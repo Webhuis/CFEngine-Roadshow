@@ -1,0 +1,24 @@
+###############################################################################
+# This part is for cf-report
+#
+# Determines a list of reports to write into the build directory. 
+# The format may be in text, html or xml format.
+###############################################################################
+
+body reporter control
+
+{
+
+ garbadge::
+
+  reports => {
+             "all"
+             };
+
+#  build_directory => "$(sys.workdir)/reports";
+build_directory => "/tmp";
+#  report_output   => "html";
+  report_output   => "text";
+#  style_sheet => "/cf_enterprise.css";
+
+}

@@ -1,0 +1,28 @@
+bundle agent create_user_file {
+ files:
+  "/home/cfetest/files/cfe_test_file"
+  perms  => mog("644","cfetest","cfegroup"),
+  create => "true";
+}
+bundle agent create_user_directory {
+ files:
+  "/home/cfetest/."
+  perms  => mog("755","cfetest","cfegroup"),
+  create => "true";
+
+  "/home/cfetest/files/."
+  perms  => mog("755","cfetest","cfegroup"),
+  create => "true";
+}
+bundle agent adduser {
+commands:
+ "/usr/sbin/useradd cfetest -d /home/cfetest -g cfegroup -m";
+}
+bundle agent addgroup {
+commands:
+  "/usr/sbin/groupadd -g 1001 cfegroup";
+}
+body common control {
+ bundlesequence => { "create_user_file", "create_user_directory", "adduser", "addgroup"  };
+     inputs     => { "/var/cfengine/inputs/libraries/cfengine_stdlib.cf" };
+}

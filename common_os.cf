@@ -1,0 +1,25 @@
+bundle agent common_os {
+
+ methods:
+
+      "any"    usebundle => cleanup;
+      "any"    usebundle => etc_hosts;
+      "any"    usebundle => resolv_conf;
+      "any"    usebundle => ntp_conf;
+
+}
+
+# A bundle for cleaning up old and not needed files and directories
+
+bundle agent cleanup {
+     
+files:
+ 
+    # Cleanup old reports
+    "$(sys.workdir)/outputs"
+     
+        comment         => "Clean up reports older than 3 days",
+        delete          => tidy,
+        file_select     => days_old("3"),
+        depth_search    => recurse("inf");
+}

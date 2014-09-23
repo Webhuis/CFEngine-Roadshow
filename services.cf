@@ -1,0 +1,10 @@
+bundle agent services {
+
+classes:
+"webapp"       or => { classmatch("webapp[0-9]") }
+
+methods:
+webapp::
+ "any" usebundle  => deploy_webapp;
+
+}

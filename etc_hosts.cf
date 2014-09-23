@@ -1,0 +1,39 @@
+bundle agent etc_hosts {
+
+files:
+  "/etc/hosts"
+  comment                   => "/etc/hosts voor elke host",
+  create                    => "true",
+  perms                     => mo("644","root"),
+  edit_line                 => edit_etc_hosts,
+  action                    => u_immediate;
+
+methods:
+
+}
+
+bundle edit_line edit_etc_hosts {
+
+ delete_lines:
+
+    ".*";
+
+ insert_lines:
+
+"s Webhuis /etc/hosts voor de roadshow
+#
+# Do not edit
+#
+127.0.0.1       localhost
+
+10.68.71.5      roadshow roadshow.webhuis.nl
+10.68.71.7      inuc-01 inuc-01.webhuis.nl
+10.68.71.8      webapp1 webapp1.webhuis.nl
+10.68.71.9      webapp2 webapp2.webhuis.nl
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters"
+
+}
