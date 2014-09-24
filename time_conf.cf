@@ -1,4 +1,4 @@
-bundle agent ntp_conf {
+bundle agent time_conf {
 
  vars:
 
@@ -11,8 +11,9 @@ bundle agent ntp_conf {
 
      "ntp_conf"               string => "/etc/ntp.conf";
      "ntp_default"            string => "/etc/default/ntpdate";
-     "timezone"               string => "/etc/localtime";
-     "gmt"                    string => "/usr/share/zoneinfo/GMT";
+     "timezone"               string => "GMT";
+     "localtime"              string => "/etc/localtime";
+     "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
 
  files:
   "${ntp_conf}"
@@ -33,11 +34,19 @@ bundle agent ntp_conf {
   classes                   => if_repaired("restart_ntp");
 
  files:
-  "${timezone}"
-  comment                   => "Set the right timezone (GMT), for once and forever.",
+  "${localtime}"
+  comment                   => "Set the right localtime (GMT), for once and forever.",
   action                    => immediate,
   move_obstructions         => "true",
   link_from                 => ln_s("${gmt}");
+
+ files:
+  "${timezone}"
+  comment                   => "Set the right timezone (GMT), for once and forever.",
+  create                    => "true",
+  perms                     => mo("644","root"),
+  action                    => u_immediate,
+  edit_line                 => edit_timezone(${timezone});
 
 methods:
     "any" usebundle => packages("ntp_conf.pkg");
@@ -99,5 +108,16 @@ delete_lines:
  insert_lines:
 "\"
 NTPOPTIONS=\"\"";
+
+}
+
+bundle edit_line  edit_timezone(string) {
+
+delete_lines:
+
+    ".*";
+
+ insert_lines:
+"${string}";
 
 }
