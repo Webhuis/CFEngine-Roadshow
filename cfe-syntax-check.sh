@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd /var/lib/svn/roadshow
-
-/usr/bin/svn update
+cd /root/mirror.webhuis.nl/roadshow/roadshow
 
 /usr/bin/find . -name "*.cf" -exec /var/cfengine/bin/cf-promises {} \; | grep syntax
 

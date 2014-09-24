@@ -80,7 +80,7 @@ insert_lines:
 
 }
 
-bundle agent apt-mirror {
+bundle agent apt_mirror {
 
   vars:
     "mirror" string => "http://mirror.webhuis.nl:3142/";
