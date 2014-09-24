@@ -48,8 +48,7 @@ body common control {
             "pkg_base_debian.cf",
             "etc_hosts.cf",
             "resolv_conf.cf",
-            "etc_hosts.cf",
-            "etc_hosts.cf",
+            "time_conf.cf",
             "deploy_webapp.cf",
 
          # Control body for all agents

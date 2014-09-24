@@ -5,7 +5,9 @@ bundle agent common_os {
       "any"    usebundle => cleanup;
       "any"    usebundle => etc_hosts;
       "any"    usebundle => resolv_conf;
-      "any"    usebundle => ntp_conf;
+      "any"    usebundle => time_conf;
+      "any"    usebundle => linux;
+      "any"    usebundle => debian;
 
 }
 

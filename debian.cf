@@ -1,6 +1,7 @@
 bundle agent debian {
 
   methods:
+      "any"    usebundle => apt_mirror;
       "any"    usebundle => pkg_base_debian;
       "any"    usebundle => issue;
       "any"    usebundle => motd;
@@ -76,6 +77,27 @@ bundle edit_line  webhuis_motd(string) {
 
 insert_lines:
   "$(string)";
+
+}
+
+bundle agent apt-mirror {
+
+  vars:
+    "mirror" string => "http://mirror.webhuis.nl:3142/";
+
+  files:
+
+      "/etc/apt/apt.conf"
+
+              create  => "true",
+            edit_line => edit_apt_mirror($(mirror)) ;
+
+     }
+
+bundle edit_line  edit_apt_mirror(string) {
+
+insert_lines:
+  "Acquire::http::Proxy \"$(string)\"";
 
 }
 
