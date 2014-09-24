@@ -16,7 +16,7 @@ delete_lines:
     ".*";
 
 insert_lines:
-search ${g.class_domain}
-nameserver ${g.nameserver};
+"search ${g.class_domain}
+nameserver ${g.nameserver}";
 
 }
