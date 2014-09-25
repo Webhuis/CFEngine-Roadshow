@@ -1,0 +1,10 @@
+bundle agent pkg_apt_cacher {
+
+vars:
+
+    "pkg[apt-cacher-ng]"               string => "*";
+
+methods:
+ "any" usebundle => packages("pkg_apt_cacher.pkg");
+
+}

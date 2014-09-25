@@ -1,0 +1,10 @@
+bundle agent pkg_nfs_server {
+
+vars:
+
+    "pkg[nfs-kernel-server]"               string => "*";
+
+methods:
+ "any" usebundle => packages("pkg_nfs_server.pkg");
+
+}
