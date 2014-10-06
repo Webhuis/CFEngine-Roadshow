@@ -16,7 +16,8 @@ delete_lines:
     ".*";
 
 insert_lines:
-"search ${g.class_domain}
+"search webhuis.nl
+#${sys.domain}
 nameserver ${g.nameserver}";
 
 }

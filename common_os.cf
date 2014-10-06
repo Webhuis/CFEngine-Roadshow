@@ -6,8 +6,9 @@ bundle agent common_os {
       "any"    usebundle => etc_hosts;
       "any"    usebundle => resolv_conf;
       "any"    usebundle => time_conf;
-      "any"    usebundle => linux;
       "any"    usebundle => debian;
+      "any"    usebundle => mnt_common_backups;
+      "any"    usebundle => common_backups;
 
 }
 

@@ -6,7 +6,8 @@ bundle agent debian {
       "any"    usebundle => issue;
       "any"    usebundle => motd;
       "any"    usebundle => ssh_config;
-      "martin" usebundle => ssh_users;
+      "any"    usebundle => user_data;
+#      "martin" usebundle => ssh_users;
 
 }
 
@@ -83,7 +84,7 @@ insert_lines:
 bundle agent apt_mirror {
 
   vars:
-    "mirror" string => "http://mirror.webhuis.nl:3142/";
+    "mirror"     string => "http://apt-roadshow.webhuis.nl:3142/";
 
   files:
 
@@ -96,8 +97,11 @@ bundle agent apt_mirror {
 
 bundle edit_line  edit_apt_mirror(string) {
 
+delete_lines:
+  ".*";
+
 insert_lines:
-  "Acquire::http::Proxy \"$(string)\"";
+  "Acquire::http::Proxy \"${string}\"${g.punt_komma}";
 
 }
 
@@ -154,33 +158,6 @@ bundle agent edit_ssh(file,params) {
 }
 
 ####################################################
-
-bundle agent ssh_users {
-
-  vars:
-"authorized_key" string =>
-"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150";
-
-  files:
-      "/home/martin/.ssh/authorized_keys"
-               create => "true",
-                perms => mog(0600, "martin", "martin"),
-               handle => "set_ssh_public_key",
-              comment => "Set desired ssh_config parameters",
-            edit_line => ssh_users("$(authorized_key)");
-
-      "/home/martin/.ssh"
-                perms => mog(0700, "martin", "martin");
-
-}
-
-bundle edit_line ssh_users(param) {
-
-insert_lines:
-  "$(param)";
- }
-
-#####################################
 
 bundle agent packages (pkgs_array) {
 

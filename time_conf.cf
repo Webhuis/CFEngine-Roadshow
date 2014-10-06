@@ -41,7 +41,7 @@ bundle agent time_conf {
   link_from                 => ln_s("${gmt}");
 
  files:
-  "${timezone}"
+  "/etc/timezone"
   comment                   => "Set the right timezone (GMT), for once and forever.",
   create                    => "true",
   perms                     => mo("644","root"),
@@ -49,13 +49,13 @@ bundle agent time_conf {
   edit_line                 => edit_timezone(${timezone});
 
 methods:
-    "any" usebundle => packages("ntp_conf.pkg");
-    "any" usebundle => nopackages("ntp_conf.nopkg");
+    "any" usebundle => packages("time_conf.pkg");
+    "any" usebundle => nopackages("time_conf.nopkg");
 
  commands:
 
   "/etc/init.d/ntp stop";
-  "/usr/sbin/ntpdate ${${g.class_domain}.ntp_master}.${${g.class_domain}.ntp_pool}";
+  "/usr/sbin/ntpdate ${g.ntp_server}";
   "/sbin/hwclock -w";
 
 }
@@ -76,7 +76,7 @@ delete_lines:
     filegen clockstats file clockstats type day enable";
 
  insert_lines:
-"    server ${${g.class_domain}.ntp_master}.${${g.class_domain}.ntp_pool}";
+"    server ${g.ntp_server}";
 
  insert_lines:
 "    restrict -4 default kod nomodify notrap nopeer noquery
@@ -103,7 +103,7 @@ delete_lines:
     "NTPSERVERS=\"";
 
  insert_lines:
-     "${${g.class_domain}.ntp_master}.${${g.class_domain}.ntp_pool}";
+     "${g.ntp_server}";
 
  insert_lines:
 "\"

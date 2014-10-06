@@ -1,14 +1,41 @@
 bundle agent nfs_server {
 
 vars:
-    "bundles[dummy]"    string => "dummy.cf";
 
+ "pkg[nfs-kernel-server]"               string => "*";
 
-    "sequence"          slist  => getindices("bundles");
-    "input"             slist  => getvalues("bundles");
+ "hosts"           slist => getindices("etc_hosts.hosts");
+
+ "nfs_host"       string => "nfs-roadshow.webhuis.nl";
+ "nfs_backup"     string => "/var/backups";
+ "nfs_webapps"    string => "/var/local/webapps";
+
+ "etc_exports"    string => "/etc/exports";
+ "exports_ro"     string => "(ro,sync,root_squash,no_subtree_check)";
+ "exports_rw"     string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
+ "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
+ "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+ "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
+ "nfs_exports[/var/local/webapps/][exports_permissions]"      string => "$(exports_ro)";
+
+ "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_network]"     string => "$(hosts).$(sys.domain)";
+ "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_permissions]" string => "$(exports_rw)";
+
+files:
+
+ "/var/backups/$(sys.domain)/$(hosts).$(sys.domain)/."
+   create  =>  "true",
+   classes => if_repaired("restart_nfs_server");
 
 methods:
+ "any" usebundle => packages("nfs_server.pkg");
+ "any" usebundle => exports_nfs_array("nfs_server.nfs_exports");
 
- "any" usebundle => pkg_nfs_server;
+commands:
+ restart_nfs_server::
+  "/etc/init.d/nfs-kernel-server restart"
+     handle => "restart_nfs_kernel_server",
+    comment => "restarting nfs-kernel-server";
 
 }

@@ -1,9 +1,0 @@
-bundle agent linux {
-
-  vars:
-      "users" slist => { "martin", "cfetest", "hans" };
-
-  methods:
-     
-    "debian" usebundle => debian;
-}
