@@ -1,0 +1,11 @@
+bundle agent common_backups {
+
+vars:
+
+  "backup_directory"  slist => { "/etc", "/home" };
+
+commands:
+
+  "/usr/bin/rsync -qa ${backup_directory} /mnt/backup/";
+}
+
