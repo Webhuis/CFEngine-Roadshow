@@ -73,7 +73,7 @@ body common control {
 
   };
 
- version => "Community Promises.cf 3.5.3";
+ version => "Community Promises.cf 3.5.2";
  ignore_missing_inputs => "true";
  ignore_missing_bundles => "true";
 }
