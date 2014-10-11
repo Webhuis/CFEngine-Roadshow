@@ -2,7 +2,7 @@ bundle agent common_backups {
 
 vars:
 
-  "backup_directory"  slist => { "/etc", "/home" };
+  "backup_directory"  slist => { "/boot", "/home", "/opt" };
 
 commands:
 

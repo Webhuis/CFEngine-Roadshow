@@ -1,22 +1,22 @@
 bundle agent create_user_file {
  files:
-  "/home/cfetest/files/cfe_test_file"
-  perms  => mog("644","cfetest","cfegroup"),
+  "/home/cferoadshow/files/cfe_test_file"
+  perms  => mog("644","cferoadshow","cfegroup"),
   create => "true";
 }
 bundle agent create_user_directory {
  files:
-  "/home/cfetest/."
-  perms  => mog("755","cfetest","cfegroup"),
+  "/home/cferoadshow/."
+  perms  => mog("755","cferoadshow","cfegroup"),
   create => "true";
 
-  "/home/cfetest/files/."
-  perms  => mog("755","cfetest","cfegroup"),
+  "/home/cferoadshow/files/."
+  perms  => mog("755","cferoadshow","cfegroup"),
   create => "true";
 }
 bundle agent adduser {
 commands:
- "/usr/sbin/useradd cfetest -d /home/cfetest -g cfegroup -m";
+ "/usr/sbin/useradd cferoadshow -d /home/cferoadshow -g cfegroup -m";
 }
 bundle agent addgroup {
 commands:
