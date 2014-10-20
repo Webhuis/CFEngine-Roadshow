@@ -1,0 +1,6 @@
+bundle agent ubuntu {
+
+methods:
+ "any" usebundle => debian;
+
+}
