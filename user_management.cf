@@ -2,9 +2,9 @@ bundle agent user_data {
 
 vars:
 
- "user[cfetest]"           string => "cfetest:x:1001:1100:cfetest:/home/cfetest";
- "user[hans]"              string => "hans:x:1002:1100:hans:/home/hans";
- "user[martin]"            string => "martin:x:1000:1100:martin:/home/martin";
+ "user[cfetest]"           string => "cfetest:x:1001:1100:cfetest:/home/cfetest:/bin/bash";
+ "user[hans]"              string => "hans:x:1002:1100:hans:/home/hans:/bin/bash";
+ "user[martin]"            string => "martin:x:1000:1100:martin:/home/martin:/bin/bash";
 
  "user_pw[cfetest]" string => "cfetest:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
  "user_pw[hans]" string => "hans:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
