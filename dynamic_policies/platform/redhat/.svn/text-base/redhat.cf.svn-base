@@ -1,0 +1,39 @@
+bundle agent redhat {
+
+methods:
+ "any" usebundle => rpmcos_mirror;
+ "any" usebundle => os_common;
+
+}
+
+bundle agent rpmcos_mirror {
+
+  vars:
+    "mirror"     string => "http://rpmcos01.webhuis.nl:3142/";
+
+  files:
+
+!rpmcos01::
+      "/etc/apt/apt.conf"
+
+              create  => "true",
+            edit_line => edit_rpm_mirror($(mirror)) ;
+
+}
+
+
+bundle agent rpm_packages (pkgs_array) {
+
+vars:
+ any::
+        "package_name"            slist  => getindices("$(pkgs_array)");
+
+packages:
+
+      "$(package_name)"
+            package_policy  => "addupdate",
+            package_method  => yum_rpm,
+            package_version => "$($(pkgs_array)[$(package_name)])";
+
+}
+

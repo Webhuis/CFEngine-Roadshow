@@ -1,0 +1,243 @@
+bundle agent debian {
+
+  methods:
+      "any"    usebundle => apt_mirror;
+      "any"    usebundle => pkg_base_debian;
+      "any"    usebundle => issue;
+      "any"    usebundle => motd;
+      "any"    usebundle => ssh_config;
+      "martin" usebundle => ssh_users;
+
+}
+
+bundle agent issue {
+
+  vars:
+    "issue" string => 
+    "Welkom op ${sys.fqhost}
+
+Let op: Alleen geautoriseerde login is toegestaan op dit systeem in beheer bij Webhuis.
+
+W                 W EEEEEEE BBBBBB   H      H U      U IIIII  SSSSSS
+ W               W  E       B     B  H      H U      U   I   S
+  W             W   E       B     B  H      H U      U   I   S
+   W     W     W    EEEEEE  BBBBBB   HHHHHHHH U      U   I    SSSSS
+    W   W W   W     E       B      B H      H U      U   I         S
+     W W   W W      E       B      B H      H U      U   I         S
+      W     W       EEEEEEE BBBBBBB  H      H  UUUUUU  IIIII SSSSSS
+                          
+ http://webhuis.nl/login ";
+
+
+  files:
+
+      "/etc/issue"
+              create  => "true",
+            edit_line => webhuis_issue($(issue)) ;
+
+      "/etc/issue.net"
+              create  => "true",
+            edit_line => webhuis_issue($(issue)) ;
+
+     }
+
+bundle edit_line  webhuis_issue(string) {
+
+insert_lines:
+  "$(string)";
+ }
+
+####################################################
+
+bundle agent motd {
+
+  vars:
+    "motd" string =>
+"The programs included with the Debian GNU/Linux system are free software
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+    
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+    
+Welkom op ${sys.fqhost}, dit systeem is in beheer bij Webhuis.
+  
+http://webhuis.nl ";
+
+  files:
+
+      "/etc/motd"
+
+              create  => "true",
+            edit_line => webhuis_motd($(motd)) ;
+
+     }
+
+bundle edit_line  webhuis_motd(string) {
+
+insert_lines:
+  "$(string)";
+
+}
+
+bundle agent apt_mirror {
+
+  vars:
+    "mirror"     string => "http://apt-roadshow.webhuis.nl:3142/";
+
+  files:
+
+      "/etc/apt/apt.conf"
+
+              create  => "true",
+            edit_line => edit_apt_mirror($(mirror)) ;
+
+     }
+
+bundle edit_line  edit_apt_mirror(string) {
+
+<<<<<<< .mine
+deete_lines:
+  ".*";
+
+=======
+delete_lines:
+  ".*";
+
+>>>>>>> .r295
+insert_lines:
+  "Acquire::http::Proxy \"${string}\"${g.punt_komma}";
+
+}
+
+####################################################
+
+
+bundle agent ssh_config {
+
+  vars:
+      "sshdconfig" string => "/etc/ssh/sshd_config";
+      "sshconfig" string => "/etc/ssh/ssh_config";
+
+      # SSHD configuration to set
+      "sshd[Protocol]"                                string => "2";
+      "sshd[PermitRootLogin]"                         string => "no";
+      "sshd[PasswordAuthentication]"                  string => "no";
+      "sshd[X11Forwarding]"                           string => "yes";
+      "sshd[UseDNS]"                                  string => "no";
+      "sshd[UsePAM]"                                  string => "no";
+
+      # SSH configuration to set
+      "ssh[ServerAliveInterval]"                      string => "60";
+
+  methods:
+      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
+      "ssh"    usebundle => edit_ssh("$(sshconfig)", "ssh_config.ssh");
+}
+
+bundle agent edit_sshd(file,params) {
+
+  files:
+      "$(file)"
+               handle => "edit_sshd",
+              comment => "Set desired sshd_config parameters",
+            edit_line => set_config_values("$(params)"),
+              classes => if_repaired("restart_sshd");
+
+  commands:
+    restart_sshd::
+      "/etc/init.d/ssh restart"
+               handle => "sshd_restart",
+              comment => "Restart sshd if the configuration file was modified";
+}
+
+
+bundle agent edit_ssh(file,params) {
+
+  files:
+      "$(file)"
+               handle => "edit_ssh",
+              comment => "Set desired ssh_config parameters",
+            edit_line => set_config_values("$(params)");
+
+}
+
+####################################################
+
+bundle agent ssh_users {
+
+  vars:
+"authorized_key" string =>
+"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150";
+
+  files:
+      "/home/martin/.ssh/authorized_keys"
+               create => "true",
+                perms => mog(0600, "martin", "martin"),
+               handle => "set_ssh_public_key",
+              comment => "Set desired ssh_config parameters",
+            edit_line => ssh_users("$(authorized_key)");
+
+      "/home/martin/.ssh"
+                perms => mog(0700, "martin", "martin");
+
+}
+
+bundle edit_line ssh_users(param) {
+
+insert_lines:
+  "$(param)";
+ }
+
+#####################################
+
+bundle agent packages (pkgs_array) {
+
+vars:
+ any::
+        "package_name"            slist  => getindices("$(pkgs_array)");
+
+packages:
+   
+    any::
+
+      "$(package_name)"
+            package_policy  => "add",
+            package_method  => apt,
+            package_version => "$($(pkgs_array)[$(package_name)])";
+}
+
+bundle agent dpackages (dpkgs_array) {
+
+vars:
+ any::
+        "dpackage_name"            slist  => getindices("$(dpkgs_array)");
+
+packages:
+
+    debian::
+
+      "$(dpackage_name)"
+            package_policy  => "addupdate",
+            package_method  => dpkg_version("/var/cache/apt/archives"),
+            package_select  => "==",
+            package_version => "$($(dpkgs_array)[$(dpackage_name)])";
+
+}
+
+bundle agent nopackages (nopkgs_array) {
+
+vars:
+ any::
+        "nopackage_name"            slist  => getindices("$(nopkgs_array)");
+
+packages:
+    
+    any::
+
+      "$(nopackage_name)"
+            package_policy  => "delete",
+            package_method  => apt,
+            package_version => "$($(nopkgs_array)[$(nopackage_name)])";
+}
+

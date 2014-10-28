@@ -1,0 +1,15 @@
+bundle agent pkg_base_debian {
+
+vars:
+
+    # packages are defined in the following form:
+    # "pkg[<pkg-name>]" string => "<pkg-version>";
+
+    "nopkg[aptitude]"          string => "*";
+
+methods:
+# "any" usebundle => packages("pkg_base_debian.pkg");
+ "any" usebundle => nopackages("pkg_base_debian.nopkg");
+
+}
+

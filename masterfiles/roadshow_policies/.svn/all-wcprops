@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cfengine/!svn/ver/503/roadshow/masterfiles/roadshow_policies
+END
+os_common.cf
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cfengine/!svn/ver/482/roadshow/masterfiles/roadshow_policies/os_common.cf
+END
+pkg_apt_cacher.cf
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/pkg_apt_cacher.cf
+END
+deploy_webapp.cf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/cfengine/!svn/ver/493/roadshow/masterfiles/roadshow_policies/deploy_webapp.cf
+END
+etc_hosts.cf
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cfengine/!svn/ver/503/roadshow/masterfiles/roadshow_policies/etc_hosts.cf
+END
+dummy.cf
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/dummy.cf
+END
+mnt_webapp.cf
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/mnt_webapp.cf
+END
+edit_rpm_mirror.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/edit_rpm_mirror.cf
+END
+rpm.cf
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/rpm.cf
+END
+common_backups.cf
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/common_backups.cf
+END
+apache2.cf
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/apache2.cf
+END
+time_conf.cf
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/time_conf.cf
+END
+pkg_rpm_cacher.cf
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/pkg_rpm_cacher.cf
+END
+mount_nfs_array.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/mount_nfs_array.cf
+END
+exports_nfs_array.cf
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/exports_nfs_array.cf
+END
+report_sys_os.cf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/report_sys_os.cf
+END
+user_management.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/user_management.cf
+END
+pkg_base_debian.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/pkg_base_debian.cf
+END
+mnt_common_backups.cf
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/mnt_common_backups.cf
+END
+resolv_conf.cf
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/resolv_conf.cf
+END
+pkg_base_common.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/499/roadshow/masterfiles/roadshow_policies/pkg_base_common.cf
+END
+edit_apt_mirror.cf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/cfengine/!svn/ver/501/roadshow/masterfiles/roadshow_policies/edit_apt_mirror.cf
+END
+services.cf
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/cfengine/!svn/ver/465/roadshow/masterfiles/roadshow_policies/services.cf
+END

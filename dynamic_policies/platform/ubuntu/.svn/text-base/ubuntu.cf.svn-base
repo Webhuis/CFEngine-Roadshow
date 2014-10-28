@@ -1,0 +1,39 @@
+bundle agent ubuntu {
+
+methods:
+
+ "any"    usebundle => aptubu_mirror;
+ "any" usebundle => os_common;
+
+}
+
+bundle agent aptubu_mirror {
+
+  vars:
+    "mirror"     string => "http://aptubu01.webhuis.nl:3142/";
+
+  files:
+
+      "/etc/apt/apt.conf"
+
+              create  => "true",
+            edit_line => edit_apt_mirror($(mirror)) ;
+
+}
+
+bundle agent packages (pkgs_array) {
+
+vars:
+ any::
+        "package_name"            slist  => getindices("$(pkgs_array)");
+
+packages:
+
+    SUSE_13::
+
+      "$(package_name)"
+            package_policy  => "addupdate",
+            package_method  => apt,
+            package_version => "$($(pkgs_array)[$(package_name)])";
+}
+

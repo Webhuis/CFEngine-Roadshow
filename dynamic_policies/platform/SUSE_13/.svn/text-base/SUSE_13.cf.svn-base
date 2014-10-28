@@ -1,0 +1,6 @@
+bundle agent SUSE_13 {
+
+methods:
+ "any" usebundle => suse;
+
+}

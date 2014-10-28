@@ -1,0 +1,12 @@
+bundle agent mnt_common_backups {
+vars:
+
+      "nfs_volume[/mnt/backup][nfs_host]"        string => "${nfs_server.nfs_host}";
+      "nfs_volume[/mnt/backup][nfs_device]"      string => "${nfs_server.nfs_backup}/${sys.domain}/${sys.fqhost}";
+      "nfs_volume[/mnt/backup][nfs_permissions]" string => "${nfs_server.nfs_rw}";
+
+methods:
+
+  "any" usebundle => mount_nfs_array("mnt_common_backups.nfs_volume");
+}
+

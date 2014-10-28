@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/cfengine/!svn/ver/486/roadshow/dynamic_policies/platform/centos_7
+END
+centos_7.cf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/cfengine/!svn/ver/460/roadshow/dynamic_policies/platform/centos_7/centos_7.cf
+END
+redhat.cf
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cfengine/!svn/ver/486/roadshow/dynamic_policies/platform/centos_7/redhat.cf
+END

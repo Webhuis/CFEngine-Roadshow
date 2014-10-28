@@ -1,0 +1,79 @@
+bundle agent etc_hosts {
+
+vars:
+ "hosts[ips-roadshow]" string => "10.168.0.1";
+ "hosts[inuc-01]"      string => "10.168.0.7";
+ "hosts[dell-lat]"     string => "10.168.0.9";
+ "hosts[cfe-roadshow]" string => "10.168.0.10";
+ "hosts[apt-roadshow]" string => "10.168.0.11";
+ "hosts[nfs-roadshow]" string => "10.168.0.12";
+ "hosts[webapp1]"      string => "10.168.0.14";
+ "hosts[webapp2]"      string => "10.168.0.15";
+ "hosts[webapp3]"      string => "10.168.0.16";
+ "hosts[webapp4]"      string => "10.168.0.17";
+ "hosts[webapp71]"     string => "10.168.0.71";
+ "hosts[webapp72]"     string => "10.168.0.72";
+ "hosts[webapp73]"     string => "10.168.0.73";
+ "hosts[webapp74]"     string => "10.168.0.74";
+ "hosts[webapp75]"     string => "10.168.0.75";
+ "hosts[webapp76]"     string => "10.168.0.76";
+ "hosts[webapp77]"     string => "10.168.0.77";
+ "hosts[webapp78]"     string => "10.168.0.78";
+ "hosts[webapp79]"     string => "10.168.0.79";
+ "hosts[webapp80]"     string => "10.168.0.80";
+ "hosts[webapp81]"     string => "10.168.0.81";
+ "hosts[webapp82]"     string => "10.168.0.82";
+ "hosts[webapp83]"     string => "10.168.0.83";
+ "hosts[webapp84]"     string => "10.168.0.84";
+ "hosts[webapp85]"     string => "10.168.0.85";
+ "hosts[webapp86]"     string => "10.168.0.86";
+ "hosts[webapp87]"     string => "10.168.0.87";
+ "hosts[webapp88]"     string => "10.168.0.88";
+ "hosts[webapp89]"     string => "10.168.0.89";
+ "hosts[webapp90]"     string => "10.168.0.90";
+ "hosts[webapp91]"     string => "10.168.0.91";
+ "hosts[webapp92]"     string => "10.168.0.92";
+ "hosts[webapp93]"     string => "10.168.0.93";
+ "hosts[webapp94]"     string => "10.168.0.94";
+
+
+ "host_index"           slist => getindices("$(hosts)");
+
+files:
+  "/etc/hosts"
+  comment                   => "/etc/hosts voor elke host",
+  create                    => "true",
+  perms                     => mo("644","root"),
+  edit_line                 => edit_etc_hosts("etc_hosts.hosts"),
+  action                    => u_immediate;
+
+}
+
+bundle edit_line edit_etc_hosts(hosts) {
+
+vars:
+ "host_index"            slist => getindices("$(hosts)");
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+"# Webhuis /etc/hosts voor de roadshow
+#
+# Do not edit
+#
+127.0.0.1       localhost
+
+$($(hosts)[$(host_index)]) $(host_index).${sys.domain} $(host_index)
+
+10.168.0.181    mirror.webhuis.nl mirror
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters";
+
+}
+

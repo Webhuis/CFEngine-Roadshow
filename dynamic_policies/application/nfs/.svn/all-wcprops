@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cfengine/!svn/ver/460/roadshow/dynamic_policies/application/nfs
+END
+nfs.cf
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/cfengine/!svn/ver/460/roadshow/dynamic_policies/application/nfs/nfs.cf
+END

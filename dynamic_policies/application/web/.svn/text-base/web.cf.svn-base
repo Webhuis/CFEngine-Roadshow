@@ -1,0 +1,12 @@
+bundle agent web {
+
+vars:
+
+  "pkg[openjdk-7-jre]"     string => "*";
+  "pkg[tomcat7]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("web.pkg");
+
+}

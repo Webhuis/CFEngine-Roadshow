@@ -1,0 +1,10 @@
+bundle edit_line  edit_rpm_mirror(string) {
+
+delete_lines:
+  ".*";
+
+insert_lines:
+  "Acquire::http::Proxy \"${string}\"${g.punt_komma}";
+
+}
+

@@ -1,0 +1,25 @@
+bundle agent exports_nfs_array(array_exports) {
+
+vars:
+  "exports_index"                         slist => getindices(${array_exports});
+
+files:
+ "${nfs_server.etc_exports}"
+  create    => "true",
+  edit_line => edit_nfs_exports("${exports_index}", "$($(array_exports)[$(exports_index)][exports_network])", "$($(array_exports)[$(exports_index)][exports_permissions])"),
+  classes => if_repaired("restart_nfs_server");
+
+commands:
+    restart_nfs_server::
+      "/etc/init.d/nfs-kernel-server restart"
+               handle => "nfs_kernel_server_restart",
+              comment => "Restart nfs-kernel-server if the configuration file was modified";
+
+}
+
+bundle edit_line edit_nfs_exports(device, network, permissions) {
+
+ insert_lines:
+  "${device} ${network}${permissions}";
+}
+

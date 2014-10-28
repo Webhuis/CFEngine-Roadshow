@@ -1,0 +1,27 @@
+bundle agent deploy_webapp {
+vars:
+  "catalina_base"          string => "/var/lib/tomcat7";
+  "pkg[openjdk-7-jre]"     string => "*";
+  "pkg[tomcat7]"           string => "*";
+
+files:
+  "$(catalina_base)/webapps/sample"
+     handle => "delete_sample",
+    comment => "deleting sample.war",
+     delete => tidy;
+
+  "$(catalina_base)/webapps/sample.war"
+    comment => "deploying  sample.war",
+     perms  => mog("644","tomcat7","tomcat7"),
+    classes => if_repaired("restart_tomcat"),
+  copy_from => local_cp("/mnt/webapps/sample.war");
+
+methods:
+    "any" usebundle => packages("deploy_webapp.pkg");
+
+commands:
+ restart_tomcat::
+  "/etc/init.d/tomcat7 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+}

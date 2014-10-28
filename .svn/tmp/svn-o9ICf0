@@ -1,0 +1,79 @@
+###############################################################################
+#
+#   promises.cf - Basic Policy for Community
+#
+###############################################################################
+
+# global vars
+
+bundle common g {
+
+vars:
+
+  # List here the IP masks that we grant access to on the server
+
+ "acl"                 slist  => { "10.*" };
+ "workdir"             string => "/var/cfengine";
+ "master_location"     string => "/var/cfengine/masterfiles";
+
+ "dir_bin"             string => "/var/cfengine/bin";
+ "dir_modules"         string => "/var/cfengine/bin";
+ "inputfiles"          string => "/var/cfengine/inputs";
+ "policyhost"          string => "cfe.roadshow.webhuis.nl";
+ "class_domain"        string => canonify("$(sys.domain)");
+ "class_host"          string => canonify("$(sys.uqhost)");
+ "ntp_server"          string => "inuc-01.webhuis.nl";
+ "nameserver"           slist => { "10.68.71.187", "8.8.8.8"};
+ "punt_komma"          string => ";";
+
+#   "os_inputs"         slist => splitstring(execresult("/usr/bin/find ${workdir}/inputs/os/ -name '*.cf'","noshell"),"\n","99");
+
+}
+
+body common control {
+
+ bundlesequence => { "g", "update", "common_os", "services" };
+
+  inputs => {
+
+         # COPBL/Custom libraries
+            "libraries/cfengine_stdlib.cf",
+
+            "update.cf",
+            "common_os.cf",
+            "services.cf",
+            "debian.cf",
+            "pkg_base_debian.cf",
+            "etc_hosts.cf",
+            "resolv_conf.cf",
+            "time_conf.cf",
+            "deploy_webapp.cf",
+            "apache2.cf",
+            "apt_cacher.cf",
+            "cfe_server.cf",
+            "ips_server.cf",
+            "nfs_server.cf",
+            "pkg_apt_cacher.cf",
+            "exports_nfs.cf",
+            "exports_nfs_array.cf",
+            "mnt_common_backups.cf",
+            "common_backups.cf",
+            "mnt_webapp.cf",
+            "mount_nfs_array.cf",
+            "user_management.cf",
+            "dummy.cf",
+            "web_server.cf",
+
+         # Control body for all agents
+            "controls/cf_execd.cf",
+            "controls/cf_monitord.cf",
+            "controls/cf_report.cf",
+            "controls/cf_runagent.cf",
+            "controls/cf_serverd.cf",
+
+  };
+
+ version => "Community Promises.cf 3.6.2";
+ ignore_missing_inputs => "true";
+ ignore_missing_bundles => "true";
+}

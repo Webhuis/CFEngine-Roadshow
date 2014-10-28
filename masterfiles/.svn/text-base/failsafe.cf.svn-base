@@ -1,0 +1,106 @@
+################################################################################
+# THIS FILE REPRESENTS A FALL-BACK SOLUTION FOR THE PRIMARY FAILSAFE FILE.
+# IF THE PRIMARY FAILSAFE/UPDATE LOSES FUNCTIONALITY DUE TO MODIFICATIONS MADE
+# BY THE USER, CFENGINE WILL RECOVER BY USING THIS FALL-BACK BOOTSTRAPPED FILE.
+# NEVER EDIT THIS FILE, YOU WILL HAVE TO LOG ON TO EVERY NODE MANAGED BY
+# CFENGINE TO RECTIFY POTENTIAL ERRORS IF SOMETHING GOES WRONG.
+################################################################################
+body common control
+{
+bundlesequence => { "cfe_internal_update" };
+
+}
+
+body agent control
+{
+skipidentify => "true";
+}
+
+bundle agent cfe_internal_update
+{
+
+vars:
+
+  # List here the IP masks that we grant access to on the server
+
+    "master_location"   string => "/var/cfengine/masterfiles";
+
+files:
+any::
+
+   "$(sys.workdir)/inputs"
+           comment => "Copy policy updates from master source on policy server if a new validation was acquired",
+            handle => "update_files_inputs_dir",
+         copy_from => u_secure_cp("${master_location}","${sys.policy_hub}"),
+      depth_search => u_recurse("inf");
+
+   "$(sys.workdir)/inputs/webhuis/"
+          delete => empty_webhuis;
+
+commands:
+#   "cfengine_start" -> { "/etc/init.d/cfengine3 restart" };
+
+}
+
+############################################
+body classes outcome(x)
+{
+promise_repaired => {"$(x)_ok"};
+}
+############################################
+body classes success(x)
+{
+promise_repaired => {"$(x)"};
+}
+############################################
+body perms u_p(p)
+{
+mode  => "$(p)";
+}
+#############################################
+body copy_from u_secure_cp(from,servers)
+{
+source      => "$(from)";
+compare     => "digest";
+encrypt     => "true";
+trustkey    => "true";
+purge       => "false";
+!am_policy_hub::
+servers => { "$(sys.policy_hub)" };
+}
+############################################
+body action u_background
+{
+background => "true";
+}
+############################################
+body depth_search u_recurse(d)
+{
+depth => "$(d)";
+exclude_dirs => { "\.svn", "\.git" };}
+############################################
+body service_method bootstart
+{
+service_autostart_policy => "boot_time";
+}
+############################################
+body action ifwin_bg
+{
+windows::
+background => "true";
+}
+############################################
+body copy_from u_cp(from)
+{
+source          => "$(from)";
+compare         => "digest";
+copy_backup     => "false";
+}
+
+body delete empty_webhuis
+
+{
+dirlinks => "delete";
+rmdirs   => "true";
+}
+

@@ -1,0 +1,24 @@
+bundle agent app {
+
+vars:
+  "catalina_base"          string => "/var/lib/tomcat7";
+
+files:
+  "$(catalina_base)/webapps/sample"
+     handle => "sample_delete",
+    comment => "deleting sample.war",
+     delete => tidy;
+
+  "$(catalina_base)/webapps/sample.war"
+     handle => "deploy_sample",
+    comment => "deploying sample.war",
+     perms  => mog("644","tomcat7","tomcat7"),
+    classes => if_repaired("restart_tomcat"),
+  copy_from => local_cp("/mnt/webapps/sample.war");
+
+methods:
+
+ restart_tomcat::
+  "any" usebundle => restart_tomcat;
+
+}

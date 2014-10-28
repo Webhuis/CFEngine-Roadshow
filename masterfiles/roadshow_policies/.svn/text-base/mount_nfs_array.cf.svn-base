@@ -1,0 +1,17 @@
+bundle agent mount_nfs_array(array_mounts) {
+
+vars:
+  "mounts_index"                         slist => getindices(${array_mounts});
+
+methods:
+ "any"  usebundle => mount_nfs("${mounts_index}", "$($(array_mounts)[$(mounts_index)][nfs_host])", "$($(array_mounts)[$(mounts_index)][nfs_device])", "$($(array_mounts)[$(mounts_index)][nfs_permissions])");
+
+}
+
+bundle agent mount_nfs(mount, nfs_host, nfs_device, nfs_permissions) {
+
+storage:
+  "${mount}"   mount  => nfs_p($(nfs_host), $(nfs_device),$(nfs_permissions));
+
+}
+
