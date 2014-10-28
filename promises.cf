@@ -8,10 +8,17 @@
 
 bundle common g {
 
+classes:
+      "parsed_all" expression => regextract("^(...)(...)(..).*", $(sys.uqhost), "part");
+
 vars:
 
   # List here the IP masks that we grant access to on the server
 
+ "application"         string => "${part[1]}";
+ "function"            string => "${part[2]}";
+ "instance"            string => "${part[3]}";
+ "os"                  string => ${sys.flavor};
  "acl"                 slist  => { "10.*" };
  "workdir"             string => "/var/cfengine";
  "master_location"     string => "/var/cfengine/masterfiles";
@@ -32,7 +39,7 @@ vars:
 
 body common control {
 
- bundlesequence => { "g", "update", "common_os", "services" };
+ bundlesequence => { "g", "update", "${sys.flavor}", "common_os", "${application}", "services" };
 
   inputs => {
 
@@ -41,8 +48,10 @@ body common control {
 
             "update.cf",
             "common_os.cf",
+            "centos_7.cf",
             "services.cf",
             "debian.cf",
+            "debian_7.cf",
             "pkg_base_debian.cf",
             "etc_hosts.cf",
             "resolv_conf.cf",
@@ -60,6 +69,10 @@ body common control {
             "common_backups.cf",
             "mnt_webapp.cf",
             "mount_nfs_array.cf",
+            "redhat.cf",
+            "opensuse.cf",
+            "ubuntu.cf",
+            "ubuntu_14.cf",
             "user_management.cf",
             "dummy.cf",
             "web_server.cf",

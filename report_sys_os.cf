@@ -1,6 +1,0 @@
-bundle agent report_sys_os {
-
-reports:
-
-"inhoud van hard class os: ${sys.os} ${sys.flavor}";
-}

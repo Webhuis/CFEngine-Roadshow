@@ -1,6 +1,0 @@
-bundle agent centos_7 {
-
-methods:
- "any" usebundle => redhat;
-
-}
