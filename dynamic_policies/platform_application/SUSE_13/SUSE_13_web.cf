@@ -11,7 +11,7 @@ methods:
 
 }
 
-bundle gent restart_tomcat {
+bundle agent restart_tomcat {
 
 commands:
   "service tomcat7 restart"
