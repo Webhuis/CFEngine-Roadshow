@@ -38,8 +38,15 @@ files:
             action => u_immediate,
            classes => u_if_repaired("update_report");
 
-reports:
- "upd: platform: ${g.master_dynamic}/platform/${g.os}/*.cf";
+   "$(sys.workdir)/dynamic-inputs/platform_application"
+           comment => "Copy platform_applicatiion policy updates from master source on policy server if a new validation was acquired",
+            handle => "update_files_inputs_platform_application",
+         copy_from => u_secure_cp("${g.master_dynamic}/platform_application/${g.os}_${g.application}","${sys.policy_hub}"),
+      depth_search => u_recurse("inf"),
+      file_select  => u_inputfiles,
+            action => u_immediate,
+           classes => u_if_repaired("update_report");
+
 }
 
 #########################################################

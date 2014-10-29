@@ -2,11 +2,13 @@ bundle agent web {
 
 vars:
 
-  "pkg[openjdk-7-jre]"     string => "*";
-  "pkg[tomcat7]"           string => "*";
+  "nfs_volume[/mnt/webapps][nfs_host]"        string => "${nfs_server.nfs_host}";
+  "nfs_volume[/mnt/webapps][nfs_device]"      string => "${nfs_server.nfs_webapps}";
+  "nfs_volume[/mnt/webapps][nfs_permissions]" string => "${nfs_server.nfs_ro}";
 
 methods:
 
-  "any" usebundle => packages("web.pkg");
+  "any" usebundle => mount_nfs_array("web_server.nfs_volume");
+  "any" usebundle => ${g.os}_{g.application};
 
 }

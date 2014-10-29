@@ -51,12 +51,3 @@ commands:
     comment => "restarting sshd";
 
 }
-
-bundle agent restart_tomcat {
-
-commands:
-  "service tomcat7 restart"
-     handle => "restart_tomcat",
-    comment => "restarting tomcat";
-
-}
