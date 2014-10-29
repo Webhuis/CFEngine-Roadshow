@@ -2,8 +2,8 @@ bundle agent SUSE_13_web {
 
 vars:
 
-  "pkg[openjdk-7-jre]"     string => "*";
-  "pkg[tomcat7]"           string => "*";
+  "pkg[java-1_7_0-openjdk]"     string => "*";
+  "pkg[tomcat]"                 string => "*";
 
 methods:
 
@@ -14,7 +14,7 @@ methods:
 bundle agent restart_tomcat {
 
 commands:
-  "service tomcat7 restart"
+  "service tomcat restart"
      handle => "restart_tomcat",
     comment => "restarting tomcat";
 
