@@ -1,6 +1,24 @@
 bundle agent suse {
 
+vars:
+#    "pkg[bzip2]"               string => "*";
+#    "pkg[dnsutils]"            string => "*";
+#    "pkg[gzip]"                string => "*";
+#    "pkg[ldap-utils]"          string => "*";
+#    "pkg[less]"                string => "*";
+#    "pkg[lynx]"                string => "*";
+#    "pkg[mc]"                  string => "*";
+#    "pkg[nfs-common]"          string => "*";
+#    "pkg[rsync]"               string => "*";
+    "pkg[openssh]"                 string => "*";
+#    "pkg[subversion]"          string => "*";
+#    "pkg[sudo]"                string => "*";
+
+#    "nopkg[aptitude]"          string => "*";
+#    "nopkg[nano]"              string => "*";
+
 methods:
+ "any" usebundle => packages("suse.pkg");
  "any" usebundle => rpmosu_mirror;
  "any" usebundle => zypper_repo;
  "any" usebundle => os_common;
