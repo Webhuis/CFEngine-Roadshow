@@ -1,6 +1,0 @@
-bundle agent debian_7 {
-
-methods:
- "any" usebundle => debian;
-
-}

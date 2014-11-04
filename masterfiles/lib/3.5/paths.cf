@@ -39,7 +39,7 @@
 # the online docs
 #
 
-# For CFEngine Core: 3.6.0 to 3.6.x
+# For CFEngine Core: 3.5.1 to 3.5.x
 # Paths bundle (used by other bodies)
 
 ###################################################
@@ -48,25 +48,9 @@
 ###################################################
 
 bundle common paths
-# @brief Defines an array `path` with common paths to standard binaries,
-# and classes for defined and existing paths.
-#
-# If the current platform knows that binary XYZ should be present,
-# `_stdlib_has_path_XYZ` is defined. Furthermore, if XYZ is actually present
-# (i.e. the binary exists) in the expected location, `_stdlib_path_exists_XYZ` is
-# defined.
-#
-# **Example:**
-#
-# ```cf3
-# bundle agent repair_newlines(filename)
-# {
-# commands:
-#   _stdlib_path_exists_sed::
-#      “$(path[sed])”
-#        args => “-i 's/^M//' $(filename)”
-# }
-# ```
+# In addition to defining common paths, this bundle also defines context
+# classes for paths that are defined (_stdlib_has_path_xxx) and paths that
+# exist (_stdlib_path_exists_xxx)
 {
   vars:
 
@@ -74,32 +58,10 @@ bundle common paths
       # Common full pathname of commands for OS
       #
 
-    enterprise.(am_policy_hub|policy_server)::
-      "path[git]"
-        string => "$(sys.workdir)/bin/git",
-        comment => "CFEngine Enterprise Hub ships with its own git which is used internally";
-
-    !(enterprise.(am_policy_hub|policy_server))::
-      "path[git]"      string => "/usr/bin/git";
-
     any::
       "path[getfacl]"  string => "/usr/bin/getfacl";
       "path[npm]"      string => "/usr/bin/npm";
       "path[pip]"      string => "/usr/bin/pip";
-
-    _have_bin_env::
-      "path[env]"      string => "/bin/env";
-    !_have_bin_env::
-      "path[env]"      string => "/usr/bin/env";
-
-    _have_bin_systemctl::
-      "path[systemctl]"      string => "/bin/systemctl";
-    !_have_bin_systemctl::
-      "path[systemctl]"      string => "/usr/bin/systemctl";
-
-    linux::
-      "path[lsattr]"        string => "/usr/bin/lsattr";
-      "path[tar]"           string => "/bin/tar";
 
     aix::
 
@@ -169,13 +131,15 @@ bundle common paths
       "path[ip]"                string => "/usr/bin/ip";
       "path[ifconfig]"          string => "/usr/bin/ifconfig";
       "path[journalctl]"        string => "/usr/bin/journalctl";
+      "path[systemctl]"         string => "/usr/bin/systemctl";
       "path[netctl]"            string => "/usr/bin/netctl";
 
-    freebsd|netbsd|openbsd::
+    freebsd|netbsd::
 
       "path[awk]"      string => "/usr/bin/awk";
       "path[bc]"       string => "/usr/bin/bc";
       "path[cat]"      string => "/bin/cat";
+      "path[cksum]"    string => "/usr/bin/cksum";
       "path[crontabs]" string => "/var/cron/tabs";
       "path[cut]"      string => "/usr/bin/cut";
       "path[dc]"       string => "/usr/bin/dc";
@@ -194,15 +158,32 @@ bundle common paths
       "path[sed]"      string => "/usr/bin/sed";
       "path[sort]"     string => "/usr/bin/sort";
       "path[tr]"       string => "/usr/bin/tr";
-
-    freebsd|netbsd::
-
-      "path[cksum]"    string => "/usr/bin/cksum";
       "path[realpath]" string => "/bin/realpath";
 
     openbsd::
 
+      "path[awk]"      string => "/usr/bin/awk";
+      "path[bc]"       string => "/usr/bin/bc";
+      "path[cat]"      string => "/bin/cat";
       "path[cksum]"    string => "/bin/cksum";
+      "path[crontabs]" string => "/var/cron/tabs";
+      "path[cut]"      string => "/usr/bin/cut";
+      "path[dc]"       string => "/usr/bin/dc";
+      "path[df]"       string => "/bin/df";
+      "path[diff]"     string => "/usr/bin/diff";
+      "path[dig]"      string => "/usr/sbin/dig";
+      "path[echo]"     string => "/bin/echo";
+      "path[egrep]"    string => "/usr/bin/egrep";
+      "path[find]"     string => "/usr/bin/find";
+      "path[grep]"     string => "/usr/bin/grep";
+      "path[ls]"       string => "/bin/ls";
+      "path[netstat]"  string => "/usr/bin/netstat";
+      "path[ping]"     string => "/usr/bin/ping";
+      "path[perl]"     string => "/usr/bin/perl";
+      "path[printf]"   string => "/usr/bin/printf";
+      "path[sed]"      string => "/usr/bin/sed";
+      "path[sort]"     string => "/usr/bin/sort";
+      "path[tr]"       string => "/usr/bin/tr";
 
     smartos::
       "path[npm]"      string => "/opt/local/bin/npm";
@@ -285,8 +266,8 @@ bundle common paths
       "path[sed]"           string => "/bin/sed";
       "path[sort]"          string => "/bin/sort";
       "path[test]"          string => "/usr/bin/test";
-      "path[tr]"            string => "/usr/bin/tr";
       "path[wget]"          string => "/usr/bin/wget";
+      "path[tr]"            string => "/usr/bin/tr";
       "path[realpath]"      string => "/usr/bin/realpath";
 
       #
@@ -403,10 +384,10 @@ bundle common paths
 
       "path[sysctl]"        string => "/sbin/sysctl";
 
-    !suse::
+    !(SuSE||SUSE||suse)::
       "path[logger]"        string => "/usr/bin/logger";
 
-    suse::
+    SuSE||SUSE||suse::
 
       "path[awk]"           string => "/usr/bin/awk";
       "path[bc]"            string => "/usr/bin/bc";
@@ -474,14 +455,10 @@ bundle common paths
       "path[shadow]"       string => "/etc/security/passwd";
 
     any::
-
       "all_paths"     slist => getindices("path");
       "$(all_paths)" string => "$(path[$(all_paths)])";
 
   classes:
-      "_have_bin_env" expression => fileexists("/bin/env");
-      "_have_bin_systemctl" expression => fileexists("/bin/systemctl");
-
       "_stdlib_has_path_$(all_paths)"
       expression => isvariable("$(all_paths)"),
       comment    => "It's useful to know if a given path is defined";
