@@ -20,16 +20,15 @@ vars:
  "instance"             string => "${part[3]}";
  "os"                   string => ${sys.flavor};
  "acl"                   slist => { "10.*", "194.151.143.205", "62.45.247.173" };
- "workdir"              string => "/var/cfengine";
- "master_location"      string => "/var/cfengine/masterfiles";
- "master_dynamic"       string => "/var/cfengine/dynamic_policies";
- "dir_bin"              string => "/var/cfengine/bin";
+ "master_location"      string => "$(sys.masterdir)";
+ "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
+ "dir_bin"              string => "$(sys.bindir)";
  "dir_modules"          string => "/var/cfengine/bin";
- "inputfiles"           string => "/var/cfengine/inputs";
+ "inputfiles"           string => "$(sys.inputdir)";
 
- "controls"              slist => findfiles("/var/cfengine/inputs/controls/*.cf");
- "roadshow_policies"     slist => findfiles("/var/cfengine/inputs/roadshow_policies/*.cf");
- "dynamic_policies"      slist => findfiles("/var/cfengine/dynamic-inputs/**/*.cf");
+ "controls"              slist => findfiles("$(sys.inputdir)/controls/*.cf");
+ "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
+ "dynamic_policies"      slist => findfiles("$(master_dynamic)/**/*.cf");
 # "application_policies"  slist => findfiles("/var/cfengine/dynamic-inputs/application/${g.application}/*.cf");
 # "function_policies"     slist => findfiles("/var/cfengine/dynamic-inputs/function/${g.function}/*.cf");
 
@@ -56,7 +55,7 @@ body common control {
   inputs => {
 
          # COPBL/Custom libraries
-            "/var/cfengine/inputs/lib/3.6/stdlib.cf",
+            "$(sys.libdir)/stdlib.cf",
 
             "update.cf",
 
