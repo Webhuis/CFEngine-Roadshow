@@ -11,6 +11,7 @@ body common control
                           "update_def",
                           "cfe_internal_dc_workflow",
                           "cfe_internal_update_policy",
+                          "cfe_roadshow_update_policy",
                           "cfe_internal_update_bins",
                           "cfe_internal_update_processes",
       };
@@ -24,6 +25,7 @@ body common control
                   "update/cfe_internal_local_git_remote.cf",
                   "update/cfe_internal_update_from_repository.cf",
                   "update/update_policy.cf",
+                  "update/update_roadshow.cf",
                   "update/update_processes.cf"
       };
 
