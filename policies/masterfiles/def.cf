@@ -172,7 +172,7 @@ bundle common def
 
       # Auto-load files in "services/autorun" and run bundles tagged "autorun".
       # Disabled by default!
-      "services_autorun" expression => "!any";
+      "services_autorun" expression => "any";
 
       # Internal CFEngine log files rotation
       "cfengine_internal_rotate_logs" expression => "any";
@@ -194,7 +194,7 @@ bundle common def
 
       # NOTE THAT THIS CLASS ALSO NEEDS TO BE SET IN update.cf
 
-      "cfengine_internal_purge_policies" expression => "!any";
+      "cfengine_internal_purge_policies" expression => "any";
 
       # Preserve permissions of the policy server's masterfiles.
       # you can also request it from the command line with
