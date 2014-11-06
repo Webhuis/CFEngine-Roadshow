@@ -7,19 +7,24 @@
 
 bundle agent cfe_roadshow_update_policy
 {
-  classes:
-      "parsed_all" expression => regextract("^(...)(...)(..).*", $(sys.uqhost), "part");
-
   vars:
-      "application"          string => "${part[1]}";
-      "function"             string => "${part[2]}";
-      "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
-      "inputs_dynamic"       string => "$(sys.inputdir)/services/autorun/dynamic_policies";
+      "application"    string => readfile("/etc/roadshow/application", 1k);
+      "function"       string => readfile("/etc/roadshow/function", 1k);
+
+  methods:
+      "" usebundle => cfe_roadshow_copy_policy($(application), $(function));
+}
+
+bundle agent cfe_roadshow_copy_policy(application, function)
+{
+  vars:
+      "master_dynamic" string => "$(sys.workdir)/dynamic_policies";
 
       "copy[application]" string => "${master_dynamic}/application/${application}";
       "copy[function]" string => "${master_dynamic}/function/${function}";
       "copy[platform]" string => "${master_dynamic}/platform/${sys.flavor}";
-      "copy[platform_application/${sys.flavor}_${application}.cf]" string => "${master_dynamic}/platform_application/${sys.flavor}/${sys.flavor}_${application}.cf";
+      # not working yet
+      # "copy[platform_application/${sys.flavor}_${application}.cf]" string => "${master_dynamic}/platform_application/${sys.flavor}/${sys.flavor}_${application}.cf";
 
       "tocopy" slist => getindices("copy");
 
@@ -28,7 +33,7 @@ bundle agent cfe_roadshow_update_policy
       # note that validated_updates_ready is defined by
       # cfe_internal_update_policy as a global class so we can use it
 
-      "$(sys.workdir)/dynamic-inputs/$(tocopy)"
+      "$(sys.workdir)/dynamic-inputs-local/$(tocopy)"
       handle => "update_files_inputs_roadshow",
       copy_from => u_rcp("$(copy[$(tocopy)])", ${sys.policy_hub}),
       depth_search => u_recurse(inf),

@@ -1,0 +1,60 @@
+###############################################################################
+#
+#   roadshow.cf - autorun policy
+#
+###############################################################################
+
+body file control
+{
+      inputs => { @(do_roadshow.inputs) };
+}
+
+bundle agent roadshow
+{
+  meta:
+      "tags" slist => { "autorun" };
+
+  vars:
+      "os"             string => ${sys.flavor};
+      "application"    string => readfile("/etc/roadshow/application", 1k);
+      "function"       string => readfile("/etc/roadshow/function", 1k);
+      "instance"       string => readfile("/etc/roadshow/instance", 1k);
+
+  methods:
+      "" usebundle => do_roadshow($(application), $(function), $(instance));
+      "" usebundle => $(os);
+      "" usebundle => $(application);
+      "" usebundle => $(function);
+}
+
+bundle agent do_roadshow(application, function, instance)
+{
+  vars:
+      # List here the IP masks that we grant access to on the server
+      "acl"                   slist => { "10.*", "194.151.143.205", "62.45.247.173" };
+      "master_location"      string => "$(sys.masterdir)";
+      "master_dynamic"       string => "$(sys.workdir)/dynamic-inputs-local";
+      "dir_bin"              string => "$(sys.bindir)";
+      "dir_modules"          string => "/var/cfengine/bin";
+      "inputfiles"           string => "$(sys.inputdir)";
+
+      "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
+      "dynamic_policies"      slist => findfiles("$(master_dynamic)/**/*.cf");
+
+      "inputs" slist => { @(roadshow_policies), @(dynamic_policies) };
+
+      "policyhost"           string => "cfe-roadshow.webhuis.nl";
+      "class_domain"         string => canonify("$(sys.domain)");
+      "class_host"           string => canonify("$(sys.uqhost)");
+      "ntp_server"           string => "inuc-01.webhuis.nl";
+      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
+      "punt_komma"           string => ";";
+
+
+  reports:
+
+      "platform_policies: ${platform_policies}";
+      "applicat_policies: ${application_policies}";
+      "function: ${function_policies}";
+
+}
