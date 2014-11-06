@@ -9,14 +9,26 @@ bundle agent services {
 
   methods:
     apt_cacher::
-      "any" usebundle  => apt_cacher;
+      "any" usebundle  => roadshow_maybe_run($(this.namespace), apt_cacher);
     cfe_server::
-      "any" usebundle  => cfe_server;
+      "any" usebundle  => roadshow_maybe_run($(this.namespace), cfe_server);
     ips_server::
-      "any" usebundle  => ips_server;
+      "any" usebundle  => roadshow_maybe_run($(this.namespace), ips_server);
     nfs_server::
-      "any" usebundle  => nfs_server;
+      "any" usebundle  => roadshow_maybe_run($(this.namespace), nfs_server);
     webapp::
-      "any" usebundle  => web_server;
+      "any" usebundle  => roadshow_maybe_run($(this.namespace), web_server);
 
+}
+
+bundle agent roadshow_maybe_run(namespace, mybundle)
+{
+  vars:
+      "bundlesfound" slist => bundlesmatching("^$(namespace):$(mybundle)$");
+      "count" int => length(bundlesfound);
+
+  methods:
+      "any"
+      usebundle  => $(bundlesfound),
+      ifvarclass => strcmp(1, $(count));
 }
