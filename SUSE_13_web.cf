@@ -1,0 +1,54 @@
+bundle agent SUSE_13_web {
+
+vars:
+
+  "pkg[java-1_7_0-openjdk]"  string => "*";
+  "pkg[tomcat]"              string => "*";
+
+  "firewall"                  slist => { "apache2", "${suse.firewall}" };
+
+methods:
+
+  "any" usebundle => packages("SUSE_13_web.pkg");
+  "any" usebundle => suse_firewall(suse.firewall);
+
+}
+
+bundle agent suse_firewall {
+
+vars:
+      "suse_firewall" string => "/etc/sysconfig/SuSEfirewall2";
+
+      "firewall[FW_CONFIGURATIONS_EXT]"      slist => "${firewall}";
+
+      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
+methods:
+      "any"    usebundle => edit_suse_firewall("$(suse_firewall)", "suse.firewall");
+
+}
+
+bundle agent edit_suse_firewall(file,params) {
+
+files:
+      "$(file)"
+               handle => "edit_suse_firewall",
+              comment => "Set desired suse_firewall parameters",
+            edit_line => set_config_values("$(params)"),
+              classes => if_repaired("restart_suse_firewall");
+
+commands:
+ restart_suse_firewall::
+   "/usr/bin/systemctl restart SuSEfirewall2";
+
+}
+
+
+
+bundle agent restart_tomcat {
+
+commands:
+  "service tomcat restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}
