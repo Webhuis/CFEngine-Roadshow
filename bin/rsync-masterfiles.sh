@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd /var/lib/svn/roadshow
+cd /var/lib/git/CFEngine-Roadshow
 
-/usr/bin/rsync -qaC --delete /var/lib/svn/roadshow/masterfiles/* /var/cfengine/masterfiles
-/usr/bin/rsync -qaC --delete /var/lib/svn/roadshow/dynamic_policies/* /var/cfengine/dynamic_policies
+/usr/bin/rsync -qaC --delete /var/lib/git/CFEngine-Roadshow/masterfiles/* /var/cfengine/masterfiles
+/usr/bin/rsync -qaC --delete /var/lib/git/CFEngine-Roadshow/dynamic_policies/* /var/cfengine/dynamic_policies
 
 cd -
