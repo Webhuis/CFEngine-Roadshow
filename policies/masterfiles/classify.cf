@@ -21,8 +21,8 @@ bundle agent classify
       "function"             string => "sys";
       "instance"             string => "1";
 
-  methods:
-      "" usebundle => file_make("/etc/roadshow/application", $(application));
-      "" usebundle => file_make("/etc/roadshow/function", $(function));
-      "" usebundle => file_make("/etc/roadshow/instance", $(instance));
+#  methods:
+#      "" usebundle => file_make("/etc/roadshow/application", $(application));
+#      "" usebundle => file_make("/etc/roadshow/function", $(function));
+#      "" usebundle => file_make("/etc/roadshow/instance", $(instance));
 }
