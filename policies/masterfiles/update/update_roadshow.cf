@@ -8,8 +8,8 @@
 bundle agent cfe_roadshow_update_policy
 {
   vars:
-      "application"    string => readfile("/etc/roadshow/application", 1k);
-      "function"       string => readfile("/etc/roadshow/function", 1k);
+      "application"    string => ${classifyapplication}; #readfile("/etc/roadshow/application", 1k);
+      "function"       string => ${classify.function}; readfile("/etc/roadshow/function", 1k);
 
   methods:
       "" usebundle => cfe_roadshow_copy_policy($(application), $(function));

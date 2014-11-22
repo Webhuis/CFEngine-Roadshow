@@ -16,18 +16,18 @@ bundle agent roadshow
 
   vars:
       "os"             string => ${sys.flavor};
-      "application"    string => readfile("/etc/roadshow/application", 1k);
-      "function"       string => readfile("/etc/roadshow/function", 1k);
-      "instance"       string => readfile("/etc/roadshow/instance", 1k);
+      "application"    string => ${classifyapplication}; #readfile("/etc/roadshow/application", 1k);
+      "function"       string => ${classify.function}; readfile("/etc/roadshow/function", 1k);
+#      "instance"       string => readfile("/etc/roadshow/instance", 1k);
 
   methods:
-      "" usebundle => do_roadshow($(application), $(function), $(instance));
+      "" usebundle => do_roadshow($(application), $(function));
       "" usebundle => $(os);
       "" usebundle => $(application);
       "" usebundle => $(function);
 }
 
-bundle agent do_roadshow(application, function, instance)
+bundle agent do_roadshow(application, function)
 {
   vars:
       # List here the IP masks that we grant access to on the server
@@ -43,7 +43,7 @@ bundle agent do_roadshow(application, function, instance)
 
       "inputs" slist => { @(roadshow_policies), @(dynamic_policies) };
 
-      "policyhost"           string => "cfe-roadshow.webhuis.nl";
+      "policyhost"           string => "cfeutl01.webhuis.nl";
       "class_domain"         string => canonify("$(sys.domain)");
       "class_host"           string => canonify("$(sys.uqhost)");
       "ntp_server"           string => "inuc-01.webhuis.nl";
