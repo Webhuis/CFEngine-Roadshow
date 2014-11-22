@@ -8,7 +8,7 @@
 bundle agent cfe_roadshow_update_policy
 {
   vars:
-      "application"    string => ${classifyapplication}; # readfile("/etc/roadshow/application", 1k);
+      "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
       "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
 
   methods:
