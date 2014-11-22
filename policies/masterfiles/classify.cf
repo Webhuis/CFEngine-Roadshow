@@ -1,8 +1,9 @@
-body common control
-{
-      bundlesequence => { "classify" };
-      inputs => { "$(sys.libdir)/stdlib.cf" };
-}
+#body common control
+#{
+#      bundlesequence => { "classify" };
+#      inputs => { "$(sys.libdir)/stdlib.cf" };
+#
+#}
 
 bundle agent classify
 {
