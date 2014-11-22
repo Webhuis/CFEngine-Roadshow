@@ -21,7 +21,7 @@ body common control
 
       inputs => {
                   "cfe_internal/ha/ha_def.cf",
-                  'classify.cf",
+                  "classify.cf",
                   "update/update_bins.cf",
                   "update/cfe_internal_dc_workflow.cf",
                   "update/cfe_internal_local_git_remote.cf",
