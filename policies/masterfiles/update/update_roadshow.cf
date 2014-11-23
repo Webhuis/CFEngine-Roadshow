@@ -23,13 +23,13 @@ bundle agent cfe_roadshow_copy_policy(application, function)
       "copy[application]" string => "${master_dynamic}/application/${application}";
       "copy[function]" string => "${master_dynamic}/function/${function}";
       "copy[platform]" string => "${master_dynamic}/platform/${sys.flavor}";
-      # not working yet
-      # "copy[platform_application/${sys.flavor}_${application}.cf]" string => "${master_dynamic}/platform_application/${sys.flavor}/${sys.flavor}_${application}.cf";
+      "copy[platform_application]" string => "${master_dynamic}/platform_application/${sys.flavor}/${sys.flavor}_${application}.cf";
 
       "tocopy" slist => getindices("copy");
 
   files:
-    am_policy_hub|validated_updates_ready::
+#    am_policy_hub|validated_updates_ready::
+     validated_updates_ready::
       # note that validated_updates_ready is defined by
       # cfe_internal_update_policy as a global class so we can use it
 
