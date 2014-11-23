@@ -9,6 +9,6 @@ vars:
 
 methods:
 
- "any" usebundle => pkg_apt_cacher;
+ "any" usebundle => "${g.os}_${g.application}";
 
 }
