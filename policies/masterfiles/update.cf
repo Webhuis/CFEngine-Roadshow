@@ -10,7 +10,6 @@ body common control
                           "ha_def",
                           "update_def",
                           "classify",
-                          "cf_serverd",
                           "cfe_internal_dc_workflow",
                           "cfe_internal_update_policy",
                           "cfe_roadshow_update_policy",
