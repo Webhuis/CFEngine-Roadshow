@@ -33,14 +33,13 @@ bundle agent do_roadshow(application, function)
       # List here the IP masks that we grant access to on the server
       "acl"                   slist => { "10.*", "194.151.143.205", "62.45.247.173" };
       "master_location"      string => "$(sys.masterdir)";
-      "master_dynamic"       string => "$(sys.workdir)/dynamic-inputs-local";
+      "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
       "dir_bin"              string => "$(sys.bindir)";
       "dir_modules"          string => "/var/cfengine/bin";
       "inputfiles"           string => "$(sys.inputdir)";
 
       "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
-      "dynamic_policies"      slist => findfiles("$(master_dynamic)/**/*.cf");
-
+      "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
       "inputs" slist => { @(roadshow_policies), @(dynamic_policies) };
 
       "policyhost"           string => "cfeutl01.webhuis.nl";

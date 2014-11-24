@@ -72,7 +72,7 @@ bundle server access_rules()
       comment => "Grant access to the policy updates",
       admit => { @(def.acl) };
 
-      "${cfe_roadshow_update_policy.master_dynamic}"
+      "$(sys.workdir)/dynamic_policies"
       handle => "server_access_grant_access_dynamic_policy",
       comment => "Grant access to the dynamic policy updates",
       admit => { @(def.acl) };
