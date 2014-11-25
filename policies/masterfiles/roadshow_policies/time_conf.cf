@@ -1,14 +1,6 @@
 bundle agent time_conf {
 
  vars:
-
-     "pkg[fake-hwclock]"      string => "*";
-     "pkg[ntp]"               string => "*";
-     "pkg[ntpdate]"           string => "*";
-
-     "nopkg[hobbit-plugins]"  string => "*";
-     "nopkg[openntpd]"        string => "*";
-
      "ntp_conf"               string => "/etc/ntp.conf";
      "ntp_default"            string => "/etc/default/ntpdate";
      "timezone"               string => "GMT";
@@ -16,8 +8,12 @@ bundle agent time_conf {
      "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
 
 methods:
-    "any" usebundle => packages("time_conf.pkg");
-    "any" usebundle => nopackages("time_conf.nopkg");
+      "" usebundle => package_present("fake-hwclock");
+      "" usebundle => package_present("ntp");
+      "" usebundle => package_present("ntpdate");
+
+      "" usebundle => package_absent("hobbit-plugins");
+      "" usebundle => package_absent("openntpd");
 
       "" usebundle => file_link(${gmt}, ${localtime});
       "" usebundle => file_make("/etc/timezone", $(timezone));
