@@ -1,123 +1,53 @@
 bundle agent time_conf {
 
  vars:
-
-     "pkg[fake-hwclock]"      string => "*";
-     "pkg[ntp]"               string => "*";
-     "pkg[ntpdate]"           string => "*";
-
-     "nopkg[hobbit-plugins]"  string => "*";
-     "nopkg[openntpd]"        string => "*";
-
      "ntp_conf"               string => "/etc/ntp.conf";
      "ntp_default"            string => "/etc/default/ntpdate";
      "timezone"               string => "GMT";
      "localtime"              string => "/etc/localtime";
      "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
 
- files:
-  "${ntp_conf}"
-  comment                   => "Domain ntp.conf door g.class_domain",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => ntp_server(${ntp_conf}),
-  classes                   => if_repaired("restart_ntp");
-
- files:
-  "${ntp_default}"
-  comment                   => "Domain default ntpd",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => ntp_default(${ntp_default}),
-  classes                   => if_repaired("restart_ntp");
-
- files:
-  "${localtime}"
-  comment                   => "Set the right localtime (GMT), for once and forever.",
-  action                    => immediate,
-  move_obstructions         => "true",
-  link_from                 => ln_s("${gmt}");
-
- files:
-  "/etc/timezone"
-  comment                   => "Set the right timezone (GMT), for once and forever.",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => edit_timezone(${timezone});
-
 methods:
-    "any" usebundle => packages("time_conf.pkg");
-    "any" usebundle => nopackages("time_conf.nopkg");
+      "" usebundle => package_present("fake-hwclock");
+      "" usebundle => package_present("ntp");
+      "" usebundle => package_present("ntpdate");
 
- commands:
+      "" usebundle => package_absent("hobbit-plugins");
+      "" usebundle => package_absent("openntpd");
 
-  "/etc/init.d/ntp stop";
-  "/usr/sbin/ntpdate ${g.ntp_server}";
-  "/sbin/hwclock -w";
+      "" usebundle => file_link(${gmt}, ${localtime});
+      "" usebundle => file_make("/etc/timezone", $(timezone));
 
-}
+      "" usebundle => file_make_mog($(ntp_default), '# maintained by CFEngine, do not edit
+NTPDATE_USE_NTP_CONF=yes
+NTPSERVERS="${do_roadshow.ntp_server}"
+NTPOPTIONS=""
+', 644, "root", "root"),
+      classes => if_repaired("restart_ntp");
 
-bundle edit_line  ntp_server(string) {
-
-delete_lines:
-
-    ".*";
-
- insert_lines:
-"    driftfile /var/lib/ntp/ntp.drift
+      "" usebundle => file_make_mog($(ntp_conf), "# maintained by CFEngine, do not edit
+    driftfile /var/lib/ntp/ntp.drift
     statsdir /var/log/ntpstats/
 
     statistics loopstats peerstats clockstats
     filegen loopstats file loopstats type day enable
     filegen peerstats file peerstats type day enable
-    filegen clockstats file clockstats type day enable";
+    filegen clockstats file clockstats type day enable
+    server ${do_roadshow.ntp_server}
 
- insert_lines:
-"    server ${g.ntp_server}";
-
- insert_lines:
-"    restrict -4 default kod nomodify notrap nopeer noquery
+    restrict -4 default kod nomodify notrap nopeer noquery
     restrict -6 default kod nomodify notrap nopeer noquery
 
-    restrict ${${g.class_domain}.restrict}
+    restrict ${${do_roadshow.class_domain}.restrict}
 
-    restrict ${${g.class_domain}.network} mask ${${g.class_domain}.mask} nomodify notrap";
+    restrict ${${do_roadshow.class_domain}.network} mask ${${do_roadshow.class_domain}.mask} nomodify notrap
+", 644, "root", "root"),
+      classes => if_repaired("restart_ntp");
 
-}
+  commands:
 
-bundle edit_line  ntp_default(string) {
-
-delete_lines:
-
-    ".*";
-
- insert_lines:
-
-"NTPDATE_USE_NTP_CONF=yes";
-
- insert_lines:
-
-    "NTPSERVERS=\"";
-
- insert_lines:
-     "${g.ntp_server}";
-
- insert_lines:
-"\"
-NTPOPTIONS=\"\"";
-
-}
-
-bundle edit_line  edit_timezone(string) {
-
-delete_lines:
-
-    ".*";
-
- insert_lines:
-"${string}";
+  "/etc/init.d/ntp stop";
+  "/usr/sbin/ntpdate ${do_roadshow.ntp_server}";
+  "/sbin/hwclock -w";
 
 }
