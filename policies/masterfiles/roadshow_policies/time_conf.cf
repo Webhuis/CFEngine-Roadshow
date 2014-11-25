@@ -15,24 +15,6 @@ bundle agent time_conf {
      "localtime"              string => "/etc/localtime";
      "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
 
- files:
-  "${ntp_conf}"
-  comment                   => "Domain ntp.conf door g.class_domain",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => ntp_server(${ntp_conf}),
-  classes                   => if_repaired("restart_ntp");
-
- files:
-  "${ntp_default}"
-  comment                   => "Domain default ntpd",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => ntp_default(${ntp_default}),
-  classes                   => if_repaired("restart_ntp");
-
 methods:
     "any" usebundle => packages("time_conf.pkg");
     "any" usebundle => nopackages("time_conf.nopkg");
