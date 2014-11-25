@@ -1,23 +1,9 @@
-bundle agent resolv_conf {
-
- files:
-  "/etc/resolv.conf"
-  comment                   => "Domain resolv.conf door g.class_domain",
-  create                    => "true",
-  perms                     => mo("644","root"),
-  action                    => u_immediate,
-  edit_line                 => edit_resolv_conf;
-
-}
-
-bundle edit_line edit_resolv_conf {
-delete_lines:
-
-    ".*";
-
-insert_lines:
-"search webhuis.nl
+bundle agent resolv_conf
+{
+  methods:
+      "" usebundle => file_make_mog("/etc/resolv.conf", "
+search webhuis.nl
 #${sys.domain}
-nameserver ${g.nameserver}";
-
+nameserver ${do_roadshow.nameserver}", 644, "root", "root"),
+      comment => "Domain resolv.conf door g.class_domain";
 }
