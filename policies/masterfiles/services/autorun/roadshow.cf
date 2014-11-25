@@ -40,7 +40,7 @@ bundle agent do_roadshow(application, function)
 
       "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
       "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
-      "inputs" slist => { @(roadshow_policies), @(dynamic_policies) };
+      "inputs" slist => { @(roadshow_policies), @(dynamic_inputs) };
 
       "policyhost"           string => "cfeutl01.webhuis.nl";
       "class_domain"         string => canonify("$(sys.domain)");
