@@ -21,6 +21,7 @@ bundle agent roadshow
 #      "instance"       string => readfile("/etc/roadshow/instance", 1k);
 
   methods:
+      "" usebundle => classify;
       "" usebundle => do_roadshow($(application), $(function));
       "" usebundle => $(os);
       "" usebundle => $(application);
@@ -52,9 +53,9 @@ bundle agent do_roadshow(application, function)
 
   reports:
 
-      "platform_policies: ${platform_policies}";
-      "applicat_policies: ${application_policies}";
-      "function: ${function_policies}";
+      "platform: ${os}";
+      "application: ${application}";
+      "function: ${function}";
 
 }
 
