@@ -4,7 +4,7 @@ delete_lines:
   ".*";
 
 insert_lines:
-  "#Acquire::http::Proxy \"${string}\"${g.punt_komma}";
+  "Acquire::http::Proxy \"${string}\"${roadshow.punt_komma}";
 
 }
 
