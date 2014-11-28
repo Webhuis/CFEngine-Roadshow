@@ -6,6 +6,6 @@ vars:
 
 methods:
 
-  "any" usebundle => packages("debian_7_web.pkg");
+  "any" usebundle => packages("debian_7_apt.pkg");
 
 }
