@@ -1,7 +1,7 @@
 bundle agent debian {
 
 methods:
- "any" usebundle => aptdeb_mirror;
+# "any" usebundle => aptdeb_mirror;
  "any" usebundle => os_common;
 
 

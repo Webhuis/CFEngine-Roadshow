@@ -9,6 +9,6 @@ vars:
 
 methods:
 
- "any" usebundle => "${g.os}_${g.application}";
+ "any" usebundle => "${roadshow.os}_${roadshow.application}";
 
 }
