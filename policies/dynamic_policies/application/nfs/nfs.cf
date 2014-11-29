@@ -6,8 +6,7 @@ vars:
 
  "hosts"           slist => getindices("etc_hosts.hosts");
 
- "nfs_host"       string => "nfs-roadshow.webhuis.nl";
- "nfs_backup"     string => "/var/backups";
+ "nfs_host"       string => "nfsutl01.webhuis.nl";
  "nfs_webapps"    string => "/var/local/webapps";
 
  "etc_exports"    string => "/etc/exports";
@@ -19,14 +18,10 @@ vars:
  "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
  "nfs_exports[/var/local/webapps/][exports_permissions]"      string => "$(exports_ro)";
 
- "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_network]"     string => "$(hosts).$(sys.domain)";
- "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_permissions]" string => "$(exports_rw)";
-
 files:
 
- "/var/backups/$(sys.domain)/$(hosts).$(sys.domain)/."
-   create  =>  "true",
-   classes => if_repaired("restart_nfs_server");
+ "/var/local/webapps/."
+   create  =>  "true";
 
 methods:
  "any" usebundle => packages("nfs.pkg");
