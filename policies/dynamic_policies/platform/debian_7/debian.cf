@@ -10,7 +10,7 @@ methods:
 bundle agent aptdeb_mirror {
 
   vars:
-    "mirror"     string => "http://apt-roadshow.webhuis.nl:3142/";
+    "mirror"     string => "http://aptutl01.webhuis.nl:3142/";
 
   files:
 
