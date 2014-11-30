@@ -1,0 +1,11 @@
+bundle agent debian_7_nfs {
+
+vars:
+
+  "pkg[nfs-kernel-server]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_7_nfs.pkg");
+
+}
