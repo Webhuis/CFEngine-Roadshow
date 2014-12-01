@@ -1,6 +1,11 @@
 bundle agent debian {
 
+vars:
+    "pkg[openssh-server]"            string => "*";
+
 methods:
+ 
+ "any" usebundle => packages("debian.pkg");
  "any" usebundle => aptdeb_mirror;
  "any" usebundle => os_common;
 
