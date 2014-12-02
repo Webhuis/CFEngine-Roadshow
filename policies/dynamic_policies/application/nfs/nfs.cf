@@ -2,8 +2,6 @@ bundle agent nfs {
 
 vars:
 
- "pkg[nfs-kernel-server]"               string => "*";
-
  "hosts"           slist => getindices("etc_hosts.hosts");
 
  "nfs_host"       string => "nfsutl01.webhuis.nl";
@@ -24,7 +22,6 @@ files:
    create  =>  "true";
 
 methods:
- "any" usebundle => packages("nfs.pkg");
  "any" usebundle => exports_nfs_array("nfs.nfs_exports");
 
 commands:

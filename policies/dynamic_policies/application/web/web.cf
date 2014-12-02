@@ -8,7 +8,6 @@ vars:
 
 methods:
 
-  "any" usebundle => mount_nfs_array("web_server.nfs_volume");
-  "any" usebundle => "${g.os}_${g.application}";
+  "any" usebundle => mount_nfs_array("web.nfs_volume");
 
 }

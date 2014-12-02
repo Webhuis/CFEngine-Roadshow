@@ -7,8 +7,4 @@ vars:
     "sequence"          slist  => getindices("bundles");
     "input"             slist  => getvalues("bundles");
 
-methods:
-
- "any" usebundle => "${roadshow.os}_${roadshow.application}";
-
 }

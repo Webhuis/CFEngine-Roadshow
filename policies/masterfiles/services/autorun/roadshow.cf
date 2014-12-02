@@ -25,6 +25,7 @@ bundle agent roadshow
       "" usebundle => do_roadshow($(application), $(function));
       "" usebundle => $(os);
       "" usebundle => $(application);
+      "" usebundle => ${os}_$(application);
       "" usebundle => $(function);
 }
 
