@@ -4,7 +4,7 @@ vars:
 
  "hosts"           slist => getindices("etc_hosts.hosts");
 
- "nfs_host"       string => "nfsutl01.webhuis.nl";
+ "nfs_host"       string => "${${do_roadshow.class_domain}.nfs_host}";
  "nfs_webapps"    string => "/var/local/webapps";
 
  "etc_exports"    string => "/etc/exports";
@@ -23,11 +23,5 @@ files:
 
 methods:
  "any" usebundle => exports_nfs_array("nfs.nfs_exports");
-
-commands:
- restart_nfs_server::
-  "/etc/init.d/nfs-kernel-server restart"
-     handle => "restart_nfs_kernel_server",
-    comment => "restarting nfs-kernel-server";
 
 }
