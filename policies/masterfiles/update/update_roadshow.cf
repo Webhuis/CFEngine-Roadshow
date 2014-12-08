@@ -24,6 +24,7 @@ bundle agent cfe_roadshow_copy_policy(application, function)
       "copy[function]"             string => "${master_dynamic}/function/${function}";
       "copy[platform]"             string => "${master_dynamic}/platform/${sys.flavor}";
       "copy[platform_application]" string => "${master_dynamic}/platform_application/${sys.flavor}/${application}";
+      "copy[domain]"               string => "${master_dynamic}/domain/${sys.domain}";
 
       "tocopy" slist => getindices("copy");
 

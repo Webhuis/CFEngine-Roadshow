@@ -15,7 +15,6 @@ body common control
                           "cfe_roadshow_update_policy",
                           "cfe_internal_update_bins",
                           "cfe_internal_update_processes",
-                          "cfe_roadshow_update_policy",
       };
 
       version => "update.cf 3.6.1";

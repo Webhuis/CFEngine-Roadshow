@@ -1,34 +1,23 @@
-bundle agent services {
+bundle agent nfs_server {
 
-  classes:
-      "apt_cacher"   or => { classmatch("apt.*") };
-      "cfe_server"   or => { classmatch("cfe.*") };
-      "ips_server"   or => { classmatch("ips*") };
-      "nfs_server"   or => { classmatch("nfs.*") };
-      "webapp"       or => { classmatch("webapp[0-9]*") };
+vars:
 
-  methods:
-    apt_cacher::
-      "any" usebundle  => roadshow_maybe_run($(this.namespace), apt_cacher);
-    cfe_server::
-      "any" usebundle  => roadshow_maybe_run($(this.namespace), cfe_server);
-    ips_server::
-      "any" usebundle  => roadshow_maybe_run($(this.namespace), ips_server);
-    nfs_server::
-      "any" usebundle  => roadshow_maybe_run($(this.namespace), nfs_server);
-    webapp::
-      "any" usebundle  => roadshow_maybe_run($(this.namespace), web_server);
+ "hosts" slist => getindices("etc_hosts.hosts");
 
-}
+ "nfs_host" string => "nfs-roadshow.webhuis.nl";
+ "nfs_backup" string => "/var/backups";
+ "nfs_webapps" string => "/var/local/webapps";
 
-bundle agent roadshow_maybe_run(namespace, mybundle)
-{
-  vars:
-      "bundlesfound" slist => bundlesmatching("^$(namespace):$(mybundle)$");
-      "count" int => length(bundlesfound);
+ "etc_exports" string => "/etc/exports";
+ "exports_ro" string => "(ro,sync,root_squash,no_subtree_check)";
+ "exports_rw" string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
 
-  methods:
-      "any"
-      usebundle  => $(bundlesfound),
-      ifvarclass => strcmp(1, $(count));
+ "nfs_ro" string => "ro,hard,intr,noatime,nodiratime 0 0";
+ "nfs_rw" string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+ "nfs_exports[/var/local/webapps/][exports_network]" string => "*.$(sys.domain)";
+ "nfs_exports[/var/local/webapps/][exports_permissions]" string => "$(exports_ro)";
+ "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_network]" string => "$(hosts).$(sys.domain)";
+ "nfs_exports[/var/backups/$(sys.domain)/$(hosts).$(sys.domain)][exports_permissions]" string => "$(exports_rw)";
+
 }
