@@ -17,6 +17,7 @@ bundle agent roadshow
   vars:
       "os"             string => ${sys.flavor};
       "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
+      "os_application" string => "${os}_${application}";
       "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
 #      "instance"       string => readfile("/etc/roadshow/instance", 1k);
 
@@ -25,7 +26,7 @@ bundle agent roadshow
       "" usebundle => do_roadshow($(application), $(function));
       "" usebundle => $(os);
       "" usebundle => $(application);
-      "" usebundle => ${os}_$(application);
+      "" usebundle => ${os_application};
       "" usebundle => $(function);
 }
 
