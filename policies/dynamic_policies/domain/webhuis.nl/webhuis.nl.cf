@@ -26,8 +26,8 @@ vars:
       "san_host"       string => "san.webhuis.nl";
       "san_export"     string => "/volume1/exports";
 
-      "ntp_server"           string => "inuc-01.webhuis.nl";
-      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
+      "ntp_server"     string => "inuc-01.webhuis.nl";
+      "nameserver"      slist => { "10.68.71.187", "8.8.8.8"};
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
