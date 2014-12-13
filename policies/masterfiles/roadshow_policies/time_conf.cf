@@ -20,7 +20,7 @@ methods:
 
       "" usebundle => file_make_mog($(ntp_default), '# maintained by CFEngine, do not edit
 NTPDATE_USE_NTP_CONF=yes
-NTPSERVERS="${do_roadshow.ntp_server}"
+NTPSERVERS="${${do_roadshow.class_domain}.ntp_server}"
 NTPOPTIONS=""
 ', 644, "root", "root"),
       classes => if_repaired("restart_ntp");
