@@ -24,6 +24,7 @@ bundle agent roadshow
   methods:
       "" usebundle => classify;
       "" usebundle => do_roadshow($(application), $(function));
+      "" usebundle => ${do_roadshow.class_domain};
       "" usebundle => $(os);
       "" usebundle => $(application);
       "" usebundle => ${os_application};
