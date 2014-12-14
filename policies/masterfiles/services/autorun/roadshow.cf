@@ -26,7 +26,7 @@ bundle agent roadshow
   methods:
       "" usebundle => classify;
       "" usebundle => do_roadshow($(application), $(function));
-      "" usebundle => ${do_roadshow.class_domain};
+      "" usebundle => ${class_domain};
       "" usebundle => $(os);
       "" usebundle => $(application);
       "" usebundle => ${os_application};
@@ -49,8 +49,6 @@ bundle agent do_roadshow(application, function)
       "inputs" slist => { @(roadshow_policies), @(dynamic_inputs) };
 
       "policyhost"           string => "cfeutl01.webhuis.nl";
-      "class_domain"         string => canonify("$(sys.domain)");
-      "class_host"           string => canonify("$(sys.uqhost)");
 #      "ntp_server"           string => "inuc-01.webhuis.nl";
 #      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
       "punt_komma"           string => ";";
