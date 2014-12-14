@@ -15,7 +15,7 @@ storage:
 
 reports:
 
- "mount_nfs_array: ${mount}, ${nfs_host}, ${nfs_decvice}, ${nfs_permissions}";
+ "mount_nfs_array: ${mount}, ${nfs_host}, ${nfs_device}, ${nfs_permissions}";
 
 }
 
