@@ -26,6 +26,8 @@ vars:
       "nfs_backup"     string => "/bur-san";
       "san_host"       string => "san.webhuis.nl";
       "san_export"     string => "/volume1/exports";
+      "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
+      "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
       "ntp_server"     string => "inuc-01.webhuis.nl";
       "nameserver"      slist => { "10.68.71.187", "8.8.8.8"};
