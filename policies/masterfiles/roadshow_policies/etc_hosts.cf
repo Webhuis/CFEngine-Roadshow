@@ -37,6 +37,8 @@ insert_lines:
 #
 127.0.0.1       localhost
 
+${sys.ipv4} ${sys.fqhost} ${sys.uqhost}
+
 $($(hosts)[$(host_index)]) $(host_index).${sys.domain} $(host_index)
 
 10.68.71.181    mirror.webhuis.nl mirror
