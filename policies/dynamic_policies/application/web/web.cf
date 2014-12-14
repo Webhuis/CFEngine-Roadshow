@@ -2,9 +2,9 @@ bundle agent web {
 
 vars:
 
-  "nfs_volume[/mnt/webapps][nfs_host]"        string => "${${do_roadshow.class_domain}.nfs_host}";
-  "nfs_volume[/mnt/webapps][nfs_device]"      string => "${${do_roadshow.class_domain}.nfs_webapps}";
-  "nfs_volume[/mnt/webapps][nfs_permissions]" string => "${${do_roadshow.class_domain}.nfs_ro}";
+  "nfs_volume[/mnt/webapps][nfs_host]"        string => "${${roadshow.class_domain}.nfs_host}";
+  "nfs_volume[/mnt/webapps][nfs_device]"      string => "${${roadshow.class_domain}.nfs_webapps}";
+  "nfs_volume[/mnt/webapps][nfs_permissions]" string => "${${roadshow.class_domain}.nfs_ro}";
 
 methods:
 

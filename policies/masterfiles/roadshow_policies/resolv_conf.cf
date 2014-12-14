@@ -2,8 +2,8 @@ bundle agent resolv_conf
 {
   methods:
       "" usebundle => file_make_mog("/etc/resolv.conf", "
-search webhuis.nl
-#${sys.domain}
-nameserver ${do_roadshow.nameserver}", 644, "root", "root"),
-      comment => "Domain resolv.conf door g.class_domain";
+search ${sys.domain}
+
+nameserver ${${roadshow.class_domain}.nameserver}", 644, "root", "root"),
+      comment => "Domain resolv.conf door roadshow.class_domain ${roadshow.class_domain}";
 }

@@ -4,7 +4,7 @@ vars:
 
  "hosts"           slist => getindices("etc_hosts.hosts");
 
- "nfs_host"       string => "${${do_roadshow.class_domain}.nfs_host}";
+ "nfs_host"       string => "${${roadshow.class_domain}.nfs_host}";
  "nfs_webapps"    string => "/var/local/webapps";
 
  "etc_exports"    string => "/etc/exports";

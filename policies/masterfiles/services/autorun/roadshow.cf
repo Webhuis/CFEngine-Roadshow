@@ -19,7 +19,9 @@ bundle agent roadshow
       "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
       "os_application" string => "${os}_${application}";
       "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
-#      "instance"       string => readfile("/etc/roadshow/instance", 1k);
+      "class_domain"   string => canonify("$(sys.domain)");
+      "class_host"     string => canonify("$(sys.uqhost)");
+#      "instance"      string => readfile("/etc/roadshow/instance", 1k);
 
   methods:
       "" usebundle => classify;
