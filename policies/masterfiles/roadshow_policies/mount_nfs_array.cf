@@ -13,5 +13,9 @@ bundle agent mount_nfs(mount, nfs_host, nfs_device, nfs_permissions) {
 storage:
   "${mount}"   mount  => nfs_p($(nfs_host), $(nfs_device),$(nfs_permissions));
 
+reports:
+
+ "mount_nfs_array: ${mount}, ${nfs_host}, ${nfs_decvice}, ${nfs_permissions}";
+
 }
 

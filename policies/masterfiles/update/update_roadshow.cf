@@ -18,6 +18,7 @@ bundle agent cfe_roadshow_update_policy
 bundle agent cfe_roadshow_copy_policy(application, function)
 {
   vars:
+      "master_static"  string => "$(sys.workdir)/masterfiles";
       "master_dynamic" string => "$(sys.workdir)/dynamic_policies";
 
       "copy[application]"          string => "${master_dynamic}/application/${application}";
@@ -29,6 +30,16 @@ bundle agent cfe_roadshow_copy_policy(application, function)
       "tocopy" slist => getindices("copy");
 
   files:
+
+   "$(sys.workdir)/inputs"
+           comment => "Copy policy updates from master source on policy server if a new validation was acquired",
+            handle => "update_files_inputs_dir",
+         copy_from => u_rcp("${master_static}","${sys.policy_hub}"),
+      depth_search => u_recurse(inf),
+      file_select  => u_input_files,
+            action => u_immediate,
+           classes => u_if_repaired("update_report");
+
 #    am_policy_hub|validated_updates_ready::
 #     validated_updates_ready::
       # note that validated_updates_ready is defined by
