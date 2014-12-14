@@ -47,7 +47,7 @@ NTPOPTIONS=""
   commands:
 
   "/etc/init.d/ntp stop";
-  "/usr/sbin/ntpdate ${do_roadshow.ntp_server}";
+  "/usr/sbin/ntpdate ${${do_roadshow.class_domain}.ntp_server}";
   "/sbin/hwclock -w";
 
 }

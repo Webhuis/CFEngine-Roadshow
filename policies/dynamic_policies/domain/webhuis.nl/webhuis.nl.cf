@@ -42,27 +42,27 @@ vars:
         "ntp_master"   slist => { "inuc-01" };
         "restrict"     slist => { "127.0.0.1", "::1" };
 
-files:
-   "/mnt/export/${sys.domain}/${sys.fqhost}"
-     create    => "true";
+#files:
+#   "/mnt/export/${sys.domain}/${sys.fqhost}"
+#     create    => "true";
 #     edit_line => add_export_directory;
  
 methods:
 
-   "any" usebundle => get_template("ntp.conf.tmpl");
-   "any" usebundle => ntp_conf;
+#   "any" usebundle => get_template("ntp.conf.tmpl");
+#   "any" usebundle => ntp_conf;
 
    "any" usebundle => get_template("resolv.conf.tmpl");
    "any" usebundle => resolv_conf;
 
-   "any" usebundle => mnt_common_backups;
-   "any" usebundle => common_backups;
+#   "any" usebundle => mnt_common_backups;
+#   "any" usebundle => common_backups;
 
 }
 
-bundle edit_line add_export_directory {
+#bundle edit_line add_export_directory {
 
-insert_lines:
-  "${sys.fqhost}";
+#insert_lines:
+#  "${sys.fqhost}";
 
-}
+#}
