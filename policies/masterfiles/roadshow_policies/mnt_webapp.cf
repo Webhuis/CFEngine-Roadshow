@@ -7,6 +7,6 @@ vars:
 
 methods:
 
-  "any" usebundle => mount_nfs_array("mnt_bur.nfs_volume");
+  "any" usebundle => mount_nfs_array("mnt_webapp.nfs_volume");
 }
 
