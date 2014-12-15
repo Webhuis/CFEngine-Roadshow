@@ -13,7 +13,8 @@ vars:
  "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
  "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
- "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
+# "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
+ "nfs_exports[/var/local/webapps/][exports_network]"          string => "10.168.0.0/16";
  "nfs_exports[/var/local/webapps/][exports_permissions]"      string => "$(exports_ro)";
 
 files:
