@@ -2,16 +2,12 @@ bundle agent nfs {
 
 vars:
 
- "hosts"           slist => getindices("etc_hosts.hosts");
-
  "nfs_host"       string => "${${roadshow.class_domain}.nfs_host}";
  "nfs_webapps"    string => "${${roadshow.class_domain}.nfs_webapps}";
 
  "etc_exports"    string => "/etc/exports";
  "exports_ro"     string => "(ro,sync,root_squash,no_subtree_check)";
  "exports_rw"     string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
- "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
- "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
 # "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
  "nfs_exports[/var/local/webapps/][exports_network]"          string => "10.168.0.0/16";
