@@ -1,0 +1,6 @@
+bundle agent opensuse_13 {
+
+methods:
+ "any" usebundle => suse;
+
+}
