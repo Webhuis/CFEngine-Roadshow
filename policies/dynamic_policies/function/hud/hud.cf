@@ -4,6 +4,12 @@ vars:
   "catalina_base"          string => "/var/lib/tomcat7";
 
 files:
+
+  "/usr/share/tomcat7"
+     perms  => mog("775","root","tomcat7"),
+     handle => "hudson__home",
+    comment => "hudson home";
+
   "$(catalina_base)/webapps/hudson"
      handle => "hudson__delete",
     comment => "deleting hudson.war",
