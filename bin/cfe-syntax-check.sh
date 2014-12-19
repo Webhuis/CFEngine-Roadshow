@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/lib/git/CFEngine-roadshow
+cd /var/lib/git/CFEngine-Roadshow
 
 /usr/bin/git pull
 
