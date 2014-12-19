@@ -1,19 +1,19 @@
-bundle agent ttw {
+bundle agent hud {
 
 vars:
   "catalina_base"          string => "/var/lib/tomcat7";
 
 files:
-  "$(catalina_base)/webapps/testweb"
-     handle => "testweb__delete",
-    comment => "deleting testweb.war",
+  "$(catalina_base)/webapps/hudson"
+     handle => "hudson__delete",
+    comment => "deleting hudson.war",
      delete => tidy;
 
-  "$(catalina_base)/webapps/testweb.war"
-     handle => "deploy_testweb",
-    comment => "deploying testweb.war",
+  "$(catalina_base)/webapps/hudson.war"
+     handle => "deploy_hudson",
+    comment => "deploying hudson.war",
      perms  => mog("644","tomcat7","tomcat7"),
     classes => if_repaired("restart_tomcat"),
-  copy_from => local_cp("/mnt/webapps/testweb/testweb.war");
+  copy_from => local_cp("/mnt/webapps/hudson/hudson.war");
 
 }
