@@ -9,6 +9,7 @@ methods:
   "any" usebundle => packages("debian_7_nfs.pkg");
 
 commands:
+
  restart_nfs_server::
   "/etc/init.d/nfs-kernel-server restart"
      handle => "restart_nfs_kernel_server",

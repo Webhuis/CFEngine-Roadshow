@@ -10,13 +10,6 @@ methods:
  "any" usebundle => aptdeb_mirror;
  "any" usebundle => os_common;
 
-commands:
-
-    restart_nfs_server::
-      "/etc/init.d/nfs-kernel-server restart"
-               handle => "nfs_kernel_server_restart",
-              comment => "Restart nfs-kernel-server if the configuration file was modified";
-
 }
 
 bundle agent aptdeb_mirror {

@@ -16,9 +16,4 @@ files:
     classes => if_repaired("restart_tomcat"),
   copy_from => local_cp("/mnt/webapps/sample.war");
 
-methods:
-
- restart_tomcat::
-  "any" usebundle => restart_tomcat;
-
 }

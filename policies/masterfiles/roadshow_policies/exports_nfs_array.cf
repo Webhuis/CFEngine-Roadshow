@@ -4,7 +4,7 @@ vars:
   "exports_index"                         slist => getindices(${array_exports});
 
 files:
- "${nfs_server.etc_exports}"
+ "/etc/exports"
   create    => "true",
   edit_line => edit_nfs_exports("${exports_index}", "$($(array_exports)[$(exports_index)][exports_network])", "$($(array_exports)[$(exports_index)][exports_permissions])"),
   classes => if_repaired("restart_nfs_server");

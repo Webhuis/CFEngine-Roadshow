@@ -1,4 +1,4 @@
-bundle agent debian_7_web {
+bundle agent debian_7_ttw {
 
 vars:
 
@@ -7,10 +7,9 @@ vars:
 
 methods:
 
-  "any" usebundle => packages("debian_7_web.pkg");
+  "any" usebundle => packages("debian_7_ttw.pkg");
 
 commands:
-
  restart_tomcat::
   "service tomcat7 restart"
      handle => "restart_tomcat",
