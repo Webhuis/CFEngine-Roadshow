@@ -1,0 +1,34 @@
+bundle agent cfe_internal_local_git_remote
+{
+  files:
+      "$(update_def.local_masterfiles_git)/."
+      handle => "cfe_internal_local_git_remote_files_have_local_git_remote_masterfiles_git_perms",
+      perms => u_cfe_internal_mog($(update_def.masterfiles_perms_mode),
+                                  $(update_def.cf_apache_user),
+                                  $(update_def.cf_apache_group)),
+      depth_search => u_cfe_internal_recurse("inf"),
+      comment => "
+Apache needs the ability to write to this repository in order to
+support sketch activation deployments from Mission Portal",
+      classes => u_if_else("did_perms_local_git_remote_clone",
+                           "failed_perms_local_git_remote_clone");
+
+  reports:
+    inform_mode.did_perms_local_git_remote_clone::
+      "$(this.bundle): set the permissions of the Git clone $(update_def.local_masterfiles_git)";
+    inform_mode.failed_perms_local_git_remote_clone::
+      "$(this.bundle): failed to set the permissions of the Git clone $(update_def.local_masterfiles_git)";
+}
+
+body depth_search u_cfe_internal_recurse(d)
+{
+  depth => "$(d)";
+  xdev => "true";
+}
+
+body perms u_cfe_internal_mog(mode,user,group)
+{
+      owners => { "$(user)" };
+      groups => { "$(group)" };
+      mode   => "$(mode)";
+}

@@ -1,0 +1,71 @@
+###############################################################################
+#
+#   webhuis.nl.cf - Basic Policy for Community
+#
+###############################################################################
+
+bundle agent webhuis_nl {
+
+vars:
+
+      "mdns"           string => "nsid2.webhuis.nl";
+      "mdns_key"       string => "nsid2.webhuis.nl.:neQQPaGetzFWcCK5ajF4Vw==";
+      "dns"             slist => {"ns1", "ns2"};
+      "idns"            slist => {"nsid1", "nsid2"};
+      "ttl"            string => "300"; 
+      "network"        string => "10.68.71.0";
+      "mask"           string => "255.255.255.0";
+
+      "mldap"           slist => {"ldapm1", "ldapm2"};
+      "ldap"            slist => {"ldap1", "ldap2"};
+      "resolvers"       slist => { "10.68.71.187", "10.68.71.198" };
+      "searchlist"     string => "webhuis.nl";
+ 
+      "nfs_host"       string => "nfsutl01.webhuis.nl";
+      "nfs_webapps"    string => "/var/local/webapps";
+      "nfs_backup"     string => "/bur-san";
+      "san_host"       string => "san.webhuis.nl";
+      "san_export"     string => "/volume1/exports";
+      "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
+      "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+      "ntp_server"     string => "inuc-01.webhuis.nl";
+      "nameserver"      slist => { "10.68.71.187", "8.8.8.8"};
+
+      "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
+
+
+   kvm_host::
+        "ntp_pool"    string => "nl.pool.ntp.org";
+        "ntp_master"   slist => { "1", "2", "3" };
+        "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
+
+   !kvm_host::
+        "ntp_pool"    string => "${sys.domain}";
+        "ntp_master"   slist => { "inuc-01" };
+        "restrict"     slist => { "127.0.0.1", "::1" };
+
+#files:
+#   "/mnt/export/${sys.domain}/${sys.fqhost}"
+#     create    => "true";
+#     edit_line => add_export_directory;
+ 
+methods:
+
+#   "any" usebundle => get_template("ntp.conf.tmpl");
+#   "any" usebundle => ntp_conf;
+
+   "any" usebundle => get_template("resolv.conf.tmpl");
+   "any" usebundle => resolv_conf;
+
+#   "any" usebundle => mnt_common_backups;
+#   "any" usebundle => common_backups;
+
+}
+
+#bundle edit_line add_export_directory {
+
+#insert_lines:
+#  "${sys.fqhost}";
+
+#}

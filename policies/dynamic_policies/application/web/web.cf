@@ -1,0 +1,17 @@
+bundle agent web {
+
+vars:
+
+  "nfs_volume[/mnt/webapps][nfs_host]"        string => "${${roadshow.class_domain}.nfs_host}";
+  "nfs_volume[/mnt/webapps][nfs_device]"      string => "${${roadshow.class_domain}.nfs_webapps}";
+  "nfs_volume[/mnt/webapps][nfs_permissions]" string => "${${roadshow.class_domain}.nfs_ro}";
+
+methods:
+
+  "any" usebundle => mount_nfs_array("web.nfs_volume");
+
+reports:
+  "Web nfs_array: ${${roadshow.class_domain}.nfs_host}";
+  "Web nfs_array: ${${roadshow.class_domain}.nfs_webapps}";
+  "Web nfs_array: ${${roadshow.class_domain}.nfs_ro}";
+}

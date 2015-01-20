@@ -1,0 +1,10 @@
+bundle agent pkg_rpm_cacher {
+
+vars:
+
+#    "pkg[createrepo]"               string => "*";
+
+methods:
+# "any" usebundle => rpm_packages("pkg_rpm_cacher.pkg");
+
+}

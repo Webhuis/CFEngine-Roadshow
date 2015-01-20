@@ -1,0 +1,25 @@
+bundle agent hud {
+
+vars:
+  "catalina_base"          string => "/var/lib/tomcat7";
+
+files:
+
+  "/usr/share/tomcat7"
+     perms  => mog("775","root","tomcat7"),
+     handle => "hudson__home",
+    comment => "hudson home";
+
+  "$(catalina_base)/webapps/hudson"
+     handle => "hudson__delete",
+    comment => "deleting hudson.war",
+     delete => tidy;
+
+  "$(catalina_base)/webapps/hudson.war"
+     handle => "deploy_hudson",
+    comment => "deploying hudson.war",
+     perms  => mog("644","tomcat7","tomcat7"),
+    classes => if_repaired("restart_tomcat"),
+  copy_from => local_cp("/mnt/webapps/hudson/hudson.war");
+
+}

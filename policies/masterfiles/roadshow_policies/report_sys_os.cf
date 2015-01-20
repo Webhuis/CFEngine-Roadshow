@@ -1,0 +1,9 @@
+bundle agent report_sys_os {
+
+reports:
+
+"Hard class os: ${sys.os} ${sys.flavor}";
+"Hard class os_version: ${sys.ostype}";
+"Hard classos_flavor: ${sys.flavor}";
+
+}

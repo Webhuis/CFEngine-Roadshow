@@ -1,0 +1,28 @@
+#body common control
+#{
+#      bundlesequence => { "classify" };
+#      inputs => { "$(sys.libdir)/stdlib.cf" };
+#
+#}
+
+bundle agent classify
+{
+  classes:
+      "parsed_all" expression => regextract("^(...)(...)(..).*", $(sys.uqhost), "part");
+      "vagrant_ubuntu" expression => strcmp($(sys.uqhost), "ubuntu-14");
+
+  vars:
+    parsed_all.!vagrant_ubuntu::
+      "application"          string => "${part[1]}";
+      "function"             string => "${part[2]}";
+      "instance"             string => "${part[3]}";
+    vagrant_ubuntu::
+      "application"          string => "apt";
+      "function"             string => "sys";
+      "instance"             string => "1";
+
+#  methods:
+#      "" usebundle => file_make("/etc/roadshow/application", $(application));
+#      "" usebundle => file_make("/etc/roadshow/function", $(function));
+#      "" usebundle => file_make("/etc/roadshow/instance", $(instance));
+}

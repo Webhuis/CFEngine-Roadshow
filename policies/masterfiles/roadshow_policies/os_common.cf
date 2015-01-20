@@ -1,0 +1,172 @@
+bundle agent os_common(policy, method) {
+
+vars:
+
+ "package_policy"  string => "${policy}";
+ "package_method"  string => "${method}";
+
+methods:
+
+ "any"    usebundle => etc_hosts;
+ "any"    usebundle => pkg_base_common;
+ "any"    usebundle => issue;
+ "any"    usebundle => motd;
+ "any"    usebundle => time_conf;
+ "any"    usebundle => ssh_config;
+ "any"    usebundle => user_data;
+# "martin" usebundle => ssh_users;
+
+}
+
+bundle agent issue {
+
+  vars:
+    "issue" string => 
+    "Welkom op ${sys.fqhost}
+
+Let op: Alleen geautoriseerde login is toegestaan op dit systeem in beheer bij Webhuis.
+
+W                 W EEEEEEE BBBBBB   H      H U      U IIIII  SSSSSS
+ W               W  E       B     B  H      H U      U   I   S
+  W             W   E       B     B  H      H U      U   I   S
+   W     W     W    EEEEEE  BBBBBB   HHHHHHHH U      U   I    SSSSS
+    W   W W   W     E       B      B H      H U      U   I         S
+     W W   W W      E       B      B H      H U      U   I         S
+      W     W       EEEEEEE BBBBBBB  H      H  UUUUUU  IIIII SSSSSS
+                          
+ http://webhuis.nl/login ";
+
+
+  files:
+
+      "/etc/issue"
+              create  => "true",
+            edit_line => webhuis_issue($(issue)) ;
+
+      "/etc/issue.net"
+              create  => "true",
+            edit_line => webhuis_issue($(issue)) ;
+
+     }
+
+bundle edit_line  webhuis_issue(string) {
+
+insert_lines:
+  "$(string)";
+ }
+
+####################################################
+
+bundle agent motd {
+
+  vars:
+    "motd" string =>
+"The programs included with the Debian GNU/Linux system are free software
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+    
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+    
+Welkom op ${sys.fqhost}, dit systeem is in beheer bij Webhuis.
+  
+http://webhuis.nl ";
+
+  files:
+
+      "/etc/motd"
+
+              create  => "true",
+            edit_line => webhuis_motd($(motd)) ;
+
+     }
+
+bundle edit_line  webhuis_motd(string) {
+
+insert_lines:
+  "$(string)";
+
+}
+
+bundle agent ssh_config {
+
+  vars:
+      "sshdconfig" string => "/etc/ssh/sshd_config";
+      "sshconfig" string => "/etc/ssh/ssh_config";
+
+      # SSHD configuration to set
+      "sshd[Protocol]"                                string => "2";
+      "sshd[PermitRootLogin]"                         string => "no";
+      "sshd[PasswordAuthentication]"                  string => "no";
+      "sshd[X11Forwarding]"                           string => "yes";
+      "sshd[UseDNS]"                                  string => "no";
+      "sshd[UsePAM]"                                  string => "no";
+
+      # SSH configuration to set
+      "ssh[ServerAliveInterval]"                      string => "60";
+
+  methods:
+      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
+      "ssh"    usebundle => edit_ssh("$(sshconfig)", "ssh_config.ssh");
+}
+
+bundle agent edit_sshd(file,params) {
+
+  files:
+      "$(file)"
+               handle => "edit_sshd",
+              comment => "Set desired sshd_config parameters",
+            edit_line => set_config_values("$(params)"),
+              classes => if_repaired("restart_sshd");
+
+methods:
+ restart_sshd::
+   "any" usebundle => restart_sshd;
+
+}
+
+
+bundle agent edit_ssh(file,params) {
+
+  files:
+      "$(file)"
+               handle => "edit_ssh",
+              comment => "Set desired ssh_config parameters",
+            edit_line => set_config_values("$(params)");
+
+}
+
+bundle agent dpackages (dpkgs_array) {
+
+vars:
+ any::
+        "dpackage_name"            slist  => getindices("$(dpkgs_array)");
+
+packages:
+
+    debian::
+
+      "$(dpackage_name)"
+            package_policy  => "addupdate",
+            package_method  => dpkg_version("/var/cache/apt/archives"),
+            package_select  => "==",
+            package_version => "$($(dpkgs_array)[$(dpackage_name)])";
+
+}
+
+bundle agent nopackages (nopkgs_array) {
+
+vars:
+ any::
+        "nopackage_name"            slist  => getindices("$(nopkgs_array)");
+
+packages:
+    
+    any::
+
+      "$(nopackage_name)"
+            package_policy  => "delete",
+            package_method  => apt,
+            package_version => "$($(nopkgs_array)[$(nopackage_name)])";
+}
+

@@ -1,0 +1,53 @@
+bundle agent time_conf {
+
+ vars:
+     "ntp_conf"               string => "/etc/ntp.conf";
+     "ntp_default"            string => "/etc/default/ntpdate";
+     "timezone"               string => "GMT";
+     "localtime"              string => "/etc/localtime";
+     "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
+
+methods:
+      "" usebundle => package_present("fake-hwclock");
+      "" usebundle => package_present("ntp");
+      "" usebundle => package_present("ntpdate");
+
+      "" usebundle => package_absent("hobbit-plugins");
+      "" usebundle => package_absent("openntpd");
+
+      "" usebundle => file_link(${gmt}, ${localtime});
+      "" usebundle => file_make("/etc/timezone", $(timezone));
+
+      "" usebundle => file_make_mog($(ntp_default), '# maintained by CFEngine, do not edit
+NTPDATE_USE_NTP_CONF=yes
+NTPSERVERS="${${roadshow.class_domain}.ntp_server}"
+NTPOPTIONS=""
+', 644, "root", "root"),
+      classes => if_repaired("restart_ntp");
+
+      "" usebundle => file_make_mog($(ntp_conf), "# maintained by CFEngine, do not edit
+    driftfile /var/lib/ntp/ntp.drift
+    statsdir /var/log/ntpstats/
+
+    statistics loopstats peerstats clockstats
+    filegen loopstats file loopstats type day enable
+    filegen peerstats file peerstats type day enable
+    filegen clockstats file clockstats type day enable
+    server ${${roadshow.class_domain}.ntp_server}
+
+    restrict -4 default kod nomodify notrap nopeer noquery
+    restrict -6 default kod nomodify notrap nopeer noquery
+
+    restrict ${${roadshow.class_domain}.restrict}
+
+    restrict ${${roadshow.class_domain}.network} mask ${${roadshow.class_domain}.mask} nomodify notrap
+", 644, "root", "root"),
+      classes => if_repaired("restart_ntp");
+
+  commands:
+
+  "/etc/init.d/ntp stop";
+  "/usr/sbin/ntpdate ${${roadshow.class_domain}.ntp_server}";
+  "/sbin/hwclock -w";
+
+}

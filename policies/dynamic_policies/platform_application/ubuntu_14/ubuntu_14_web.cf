@@ -1,0 +1,22 @@
+bundle agent ubuntu_14_web {
+
+vars:
+
+  "pkg[openjdk-7-jre]"     string => "*";
+  "pkg[tomcat7]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("ubuntu_14_web.pkg");
+
+}
+
+
+bundle agent restart_tomcat {
+
+commands:
+  "service tomcat7 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}

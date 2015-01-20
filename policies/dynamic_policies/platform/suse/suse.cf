@@ -1,0 +1,37 @@
+bundle agent suse {
+
+methods:
+ "any" usebundle => rpmosu_mirror;
+ "any" usebundle => os_common;
+
+}
+
+bundle agent rpmosu_mirror {
+
+  vars:
+    "mirror"     string => "http://rpmosu01.webhuis.nl:3142/";
+
+  files:
+
+      "/etc/apt/apt.conf"
+
+              create  => "true",
+            edit_line => edit_rpm_mirror($(mirror)) ;
+
+}
+
+
+bundle agent packages (pkgs_array) {
+
+vars:
+ any::
+        "package_name"            slist  => getindices("$(pkgs_array)");
+
+packages:
+
+      "$(package_name)"
+            package_policy  => "addupdate",
+            package_method  => zypper,
+            package_version => "$($(pkgs_array)[$(package_name)])";
+}
+

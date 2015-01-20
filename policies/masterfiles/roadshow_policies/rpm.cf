@@ -1,0 +1,14 @@
+bundle agent rpm {
+
+vars:
+    "bundles[dummy]"    string => "dummy.cf";
+
+
+    "sequence"          slist  => getindices("bundles");
+    "input"             slist  => getvalues("bundles");
+
+methods:
+
+ "any" usebundle => pkg_rpm_cacher;
+
+}

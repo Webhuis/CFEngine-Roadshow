@@ -1,0 +1,6 @@
+bundle agent ubuntu_14 {
+
+methods:
+ "any" usebundle => ubuntu;
+
+}

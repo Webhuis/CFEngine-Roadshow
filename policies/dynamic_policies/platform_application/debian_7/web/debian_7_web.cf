@@ -1,0 +1,19 @@
+bundle agent debian_7_web {
+
+vars:
+
+  "pkg[openjdk-7-jre]"     string => "*";
+  "pkg[tomcat7]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_7_web.pkg");
+
+commands:
+
+ restart_tomcat::
+  "service tomcat7 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}

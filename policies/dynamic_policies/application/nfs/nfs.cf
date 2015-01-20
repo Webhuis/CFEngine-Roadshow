@@ -1,0 +1,24 @@
+bundle agent nfs {
+
+vars:
+
+ "nfs_host"       string => "${${roadshow.class_domain}.nfs_host}";
+ "nfs_webapps"    string => "${${roadshow.class_domain}.nfs_webapps}";
+
+ "etc_exports"    string => "/etc/exports";
+ "exports_ro"     string => "(ro,sync,root_squash,no_subtree_check)";
+ "exports_rw"     string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
+
+# "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
+ "nfs_exports[/var/local/webapps/][exports_network]"          string => "10.168.0.0/16";
+ "nfs_exports[/var/local/webapps/][exports_permissions]"      string => "$(exports_ro)";
+
+files:
+
+ "/var/local/webapps/."
+   create  =>  "true";
+
+methods:
+ "any" usebundle => exports_nfs_array("nfs.nfs_exports");
+
+}

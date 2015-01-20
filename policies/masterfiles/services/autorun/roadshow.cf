@@ -1,0 +1,92 @@
+###############################################################################
+#
+#   roadshow.cf - autorun policy
+#
+###############################################################################
+
+body file control
+{
+      inputs => { @(do_roadshow.inputs) };
+}
+
+bundle agent roadshow
+{
+  meta:
+      "tags" slist => { "autorun" };
+
+  vars:
+      "os"             string => ${sys.flavor};
+      "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
+      "os_application" string => "${os}_${application}";
+      "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
+      "class_domain"   string => canonify("$(sys.domain)");
+      "class_host"     string => canonify("$(sys.uqhost)");
+#      "instance"      string => readfile("/etc/roadshow/instance", 1k);
+
+  methods:
+      "" usebundle => classify;
+      "" usebundle => do_roadshow($(application), $(function));
+      "" usebundle => ${class_domain};
+      "" usebundle => $(os);
+      "" usebundle => $(application);
+      "" usebundle => ${os_application};
+      "" usebundle => $(function);
+}
+
+bundle agent do_roadshow(application, function)
+{
+  vars:
+      # List here the IP masks that we grant access to on the server
+      "acl"                   slist => { "10.*", "194.151.143.205", "62.45.247.173" };
+      "master_location"      string => "$(sys.masterdir)";
+      "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
+      "dir_bin"              string => "$(sys.bindir)";
+      "dir_modules"          string => "/var/cfengine/bin";
+      "inputfiles"           string => "$(sys.inputdir)";
+
+      "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
+      "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
+      "inputs" slist => { @(roadshow_policies), @(dynamic_inputs) };
+
+      "policyhost"           string => "cfeutl01.webhuis.nl";
+#      "ntp_server"           string => "inuc-01.webhuis.nl";
+#      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
+      "punt_komma"           string => ";";
+
+
+  reports:
+
+      "platform: ${os}";
+      "application: ${application}";
+      "function: ${function}";
+
+}
+
+# proposed for stdlib, remove when/if it's accepted
+bundle agent file_make_mog(file, str, mode, owner, group)
+# @brief Make a file from a string with mode, owner, group
+# @param file target
+# @param str the string data
+# @param mode the file permissions in octal
+# @param owner the file owner as a name or UID
+# @param group the file group as a name or GID
+#
+# **Example:**
+#
+# ```cf3
+# methods:
+#      "" usebundle => file_make_mog("/tmp/z.txt", "Some text
+# and some more text here", "0644", "root", "root");
+# ```
+{
+  files:
+      "$(file)"
+      create => "true",
+      edit_line => insert_lines($(str)),
+      perms => mog($(mode), $(owner), $(group)),
+      edit_defaults => empty;
+
+  reports:
+    inform_mode|EXTRA::
+      "$(this.bundle): creating $(file) with contents '$(str)', mode '$(mode)', owner '$(owner)' and group '$(group)'";
+}
