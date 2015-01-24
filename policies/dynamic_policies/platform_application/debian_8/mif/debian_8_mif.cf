@@ -1,0 +1,12 @@
+bundle agent debian_8_mif {
+
+vars:
+
+  "pkg[icinga-core]"           string => "*";
+  "pkg[icinga-web]"            string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_8_mif.pkg");
+
+}

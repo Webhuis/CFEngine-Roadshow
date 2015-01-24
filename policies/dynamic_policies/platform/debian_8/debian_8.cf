@@ -1,0 +1,6 @@
+bundle agent debian_8 {
+
+methods:
+ "any" usebundle => debian;
+
+}

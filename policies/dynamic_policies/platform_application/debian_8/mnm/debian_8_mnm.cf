@@ -1,0 +1,14 @@
+bundle agent debian_8_mnm {
+
+vars:
+
+  "pkg[nagios3-common]"           string => "*";
+  "pkg[nagios3-core]"             string => "*";
+  "pkg[nagios-plugins]"           string => "*";
+  "pkg[ndoutils-nagios3-mysql]"   string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_8_mnm.pkg");
+
+}
