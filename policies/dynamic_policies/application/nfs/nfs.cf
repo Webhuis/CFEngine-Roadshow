@@ -10,10 +10,15 @@ vars:
  "exports_rw"     string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
 
 # "nfs_exports[/var/local/webapps/][exports_network]"          string => "*.$(sys.domain)";
+ "nfs_exports[/var/local/nagios/][exports_network]"           string => "10.168.0.0/16";
+ "nfs_exports[/var/local/nagios/][exports_permissions]"       string => "$(exports_ro)";
  "nfs_exports[/var/local/webapps/][exports_network]"          string => "10.168.0.0/16";
  "nfs_exports[/var/local/webapps/][exports_permissions]"      string => "$(exports_ro)";
 
 files:
+
+ "/var/local/nagios/."
+   create  =>  "true";
 
  "/var/local/webapps/."
    create  =>  "true";

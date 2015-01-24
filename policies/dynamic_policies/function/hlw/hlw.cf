@@ -1,0 +1,19 @@
+bundle agent hlw {
+
+vars:
+  "jboss_base"          string => "/var/lib/tomcat7";
+
+files:
+  "$(jboss_base)/webapps/helloworld"
+     handle => "helloworld_delete",
+    comment => "deleting helloworld.war",
+     delete => tidy;
+
+  "$(catalina_base)/webapps/helloworld.war"
+     handle => "deploy_helloworld",
+    comment => "deploying helloworld.war",
+     perms  => mog("644","jboss","jboss"),
+    classes => if_repaired("restart_jboss"),
+  copy_from => local_cp("/mnt/webapps/helloworld.war");
+
+}
