@@ -1,0 +1,18 @@
+bundle agent ipsec {
+
+vars:
+
+    "pkg[iperf]"                string => "*";
+    "pkg[ipsec-tools]"          string => "*";
+    "pkg[iptraf]"               string => "*";
+    "pkg[openssl]"              string => "*";
+    "pkg[racoon]"		string => "*";
+
+methods:
+    "any" usebundle => packages("ipsec.pkg");
+
+reports:
+  ipsec::
+    "ipsec";
+
+}

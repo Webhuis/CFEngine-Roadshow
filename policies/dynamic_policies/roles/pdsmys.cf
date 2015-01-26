@@ -1,0 +1,16 @@
+bundle agent pdsmys {
+
+vars:
+
+      "bundles[mysql_server_comp]"      string => "mysql_server_comp.cf";
+      "bundles[pdns_server_comp]"       string => "pdns_server_comp.cf";
+
+      "sequence"  slist => getindices("bundles");
+      "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "mysql_server_comp";
+  "any" usebundle => "pdns_server_comp";
+
+}

@@ -1,0 +1,35 @@
+bundle agent bind9 {
+
+vars:
+
+    # packages are defined in the following form:
+    # "pkg[<pkg-name>]" string => "<pkg-version>";
+
+    "pkg[bind9]"                string => "*";
+    "pkg[bind9utils]"           string => "*";
+
+    "nopkg[pdns-server]"        string => "*";
+    "nopkg[pdns-recursor]"      string => "*";
+    "nopkg[pdns-backend-mysql]" string => "*";
+
+    "bind9_name"       slist  => getindices("pkg");
+
+methods:
+ "any" usebundle => nopackages("bind9.nopkg");
+ "any" usebundle => packages("bind9.pkg");
+
+}
+
+bundle agent bind9_conf {
+
+files:
+ "/etc/bind9/named.conf"
+  comment                   => "named.conf door class_domain nameserver",
+  perms                     => mo("600","root"),
+  copy_from                 => local_cp("$(sys.workdir)/inputs-webhuis/templates/named.conf.tmpl"),
+  action                    => u_immediate,
+  edit_template             => "$(sys.workdir)/inputs-webhuis/templates/named.conf.tmpl",
+#  empty_file_before_editing => "true",
+  classes                   => u_if_repaired("update_report");
+
+}

@@ -1,0 +1,16 @@
+bundle agent php_mysql {
+
+vars:
+
+    "pkg[php_mysql2]"		string => "*";
+
+#    "ips_package_name"     slist  => getindices("pkg");
+
+methods:
+    "any" usebundle => packages("php_mysql.pkg");
+
+reports:
+  php_mysql::
+    "php_mysql";
+
+}

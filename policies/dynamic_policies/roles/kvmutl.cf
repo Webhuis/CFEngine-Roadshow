@@ -1,0 +1,14 @@
+bundle agent kvmutl {
+
+vars:
+
+  "bundles[kvm_comp]"      string => "kvm_comp.cf";
+
+  "sequence"  slist => getindices("bundles");
+  "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "kvm_comp"
+
+}

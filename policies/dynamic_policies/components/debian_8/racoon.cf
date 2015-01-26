@@ -1,0 +1,18 @@
+bundle agent racoon {
+
+vars:
+
+    "pkg[ipsec-tools]"          string => "*";
+    "pkg[openssl]"              string => "*";
+    "pkg[racoon]"		string => "*";
+
+#    "racoon_package_name"     slist  => getindices("pkg");
+
+methods:
+    "any" usebundle => packages("racoon.pkg");
+
+reports:
+  racoon::
+    "racoon";
+
+}

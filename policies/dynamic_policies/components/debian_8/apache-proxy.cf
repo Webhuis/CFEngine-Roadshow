@@ -1,0 +1,16 @@
+bundle agent apache_proxy {
+
+vars:
+
+    "pkg[apache-proxy]"              string => "*";
+
+methods:
+    "any" usebundle => packages("apache_proxy.pkg");
+
+#    "any" usebundle => "apache.cf";
+
+reports:
+  linux::
+    "apache_proxy";
+
+}

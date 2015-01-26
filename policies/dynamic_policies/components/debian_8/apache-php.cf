@@ -1,0 +1,16 @@
+bundle agent apache_php {
+
+vars:
+
+    "pkg[apache_php2]"		string => "*";
+
+#    "ips_package_name"     slist  => getindices("pkg");
+
+methods:
+    "any" usebundle => packages("apache_php.pkg");
+
+reports:
+  apache_php::
+    "apache_php";
+
+}

@@ -1,0 +1,18 @@
+bundle agent snort {
+
+vars:
+
+    "pkg[iperf]"                string => "*";
+    "pkg[iptraf]"               string => "*";
+    "pkg[snort]"		string => "*";
+
+#    "snort_package_name"     slist  => getindices("pkg");
+
+methods:
+    "any" usebundle => packages("snort.pkg");
+
+reports:
+  snort::
+    "snort";
+
+}

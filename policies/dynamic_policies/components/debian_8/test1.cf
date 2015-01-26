@@ -1,0 +1,6 @@
+bundle agent test1 {
+
+reports:
+  linux::
+    "Bundle test1 uitgevoerd";
+}

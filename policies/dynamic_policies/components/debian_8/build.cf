@@ -1,0 +1,7 @@
+bundle agent build {
+
+methods:
+
+ "any" usebundle => pkg_build;
+
+}

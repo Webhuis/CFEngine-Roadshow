@@ -1,0 +1,31 @@
+bundle agent component_mysql_server {
+
+vars:
+
+    "pkg[mysql-server]"		string => "*";
+
+methods:
+    "any" usebundle => packages("component_mysql_server.pkg");
+    "any" usebundle => my_cnf;
+
+}
+
+bundle agent my_cnf {
+
+vars:
+ "my_cnf"   string => "/etc/mysql/my.cnf";
+
+files:
+ "${my_cnf}"
+  comment       => "Copy my.cnf templates from master source",
+  handle        => "update_my_cnf_inputs_templates_dir",
+  copy_from     => u_secure_cp("${g.master_templates}/inputs-webhuis/templates/my.cnf.tmpl","${sys.policy_hub}"),
+  action        => u_immediate,
+  edit_template => "$(sys.workdir)/inputs-webhuis/templates/my.cnf.tmpl",
+  classes       => u_if_repaired("restart_mysql");
+
+commands:
+ restart_mysql::
+  "/etc/init.d/mysql-server restart";
+
+}

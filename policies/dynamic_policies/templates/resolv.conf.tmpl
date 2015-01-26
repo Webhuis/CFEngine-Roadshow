@@ -1,0 +1,7 @@
+# Webhuis template voor resolv.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+search ${sys.domain}
+nameserver ${${g.class_domain}.resolvers}

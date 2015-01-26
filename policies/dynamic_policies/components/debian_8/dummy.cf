@@ -1,0 +1,6 @@
+bundle agent dummy {
+
+reports:
+  linux::
+    "De bundle dummy is uitgevoerd.";
+}

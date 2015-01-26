@@ -1,0 +1,11 @@
+bundle agent debian_8_pdsmys {
+
+vars:
+
+  "pkg[apt-cacher-ng]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_8_pdsmys.pkg");
+
+}

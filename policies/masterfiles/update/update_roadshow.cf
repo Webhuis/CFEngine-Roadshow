@@ -21,11 +21,10 @@ bundle agent cfe_roadshow_copy_policy(application, function)
       "master_static"  string => "$(sys.workdir)/masterfiles";
       "master_dynamic" string => "$(sys.workdir)/dynamic_policies";
 
-      "copy[application]"          string => "${master_dynamic}/application/${application}";
-      "copy[function]"             string => "${master_dynamic}/function/${function}";
-      "copy[platform]"             string => "${master_dynamic}/platform/${sys.flavor}";
-      "copy[platform_application]" string => "${master_dynamic}/platform_application/${sys.flavor}/${application}";
+      "copy[components]"            slist => "${master_dynamic}/components/${sys.flavor}/${classify.role}.inputs";
       "copy[domain]"               string => "${master_dynamic}/domain/${sys.domain}";
+      "copy[platform]"             string => "${master_dynamic}/platform/${sys.flavor}";
+      "copy[role]"                 string => "${master_dynamic}/roles/${classify.role}.cf";
 
       "tocopy" slist => getindices("copy");
 
