@@ -23,6 +23,8 @@ bundle agent classify
       "function"             string => "sys";
       "instance"             string => "1";
 
+    "role_input"             string => "/var/cfengine/dynamic-inputs-local/role/${role}.cf";
+
 #  methods:
 #      "" usebundle => file_make("/etc/roadshow/application", $(application));
 #      "" usebundle => file_make("/etc/roadshow/function", $(function));

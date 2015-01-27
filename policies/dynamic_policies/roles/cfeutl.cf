@@ -1,0 +1,14 @@
+bundle agent cfeutl {
+
+vars:
+
+  "bundles[cfe_comp]"      string => "cfe_comp.cf";
+
+  "sequence"  slist => getindices("bundles");
+  "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "cfe_comp"
+
+}

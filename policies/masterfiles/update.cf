@@ -10,9 +10,10 @@ body common control
                           "ha_def",
                           "update_def",
                           "classify",
+##                          "${classify.role}",
                           "cfe_internal_dc_workflow",
                           "cfe_internal_update_policy",
-                          "cfe_roadshow_update_policy",
+#                          "cfe_roadshow_update_policy",
                           "cfe_internal_update_bins",
                           "cfe_internal_update_processes",
       };
@@ -22,13 +23,14 @@ body common control
       inputs => {
                   "cfe_internal/ha/ha_def.cf",
                   "roadshow_policies/classify.cf",
+#                  @(update_def.dynamic_inputs),
                   "controls/cf_serverd.cf",
                   "update/update_bins.cf",
                   "update/cfe_internal_dc_workflow.cf",
                   "update/cfe_internal_local_git_remote.cf",
                   "update/cfe_internal_update_from_repository.cf",
                   "update/update_policy.cf",
-                  "update/update_roadshow.cf",
+#                  "update/update_roadshow.cf",
                   "update/update_processes.cf"
       };
 
@@ -49,6 +51,8 @@ body agent control
 bundle common update_def
 {
   vars:
+
+#      "dynamic_inputs"      slist => findfiles("${sys.workdir}/dynamic-inputs-local/**/*.cf");
       "input_name_patterns" slist => { ".*\.cf",".*\.dat",".*\.txt", ".*\.conf", ".*\.mustache",
                                        ".*\.sh", ".*\.pl", ".*\.py", ".*\.rb",
                                        "cf_promises_release_id", ".*\.json" },

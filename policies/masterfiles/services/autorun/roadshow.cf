@@ -18,6 +18,7 @@ bundle agent roadshow
       "os"             string => ${sys.flavor};
       "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
       "os_application" string => "${os}_${application}";
+      "role"           string => ${classify.role}; # readfile("/etc/roadshow/function", 1k);
       "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
       "class_domain"   string => canonify("$(sys.domain)");
       "class_host"     string => canonify("$(sys.uqhost)");
@@ -25,16 +26,15 @@ bundle agent roadshow
 
   methods:
       "" usebundle => classify;
-      "" usebundle => do_roadshow($(application), $(function));
+      "" usebundle => do_roadshow;
+      "" usebundle => cfe_roadshow_update_policy;
       "" usebundle => ${class_domain};
       "" usebundle => $(os);
-      "" usebundle => $(application);
-      "" usebundle => ${os_application};
-      "" usebundle => $(function);
+      "" usebundle => $(role);
 }
 
-bundle agent do_roadshow(application, function)
-{
+bundle agent do_roadshow {
+
   vars:
       # List here the IP masks that we grant access to on the server
       "acl"                   slist => { "10.*", "62.45.247.173" };
@@ -46,7 +46,7 @@ bundle agent do_roadshow(application, function)
 
       "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
       "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
-      "inputs" slist => { @(roadshow_policies), @(dynamic_inputs) };
+      "inputs" slist => { @(roadshow_policies), @(dynamic_inputs), "$(sys.inputdir)/update/update_roadshow.cf" };
 
       "policyhost"           string => "cfeutl01.webhuis.nl";
 #      "ntp_server"           string => "inuc-01.webhuis.nl";
