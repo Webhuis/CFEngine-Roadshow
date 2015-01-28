@@ -19,7 +19,7 @@ files:
  "${my_cnf}"
   comment       => "Copy my.cnf templates from master source",
   handle        => "update_my_cnf_inputs_templates_dir",
-  copy_from     => u_secure_cp("${g.master_templates}/inputs-webhuis/templates/my.cnf.tmpl","${sys.policy_hub}"),
+  copy_from     => u_rcp("${g.master_templates}/inputs-webhuis/templates/my.cnf.tmpl","${sys.policy_hub}"),
   action        => u_immediate,
   edit_template => "$(sys.workdir)/inputs-webhuis/templates/my.cnf.tmpl",
   classes       => u_if_repaired("restart_mysql");
