@@ -16,12 +16,13 @@ bundle agent roadshow
 
   vars:
       "os"             string => ${sys.flavor};
-      "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
-      "os_application" string => "${os}_${application}";
-      "role"           string => ${classify.role}; # readfile("/etc/roadshow/function", 1k);
-      "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
+      "role"           string => ${classify.role};
       "class_domain"   string => canonify("$(sys.domain)");
       "class_host"     string => canonify("$(sys.uqhost)");
+
+#      "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
+#      "os_application" string => "${os}_${application}";
+#      "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
 #      "instance"      string => readfile("/etc/roadshow/instance", 1k);
 
   methods:
@@ -49,16 +50,14 @@ bundle agent do_roadshow {
       "inputs" slist => { @(roadshow_policies), @(dynamic_inputs), "$(sys.inputdir)/update/update_roadshow.cf" };
 
       "policyhost"           string => "cfeutl01.webhuis.nl";
-#      "ntp_server"           string => "inuc-01.webhuis.nl";
-#      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
+      "ntp_server"           string => "inuc-01.webhuis.nl";
+      "nameserver"            slist => { "10.168.0.17", "8.8.8.8"};
       "punt_komma"           string => ";";
 
 
   reports:
 
       "platform: ${os}";
-      "application: ${application}";
-      "function: ${function}";
 
 }
 
