@@ -142,7 +142,7 @@ files:
 
         comment         => "Clean up reports older than 3 days",
         delete          => tidy,
-        file_select     => days_old("3"),
+        file_select     => days_old("1"),
         depth_search    => recurse("inf");
 }
 
