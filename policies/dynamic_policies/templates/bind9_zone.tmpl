@@ -3,14 +3,14 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-$ORIGIN ${${g.class_host}.all_zones}.     ; designates the start of this zone file in the namespace
-$TTL ${${g.class_host}.all_zones}.ttl     ; default expiration time of all resource records without their own TTL value
-${${g.class_host}.all_zones}.  IN  SOA  ${${g.class_host}.all_zones}. username.${${g.class_host}.all_zones}. (
+$ORIGIN ${${do_roadshow.class_host}.all_zones}.     ; designates the start of this zone file in the namespace
+$TTL ${${do_roadshow.class_host}.all_zones}.ttl     ; default expiration time of all resource records without their own TTL value
+${${do_roadshow.class_host}.all_zones}.  IN  SOA  ${${do_roadshow.class_host}.all_zones}. username.${${do_roadshow.class_host}.all_zones}. (
               2007120710 ; serial number of this zone file
               1d         ; slave refresh (1 day)
               2h         ; slave retry time in case of a problem (2 hours)
               4w         ; slave expiration time (4 weeks)
               1h         ; maximum caching time in case of failed lookups (1 hour)
               )
-${sys.domain}. NS ${${g.class_domain}.idns}.${${g.class_host}.all_zones}.  ; ${${g.class_domain}.idns}.${${g.class_host}.all_zones} is a nameserver for ${${g.class_host}.all_zones}
+${sys.domain}. NS ${${do_roadshow.class_domain}.idns}.${${do_roadshow.class_host}.all_zones}.  ; ${${do_roadshow.class_domain}.idns}.${${do_roadshow.class_host}.all_zones} is a nameserver for ${${do_roadshow.class_host}.all_zones}
 

@@ -20,7 +20,7 @@ methods:
 
       "" usebundle => file_make_mog($(ntp_default), '# maintained by CFEngine, do not edit
 NTPDATE_USE_NTP_CONF=yes
-NTPSERVERS="${${roadshow.class_domain}.ntp_server}"
+NTPSERVERS="${${do_roadshow.class_domain}.ntp_server}"
 NTPOPTIONS=""
 ', 644, "root", "root"),
       classes => if_repaired("restart_ntp");
@@ -33,21 +33,21 @@ NTPOPTIONS=""
     filegen loopstats file loopstats type day enable
     filegen peerstats file peerstats type day enable
     filegen clockstats file clockstats type day enable
-    server ${${roadshow.class_domain}.ntp_server}
+    server ${${do_roadshow.class_domain}.ntp_server}
 
     restrict -4 default kod nomodify notrap nopeer noquery
     restrict -6 default kod nomodify notrap nopeer noquery
 
-    restrict ${${roadshow.class_domain}.restrict}
+    restrict ${${do_roadshow.class_domain}.restrict}
 
-    restrict ${${roadshow.class_domain}.network} mask ${${roadshow.class_domain}.mask} nomodify notrap
+    restrict ${${do_roadshow.class_domain}.network} mask ${${do_roadshow.class_domain}.mask} nomodify notrap
 ", 644, "root", "root"),
       classes => if_repaired("restart_ntp");
 
   commands:
 
   "/etc/init.d/ntp stop";
-  "/usr/sbin/ntpdate ${${roadshow.class_domain}.ntp_server}";
+  "/usr/sbin/ntpdate ${${do_roadshow.class_domain}.ntp_server}";
   "/sbin/hwclock -w";
 
 }
