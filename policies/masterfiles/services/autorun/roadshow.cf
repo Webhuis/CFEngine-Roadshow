@@ -20,7 +20,7 @@ bundle agent roadshow
       "" usebundle => cfe_roadshow_update_policy;
       "" usebundle => ${do_roadshow.class_domain};
       "" usebundle => $(do_roadshow.os);
-      "" usebundle => $(calssify.role);
+      "" usebundle => $(classify.role);
 
 }
 
