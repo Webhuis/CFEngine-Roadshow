@@ -1,0 +1,25 @@
+bundle agent jen {
+
+vars:
+  "catalina_base"          string => "/var/lib/tomcat7";
+
+files:
+
+  "/usr/share/tomcat7"
+     perms  => mog("775","root","tomcat7"),
+     handle => "jenkins__home",
+    comment => "jenkins home";
+
+  "$(catalina_base)/webapps/jenkins"
+     handle => "jenkins__delete",
+    comment => "deleting jenkins.war",
+     delete => tidy;
+
+  "$(catalina_base)/webapps/jenkins.war"
+     handle => "deploy_jenkins",
+    comment => "deploying jenkins.war",
+     perms  => mog("644","tomcat7","tomcat7"),
+    classes => if_repaired("restart_tomcat"),
+  copy_from => local_cp("/mnt/webapps/jenkins/jenkins.war");
+
+}
