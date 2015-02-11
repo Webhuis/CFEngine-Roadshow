@@ -37,7 +37,7 @@ bundle agent do_roadshow {
 
   vars:
       # List here the IP masks that we grant access to on the server
-      "acl"                   slist => { "10.*", "62.45.247.173" };
+      "acl"                   slist => { "10.*", "192.168.125.*", "62.45.247.173" };
       "master_location"      string => "$(sys.masterdir)";
       "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
       "dir_bin"              string => "$(sys.bindir)";
