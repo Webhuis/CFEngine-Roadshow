@@ -4,6 +4,6 @@ bundle agent resolv_conf
       "" usebundle => file_make_mog("/etc/resolv.conf", "
 search ${sys.domain}
 
-nameserver ${${roadshow.class_domain}.nameserver}", 644, "root", "root"),
-      comment => "Domain resolv.conf door roadshow.class_domain ${roadshow.class_domain}";
+nameserver ${${do_roadshow.class_domain}.nameserver}", 644, "root", "root"),
+      comment => "Domain resolv.conf door do_roadshow.class_domain ${do_roadshow.class_domain}";
 }

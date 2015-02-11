@@ -14,23 +14,14 @@ bundle agent roadshow
   meta:
       "tags" slist => { "autorun" };
 
-  vars:
-      "os"             string => ${sys.flavor};
-      "application"    string => ${classify.application}; # readfile("/etc/roadshow/application", 1k);
-      "os_application" string => "${os}_${application}";
-      "role"           string => ${classify.role}; # readfile("/etc/roadshow/function", 1k);
-      "function"       string => ${classify.function}; # readfile("/etc/roadshow/function", 1k);
-      "class_domain"   string => canonify("$(sys.domain)");
-      "class_host"     string => canonify("$(sys.uqhost)");
-#      "instance"      string => readfile("/etc/roadshow/instance", 1k);
-
   methods:
       "" usebundle => classify;
       "" usebundle => do_roadshow;
       "" usebundle => cfe_roadshow_update_policy;
-      "" usebundle => ${class_domain};
-      "" usebundle => $(os);
-      "" usebundle => $(role);
+      "" usebundle => ${do_roadshow.class_domain};
+      "" usebundle => $(do_roadshow.os);
+      "" usebundle => $(classify.role);
+
 }
 
 bundle agent do_roadshow {
@@ -48,17 +39,20 @@ bundle agent do_roadshow {
       "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
       "inputs" slist => { @(roadshow_policies), @(dynamic_inputs), "$(sys.inputdir)/update/update_roadshow.cf" };
 
+      "os"                   string => ${sys.flavor};
+      "class_domain"         string => canonify("$(sys.domain)");
+      "class_host"           string => canonify("$(sys.uqhost)");
+
       "policyhost"           string => "cfeutl01.webhuis.nl";
-#      "ntp_server"           string => "inuc-01.webhuis.nl";
-#      "nameserver"            slist => { "10.68.71.187", "8.8.8.8"};
+      "ntp_server"           string => "inuc-01.webhuis.nl";
+      "nameserver"            slist => { "10.168.0.17", "8.8.8.8"};
       "punt_komma"           string => ";";
 
 
   reports:
 
+      "roadshow: ${class_domain}";
       "platform: ${os}";
-      "application: ${application}";
-      "function: ${function}";
 
 }
 

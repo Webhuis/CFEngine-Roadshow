@@ -1,17 +1,14 @@
-bundle agent os_common(policy, method) {
-
-vars:
-
- "package_policy"  string => "${policy}";
- "package_method"  string => "${method}";
+bundle agent os_common {
 
 methods:
 
+ "any"    usebundle => cleanup;
  "any"    usebundle => etc_hosts;
  "any"    usebundle => pkg_base_common;
  "any"    usebundle => issue;
  "any"    usebundle => motd;
  "any"    usebundle => time_conf;
+ "any"    usebundle => etc_hosts;
  "any"    usebundle => ssh_config;
  "any"    usebundle => user_data;
 # "martin" usebundle => ssh_users;
@@ -134,6 +131,41 @@ bundle agent edit_ssh(file,params) {
               comment => "Set desired ssh_config parameters",
             edit_line => set_config_values("$(params)");
 
+}
+
+bundle agent cleanup {
+
+files:
+
+    # Cleanup old reports
+    "$(sys.workdir)/outputs"
+
+        comment         => "Clean up reports older than 3 days",
+        delete          => tidy,
+        file_select     => days_old("1"),
+        depth_search    => recurse("inf");
+}
+
+bundle agent get_template(template_config) {
+
+vars:
+
+ "templates" string => lastnode("${template_config}","/");
+
+files:
+
+ "$(sys.workdir)/dynamic-inputs-local/templates/${template_config}"
+  comment       => "Copy templates from master source on policy server if a new validation was acquired",
+  handle        => "update_files_inputs_templates_dir",
+  copy_from     => u_rcp("${do_roadshow.master_dynamic}/templates/${template_config}","${sys.policy_hub}"),
+  action        => u_immediate;
+#  edit_template => "$(sys.workdir)/inputs-webhuis/templates/${template_config}",
+#  classes       => u_if_repaired("update_report");
+
+reports:
+ linux::
+ "$(template_config)";
+ "${$do_roadshow.class_domain}.resolvers}}";
 }
 
 bundle agent dpackages (dpkgs_array) {

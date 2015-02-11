@@ -11,7 +11,7 @@
     filegen peerstats file peerstats type day enable
     filegen clockstats file clockstats type day enable
 
-    server ${${g.class_domain}.ntp_master}.${${g.class_domain}.ntp_pool}
+    server ${${do_roadshow_domain}.ntp_master}.${${do_roadshow_domain}.ntp_pool}
 
     restrict -4 default kod nomodify notrap nopeer noquery
     restrict -6 default kod nomodify notrap nopeer noquery

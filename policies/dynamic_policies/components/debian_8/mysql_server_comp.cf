@@ -1,11 +1,11 @@
-bundle agent component_mysql_server {
+bundle agent mysql_server_comp {
 
 vars:
 
     "pkg[mysql-server]"		string => "*";
 
 methods:
-    "any" usebundle => packages("component_mysql_server.pkg");
+    "any" usebundle => packages("mysql_server_comp.pkg");
     "any" usebundle => my_cnf;
 
 }
