@@ -14,15 +14,19 @@ methods:
 
 bundle agent aptdeb_mirror {
 
-  vars:
-    "mirror"     string => "http://aptutl01.webhuis.nl:3142/";
+vars:
+  "mirror" string => "http://aptutl01.webhuis.nl:3142/";
 
-  files:
+files:
+  "/etc/apt/apt.conf"
+          create  => "true",
+        edit_line => edit_apt_mirror($(mirror)),
+          classes => if_repaired("update_mirror");
 
-      "/etc/apt/apt.conf"
-
-              create  => "true",
-            edit_line => edit_apt_mirror($(mirror)) ;
+commands:
+ update_mirror::
+  "/usr/bin/apt-get update";
+  "/usr/bin/apt-get upgrade";
 
 }
 
