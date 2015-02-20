@@ -22,6 +22,8 @@ bundle agent roadshow
       "" usebundle => $(do_roadshow.os);
       "" usebundle => $(classify.role);
 
+reports:
+ "roadshow role:  $(classify.role)";
 }
 
 bundle agent do_roadshow {

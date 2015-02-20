@@ -1,5 +1,5 @@
 bundle agent dummy {
-
+# Remove this policy
 reports:
   linux::
     "De bundle dummy is uitgevoerd.";

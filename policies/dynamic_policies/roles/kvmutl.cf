@@ -9,6 +9,6 @@ vars:
 
 methods:
 
-  "any" usebundle => "kvm_comp"
+  "any" usebundle => "kvm_comp";
 
 }
