@@ -23,6 +23,12 @@ bundle agent aptdeb_mirror {
 
               create  => "true",
             edit_line => edit_apt_mirror($(mirror)) ;
+              classes => if_repaired("update_mirror");
+
+commands:
+ update_mirror::
+  "/usr/bin/apt-get update";
+  "/usr/bin/apt-get upgrade";
 
 }
 
