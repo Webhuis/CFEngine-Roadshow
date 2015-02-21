@@ -1,9 +1,0 @@
-# Webhuis template voor bind9-zone file
-#
-# Do not edit
-#
-[%CFEngine any:: %]
-zone "${${g.class_host}.all_zones}" in {
-  type master;
-  file "/var/cache/bind/${${g.class_host}.all_zones}";
-};

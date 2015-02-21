@@ -5,8 +5,9 @@ vars:
     "pkg[mysql-server]"		string => "*";
 
 methods:
-    "any" usebundle => packages("mysql_server_comp.pkg");
-    "any" usebundle => my_cnf;
+ "any" usebundle => packages("mysql_server_comp.pkg");
+ "any" usebundle => get_template("my.cnf.tmpl");
+ "any" usebundle => my_cnf;
 
 }
 
@@ -19,9 +20,9 @@ files:
  "${my_cnf}"
   comment       => "Copy my.cnf templates from master source",
   handle        => "update_my_cnf_inputs_templates_dir",
-  copy_from     => u_rcp("${g.master_templates}/inputs-webhuis/templates/my.cnf.tmpl","${sys.policy_hub}"),
+  copy_from     => local_cp("${sys.workdir}/dynamic-inputs-local/templates/my.cnf.tmpl"),
   action        => u_immediate,
-  edit_template => "$(sys.workdir)/inputs-webhuis/templates/my.cnf.tmpl",
+  edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/my.cnf.tmpl",
   classes       => u_if_repaired("restart_mysql");
 
 commands:
