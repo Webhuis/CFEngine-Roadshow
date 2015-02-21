@@ -1,9 +1,12 @@
 bundle agent resolv_conf
 {
-  methods:
-      "" usebundle => file_make_mog("/etc/resolv.conf", "
-search ${sys.domain}
 
-nameserver ${${do_roadshow.class_domain}.nameserver}", 644, "root", "root"),
-      comment => "Domain resolv.conf door do_roadshow.class_domain ${do_roadshow.class_domain}";
+ files:
+  "/etc/resolv.conf"
+  comment                   => "Domain resolv.conf door g.class_domain",
+  perms                     => mo("644","root"),
+  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl"),
+  action                    => u_immediate,
+  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl",
+
 }
