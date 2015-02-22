@@ -4,11 +4,14 @@ vars:
 
     "pkg[pdns-server]"           string => "*";
     "pkg[pdns-recursor]"         string => "*";
+    "pkg[pdns-backend-mysql]"    string => "*";
 
     "pdns_package_name"          slist  => getindices("pkg");
 
 methods:
  "any" usebundle => packages("pdns_server_comp.pkg");
+ "any" usebundle => get_template("pdns.conf.tmpl");
+ "any" usebundle => pdns_conf;
 
 }
 

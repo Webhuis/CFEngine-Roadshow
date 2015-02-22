@@ -7,6 +7,6 @@ bundle agent resolv_conf
   perms                     => mo("644","root"),
   copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl"),
   action                    => u_immediate,
-  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl",
+  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl";
 
 }
