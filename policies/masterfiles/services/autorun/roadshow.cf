@@ -17,7 +17,7 @@ bundle agent roadshow
   methods:
       "" usebundle => classify;
       "" usebundle => do_roadshow;
-      "" usebundle => cfe_roadshow_update_policy;
+      "" usebundle => cfe_roadshow_update;
       "" usebundle => ${do_roadshow.class_domain};
       "" usebundle => $(do_roadshow.os);
       "" usebundle => $(classify.role);

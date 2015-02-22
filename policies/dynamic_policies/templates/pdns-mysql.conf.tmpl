@@ -12,11 +12,11 @@ disable-axfr=no
 launch=gmysql
 local-address=${sys.ipv4}
 gmysql-host=127.0.0.1
-gmysql-user=pdns_mysql
-gmysql-password=${${g.class_host}.pdns_mysql_password}
+gmysql-user=pdns
+gmysql-password=
 gmysql-dbname=pdns
 loglevel=9
-master=yes
+master=no
 recursor=127.0.0.1:5300
-slave=no
+slave=yes
 
