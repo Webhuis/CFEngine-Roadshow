@@ -10,7 +10,7 @@ vars:
 
 methods:
  "any" usebundle => packages("pdns_server_comp.pkg");
- "any" usebundle => get_template("pdns.conf.tmpl");
+ "any" usebundle => get_template("pdns-mysql.conf.tmpl");
  "any" usebundle => pdns_conf;
 
 }
@@ -21,9 +21,9 @@ files:
  "/etc/powerdns/pdns.conf"
   comment                   => "pdns.conf door class_domain nameserver",
   perms                     => mo("600","root"),
-  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/pdns.conf.tmpl"),
+  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl"),
   action                    => u_immediate,
-  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns.conf.tmpl",
+  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl",
 #  empty_file_before_editing => "true",
   classes                   => u_if_repaired("restart_pdns");
 
