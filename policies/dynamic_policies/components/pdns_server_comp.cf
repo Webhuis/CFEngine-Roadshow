@@ -8,7 +8,7 @@ vars:
 
     "pdns_package_name"          slist  => getindices("pkg");
 
-    "gmysql_password"            string => "UFvMgzuM2HsK";
+    "gmysql_password"            string => "6DcFQCD0j5iK";
 
 methods:
  "any" usebundle => packages("pdns_server_comp.pkg");
