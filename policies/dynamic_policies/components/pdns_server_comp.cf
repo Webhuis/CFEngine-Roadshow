@@ -23,7 +23,7 @@ files:
  "/etc/powerdns/pdns.conf"
   comment                   => "pdns.conf door class_domain nameserver",
   perms                     => mo("600","root"),
-  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl"),
+#  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl"),
   action                    => u_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl",
 #  empty_file_before_editing => "true",

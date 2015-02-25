@@ -1,0 +1,17 @@
+bundle agent mnmutl {
+
+vars:
+
+      "bundles[nagios3]"                string => "nagios3.cf";
+      "bundles[mysql_server_comp]"      string => "mysql_server_comp.cf";
+
+      "sequence"  slist => getindices("bundles");
+      "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "nagios3";
+  "any" usebundle => "mysql_server_comp";
+
+
+}

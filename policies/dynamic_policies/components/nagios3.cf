@@ -1,0 +1,45 @@
+bundle agent nagios3 {
+
+vars:
+
+  "pkg[nagios3-common]"           string => "*";
+  "pkg[nagios3-core]"             string => "*";
+  "pkg[nagios-plugins]"           string => "*";
+  "pkg[ndoutils-nagios3-mysql]"   string => "*";
+
+  "htaccess[CFEngine_Roadshow]"   string => "$apr1$U4N0j0JG$y5UJo87aft1Ardac/98EC.";
+  "htaccess[nagiosadmin]"         string => "$apr1$F/Di/OXy$6INIIyolQZMlX1iAE/6tc.";
+  "htaccess[jorgen]"              string => "$apr1$VEEafOGP$GicucVsaSul1FIK/Se2.l/";
+
+  "htusers"                        slist => getindices("htaccess");
+  "htpassword"                     slist => getvalues("htaccess");
+
+  "nagios_users"                   slist => { "CFEngine_Roadshow" };
+  "nagios_admins"                  slist => { "nagiosadmin", "jorgen" };
+  "all_nagios_users"               slist => { ${nagios_users}, ${nagios_admins} };
+
+files:
+  "/etc/nagios3/htpasswd.users" 
+   perms             => mo("600","root"),
+   create            => "true",
+   action            => u_immediate,
+   edit_line         => edit_nagios_cfg(${htusers},${htpasswd});
+
+  "/etc/nagios3/cgi.cfg"
+   perms             => mo("600","root"),
+   action            => u_immediate,
+   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl";
+
+methods:
+
+  "any" usebundle => packages("nagios3.pkg");
+  "any" usebundle => get_template("nagios.cgi.tmpl");
+
+}
+
+bundle edit_line edit_nagios_cfg(htuser,htpasswd) {
+
+insert_lines:
+"${htuser}=${htpasswd}";
+
+}
