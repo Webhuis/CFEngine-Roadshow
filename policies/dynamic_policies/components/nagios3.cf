@@ -11,35 +11,58 @@ vars:
   "htaccess[nagiosadmin]"         string => "$apr1$F/Di/OXy$6INIIyolQZMlX1iAE/6tc.";
   "htaccess[jorgen]"              string => "$apr1$VEEafOGP$GicucVsaSul1FIK/Se2.l/";
 
-  "htusers"                        slist => getindices("htaccess");
-  "htpassword"                     slist => getvalues("htaccess");
+  "htusers"                        slist => getindices("${htaccess}");
+  "htpasswd"                       slist => getvalues("${htaccess}");
 
-  "nagios_users"                   slist => { "CFEngine_Roadshow" };
-  "nagios_admins"                  slist => { "nagiosadmin", "jorgen" };
-  "all_nagios_users"               slist => { ${nagios_users}, ${nagios_admins} };
+  "nagios_users"                  string => "CFEngine_Roadshow";
+  "nagios_admins"                 string => "nagiosadmin,jorgen";
+  "all_nagios_users"              string => "${nagios_users},${nagios_admins}";
 
 files:
-  "/etc/nagios3/htpasswd.users" 
-   perms             => mo("600","root"),
-   create            => "true",
-   action            => u_immediate,
-   edit_line         => edit_nagios_cfg(${htusers},${htpasswd});
 
   "/etc/nagios3/cgi.cfg"
-   perms             => mo("600","root"),
+   perms             => mo("644","root"),
    action            => u_immediate,
-   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl";
+   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl",
+   classes           => if_repaired("restart_apache2");
 
 methods:
 
   "any" usebundle => packages("nagios3.pkg");
   "any" usebundle => get_template("nagios.cgi.tmpl");
+  "any" usebundle => nagios_htpasswd("nagios3.htaccess");
+
+commands:
+  restart_apache2::
+  "/etc/init.d/apache2 restart";
+
+reports:
+ "nagios3: $(nagios3.htusers) $(${nagios3.htaccess}[$(nagios3.htusers)])";
 
 }
 
-bundle edit_line edit_nagios_cfg(htuser,htpasswd) {
+bundle agent nagios_htpasswd(htaccess) {
+
+vars:
+ "users"                        slist => getindices("${htaccess}");
+
+files:
+
+  "/etc/nagios3/htpasswd.users"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => u_immediate,
+   edit_line         => edit_nagios_cfg("$(users)","$($(htaccess)[$(users)])");
+
+}
+
+bundle edit_line edit_nagios_cfg(user,passwd) {
+
+delete_lines:
+  ".*";
 
 insert_lines:
-"${htuser}=${htpasswd}";
+"$(user):$(passwd)";
 
 }
+

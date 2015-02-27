@@ -20,17 +20,17 @@ use_authentication=1
 
 use_ssl_authentication=0
 
-authorized_for_system_information=${all_nagios_users}
+authorized_for_system_information=${nagios3.nagios_admins},${nagios3.nagios_users}
 
-authorized_for_configuration_information=${all_nagios_users}
+authorized_for_configuration_information=${nagios3.nagios_admins},${nagios3.nagios_users}
 
-authorized_for_system_commands=${nagios_admins}
+authorized_for_system_commands=${nagios3.nagios_admins}
 
-authorized_for_all_services=${all_nagios_users}
-authorized_for_all_hosts=${all_nagios_users}
+authorized_for_nagios3.all_services=${nagios3.nagios_admins},${nagios3.nagios_users}
+authorized_for_nagios3.all_hosts=${nagios3.nagios_admins},${nagios3.nagios_users}
 
-authorized_for_all_service_commands=${all_nagios_users}
-authorized_for_all_host_commands=${all_nagios_users}
+authorized_for_nagios3.all_service_commands=${nagios3.nagios_admins},${nagios3.nagios_users}
+authorized_for_nagios3.all_host_commands=${nagios3.nagios_admins},${nagios3.nagios_users}
 
 default_statusmap_layout=5
 
