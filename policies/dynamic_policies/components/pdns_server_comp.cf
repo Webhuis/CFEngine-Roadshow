@@ -8,12 +8,12 @@ vars:
 
     "pdns_package_name"          slist  => getindices("pkg");
 
-    "gmysql_password"            string => "6DcFQCD0j5iK";
-
 methods:
  "any" usebundle => packages("pdns_server_comp.pkg");
  "any" usebundle => get_template("pdns-mysql.conf.tmpl");
  "any" usebundle => pdns_conf;
+ "any" usebundle => get_template("recursor.conf.tmpl");
+ "any" usebundle => recursor_conf;
 
 }
 
@@ -23,10 +23,9 @@ files:
  "/etc/powerdns/pdns.conf"
   comment                   => "pdns.conf door class_domain nameserver",
   perms                     => mo("600","root"),
-#  copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl"),
+  create                    => "true",
   action                    => u_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl",
-#  empty_file_before_editing => "true",
   classes                   => u_if_repaired("restart_pdns");
 
 commands:
@@ -35,3 +34,21 @@ commands:
    "/etc/init.d/pdns-recursor restart";
 
 }
+
+bundle agent recursor_conf {
+
+files:
+ "/etc/powerdns/recursor.conf"
+  comment                   => "recursor.conf door class_domain nameserver",
+  create                    => "true",
+  perms                     => mog("640","root","pdns"),
+  action                    => u_immediate,
+  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/recursor.conf.tmpl",
+  classes                   => u_if_repaired("restart_recursor");
+
+commands:
+  restart_pdns::
+   "/etc/init.d/pdns-recursor restart";
+
+}
+

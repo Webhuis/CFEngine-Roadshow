@@ -25,8 +25,10 @@ files:
 
 commands:
  update_mirror::
+  "/bin/rm /var/lib/apt/lists/lock";
+  "/bin/rm /var/lib/dpkg/lock";
   "/usr/bin/apt-get update";
-  "/usr/bin/apt-get upgrade";
+  "/usr/bin/apt-get upgrade -y";
 
 }
 
