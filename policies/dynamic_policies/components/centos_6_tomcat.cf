@@ -1,0 +1,21 @@
+bundle agent centos_6_tomcat {
+
+vars:
+
+  "pkg[java-1.6.0-openjdk]"     string => "*";
+  "pkg[nfs-utils]"              string => "*";
+  "pkg[tomcat6]"                string => "*";
+
+methods:
+
+  "any" usebundle => packages("centos_6_tomcat.pkg");
+
+
+commands:
+
+ restart_tomcat::
+  "/etc/init.d/tomcat6 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}

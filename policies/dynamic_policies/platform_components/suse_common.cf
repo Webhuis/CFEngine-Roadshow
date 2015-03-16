@@ -6,6 +6,15 @@ methods:
 
 }
 
+
+bundle agent zypper_repo {
+
+commands:
+# "/usr/bin/zypper --gpg-auto-import-keys  addrepo -f  http://download.opensuse.org/repositories/network/openSUSE_13.1/ obsrepo";
+ "/usr/sbin/zypp-refresh";
+
+}
+
 bundle agent rpmosu_mirror {
 
   vars:

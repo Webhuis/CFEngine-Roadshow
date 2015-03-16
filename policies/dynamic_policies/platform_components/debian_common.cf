@@ -1,8 +1,9 @@
 bundle agent debian {
 
 vars:
-    "pkg[openssh-server]"      string => "*";
+    "pkg[debian-goodies]"      string => "*";
     "pkg[nfs-common]"          string => "*";
+    "pkg[openssh-server]"      string => "*";
 
 methods:
  

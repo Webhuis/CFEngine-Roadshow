@@ -1,15 +1,15 @@
 bundle agent redhat {
 
 methods:
- "any" usebundle => rpmcos_mirror;
+ "any" usebundle => redhat_mirror;
  "any" usebundle => os_common;
 
 }
 
-bundle agent rpmcos_mirror {
+bundle agent redhat_mirror {
 
   vars:
-    "mirror"     string => "http://rpmcos01.webhuis.nl:3142/";
+    "mirror"     string => "http://aptutl01.webhuis.nl:3142/";
 
   files:
 

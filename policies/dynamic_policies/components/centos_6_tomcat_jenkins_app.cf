@@ -1,0 +1,20 @@
+bundle agent centos_6_tomcat_jenkins_app {
+
+vars:
+  "catalina_base"          string => "/var/lib/tomcat6";
+
+files:
+  "$(catalina_base)/webapps/sample"
+          handle => "enkinse_delete",
+         comment => "deleting jenkins.war",
+    depth_search => u_recurse(inf),
+          delete => tidy;
+
+  "$(catalina_base)/webapps/jenkins.war"
+          handle => "deploy_jenkins",
+         comment => "deploying jenkins.war",
+          perms  => mog("644","tomcat","tomcat"),
+         classes => if_repaired("restart_tomcat"),
+       copy_from => local_cp("/mnt/webapps/jenkins/jenkins.war");
+
+}

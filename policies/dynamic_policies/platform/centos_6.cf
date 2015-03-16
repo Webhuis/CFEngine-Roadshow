@@ -1,0 +1,6 @@
+bundle agent centos_6 {
+
+methods:
+ "any" usebundle => redhat;
+
+}
