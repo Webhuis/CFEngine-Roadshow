@@ -11,9 +11,9 @@ vars:
 
 methods:
 
-  "any" usebundle => "${sys.flavor}_tomcat";
   "any" usebundle => "app_mount";
   "any" usebundle => "${sys.flavor}_tomcat_jenkins_app";
+  "any" usebundle => "${sys.flavor}_tomcat";
 
 reports:
 

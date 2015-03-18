@@ -1,26 +1,10 @@
-bundle agent redhat {
+bundle agent redhat_common {
 
-methods:
- "any" usebundle => redhat_mirror;
- "any" usebundle => os_common;
+vars:
 
-}
-
-bundle agent redhat_mirror {
-
-  vars:
-    "mirror"     string => "http://aptutl01.webhuis.nl:3142/";
-
-  files:
-
-!rpmcos01::
-      "/etc/apt/apt.conf"
-
-              create  => "true",
-            edit_line => edit_rpm_mirror($(mirror)) ;
+ "redhat_common"     string => "redhat_common";
 
 }
-
 
 bundle agent packages (pkgs_array) {
 
@@ -40,7 +24,7 @@ packages:
 bundle agent restart_sshd {
 
 commands:
-  "systemctl restart sshd"
+  "/etc/init.d/sshd restart"
      handle => "restart_sshd",
     comment => "restarting sshd";
 

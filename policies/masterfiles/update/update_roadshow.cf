@@ -20,9 +20,16 @@ bundle agent cfe_roadshow_update {
       action => u_immediate,
       classes => u_if_repaired("update_report");
 
-   "$(sys.workdir)/dynamic-inputs-local/platform"
+   "$(sys.workdir)/dynamic-inputs-local/platform/${sys.flavor}.cf"
       handle => "update_files_inputs_roadshow_platform",
-      copy_from => u_rcp("${master_dynamic}/platform/${sys.flavor}", ${sys.policy_hub}),
+      copy_from => u_rcp("${master_dynamic}/platform/${sys.flavor}.cf", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform_components/${${sys.flavor}.inputs}"
+      handle => "update_files_inputs_roadshow_platform_components",
+      copy_from => u_rcp("${master_dynamic}/platform_components/${${sys.flavor}.inputs}", ${sys.policy_hub}),
       file_select  => u_policies,
       depth_search => u_recurse(inf),
       action => u_immediate,

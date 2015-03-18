@@ -1,10 +1,10 @@
-bundle agent webapp {
+bundle agent webhud {
 
 vars:
 
   "bundles[${sys.flavor}_tomcat]"                 string => "${sys.flavor}_tomcat.cf";
   "bundles[app_mount]"                            string => "app_mount.cf";
-  "bundles[${sys.flavor}_tomcat_sample_app]"      string => "${sys.flavor}_tomcat_sample_app.cf";
+  "bundles[${sys.flavor}_tomcat_hudson_app]"     string => "${sys.flavor}_tomcat_hudson_app.cf";
 
   "sequence"  slist => getindices("bundles");
   "inputs"    slist => getvalues("bundles");
@@ -12,10 +12,10 @@ vars:
 methods:
 
   "any" usebundle => "app_mount";
-  "any" usebundle => "${sys.flavor}_tomcat_sample_app";
+  "any" usebundle => "${sys.flavor}_tomcat_hudson_app";
   "any" usebundle => "${sys.flavor}_tomcat";
 
 reports:
 
- "webapp: ${webapp.inputs}";
+ "webhud: ${webhud.inputs}";
 }
