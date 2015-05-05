@@ -24,7 +24,7 @@ vars:
 packages:
 
       "$(package_name)"
-            package_policy  => "addupdate",
+            package_policy  => "add",
             package_method  => zypper,
             package_version => "$($(pkgs_array)[$(package_name)])";
 }
