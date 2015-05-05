@@ -168,24 +168,6 @@ reports:
  "${$do_roadshow.class_domain}.resolvers}}";
 }
 
-bundle agent dpackages (dpkgs_array) {
-
-vars:
- any::
-        "dpackage_name"            slist  => getindices("$(dpkgs_array)");
-
-packages:
-
-    debian::
-
-      "$(dpackage_name)"
-            package_policy  => "addupdate",
-            package_method  => dpkg_version("/var/cache/apt/archives"),
-            package_select  => "==",
-            package_version => "$($(dpkgs_array)[$(dpackage_name)])";
-
-}
-
 bundle agent nopackages (nopkgs_array) {
 
 vars:

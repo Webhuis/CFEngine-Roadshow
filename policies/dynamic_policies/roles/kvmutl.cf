@@ -4,11 +4,30 @@ vars:
 
   "bundles[kvm_comp]"      string => "kvm_comp.cf";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "sequence"                slist => getindices("bundles");
+  "inputs"                  slist => getvalues("bundles");
+
+  "host_utl[pdsmys0017]    string => "2G";
+  "host_utl[mngmys0019]    string => "2G";
+
+  "host_vm[webapp0080]     string => "2G";
+  "host_vm[webttw0082]     string => "2G";
+  "host_vm[webhud0083]     string => "2G";
+  "host_vm[webjen0086]     string => "2G";
+  "host_vm[webapp0180]     string => "2G";
+  "host_vm[webttw0182]     string => "2G";
+  "host_vm[webjen0183]     string => "2G";
+  "host_vm[webhud0184]     string => "2G";
+  "host_vm[webjen0190]     string => "2560M";
+  "host_vm[webapp0191]     string => "2560M";
+  "host_vm[webhud0192]     string => "2560M";
+  "host_vm[webjen0193]     string => "2560M";
+  "host_vm[webapp0194]     string => "2560M";
+  "host_vm[webhud0195]     string => "2560M";
+
 
 methods:
 
-  "any" usebundle => "kvm_comp";
+  "any" usebundle => "kvm_comp(kvmutl.host_vm)";
 
 }

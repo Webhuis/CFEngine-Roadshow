@@ -1,7 +1,7 @@
-bundle agent suse {
+bundle agent suse_common {
 
 methods:
- "any" usebundle => rpmosu_mirror;
+ "any" usebundle => zypper_repo;
  "any" usebundle => os_common;
 
 }
@@ -10,25 +10,10 @@ methods:
 bundle agent zypper_repo {
 
 commands:
-# "/usr/bin/zypper --gpg-auto-import-keys  addrepo -f  http://download.opensuse.org/repositories/network/openSUSE_13.1/ obsrepo";
+
  "/usr/sbin/zypp-refresh";
 
 }
-
-bundle agent rpmosu_mirror {
-
-  vars:
-    "mirror"     string => "http://rpmosu01.webhuis.nl:3142/";
-
-  files:
-
-      "/etc/apt/apt.conf"
-
-              create  => "true",
-            edit_line => edit_rpm_mirror($(mirror)) ;
-
-}
-
 
 bundle agent packages (pkgs_array) {
 

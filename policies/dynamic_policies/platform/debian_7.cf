@@ -1,6 +1,16 @@
 bundle agent debian_7 {
 
+vars:
+
+  "bundles[os_common]"                 string => "os_common.cf";
+  "bundles[debian_common]"             string => "debian_common.cf";
+
+  "sequence"  slist => getindices("bundles");
+  "inputs"    slist => getvalues("bundles");
+
 methods:
- "any" usebundle => debian;
+
+ "any" usebundle => os_common;
+ "any" usebundle => debian_common;
 
 }

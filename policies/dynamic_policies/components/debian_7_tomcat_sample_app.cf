@@ -1,7 +1,7 @@
 bundle agent debian_7_tomcat_sample_app {
 
 vars:
-  "catalina_base"          string => "/var/lib/tomcat7";
+  "catalina_base"          string => "/var/lib/tomcat6";
 
 files:
   "$(catalina_base)/webapps/sample"
@@ -13,7 +13,7 @@ files:
   "$(catalina_base)/webapps/sample.war"
           handle => "deploy_sample",
          comment => "deploying sample.war",
-          perms  => mog("644","tomcat7","tomcat7"),
+          perms  => mog("644","tomcat6","tomcat6"),
          classes => if_repaired("restart_tomcat"),
        copy_from => local_cp("/mnt/webapps/sample.war");
 
