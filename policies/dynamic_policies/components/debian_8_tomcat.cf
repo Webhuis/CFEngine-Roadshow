@@ -1,0 +1,20 @@
+bundle agent debian_8_tomcat {
+
+vars:
+
+  "pkg[nfs-common]"        string => "*";
+  "pkg[openjdk-7-jre]"     string => "*";
+  "pkg[tomcat7]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("debian_8_tomcat.pkg");
+
+commands:
+
+ restart_tomcat::
+  "/etc/init.d/tomcat7 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}

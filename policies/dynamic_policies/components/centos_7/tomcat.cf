@@ -1,0 +1,20 @@
+bundle agent tomcat {
+
+vars:
+
+  "pkg[java-1.7.0-openjdk]"     string => "*";
+  "pkg[nfs-utils]"              string => "*";
+  "pkg[tomcat]"                 string => "*";
+
+methods:
+
+  "any" usebundle => packages("tomcat.pkg");
+
+commands:
+
+ restart_tomcat::
+  "service tomcat restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}

@@ -1,0 +1,23 @@
+bundle agent gitlab {
+
+vars:
+
+      "bundles[${sys.flavor}_pitlab_comp]"          string => "${sys.flavor}_gitlab_comp.cf";
+      "bundles[${sys.flavor}_postfix_comp]"         string => "${sys.flavor}_postfix_comp.cf";
+      "bundles[${sys.flavor}_postgresql_comp]"      string => "${sys.flavor}_postgresql_comp.cf";
+      "bundles[${sys.flavor}_redis_server_comp]"    string => "${sys.flavor}_ruby_comp.cf";
+      "bundles[${sys.flavor}_ruby_comp]"            string => "${sys.flavor}_ruby_comp.cf";
+
+
+      "sequence"  slist => getindices("bundles");
+      "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "${sys.flavor}_gitlab_comp";
+  "any" usebundle => "${sys.flavor}_postfix_comp";
+  "any" usebundle => "${sys.flavor}_postgresql_comp";
+  "any" usebundle => "${sys.flavor}_redis_server_comp";
+  "any" usebundle => "${sys.flavor}_ruby_comp";
+
+}

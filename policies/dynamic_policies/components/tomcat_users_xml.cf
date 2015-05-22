@@ -1,0 +1,12 @@
+bundle agent tomcat_users_xml {
+
+files:
+ "/etc/tomcat/tomcat-users.xml"
+  comment                   => "tomcat users for management",
+  perms                     => mog("664","tomcat","tomcat"),
+  create                    => "true",
+  action                    => u_immediate,
+  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/tomcat-users.xml.tmpl",
+  classes                   => u_if_repaired("restart_tomcat");
+
+}

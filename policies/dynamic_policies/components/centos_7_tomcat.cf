@@ -1,0 +1,21 @@
+bundle agent centos_7_tomcat {
+
+vars:
+
+  "pkg[java-1.7.0-openjdk]"     string => "*";
+  "pkg[nfs-utils]"              string => "*";
+  "pkg[tomcat7]"                string => "*";
+
+methods:
+
+  "any" usebundle => packages("centos_7_tomcat.pkg");
+
+
+commands:
+
+ restart_tomcat::
+  "/etc/init.d/tomcat6 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}
