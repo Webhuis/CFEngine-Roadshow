@@ -1,4 +1,4 @@
-bundle agent debian_8_nfs {
+bundle agent nfs {
 
 vars:
 
@@ -6,7 +6,7 @@ vars:
 
 methods:
 
-  "any" usebundle => packages("debian_8_nfs.pkg");
+  "any" usebundle => packages("nfs.pkg");
 
 commands:
 

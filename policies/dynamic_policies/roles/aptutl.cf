@@ -1,4 +1,4 @@
-bundle agent debian_8_aptutl {
+bundle agent aptutl {
 
 vars:
 
@@ -6,6 +6,6 @@ vars:
 
 methods:
 
-  "any" usebundle => packages("debian_8_aptutl.pkg");
+  "any" usebundle => packages("aptutl.pkg");
 
 }

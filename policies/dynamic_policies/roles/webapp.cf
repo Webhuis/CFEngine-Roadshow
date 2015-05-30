@@ -2,18 +2,21 @@ bundle agent webapp {
 
 vars:
 
-  "bundles[${sys.flavor}_tomcat]"                 string => "${sys.flavor}_tomcat.cf";
-  "bundles[app_mount]"                            string => "app_mount.cf";
-  "bundles[${sys.flavor}_tomcat_sample_app]"      string => "${sys.flavor}_tomcat_sample_app.cf";
+  "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
+  "bundles[app_mount]"              string => "app_mount.cf";
+  "bundles[tomcat_users_xml]"       string => "tomcat_users_xml.cf";
+  "bundles[tomcat_sample_app]"      string => "${sys.flavor}/tomcat_sample_app.cf";
 
   "sequence"  slist => getindices("bundles");
   "inputs"    slist => getvalues("bundles");
 
 methods:
 
+  "any" usebundle => get_template("tomcat-users.xml.tmpl");
   "any" usebundle => "app_mount";
-  "any" usebundle => "${sys.flavor}_tomcat_sample_app";
-  "any" usebundle => "${sys.flavor}_tomcat";
+  "any" usebundle => "tomcat_sample_app";
+  "any" usebundle => "tomcat_users_xml";
+  "any" usebundle => "tomcat";
 
 reports:
 

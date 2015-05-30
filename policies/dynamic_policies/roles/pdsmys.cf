@@ -2,15 +2,15 @@ bundle agent pdsmys {
 
 vars:
 
-      "bundles[${sys.flavor}_mysql_server_comp]"      string => "${sys.flavor}_mysql_server_comp.cf";
-      "bundles[${sys.flavor}_pdns_server_comp]"       string => "${sys.flavor}_pdns_server_comp.cf";
+  "bundles[mysql_server_comp]"      string => "${sys.flavor}/mysql_server_comp.cf";
+  "bundles[pdns_server_comp]"       string => "${sys.flavor}/pdns_server_comp.cf";
 
-      "sequence"  slist => getindices("bundles");
-      "inputs"    slist => getvalues("bundles");
+  "sequence"  slist => getindices("bundles");
+  "inputs"    slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => "${sys.flavor}_mysql_server_comp";
-  "any" usebundle => "${sys.flavor}_pdns_server_comp";
+  "any" usebundle => "mysql_server_comp";
+  "any" usebundle => "pdns_server_comp";
 
 }

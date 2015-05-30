@@ -1,4 +1,4 @@
-bundle agent debian_8_mif {
+bundle agent mif {
 
 vars:
 
@@ -7,6 +7,6 @@ vars:
 
 methods:
 
-  "any" usebundle => packages("debian_8_mif.pkg");
+  "any" usebundle => packages("mif.pkg");
 
 }
