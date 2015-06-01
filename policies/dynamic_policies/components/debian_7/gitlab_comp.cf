@@ -1,0 +1,15 @@
+bundle agent gitlab_comp {
+
+vars:
+
+    "gitlab_version"                              string => "gitlab_7.9.2-omnibus-1_amd64.deb";
+
+    "pkg[postfix]"                                string => "*";
+    "dpkg[gitlab]"                                string => "*";
+
+methods:
+ "any" usebundle => packages("gitlab_comp.pkg");
+ "any" usebundle => get_dpackage("gitlab_version");
+ "any" usebundle => dpackages("gitlab_comp.dpkg");
+
+}

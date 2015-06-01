@@ -1,0 +1,20 @@
+bundle agent tomcat {
+
+vars:
+
+  "pkg[nfs-common]"        string => "*";
+  "pkg[openjdk-6-jre]"     string => "*";
+  "pkg[tomcat6]"           string => "*";
+
+methods:
+
+  "any" usebundle => packages("tomcat.pkg");
+
+commands:
+
+ restart_tomcat::
+  "/etc/init.d/tomcat6 restart"
+     handle => "restart_tomcat",
+    comment => "restarting tomcat";
+
+}
