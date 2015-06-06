@@ -1,0 +1,24 @@
+bundle agent tomcat_jenkins_app {
+
+files:
+
+  "${tomcat.home}"
+           perms => mog("775","root","${tomcat.group}"),
+          handle => "jenkins_home",
+         comment => "jenkins home",
+         classes => if_repaired("restart_tomcat");
+
+  "$(tomcat.catalina_base)/webapps/jenkins"
+          handle => "jenkins_delete",
+         comment => "deleting jenkins.war",
+    depth_search => u_recurse(inf),
+          delete => tidy;
+
+  "$(tomcat.catalina_base)/webapps/jenkins.war"
+          handle => "deploy_jenkins",
+         comment => "deploying jenkins.war",
+          perms  => mog("644","${tomcat.user}","${tomcat.group}")
+       copy_from => local_cp("/mnt/webapps/jenkins/jenkins.war"),
+         classes => if_repaired("restart_tomcat");
+
+}

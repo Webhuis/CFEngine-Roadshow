@@ -2,6 +2,12 @@ bundle agent tomcat {
 
 vars:
 
+  "user"                   string => "tomcat";
+  "group"                  string => "tomcat";
+  "home"                   string => "/usr/share/tomcat6";
+  "config"                 string => "/etc/tomcat6";
+  "catalina_base"          string => "/var/lib/tomcat6";
+
   "pkg[java-1.6.0-openjdk]"     string => "*";
   "pkg[nfs-utils]"              string => "*";
   "pkg[tomcat6]"                string => "*";

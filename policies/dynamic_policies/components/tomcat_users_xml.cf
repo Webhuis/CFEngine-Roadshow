@@ -1,9 +1,9 @@
 bundle agent tomcat_users_xml {
 
 files:
- "/etc/tomcat/tomcat-users.xml"
+ "${tomcat.config}/tomcat-users.xml"
   comment                   => "tomcat users for management",
-  perms                     => mog("664","tomcat","tomcat"),
+  perms                     => mog("664","${tomcat.user}","${tomcat.group}"),
   create                    => "true",
   action                    => u_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/tomcat-users.xml.tmpl",
