@@ -5,7 +5,7 @@ vars:
   "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
   "bundles[app_mount]"              string => "app_mount.cf";
   "bundles[tomcat_users_xml]"       string => "tomcat_users_xml.cf";
-  "bundles[tomcat_jenkins_app]"     string => "${sys.flavor}/tomcat_jenkins_app.cf";
+  "bundles[tomcat_jenkins_app]"     string => "tomcat_jenkins_app.cf";
 
   "sequence"  slist => getindices("bundles");
   "inputs"    slist => getvalues("bundles");
