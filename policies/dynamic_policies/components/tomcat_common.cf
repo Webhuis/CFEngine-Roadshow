@@ -1,0 +1,45 @@
+bundle agent tomcat_common {
+
+vars:
+
+  "tomcat_manager" sring => "manager";
+
+files:
+ "${tomcat.config}/tomcat-users.xml"
+  comment         => "tomcat users for management",
+  perms           => mog("664","${tomcat.user}","${tomcat.group}"),
+  create          => "true",
+  action          => u_immediate,
+  edit_template   => "$(sys.workdir)/dynamic-inputs-local/templates/tomcat-users.xml.tmpl",
+  classes         => u_if_repaired("restart_tomcat");
+
+  "${tomcat.home}"
+           perms  => mog("775","root","${tomcat.group}"),
+          handle  => "tomcat_home",
+         comment  => "tomcat home",
+         classes  => if_repaired("restart_tomcat");
+
+methods:
+
+  "any" usebundle => deploy_app("${tomcat_manager}");
+
+}
+
+bundle agent deploy_app (app) {
+
+files:
+
+  "$(tomcat.catalina_base)/webapps/${app}"
+          handle  => "app_delete",
+         comment  => "deleting app",
+    depth_search  => u_recurse(inf),
+          delete  => tidy;
+
+  "$(tomcat.catalina_base)/webapps/${app}.war"
+          handle  => "deploy_app",
+         comment  => "deploying app.war",
+          perms   => mog("644","${tomcat.user}","${tomcat.group}"),
+       copy_from  => local_cp("/mnt/webapps/${app}.war"),
+         classes  => if_repaired("restart_tomcat");
+
+}

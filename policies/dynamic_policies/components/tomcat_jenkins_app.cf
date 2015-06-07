@@ -17,7 +17,7 @@ files:
   "$(tomcat.catalina_base)/webapps/jenkins.war"
           handle => "deploy_jenkins",
          comment => "deploying jenkins.war",
-          perms  => mog("644","${tomcat.user}","${tomcat.group}")
+          perms  => mog("644","${tomcat.user}","${tomcat.group}"),
        copy_from => local_cp("/mnt/webapps/jenkins/jenkins.war"),
          classes => if_repaired("restart_tomcat");
 

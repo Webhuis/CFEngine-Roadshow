@@ -2,20 +2,20 @@ bundle agent webjen {
 
 vars:
 
-  "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
-  "bundles[app_mount]"              string => "app_mount.cf";
-  "bundles[tomcat_users_xml]"       string => "tomcat_users_xml.cf";
-  "bundles[tomcat_jenkins_app]"     string => "tomcat_jenkins_app.cf";
+  "app"                             string => "jenkins";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
+  "bundles[app_mount]"              string => "app_mount.cf"; 
+  "bundles[tomcat_common]"          string => "tomcat_common.cf";
+
+  "sequence"                         slist => getindices("bundles");
+  "inputs"                           slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => get_template("tomcat-users.xml.tmpl");
-  "any" usebundle => "app_mount";
-  "any" usebundle => "tomcat_jenkins_app";
-  "any" usebundle => "tomcat_users_xml";
-  "any" usebundle => "tomcat";
+  "any"                          usebundle => app_mount;
+  "any"                          usebundle => deploy_app("${app}");
+  "any"                          usebundle => tomcat_common;
+  "any"                          usebundle => tomcat;
 
 }
