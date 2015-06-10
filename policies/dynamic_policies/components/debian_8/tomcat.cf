@@ -2,9 +2,16 @@ bundle agent tomcat {
 
 vars:
 
+  "user"                   string => "tomcat7";
+  "group"                  string => "tomcat7";
+  "home"                   string => "/usr/share/tomcat7";
+  "config"                 string => "/etc/tomcat7";
+  "catalina_base"          string => "/var/lib/tomcat7";
+
   "pkg[nfs-common]"        string => "*";
   "pkg[openjdk-7-jre]"     string => "*";
   "pkg[tomcat7]"           string => "*";
+  "pkg[tomcat6-admin]"     string => "*";
 
 methods:
 

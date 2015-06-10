@@ -2,18 +2,17 @@ bundle agent webttw {
 
 vars:
 
-  "pkg[openjdk-7-jre]"     string => "*";
-  "pkg[tomcat7]"           string => "*";
+  "app"            string => "testweb";
+  "tomcat_app"     string => "tomcat_app.cf";
+
+  "inputs"          slist => { "${tomcat_app}", getvalues("tomcat_app.bundles") };
 
 methods:
 
-  "any" usebundle => packages("webttw.pkg");
+  "any"         usebundle => tomcat_app(${app});
 
-commands:
+reports:
 
- restart_tomcat::
-  "service tomcat7 restart"
-     handle => "restart_tomcat",
-    comment => "restarting tomcat";
+  "webttw.inputs: ${inputs}";
 
 }

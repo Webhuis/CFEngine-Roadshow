@@ -11,6 +11,7 @@ vars:
   "pkg[nfs-common]"        string => "*";
   "pkg[openjdk-6-jre]"     string => "*";
   "pkg[tomcat6]"           string => "*";
+  "pkg[tomcat6-admin]"     string => "*";
 
 methods:
 
