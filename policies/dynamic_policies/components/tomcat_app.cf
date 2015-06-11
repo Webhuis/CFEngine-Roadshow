@@ -1,0 +1,44 @@
+bundle agent tomcat_app (app) {
+
+vars:
+
+  "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
+  "bundles[app_mount]"              string => "app_mount.cf"; 
+  "bundles[tomcat_common]"          string => "tomcat_common.cf";
+
+  "sequence"                         slist => getindices("bundles");
+  "inputs"                           slist => getvalues("bundles");
+
+methods:
+
+  "any"                          usebundle => app_mount;
+  "any"                          usebundle => deploy_tomcat_app("${app}");
+  "any"                          usebundle => tomcat_common;
+  "any"                          usebundle => tomcat;
+
+reports:
+
+  "tomcat_app.inputs: ${inputs}";
+
+}
+
+
+bundle agent deploy_tomcat_app (app) {
+
+files:
+
+  "$(tomcat.catalina_base)/webapps/${app}"
+          handle  => "app_delete",
+         comment  => "deleting app",
+    depth_search  => u_recurse(inf),
+          delete  => tidy;
+
+  "$(tomcat.catalina_base)/webapps/${app}.war"
+          handle  => "deploy_app",
+         comment  => "deploying app.war",
+           perms  => mog("644","${tomcat.user}","${tomcat.group}"),
+       copy_from  => local_cp("/mnt/webapps/${app}.war"),
+         classes  => if_repaired("restart_tomcat");
+
+}
+
