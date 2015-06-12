@@ -2,7 +2,7 @@ bundle agent tomcat_common {
 
 files:
  "${tomcat.config}/tomcat-users.xml"
-       ` comment  => "tomcat users for management",
+         comment  => "tomcat users for management",
            perms  => mog("664","${tomcat.user}","${tomcat.group}"),
           create  => "true",
           action  => u_immediate,
