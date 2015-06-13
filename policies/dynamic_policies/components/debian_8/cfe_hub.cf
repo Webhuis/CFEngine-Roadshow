@@ -1,0 +1,12 @@
+bundle agent cfe_comp {
+
+vars:
+
+  "pkg[cfengine_community]"           string => "*";
+
+#    "cfehost_package_name"     slist  => getindices("pkg");
+
+methods:
+    "any" usebundle => packages("cfe_comp.pkg");
+
+}

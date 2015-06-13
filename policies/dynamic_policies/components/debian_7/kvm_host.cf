@@ -1,0 +1,61 @@
+bundle agent kvm_comp(host_vm) {
+
+vars:
+  "host_index"                slist => getindices("host_vm");
+  "host_size"                 slist => getvalues("host_vm");
+
+  "kvm_vm_config"            string => "/etc/libvirt/qemu";
+
+files:
+  "${kvm_vm_config}/${host_index}.webhuis.nl.xml"
+          handle => "vm_config",
+         comment => "vm_config",
+          create => "true",
+           perms => mog("600","root","root"),
+         classes => if_repaired("restore_vm"),
+       copy_from => local_cp("/mnt/ssd/CFEngine_Roadshow/configurations/${host_index}.webhuis.nl.xml");
+
+methods:
+
+ restore_vm::
+  "any" usebundle destroy_vm(kvm_comp.${host_index});
+  "any" usebundle restore_vm(kvm_comp.${host_index},kvm_comp.${host_size});
+
+}
+
+bundle agent restore_vm(vm) {
+
+vars;
+
+  "kvm_vm_config"            string => "/etc/libvirt/qemu";
+
+methods:
+
+  "any" usebundle restore_file_system(vm, vm_size);
+
+commands:
+   "/usr/bin/virsh create ${kvm_vm_config}/${vm}.webhuis.nl.xml";
+
+}
+
+bundle agent restore_file_system(vm, vm_size) {
+
+vars:
+
+  "host_group"    string => "kvm-roadshow";
+  "host_images"   string => "/dev/${host_group}";
+
+commands:
+
+  "/sbin/lvremove -f ${host_image}/${vm}.webhuis.nl-rvg";
+  "/sbin/lvcreate -L ${vm_size} -n ${vm}.webhuis.nl-rvg ${host_group}";
+  "/bin/gunzip -c /mnt/ssd/CFEngine_Roadshow/images/${vm}.webhuis.nl-rvg.tgz | /bin/dd of=${host_image}/${vm}.webhuis.nl-rvg";
+
+}
+
+bundle agent destroy_vm(vm) {
+
+commands:
+  "/usr/bin/virsh destroy ${vm}.webhuis.nl";
+
+}
