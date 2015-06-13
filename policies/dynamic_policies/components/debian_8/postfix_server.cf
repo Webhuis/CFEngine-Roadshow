@@ -1,17 +1,16 @@
-bundle agent postfix_server{
+bundle agent postfix_server {
 
 vars:
 
-    "pkg[postfix-server]"           string => "*";
-    "pkg[postfix-recursor]"         string => "*";
-    "pkg[postfix-backend-mysql]"    string => "*";
+  "pkg[postfix]"                  string => "*";
+  "pkg[postfixadmin]"             string => "*";
 
-    "postfix_package_name"          slist  => getindices("pkg");
+  "postfix_package_name"          slist  => getindices("pkg");
 
 methods:
  "any" usebundle => packages("postfix_server.pkg");
- "any" usebundle => get_template("postfix-mysql.conf.tmpl");
- "any" usebundle => postfix_conf;
+# "any" usebundle => get_template("postfix-mysql.conf.tmpl");
+# "any" usebundle => postfix_conf;
 
 }
 

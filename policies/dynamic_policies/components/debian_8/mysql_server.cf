@@ -1,13 +1,14 @@
-bundle agent mysql_server{
+bundle agent mysql_server {
 
 vars:
 
-    "pkg[mysql-server]"		string => "*";
+  "pkg[mysql-server]"		string => "*";
 
 methods:
- "any" usebundle => packages("mysql_server.pkg");
- "any" usebundle => get_template("my.cnf.tmpl");
- "any" usebundle => my_cnf;
+
+  "any" usebundle => packages("mysql_server.pkg");
+  "any" usebundle => get_template("my.cnf.tmpl");
+  "any" usebundle => my_cnf;
 
 }
 
