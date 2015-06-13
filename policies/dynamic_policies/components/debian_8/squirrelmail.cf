@@ -3,7 +3,7 @@ bundle agent squirrelmail {
 vars:
 
   "pkg[squirrelmail]"          string => "*";
-  "pkg[php5-pear]"             string => "*";
+  "pkg[php-pear]"              string => "*";
   "pkg[php5-ldap]"             string => "*";
 
   "squirrelmail_package_name"   slist => getindices("pkg");
