@@ -3,7 +3,7 @@ bundle agent mngmys {
 vars:
 
       "bundles[nagios3]"                string => "nagios3.cf";
-      "bundles[mysql_server_comp]"      string => "mysql_server_comp.cf";
+      "bundles[mysql_server]"           string => "mysql_server.cf";
 
       "sequence"  slist => getindices("bundles");
       "inputs"    slist => getvalues("bundles");
@@ -11,7 +11,7 @@ vars:
 methods:
 
   "any" usebundle => "nagios3";
-  "any" usebundle => "mysql_server_comp";
+  "any" usebundle => "mysql_server";
 
 
 }

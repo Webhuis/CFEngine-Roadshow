@@ -1,6 +1,0 @@
-bundle agent test3 {
-
-reports:
-  linux::
-    "Bundle test3 uitgevoerd";
-}
