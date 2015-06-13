@@ -2,7 +2,7 @@ bundle agent kvmutl {
 
 vars:
 
-  "bundles[kvm_comp]"      string => "kvm_comp.cf";
+  "bundles[kvm_comp]"      string => "kvm_host.cf";
 
   "sequence"                slist => getindices("bundles");
   "inputs"                  slist => getvalues("bundles");
@@ -28,6 +28,6 @@ vars:
 
 methods:
 
-  "any" usebundle => "kvm_comp(kvmutl.host_vm)";
+  "any" usebundle => "kvm_host(kvmutl.host_vm)";
 
 }
