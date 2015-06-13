@@ -2,15 +2,15 @@ bundle agent pfxmys {
 
 vars:
 
-  "bundles[mysql_server_comp]"      string => "${sys.flavor}/mysql_server_comp.cf";
-  "bundles[postfix_server_comp]"    string => "${sys.flavor}/pdns_server_comp.cf";
+  "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
+  "bundles[postfix_server]"    string => "${sys.flavor}/pdns_server.cf";
 
   "sequence"  slist => getindices("bundles");
   "inputs"    slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => "mysql_server_comp";
-  "any" usebundle => "postfix_server_comp";
+  "any" usebundle => "mysql_server";
+  "any" usebundle => "postfix_server";
 
 }
