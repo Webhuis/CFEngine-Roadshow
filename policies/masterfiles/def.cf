@@ -38,6 +38,7 @@ bundle common def
 
                            # Assume /16 LAN clients to start with
                            "$(sys.policy_hub)/16",
+                           "10.68.71.0/24",
                            "192.168.125.0/24",
 
                            #  "2001:700:700:3.*",
