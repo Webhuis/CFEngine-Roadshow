@@ -7,7 +7,7 @@ vars:
   "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
   "bundles[courier]"           string => "${sys.flavor}/courier.cf";
   "bundles[squirrelmail]"      string => "${sys.flavor}/squirrelmail.cf";
-  "bundles[apachec2]"          string => "${sys.flavor}/apache2.cf";
+  "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
 
   "sequence"  slist => getindices("bundles");
   "inputs"    slist => getvalues("bundles");
@@ -19,6 +19,6 @@ methods:
   "any" usebundle => "postfix_mysql";
   "any" usebundle => "courier";
   "any" usebundle => "squirrelmail";
-  "any" usebundle => "postfix_apache";
+  "any" usebundle => "apache2";
 
 }
