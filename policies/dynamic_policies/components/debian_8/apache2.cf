@@ -11,7 +11,7 @@ vars:
 
 files:
 
-  "${apache_conf_dir}/sites_available/${default.conf}
+  "${apache_conf_dir}/sites_available/${default.conf}"
          comment  => "default apache2 config wijst naar webhuis.nl",
            perms  => mog("644","root","root"),
           create  => "true",
@@ -19,7 +19,7 @@ files:
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/${000_default}",
          classes  => u_if_repaired("restart_apache");
 
-  "${apache_conf_dir}/sites_enabled/${default.conf}"
+  "${apache_conf_dir}/sites_enabled/${default.conf}""
          comment  => "default apache2 symbolic link",
         link_from => ln_s("${apache_conf_dir/sites-available/${default_conf}");
          classes  => u_if_repaired("restart_apache");
