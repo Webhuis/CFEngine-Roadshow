@@ -2,19 +2,36 @@ bundle agent apache2 {
 
 vars:
 
-    "pkg[apache2]"		string => "*";
+  "apache_log_dir"   string => "/var/log/apache2/";
+  "apache_conf_dir"  string => "/etc/apache2";
+  "default_conf"     string => "000-default.conf";
+  "000_default"      string => "apache2-000-default.conf.tmpl";
 
-#    "ips_package_name"     slist  => getindices("pkg");
+  "pkg[apache2]"	    string => "*";
+
+files:
+
+  "${apache_conf_dir}/sites_available/${default.conf}
+         comment  => "default apache2 config wijst naar webhuis.nl",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/${000_default}",
+         classes  => u_if_repaired("restart_apache");
+
+  "${apache_conf_dir}/sites_enabled/${default.conf}"
+         comment  => "default apache2 symbolic link",
+        link_from => ln_s("${apache_conf_dir/sites-available/${default_conf}");
+         classes  => u_if_repaired("restart_apache");
 
 methods:
-    "any" usebundle => packages("apache2.pkg");
-    "any" usebundle => apache_port_80;
-}
 
-bundle agent apache_port_80 {
+  "any" usebundle => get_template("${000_default}");
+  "any" usebundle => packages("apache2.pkg");
 
-reports:
-  linux::
-    "apache port 80";
+commands:
+
+  restart_apache::
+   "/bin/systemctl restart apache2";
 
 }

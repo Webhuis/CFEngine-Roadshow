@@ -2,6 +2,7 @@ bundle agent postfix_server {
 
 vars:
 
+  "data_directory"                string => "/var/lib/postfix/";
   "pkg[postfix]"                  string => "*";
   "pkg[postfixadmin]"             string => "*";
 
