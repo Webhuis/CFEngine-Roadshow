@@ -21,7 +21,7 @@ files:
 
   "${apache_conf_dir}/sites_enabled/${default_conf}"
          comment  => "default apache2 symbolic link",
-        link_from => ln_s("${apache_conf_dir/sites-available/${default_conf}");
+        link_from => ln_s("${apache_conf_dir/sites-available/${default_conf}"),
          classes  => u_if_repaired("restart_apache");
 
 methods:
