@@ -22,7 +22,7 @@ bundle agent addgroup {
 commands:
   "/usr/sbin/groupadd -g 1001 cfegroup";
 }
-body common control {
- bundlesequence => { "create_user_file", "create_user_directory", "adduser", "addgroup"  };
-     inputs     => { "$(sys.libdir)/stdlib.cf" };
-}
+#body common control {
+# bundlesequence => { "create_user_file", "create_user_directory", "adduser", "addgroup"  };
+#     inputs     => { "$(sys.libdir)/stdlib.cf" };
+#}
