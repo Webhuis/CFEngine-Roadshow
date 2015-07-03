@@ -117,8 +117,5 @@ sql_query insert into security(camera, filename, frame, file_type, time_stamp, e
 ; pgsql_port 5432
 ; video_pipe value
 ; motion_video_pipe value
-; thread /usr/local/etc/thread1.conf
-; thread /usr/local/etc/thread2.conf
-; thread /usr/local/etc/thread3.conf
-; thread /usr/local/etc/thread4.conf
+thread /usr/local/etc/${motion.video_device}.conf
 
