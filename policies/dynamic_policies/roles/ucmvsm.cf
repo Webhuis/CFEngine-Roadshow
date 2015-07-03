@@ -2,7 +2,7 @@ bundle agent ucmvsm {
 
 vars:
 
-  "bundles[motion]"               string => "motion.cf";
+  "bundles[motion]"               string => "${sys.flavor}/motion.cf";
 
   "sequence"                       slist => getindices("bundles");
   "inputs"                         slist => getvalues("bundles");
