@@ -3,21 +3,51 @@ bundle agent motion {
 vars:
 
   "pkg[motion]"                   string => "*";
+  "video_device"                   slist => "video0";
 
-#files:
-#
-#  "/"
-#   perms             => mo("644","root"),
-#   action            => u_immediate,
-#   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl",
-#   classes           => if_repaired("restart_apache2");
+files:
+
+  "/etc/motion/motion.conf"
+         comment  => "Motion configuration",
+           perms  => mog("664","root","motion"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
+         classes  => u_if_repaired("restart_motion");
+
+  "/etc/motion/${video_device}.conf"
+         comment  => "Motion Tread configuration",
+           perms  => mog("664","root","root"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
+         classes  => u_if_repaired("restart_motion");
+
+  "/etc/default/motion"
+           perms  => mo("644","root"),
+          action  => u_immediate,
+       edit_line  => edit_default_motion,
+         classes  => if_repaired("restart_motion");
 
 methods:
 
-  "any" usebundle => packages("motion.pkg");
+       "Install Motion"                  usebundle => packages("motion.pkg");
+       "Fetch the motion.conf template"  usebundle => get_template("motion.conf.tmpl");
+       "Fetch the Video Device template" usebundle => get_template("motion_thread.conf.tmpl");
 
 commands:
   restart_motion::
   "/etc/init.d/motion restart";
 
 }
+
+bundle edit_line edit_default_motion {
+
+delete_lines:
+  ".*";
+
+insert_lines:
+"start_motion_daemon=yes";
+
+}
+

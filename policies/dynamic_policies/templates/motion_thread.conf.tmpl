@@ -1,0 +1,11 @@
+# Webhuis template for motion thread.conf
+#
+# Do not edit
+#
+videodevice /dev/${motion.video_device}
+input 8
+text_left CAMERA ${motion.video_device}
+target_dir /usr/local/apache2/htdocs/${motion.video_device}
+webcam_port ${motion.video_device_port}
+on_picture_save /usr/local/motion-extras/camparse1.pl
+on_movie_end /usr/local/motion-extras/mpegparse1.pl 
