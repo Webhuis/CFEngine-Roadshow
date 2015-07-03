@@ -3,7 +3,7 @@ bundle agent motion {
 vars:
 
   "pkg[motion]"                   string => "*";
-  "video_device"                   slist => "video0";
+  "video_device"                   slist => { "video0" };
 
 files:
 
