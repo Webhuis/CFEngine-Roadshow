@@ -34,7 +34,7 @@ bundle agent do_roadshow {
       "master_location"      string => "$(sys.masterdir)";
       "master_dynamic"       string => "$(sys.workdir)/dynamic_policies";
       "dir_bin"              string => "$(sys.bindir)";
-      "dir_modules"          string => "/var/cfengine/bin";
+      "dir_modules"          string => "$(sys.workdir)/bin";
       "inputfiles"           string => "$(sys.inputdir)";
 
       "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");

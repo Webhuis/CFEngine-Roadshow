@@ -24,5 +24,5 @@ commands:
 }
 body common control {
  bundlesequence => { "create_user_file", "create_user_directory", "adduser", "addgroup"  };
-     inputs     => { "/var/cfengine/inputs/lib/3.6/stdlib.cf" };
+     inputs     => { "$(sys.libdir)/stdlib.cf" };
 }

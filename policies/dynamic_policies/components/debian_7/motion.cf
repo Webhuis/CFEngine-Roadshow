@@ -1,0 +1,23 @@
+bundle agent motion {
+
+vars:
+
+  "pkg[motion]"                   string => "*";
+
+#files:
+#
+#  "/"
+#   perms             => mo("644","root"),
+#   action            => u_immediate,
+#   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl",
+#   classes           => if_repaired("restart_apache2");
+
+methods:
+
+  "any" usebundle => packages("motion.pkg");
+
+commands:
+  restart_motion::
+  "/etc/init.d/motion restart";
+
+}

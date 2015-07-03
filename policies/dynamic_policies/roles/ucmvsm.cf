@@ -1,0 +1,14 @@
+bundle agent ucmvsm {
+
+vars:
+
+  "bundles[motion]"               string => "motion.cf";
+
+  "sequence"                       slist => getindices("bundles");
+  "inputs"                         slist => getvalues("bundles");
+
+methods:
+
+  "USB Camera Video Streamer"  usebundle => "motion";
+
+}

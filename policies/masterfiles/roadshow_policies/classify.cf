@@ -1,10 +1,3 @@
-#body common control
-#{
-#      bundlesequence => { "classify" };
-#      inputs => { "$(sys.libdir)/stdlib.cf" };
-#
-#}
-
 bundle agent classify
 {
   classes:
@@ -26,7 +19,7 @@ bundle agent classify
 #      "function"             string => "sys";
 #      "instance"             string => "1";
 
-    "role_input"             string => "/var/cfengine/dynamic-inputs-local/role/${role}.cf";
+    "role_input"             string => "${sys.workdir}/dynamic-inputs-local/role/${role}.cf";
 
 #  methods:
 #      "" usebundle => file_make("/etc/roadshow/application", $(application));
