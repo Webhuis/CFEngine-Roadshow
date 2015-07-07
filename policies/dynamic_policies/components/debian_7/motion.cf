@@ -32,7 +32,7 @@ methods:
        "Install Motion"                  usebundle => packages("motion.pkg");
        "Fetch the motion.conf template"  usebundle => get_template("motion.conf.tmpl");
        "Fetch the Video Device template" usebundle => get_template("motion_thread.conf.tmpl");
-       "Connect Video Devices"           usebundle => motion_thread_array(${motion.camera});
+       "Connect Video Devices"           usebundle => motion_thread_array(motion.camera);
 
 commands:
   restart_motion::
