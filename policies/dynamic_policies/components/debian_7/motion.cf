@@ -46,7 +46,7 @@ vars:
 
 methods:
 
-  "Connect Video Device"        usebundle => motion_thread("${camera_index}", "$($(camera_array)[$(camera_index)]);
+  "Connect Video Device"        usebundle => motion_thread("${camera_index}", "$($(camera_array)[$(camera_index)])");
 
 files:
 
