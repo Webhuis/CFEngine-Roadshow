@@ -7,7 +7,7 @@ videodevice /dev/${motion_thread.device}
 input 8
 text_left CAMERA ${motion_thread.device}
 webcam_port ${motion_thread.port}
-target_dir ${motion.targetdir}/${motion_thread.device}
+target_dir ${motion.video_target}/${motion_thread.device}
 snapshot_filename ${motion_thread.device}-%v-%Y%m%d%H%M%S-snapshot
 jpeg_filename ${motion_thread.device}-%v-%Y%m%d%H%M%S-%q
 movie_filename ${motion_thread.device}-%v-%Y%m%d%H%M%S
