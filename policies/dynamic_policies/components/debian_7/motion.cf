@@ -3,6 +3,8 @@ bundle agent motion {
 vars:
 
   "pkg[motion]"                   string => "*";
+  "pkg[nfs-common]"               string => "*";
+
 
   "camera[video0]"                string => "8081";
   "camera[video1]"                string => "8082";

@@ -6,11 +6,8 @@ vars:
   "nfs_volume[/mnt/surveillance][nfs_device]"      string => "/volume1/HomeSurveillance";
   "nfs_volume[/mnt/surveillance][nfs_permissions]" string => "${${do_roadshow.class_domain}.nfs_rw}";
 
-  "pkg[nfs-common]" string => "*";
-
 methods:
 
-  "any" usebundle => packages("surveillance_mount.pkg");
   "any" usebundle => mount_nfs_array("surveillance_mount.nfs_volume");
 
 }
