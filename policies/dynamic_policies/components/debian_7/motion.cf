@@ -3,7 +3,11 @@ bundle agent motion {
 vars:
 
   "pkg[motion]"                   string => "*";
-  "video_device"                   slist => { "video0" };
+
+  "camera[video0]"                string => "8081";
+  "camera[video1]"                string => "8082";
+
+  "video_target"                  string => "/mnt/surveillance";
 
 files:
 
@@ -13,14 +17,6 @@ files:
           create  => "true",
           action  => u_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
-         classes  => u_if_repaired("restart_motion");
-
-  "/etc/motion/${video_device}.conf"
-         comment  => "Motion Tread configuration",
-           perms  => mog("664","root","root"),
-          create  => "true",
-          action  => u_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
          classes  => u_if_repaired("restart_motion");
 
   "/etc/default/motion"
@@ -34,10 +30,52 @@ methods:
        "Install Motion"                  usebundle => packages("motion.pkg");
        "Fetch the motion.conf template"  usebundle => get_template("motion.conf.tmpl");
        "Fetch the Video Device template" usebundle => get_template("motion_thread.conf.tmpl");
+       "Connect Video Devices"           usebundle => motion_thread_array(${motion.camera});
 
 commands:
   restart_motion::
   "/etc/init.d/motion restart";
+
+}
+
+bundle agent motion_thread_array(camera_array) {
+
+vars:
+
+  "camera_index"                   string => getindices(${camera_array};
+
+methods:
+
+  "Connect Video Device"       usebundele => motion_thread("${camera_index}", "$($(camera_array)[$(camera_index)]);
+
+files:
+
+  "/etc/motion/${camera_index}.conf"
+         comment  => "Motion Tread configuration",
+           perms  => mog("664","root","root"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
+         classes  => u_if_repaired("restart_motion");
+
+}
+
+bundle agent motion_thread(video_device, video_port) {
+
+vars:
+
+  "device"                         string => ${video_device};
+  "port"                           string => ${video_port};
+
+files:
+
+  "/etc/motion/${device}.conf"
+         comment  => "Motion Tread configuration",
+           perms  => mog("664","root","root"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
+         classes  => u_if_repaired("restart_motion");
 
 }
 

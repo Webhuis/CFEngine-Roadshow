@@ -3,12 +3,14 @@ bundle agent ucmvsm {
 vars:
 
   "bundles[motion]"               string => "${sys.flavor}/motion.cf";
+  "bundles[surveillance_mount]"   string => "surveillance_mount.cf";
 
   "sequence"                       slist => getindices("bundles");
   "inputs"                         slist => getvalues("bundles");
 
 methods:
 
+  "Connect to Video Storage"   usebundle => "surveillance_mount";
   "USB Camera Video Streamer"  usebundle => "motion";
 
 }

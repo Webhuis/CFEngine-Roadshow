@@ -5,19 +5,18 @@
 [%CFEngine any:: %]
 daemon on
 process_id_file /var/run/motion/motion.pid 
+logfile /var/log/motion.log
 setup_mode off
-videodevice /dev/${motion.video_device}
 v4l2_palette 8
 ; tunerdevice /dev/tuner0
 input 8
 norm 0
 frequency 0
 rotate 0
-width 649
+width 640
 height 480
 framerate 12
 minimum_frame_time 0
-netcam_url value http://${sys.fqhost}/${motion.video_device}.mjpg
 ; netcam_userpass value
 ; netcam_http 1.0
 ; netcam_proxy value 
@@ -43,10 +42,10 @@ minimum_motion_frames 1
 pre_capture 0
 post_capture 0
 gap 60
-max_mpeg_time 0
+max_mpeg_time 3600
 output_all off
 output_normal on
-output_motion off
+output_motion on
 quality 75
 ppm off
 ffmpeg_cap_new on
@@ -60,23 +59,18 @@ ffmpeg_deinterlace off
 snapshot_interval 0
 locate off
 text_right %Y-%m-%d\n%T-%q
-; text_left CAMERA %t
 text_changes off
 text_event %Y%m%d%H%M%S
 text_double off
 target_dir /tmp/motion
-snapshot_filename ${motion.video_device}-%v-%Y%m%d%H%M%S-snapshot
-jpeg_filename ${motion.video_device}-%v-%Y%m%d%H%M%S-%q
-movie_filename ${motion.video_device}-%v-%Y%m%d%H%M%S
 timelapse_filename %Y%m%d-timelapse
-webcam_port 8081
 webcam_quality 50
 webcam_motion off
 webcam_maxrate 100
-webcam_localhost on
+webcam_localhost off
 webcam_limit 0
 control_port 8080
-control_localhost on
+control_localhost off
 control_html_output on
 ; control_authentication username:password
 track_type 0
@@ -117,5 +111,5 @@ sql_query insert into security(camera, filename, frame, file_type, time_stamp, e
 ; pgsql_port 5432
 ; video_pipe value
 ; motion_video_pipe value
-thread /etc/motion/${motion.video_device}.conf
+thread /etc/motion/${motion_thread.device}.conf
 
