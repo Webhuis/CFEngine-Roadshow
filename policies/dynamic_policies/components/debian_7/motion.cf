@@ -13,14 +13,6 @@ vars:
 
 files:
 
-  "/etc/motion/motion.conf"
-         comment  => "Motion configuration",
-           perms  => mog("664","root","motion"),
-          create  => "true",
-          action  => u_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
-         classes  => u_if_repaired("restart_motion");
-
   "/etc/default/motion"
            perms  => mo("644","root"),
           action  => u_immediate,
@@ -45,6 +37,16 @@ bundle agent motion_thread_array(camera_array) {
 vars:
 
   "camera_index"                    slist => getindices("${camera_array}");
+
+files:
+
+  "/etc/motion/motion.conf"
+         comment  => "Motion configuration",
+           perms  => mog("664","root","motion"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
+         classes  => u_if_repaired("restart_motion");
 
 methods:
 
