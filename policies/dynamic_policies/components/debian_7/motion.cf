@@ -50,6 +50,9 @@ methods:
 
   "Connect Video Device"        usebundle => motion_thread("${camera_index}", "$($(camera_array)[$(camera_index)])");
 
+reports:
+  "motion_thread_array.camera_index: ${camera_index}";
+
 }
 
 bundle agent motion_thread(video_device, video_port) {
@@ -61,13 +64,19 @@ vars:
 
 files:
 
-  "/etc/motion/${device}.conf"
+  "/etc/motion/${video_device}.conf"
          comment  => "Motion Tread configuration",
            perms  => mog("664","root","root"),
           create  => "true",
           action  => u_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
          classes  => u_if_repaired("restart_motion");
+
+reports:
+  "motion_thread.device: ${device}";
+  "motion_thread.video_device: ${video_device}";
+  "motion_thread.port: ${port}";
+
 
 }
 
