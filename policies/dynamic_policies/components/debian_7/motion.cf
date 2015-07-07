@@ -42,7 +42,7 @@ bundle agent motion_thread_array(camera_array) {
 
 vars:
 
-  "camera_index"                   string => getindices("${camera_array}");
+  "camera_index"                    slist => getindices("${camera_array}");
 
 methods:
 
