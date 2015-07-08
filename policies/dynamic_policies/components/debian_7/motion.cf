@@ -10,6 +10,7 @@ vars:
   "camera[video1]"                string => "8082";
 
   "video_target"                  string => "/mnt/surveillance";
+  "HomeSurveillance"               slist => { "motion" }; 
 
 files:
 
@@ -29,6 +30,10 @@ methods:
 commands:
   restart_motion::
   "/etc/init.d/motion restart";
+
+services:
+
+  "${HomeSurveillanc}"              service_policy => "start";
 
 }
 
