@@ -33,7 +33,7 @@ commands:
 
 services:
 
-  "${HomeSurveillanc}"              service_policy => "start";
+  "${HomeSurveillance}"             service_policy => "start";
 
 }
 
