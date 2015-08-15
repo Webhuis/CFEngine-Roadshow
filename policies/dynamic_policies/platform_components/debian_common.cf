@@ -13,7 +13,7 @@ methods:
  
  "Configure apt mirror"     usebundle => aptdeb_mirror;
  "Install common packages"  usebundle => packages("debian_common.pkg");
- "CFEngine custom package"  usebundle => get_custom_package("${cfengine_version}");
+ "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
  "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
 
 }
