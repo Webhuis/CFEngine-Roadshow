@@ -50,32 +50,32 @@ packages:
             package_version => "$($(pkgs_array)[$(package_name)])";
 }
 
-bundle agent dpackages (dpkgs_array) {
+bundle agent custom_packages (cpkgs_array) {
 
 vars:
  any::
-        "dpackage_name"            slist  => getindices("$(dpkgs_array)");
+        "custom_package_name"            slist  => getindices("$(cpkgs_array)");
 
 packages:
 
     debian::
 
-      "$(dpackage_name)"
+      "$(custom_package_name)"
             package_policy  => "addupdate",
             package_method  => dpkg_version("/var/cache/apt/archives"),
             package_select  => "==",
-            package_version => "$($(dpkgs_array)[$(dpackage_name)])";
+            package_version => "$($(cpkgs_array)[$(custom_package_name)])";
 
 }
 
-bundle agent get_dpackage(dpackage) {
+bundle agent get_custom_package(custom_package) {
 
 files:
 
- "/var/cache/apt/archives/${dpackage}"
+ "/var/cache/apt/archives/${custom_package}"
   comment => "Copy package",
   handle => "update_files_inputs_packages",
-  copy_from     => u_rcp("${master_dynamic}/packages/${dpackage}","${sys.policy_hub}"),
+  copy_from     => u_rcp("${master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
   action => u_immediate,
   classes => u_if_repaired("update_report");
 
