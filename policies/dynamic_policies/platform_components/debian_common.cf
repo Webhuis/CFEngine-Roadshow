@@ -1,11 +1,19 @@
 bundle agent debian_common {
 
 vars:
+
+ x86_64::
+  "arch"                       string => "amd64";
+ !x86_64::
+  "arch"                       string => "${sys.arch}";
+
+ any::
+
   "pkg[debian-goodies]"        string => "*";
   "pkg[openssh-server]"        string => "*";
 
   "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community_${cfengine_version}_${sys.arch}.deb";
+  "cfengine_package"           string => "cfengine-community_${cfengine_version}_${arch}.deb";
   "cpkg[cfengine-community]"   string => "${cfengine_version}";
 
 
