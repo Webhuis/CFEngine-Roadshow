@@ -1,14 +1,20 @@
 bundle agent debian_common {
 
 vars:
-    "pkg[debian-goodies]"      string => "*";
-    "pkg[openssh-server]"      string => "*";
+  "pkg[debian-goodies]"        string => "*";
+  "pkg[openssh-server]"        string => "*";
+
+  "cfengine_version"           string => "3.6.6-1";
+  "cfengine_package"           string => "cfengine-community_${cfengine_version}_${sys.arch}.deb";
+  "cpkg[cfengine-community]"   string => "${cfengine_version}";
+
 
 methods:
  
- "any" usebundle => packages("debian_common.pkg");
- "any" usebundle => aptdeb_mirror;
- "any" usebundle => os_common;
+ "Configure apt mirror"     usebundle => aptdeb_mirror;
+ "Install common packages"  usebundle => packages("debian_common.pkg");
+ "CFEngine custom package"  usebundle => get_custom_package("${cfengine_version}");
+ "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
 
 }
 
@@ -37,34 +43,29 @@ commands:
 bundle agent packages (pkgs_array) {
 
 vars:
- any::
-        "package_name"            slist  => getindices("$(pkgs_array)");
+  "package_name"         slist => getindices("$(pkgs_array)");
 
 packages:
 
-    any::
-
-      "$(package_name)"
-            package_policy  => "addupdate",
-            package_method  => apt,
-            package_version => "$($(pkgs_array)[$(package_name)])";
+  "$(package_name)"
+    package_policy             => "addupdate",
+    package_method             => apt,
+    package_version            => "$($(pkgs_array)[$(package_name)])";
 }
 
 bundle agent custom_packages (cpkgs_array) {
 
 vars:
- any::
-        "custom_package_name"            slist  => getindices("$(cpkgs_array)");
+
+  "custom_package_name"  slist => getindices("$(cpkgs_array)");
 
 packages:
 
-    debian::
-
-      "$(custom_package_name)"
-            package_policy  => "addupdate",
-            package_method  => dpkg_version("/var/cache/apt/archives"),
-            package_select  => "==",
-            package_version => "$($(cpkgs_array)[$(custom_package_name)])";
+  "$(custom_package_name)"
+    package_policy  => "addupdate",
+    package_method  => dpkg_version("/var/cache/apt/archives"),
+    package_select  => "==",
+    package_version => "$($(cpkgs_array)[$(custom_package_name)])";
 
 }
 
@@ -73,11 +74,10 @@ bundle agent get_custom_package(custom_package) {
 files:
 
  "/var/cache/apt/archives/${custom_package}"
-  comment => "Copy package",
-  handle => "update_files_inputs_packages",
-  copy_from     => u_rcp("${master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
-  action => u_immediate,
-  classes => u_if_repaired("update_report");
+            comment => "Copy package",
+             handle => "update_files_inputs_packages",
+          copy_from => u_rcp("${master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
+             action => u_immediate;
 
 }
 
