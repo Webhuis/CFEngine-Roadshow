@@ -7,4 +7,6 @@ reports:
 "Hard class os_flavor: ${sys.flavor}";
 "Hard class os_arch:   ${sys.arch}";
 
+"sys.local_libdir:     ${sys.local_libdir}";
+
 }
