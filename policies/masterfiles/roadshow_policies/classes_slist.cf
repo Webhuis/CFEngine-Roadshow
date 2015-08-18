@@ -2,7 +2,7 @@ bundle agent classes_slist {
 
 vars:
 
-  "webservers"            slist => { "webapp0086", "webjen0190" };
+  "webservers"            slist => { "webapp0080", "webjen0086", "webjen0190"  };
 
 classes:
 
