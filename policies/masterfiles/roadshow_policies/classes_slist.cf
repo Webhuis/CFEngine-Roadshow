@@ -1,0 +1,19 @@
+bundle agent classes_slist {
+
+vars:
+
+  "hosts"            slist => { "webapp0086", "webjen0190" };
+
+classes:
+
+  "hosts_class"        or  => { ${hosts} } ;
+
+reports:
+
+  hosts_class::
+      "Hello, this host ${sys.fqhost} belongs to the list hosts_class: ${hosts}";
+
+  !hosts_class::
+      "Hello, this host ${sys.fqhost} does not belong to the list hosts_class: ${hosts}";
+
+}
