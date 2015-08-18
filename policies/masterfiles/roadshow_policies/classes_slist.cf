@@ -6,7 +6,7 @@ vars:
 
 classes:
 
-  "webservers"              or  => { ${hosts} } ;
+  "webservers"              or  => { ${webservers} } ;
 
 reports:
 
