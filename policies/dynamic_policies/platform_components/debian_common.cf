@@ -14,12 +14,13 @@ vars:
 
   "desired"                    string => "addupdate";
   "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
+  "cfengine_package"           string => "cfengine-community_${cfengine_version}_${sys.arch}.deb";
+  "package_cache"              string => "/var/cache/apt/archives";
 
-  "cpkg[cfengine_community]"   string => "${cfengine_package}";
-  "cpkg[cfengine_community]"   string => "${desired}";
-  "cpkg[cfengine_community]"   string => "${cfengine_version}";
-  "cpkg[cfengine_community]"   string => "${sys.arch}";
+  "cpkg[cfengine_community][package]"   string => "${package_cache}/${cfengine_package}";
+  "cpkg[cfengine_community][desired]"   string => "${desired}";
+  "cpkg[cfengine_community][version]"   string => "${cfengine_version}";
+  "cpkg[cfengine_community][arch]"      string => "${sys.arch}";
 
 methods:
  
@@ -29,16 +30,19 @@ methods:
  "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
 
 reports:
- "${this.bundle}: CFEngine package string = ${cfengine_package}";
+
+ "${this.bundle}: CFEngine package string = ${package_cache}/${cfengine_package}";
 
 }
 
 bundle agent aptdeb_mirror {
 
 vars:
+
   "mirror" string => "http://aptutl01.webhuis.nl:3142/";
 
 files:
+
   "/etc/apt/apt.conf"
           create  => "true",
         edit_line => edit_apt_mirror($(mirror)),
@@ -52,6 +56,7 @@ commands:
   "/usr/bin/apt-get upgrade -y";
 
 reports:
+
  "${this.bundle}: ${mirror}";
 
 }
@@ -61,7 +66,8 @@ reports:
 bundle agent packages (pkgs_array) {
 
 vars:
-  "package_name"         slist => getindices("$(pkgs_array)");
+
+  "package_name"         slist => getindices(${pkgs_array});
 
 packages:
 
@@ -79,7 +85,7 @@ bundle agent custom_packages (cpkgs_array) {
 
 vars:
 
-  "custom_package_index" slist => getindices($(cpkgs_array));
+  "custom_package_index" slist => getindices(${cpkgs_array});
 
   "package"             string => "$($(cpkgs_array)[$(custom_package_index)][package])";
   "desired"             string => "$($(cpkgs_array)[$(custom_package_index)][desired])";
@@ -108,7 +114,7 @@ bundle agent custom_package_specific(package, desired, version, arch) {
 
 methods:
 
-  "Custom package" usebundle => package_specific(package, desired, version, arch);
+  "Custom package" usebundle => package_specific( "${package}", "${desired}", "${version}", "${arch}" );
 
 reports:
 

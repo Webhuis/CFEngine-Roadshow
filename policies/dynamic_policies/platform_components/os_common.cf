@@ -164,8 +164,8 @@ files:
 
 reports:
  linux::
- "$(template_config)";
- "${$do_roadshow.class_domain}.resolvers}}";
+ "${this.bundle}: $(template_config)";
+ "${this.bundle}: ${${do_roadshow.class_domain}.resolvers}";
 }
 
 bundle agent nopackages (nopkgs_array) {

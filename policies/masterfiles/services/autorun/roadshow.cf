@@ -23,7 +23,9 @@ bundle agent roadshow
       "" usebundle => $(classify.role);
 
 reports:
- "roadshow role:  $(classify.role)";
+
+ "${this.bundle} role:  $(classify.role)";
+
 }
 
 bundle agent do_roadshow {
@@ -53,8 +55,8 @@ bundle agent do_roadshow {
 
   reports:
 
-      "roadshow: ${class_domain}";
-      "platform: ${os}";
+      "${this.bundle}: ${class_domain}";
+      "${this.bundle}: ${os}";
 
 }
 

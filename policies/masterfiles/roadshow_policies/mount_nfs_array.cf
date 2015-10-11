@@ -4,8 +4,11 @@ vars:
   "mounts_index"                         slist => getindices(${array_mounts});
 
 methods:
- "any"  usebundle => mount_nfs("${mounts_index}", "$($(array_mounts)[$(mounts_index)][nfs_host])", "$($(array_mounts)[$(mounts_index)][nfs_device])", "$($(array_mounts)[$(mounts_index)][nfs_permissions])");
+ "Mount nfs volumes"  usebundle => mount_nfs("${mounts_index}", "$($(array_mounts)[$(mounts_index)][nfs_host])", "$($(array_mounts)[$(mounts_index)][nfs_device])", "$($(array_mounts)[$(mounts_index)][nfs_permissions])");
 
+reports:
+
+  "${this.bundle} nfs mounts ${mounts_index}";
 }
 
 bundle agent mount_nfs(mount, nfs_host, nfs_device, nfs_permissions) {
@@ -15,7 +18,7 @@ storage:
 
 reports:
 
- "mount_nfs_array: ${mount}, ${nfs_host}, ${nfs_device}, ${nfs_permissions}";
+ "${this.bundle} mount nsf volume: ${mount}, ${nfs_host}, ${nfs_device}, ${nfs_permissions}";
 
 }
 

@@ -6,8 +6,14 @@ vars:
   "nfs_volume[/mnt/surveillance][nfs_device]"      string => "/volume1/HomeSurveillance";
   "nfs_volume[/mnt/surveillance][nfs_permissions]" string => "${${do_roadshow.class_domain}.nfs_rw}";
 
+  "surveillance_index"                              slist => getindices("surveillance_mount.nfs_volume");
+
 methods:
 
-  "any" usebundle => mount_nfs_array("surveillance_mount.nfs_volume");
+  "Mount Home Surveillance share"               usebundle => mount_nfs_array("surveillance_mount.nfs_volume");
+
+reports:
+
+  "${this.bundle}: ${surveillance_index}";
 
 }
