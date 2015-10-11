@@ -12,10 +12,14 @@ vars:
   "pkg[debian-goodies]"        string => "*";
   "pkg[openssh-server]"        string => "*";
 
+  "desired"                    string => "addupdate";
   "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${arch}.deb";
-  "cpkg[cfengine-community]"   string => "${cfengine_version}";
+  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
 
+  "cpkg[cfengine_community]"   string => "${cfengine_package}";
+  "cpkg[cfengine_community]"   string => "${desired}";
+  "cpkg[cfengine_community]"   string => "${cfengine_version}";
+  "cpkg[cfengine_community]"   string => "${sys.arch}";
 
 methods:
  
@@ -23,6 +27,9 @@ methods:
  "Install common packages"  usebundle => packages("debian_common.pkg");
  "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
  "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
+
+reports:
+ "${this.bundle}: CFEngine package string = ${cfengine_package}";
 
 }
 
@@ -44,6 +51,9 @@ commands:
   "/usr/bin/apt-get update";
   "/usr/bin/apt-get upgrade -y";
 
+reports:
+ "${this.bundle}: ${mirror}";
+
 }
 
 ####################################################
@@ -59,21 +69,50 @@ packages:
     package_policy             => "addupdate",
     package_method             => apt,
     package_version            => "$($(pkgs_array)[$(package_name)])";
+
+reports:
+ "${this.bundle}:  ${package_name}";
+
 }
 
 bundle agent custom_packages (cpkgs_array) {
 
 vars:
 
-  "custom_package_name"  slist => getindices("$(cpkgs_array)");
+  "custom_package_index" slist => getindices($(cpkgs_array));
+
+  "package"             string => "$($(cpkgs_array)[$(custom_package_index)][package])";
+  "desired"             string => "$($(cpkgs_array)[$(custom_package_index)][desired])";
+  "version"             string => "$($(cpkgs_array)[$(custom_package_index)][version])";
+  "arch"                string => "$($(cpkgs_array)[$(custom_package_index)][arch])";
+
+methods:
+
+  "Addupdate custom package" usebundle => custom_package_specific( "$(package)", "$(desired)", "$(version)", "$(arch)" );
 
 packages:
-
-  "$(custom_package_name)"
+ !any::
+  "$(custom_package_index)"
     package_policy  => "addupdate",
     package_method  => dpkg_version("/var/cache/apt/archives"),
     package_select  => "==",
-    package_version => "$($(cpkgs_array)[$(custom_package_name)])";
+    package_version => "$($(cpkgs_array)[$(custom_package_index)])";
+
+reports:
+
+ "${this.bundle}: $(custom_package_index), $(package), $(desired), $(version), $(arch)";
+
+}
+
+bundle agent custom_package_specific(package, desired, version, arch) {
+
+methods:
+
+  "Custom package" usebundle => package_specific(package, desired, version, arch);
+
+reports:
+
+  "${this.bundle}: $(package) $(desired), ${version}, ${arch}";
 
 }
 
@@ -87,6 +126,9 @@ files:
           copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
              action => u_immediate;
 
+reports:
+ "${this.bundle}: ${custom_package}";
+
 }
 
 bundle agent restart_sshd {
@@ -95,5 +137,8 @@ commands:
   "service ssh restart"
      handle => "restart_sshd",
     comment => "restarting sshd";
+
+reports:
+ "${this.bundle}";
 
 }
