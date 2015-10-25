@@ -1,36 +1,36 @@
-bundle agent kvm_comp {
+bundle agent kvm_host {
 
 vars:
 
-  "guest_configs"       string => "/etc/libvirt/qemu/";
-  "support_svn_server"  string => "https://support-svn.webhuis.nl/dom0-hosts";
+  "guest_configs"               string => "/etc/libvirt/qemu/";
+  "support_svn_server"          string => "https://support-svn.webhuis.nl/dom0-hosts";
 
-  "pkg[array-info]"           string => "*";
-  "pkg[bridge-utils]"         string => "*";
-  "pkg[gdisk]"                string => "*";
-  "pkg[kvm]"                  string => "*";
-  "pkg[libvirt-bin]"          string => "*";
-  "pkg[lvm2]"                 string => "*";
-  "pkg[mdadm]"                string => "*";
-  "pkg[parted]"               string => "*";
-  "pkg[qemu]"                 string => "*";
-  "pkg[raidutils]"            string => "*";
-  "pkg[smartmontools]"        string => "*";
-  "pkg[virt-goodies]"         string => "*";
-  "pkg[virtinst]"             string => "*";
-  "pkg[virt-manager]"         string => "*";
-  "pkg[virt-top]"             string => "*";
-  "pkg[xvnc4viewer]"          string => "*";
+  "pkg[array-info]"             string => "*";
+  "pkg[bridge-utils]"           string => "*";
+  "pkg[gdisk]"                  string => "*";
+  "pkg[kvm]"                    string => "*";
+  "pkg[libvirt-bin]"            string => "*";
+  "pkg[lvm2]"                   string => "*";
+  "pkg[mdadm]"                  string => "*";
+  "pkg[parted]"                 string => "*";
+  "pkg[qemu]"                   string => "*";
+  "pkg[raidutils]"              string => "*";
+  "pkg[smartmontools]"          string => "*";
+  "pkg[virt-goodies]"           string => "*";
+  "pkg[virtinst]"               string => "*";
+  "pkg[virt-manager]"           string => "*";
+  "pkg[virt-top]"               string => "*";
+  "pkg[xvnc4viewer]"            string => "*";
 
-#    "kvm_host_package_name"     slist  => getindices("pkg");
+#   "kvm_host_package_name"     slist  => getindices("pkg");
 
 commands:
   "/usr/bin/svn update"
     comment => "Update the company vm xml definitions to a local copy",
-    contain => silent_in_dir("${${guest_configs})"),
+    contain => silent_in_dir("${${guest_configs}}"),
     ifvarclass => canonify("$(support_svn_server)");
 
 methods:
-    "any" usebundle => packages("kvm_comp.pkg");
+    "Provide desired packages" usebundle => packages("kvm_host.pkg");
 
 }

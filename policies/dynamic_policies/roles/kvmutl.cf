@@ -2,32 +2,13 @@ bundle agent kvmutl {
 
 vars:
 
-  "bundles[kvm_comp]"      string => "kvm_host.cf";
+  "bundles[kvm_host]"        string => "${sys.flavor}/kvm_host.cf";
 
-  "sequence"                slist => getindices("bundles");
-  "inputs"                  slist => getvalues("bundles");
-
-  "host_utl[pdsmys0017]    string => "2G";
-  "host_utl[mngmys0019]    string => "2G";
-
-  "host_vm[webapp0080]     string => "2G";
-  "host_vm[webttw0082]     string => "2G";
-  "host_vm[webhud0083]     string => "2G";
-  "host_vm[webjen0086]     string => "2G";
-  "host_vm[webapp0180]     string => "2G";
-  "host_vm[webttw0182]     string => "2G";
-  "host_vm[webjen0183]     string => "2G";
-  "host_vm[webhud0184]     string => "2G";
-  "host_vm[webjen0190]     string => "2560M";
-  "host_vm[webapp0191]     string => "2560M";
-  "host_vm[webhud0192]     string => "2560M";
-  "host_vm[webjen0193]     string => "2560M";
-  "host_vm[webapp0194]     string => "2560M";
-  "host_vm[webhud0195]     string => "2560M";
-
+  "sequence"                  slist => getindices("bundles");
+  "inputs"                    slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => "kvm_host(kvmutl.host_vm)";
+  "KVM host ready for VM" usebundle => "kvm_host";
 
 }
