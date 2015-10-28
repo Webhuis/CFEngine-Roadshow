@@ -1,0 +1,23 @@
+# role Apache Joomla User Managed Sites
+bundle agent apjums {
+
+vars:
+
+  "bundles[mysql_server]"                      string => "${sys.flavor}/mysql_server.cf";
+  "bundles[postfix_server]"                    string => "${sys.flavor}/postfix_server.cf";
+  "bundles[postfix_mysql]"                     string => "${sys.flavor}/postfix_mysql.cf";
+  "bundles[apache2]"                           string => "${sys.flavor}/apache2.cf";
+  "bundles[joomla]"                            string => "joomla.cf";
+
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => getvalues("bundles");
+
+methods:
+
+  "Provide and maintain the MySQL Server"   usebundle => "mysql_server";
+  "Provide and maintain the Postfix Server" usebundle => "postfix_server";
+  "Combine Postfix and MySQL"               usebundle => "postfix_mysql";
+  "Provide and maintain the Apache Server"  usebundle => "apache2";
+  "Provide and maintain the Joomla CMS"     usebundle => "joomla";
+
+}
