@@ -1,0 +1,7 @@
+# Webhuis template for libnss_ldap.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+base   "${${do_roadshow.class_domain}.ldap_base}"
+uri     ldaps://"${${do_roadshow.class_domain}.mldap}"."${sys.domain}"

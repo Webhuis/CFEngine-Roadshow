@@ -1,0 +1,11 @@
+# Webhuis template for ldap.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+BASE   "${${do_roadshow.class_domain}.ldap_base}" 
+URI     ldaps://"${${do_roadshow.class_domain}.mldap}"."${sys.domain}"
+
+TLS_REQCERT     never
+
+binddn ${${do_roadshow.class_domain}.ldap_admin}"

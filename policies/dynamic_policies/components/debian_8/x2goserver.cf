@@ -1,0 +1,26 @@
+bundle agent x2goserver {
+
+vars:
+
+  "pkg[x2goserver]"		       string => "*";
+  "pkg[x2goserver-extensions]"	       string => "*";
+  "pkg[x2goserver-fmbindings]"	       string => "*";
+  "pkg[x2goserver-printing]"	       string => "*";
+  "pkg[x2goserver-xsession]"	       string => "*";
+
+  "apt_repo[x2goserver][deb]"          string => "http://packages.x2go.org/debian jessie main";
+  "apt_repo[x2goserver][deb_src]"      string => "http://packages.x2go.org/debian jessie main";
+  "apt_repo[x2goserver][repo_key]"     string => "E1F958385BFE2B6E";
+ 
+methods:
+
+  "We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo");
+  "We desire x2goserver"            usebundle => packages("x2goserver.pkg");
+
+commands:
+
+  "/usr/sbin/locale-gen en_US en_US.UTF-8";
+  "/usr/bin/apt-get install x2go-keyring";
+  "/usr/bin/apt-get update";
+
+}

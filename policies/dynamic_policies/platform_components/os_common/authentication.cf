@@ -1,0 +1,42 @@
+bundle agent authentication {
+
+methods:
+
+  "Set LDAP configuration"            usebundle => ldap_conf;
+  "Set libnss LDAP configuration"     usebundle => libnss_ldap_conf;
+  "Set pam LDAP configuration"        usebundle => pam_ldap_conf;
+  "Set nsswitch configuration"        usebundle => nsswitch_conf;
+
+}
+
+bundle agent ldap_conf {
+
+methods:
+
+  "Get the ldap_conf tempate"         usebundle => get_template("ldap.conf.tmpl");
+
+}
+
+bundle agent libnss_ldap_conf {
+
+methods:
+
+  "Get the libnss_ldap_conf tempate"  usebundle => get_template("libnss-ldap.conf.tmpl");
+
+}
+
+bundle agent pam_ldap_conf {
+
+methods:
+
+  "Get the pam_ldap_conf tempate"     usebundle => get_template("pam_ldap.conf.tmpl");
+
+}
+
+bundle agent nsswitch_conf {
+
+methods:
+
+  "Get the pam_ldap_conf tempate"     usebundle => get_template("nsswitch.conf.tmpl");
+
+}

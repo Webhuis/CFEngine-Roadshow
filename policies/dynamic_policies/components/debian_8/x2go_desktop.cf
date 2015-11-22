@@ -1,0 +1,14 @@
+bundle agent x2go_desktop {
+
+vars:
+
+  "pkg[chromium]"			string => "*";
+
+methods:
+  "any" usebundle => packages("x2go_desktop.pkg");
+
+reports:
+
+  "${this.bundle}: role";
+
+}

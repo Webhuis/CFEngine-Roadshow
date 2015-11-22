@@ -1,0 +1,20 @@
+# Webhuis template voor debootstrap.config.sdx
+#
+# Copy this file to /etc/debootstrap/config
+# Replace /sdx to the desired patition
+#
+[%CFEngine any:: %]
+#            without using the (limited) interactive frontend or
+#            command line options (see manpage and grml-debootstrap --help)
+################################################################################
+
+TARGET='/dev/sdx1' # install to partition /dev/sdx1
+GRUB='/dev/sdx' # Install into MBR of sdx
+MIRROR='http://aptutl01.webhuis.nl:3142/debian'
+RELEASE='jessie'
+COMPONENTS='main'
+ARCH='amd64'
+KERNEL='3.16'
+ROOTPASSWORD='password'
+MKFS='ext4'
+TIMEZONE='Europe/Amsterdam'

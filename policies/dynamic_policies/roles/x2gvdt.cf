@@ -1,0 +1,17 @@
+# role X2go Virtual DeskTop
+bundle agent x2gvdt {
+
+vars:
+
+  "bundles[x2go_desktop]"                      string => "${sys.flavor}/x2go_desktop.cf";
+  "bundles[x2goserver]"                        string => "${sys.flavor}/x2goserver.cf";
+
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => getvalues("bundles");
+
+methods:
+
+  "We desire the x2go desktop"              usebundle => "x2go_desktop";
+  "We desire the x2go system"               usebundle => "x2goserver";
+
+}
