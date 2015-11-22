@@ -1,0 +1,21 @@
+bundle agent os_common {
+
+methods:
+
+ "any"    usebundle => cleanup;
+
+}
+
+bundle agent cleanup {
+
+files:
+
+    # Cleanup old reports
+    "$(sys.workdir)/outputs"
+
+        comment         => "Clean up reports older than 3 days",
+        delete          => tidy,
+        file_select     => days_old("1"),
+        depth_search    => recurse("inf");
+
+}
