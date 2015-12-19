@@ -2,7 +2,7 @@ bundle agent Data {
 
 vars:
 
-  "pkg[psycopg2]"                       string => "*";
+  "pkg[python-psycopg2]"                string => "*";
   "pkg[python-cjson]"                   string => "*";
 
 methods:
