@@ -24,7 +24,6 @@ bundle agent cfe_roadshow_update {
    "$(sys.workdir)/bin/cf-message.py"
       handle => "update_bin_roadshow",
       copy_from => u_rcp("${master_dynamic}/bin/cf-message.py", ${sys.policy_hub}),
-      file_select  => u_policies,
       action => u_immediate,
       classes => u_if_repaired("update_report");
 
