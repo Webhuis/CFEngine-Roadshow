@@ -1,10 +1,9 @@
 bundle agent cf_message {
 
 vars:
-  "role"        string => "x2gvdt";
 
   "host_info"     data => parsejson('
-      { "host": { "uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(role)" } }');
+      { "host": { "uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
 
   "host_store"      string => storejson(host_info);
 
