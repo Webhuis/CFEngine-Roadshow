@@ -17,6 +17,7 @@ methods:
   "Provide and maintain the PostgreSQL Server" usebundle => "postgresql";
   "Provide and maintain the Apache Server"     usebundle => "apache2";
   "Provide and maintain the 0mq"  	       usebundle => "0mq";
+  "We desire the Data application"	       usebundle => "Data_common";
   "We are Data!"		  	       usebundle => "Data";
 
 }
