@@ -18,7 +18,10 @@ body common control
                           "cfe_internal_update_processes",
       };
 
-      version => "update.cf 3.6.1";
+      version => "update.cf 3.6.6";
+
+      ignore_missing_inputs => "true";
+      ignore_missing_bundles => "true";
 
       inputs => {
                   "cfe_internal/ha/ha_def.cf",

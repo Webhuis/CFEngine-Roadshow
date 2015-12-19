@@ -2,23 +2,28 @@ bundle agent pkg_base_common {
 
 vars:
 
-    # packages are defined in the following form:
-    # "pkg[<pkg-name>]" string => "<pkg-version>";
+  # packages are defined in the following form:
+  # "pkg[<pkg-name>]" string => "<pkg-version>";
 
-    "pkg[git]"                 string => "*";
-    "pkg[gzip]"                string => "*";
-    "pkg[less]"                string => "*";
-    "pkg[lynx]"                string => "*";
-    "pkg[mc]"                  string => "*";
-    "pkg[rsync]"               string => "*";
-    "pkg[sudo]"                string => "*";
+  "pkg[git]"                             string => "*";
+  "pkg[gzip]"                            string => "*";
+  "pkg[less]"                            string => "*";
+  "pkg[lynx]"                            string => "*";
+  "pkg[mc]"                              string => "*";
+  "pkg[rsync]"                           string => "*";
+  "pkg[subversion]"                      string => "*";
+  "pkg[sudo]"                            string => "*";
 
-    "nopkg[nano]"              string => "*";
+  "nopkg[nano]"                          string => "*";
 
 methods:
 
- "any" usebundle => packages("pkg_base_common.pkg");
- "any" usebundle => nopackages("pkg_base_common.nopkg");
+  "Install desired standard packages" usebundle => packages("pkg_base_common.pkg");
+  "Uninstall undesired packages"      usebundle => nopackages("pkg_base_common.nopkg");
+
+reports:
+
+ "${this.bundle}: set packages common to all platforms";
 
 }
 

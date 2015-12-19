@@ -11,10 +11,15 @@ vars:
 
   "pkg[debian-goodies]"        string => "*";
   "pkg[openssh-server]"        string => "*";
+  "pkg[libpam-ldap]"           string => "*";
+  "pkg[libnss-ldap]"           string => "*";
+  "pkg[libpam-cracklib]"       string => "*";
+  "pkg[ldap-utils]"            string => "*";
+  "pkg[smbclient]"             string => "*";
 
   "desired"                    string => "addupdate";
   "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community_${cfengine_version}_${sys.arch}.deb";
+  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
   "package_cache"              string => "/var/cache/apt/archives";
 
   "cpkg[cfengine_community][package]"   string => "${package_cache}/${cfengine_package}";
@@ -26,8 +31,8 @@ methods:
  
  "Configure apt mirror"     usebundle => aptdeb_mirror;
  "Install common packages"  usebundle => packages("debian_common.pkg");
- "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
- "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
+# "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
+# "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
 
 reports:
 
@@ -58,6 +63,56 @@ commands:
 reports:
 
  "${this.bundle}: ${mirror}";
+
+}
+
+bundle agent apt_repo (apt_repo) {
+
+vars:
+
+  "repo_index"          slist => getindices(${apt_repo});
+
+methods:
+
+  "Create apt repo" usebundle => create_apt_repo("${repo_index}", "$($(apt_repo)[$(repo_index)][deb])", "$($(apt_repo)[$(repo_index)][deb_src])", "$($(apt_repo)[$(repo_index)][repo_key])");
+
+reports:
+
+  "${this.bundle} apt repositories ${repo_index}";
+
+}
+
+bundle agent create_apt_repo (apt_repo, deb, deb_src, repo_key) {
+
+files:
+
+  "/etc/apt/sources.list.d/${apt_repo}.list"
+          create  => "true",
+        edit_line => edit_apt_repo(${apt_repo}, ${deb}, ${deb_src}),
+          classes => if_repaired("new_apt_repo");
+
+commands:
+
+ new_apt_repo::
+  "/usr/bin/apt-key adv --recv-keys --keyserver keys.gnupg.net ${repo_key}";
+  "/usr/bin/apt-get update";
+
+reports:
+
+  "${this.bundle} apt repository ${apt_repo}, ${deb}, ${deb_src}";
+
+}
+
+bundle edit_line edit_apt_repo(apt_repo, deb, deb_src) {
+
+delete_lines:
+
+".*";
+
+insert_lines:
+
+"deb ${deb}";
+"deb-src ${deb_src}";
 
 }
 
@@ -137,10 +192,26 @@ reports:
 
 }
 
+bundle agent nopackages (nopkgs_array) {
+
+vars:
+ any::
+        "nopackage_name"            slist  => getindices("$(nopkgs_array)");
+
+packages:
+
+    any::
+
+      "$(nopackage_name)"
+            package_policy  => "delete",
+            package_method  => apt,
+            package_version => "$($(nopkgs_array)[$(nopackage_name)])";
+}
+
 bundle agent restart_sshd {
 
 commands:
-  "service ssh restart"
+  "/usr/sbin/service sshd restart"
      handle => "restart_sshd",
     comment => "restarting sshd";
 

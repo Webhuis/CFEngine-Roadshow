@@ -16,8 +16,11 @@ vars:
       "network"        string => "10.68.71.0";
       "mask"           string => "255.255.255.0";
 
-      "mldap"           slist => {"ldapm1", "ldapm2"};
+#      "mldap"           slist => {"ldapm1", "ldapm2"};
+      "mldap"           slist => {"ldapm1"};
       "ldap"            slist => {"ldap1", "ldap2"};
+      "ldap_base"      string => "dc=webhuis,dc=nl";
+      "ldap_admin"     string => "cn=admin,${ldap_base}";
       "resolvers"       slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
       "searchlist"     string => "webhuis.nl";
  
@@ -50,13 +53,13 @@ vars:
 #     create    => "true";
 #     edit_line => add_export_directory;
  
-methods:
+#methods:
 
 #   "any" usebundle => get_template("ntp.conf.tmpl");
 #   "any" usebundle => ntp_conf;
 
-   "any" usebundle => get_template("resolv.conf.tmpl");
-   "any" usebundle => resolv_conf;
+#   "any" usebundle => get_template("resolv.conf.tmpl");
+#   "any" usebundle => resolv_conf;
 
 #   "any" usebundle => mnt_common_backups;
 #   "any" usebundle => common_backups;

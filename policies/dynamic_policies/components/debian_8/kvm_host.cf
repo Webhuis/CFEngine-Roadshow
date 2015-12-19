@@ -8,6 +8,7 @@ vars:
   "pkg[array-info]"             string => "*";
   "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
+  "pkg[grml-debootstrap]"       string => "*";
   "pkg[kvm]"                    string => "*";
   "pkg[libvirt-bin]"            string => "*";
   "pkg[lvm2]"                   string => "*";
@@ -24,13 +25,25 @@ vars:
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
-commands:
-  "/usr/bin/svn update"
-    comment => "Update the company vm xml definitions to a local copy",
-    contain => silent_in_dir("${${guest_configs}}"),
-    ifvarclass => canonify("$(support_svn_server)");
+files:
+
+  "/etc/debootstrap/config.sdx"
+         comment => "Prepare grml debootstrap environment",
+           perms => mo("644","root"),
+          create => "true",
+          action => u_immediate,
+   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/debootstrap.config.sdx.tmpl";
+
+#commands:
+
+#  "/usr/bin/svn update"
+#    comment => "Update the company vm xml definitions to a local copy",
+#    contain => silent_in_dir("${${guest_configs}}"),
+#    ifvarclass => canonify("$(support_svn_server)");
 
 methods:
-    "Provide desired packages" usebundle => packages("kvm_host.pkg");
+
+ "Provide desired packages"          usebundle => packages("kvm_host.pkg");
+ "Provide grml debootstrap template" usebundle => get_template("debootstrap.config.sdx.tmpl");
 
 }

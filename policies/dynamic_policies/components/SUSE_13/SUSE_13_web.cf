@@ -10,19 +10,19 @@ vars:
 methods:
 
   "any" usebundle => packages("SUSE_13_web.pkg");
-  "any" usebundle => suse_firewall(suse.firewall);
+  "any" usebundle => suse_firewall("suse.firewall");
 
 }
 
-bundle agent suse_firewall {
+bundle agent suse_firewall(suse_firewall) {
 
 vars:
       "suse_firewall" string => "/etc/sysconfig/SuSEfirewall2";
 
-      "firewall[FW_CONFIGURATIONS_EXT]"      slist => "${firewall}";
+      "firewall[FW_CONFIGURATIONS_EXT]"      slist => { "${suse.firewall}"};
 
-      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
 methods:
+      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
       "any"    usebundle => edit_suse_firewall("$(suse_firewall)", "suse.firewall");
 
 }

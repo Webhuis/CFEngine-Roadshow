@@ -2,6 +2,7 @@ bundle agent authentication {
 
 methods:
 
+  "Install Webhuis RootCA"            usebundle => webhuis_nl_rootca;
   "Set LDAP configuration"            usebundle => ldap_conf;
   "Set libnss LDAP configuration"     usebundle => libnss_ldap_conf;
   "Set pam LDAP configuration"        usebundle => pam_ldap_conf;
@@ -9,34 +10,157 @@ methods:
 
 }
 
-bundle agent ldap_conf {
+bundle agent webhuis_nl_rootca {
+
+files:
+
+  "/etc/ssl/webhuis.nl-certs/cacert.pem"
+         comment => "Install Webhuis rootCA",
+           perms => mo("644","root"),
+          create => "true",
+       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/cacert.pem","${sys.policy_hub}"),
+          action => u_immediate;
+
+  "/etc/ldap.secret"
+         comment => "ldap secret",
+           perms => mo("600","root"),
+       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
+          action => u_immediate;
 
 methods:
 
   "Get the ldap_conf tempate"         usebundle => get_template("ldap.conf.tmpl");
 
+reports:
+
+  "${this.bundle}: I am doing standardized ldap setup";
+
+}
+
+bundle agent ldap_conf {
+
+files:
+
+  "/etc/ldap/ldap.conf"
+         comment => "Prepare ldap configuration",
+           perms => mo("644","root"),
+          create => "true",
+          action => u_immediate,
+   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/ldap.conf.tmpl";
+
+  "/etc/ldap.secret"
+         comment => "ldap secret",
+           perms => mo("600","root"),
+       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
+          action => u_immediate;
+
+methods:
+
+  "Get the ldap_conf tempate"         usebundle => get_template("ldap.conf.tmpl");
+
+reports:
+
+  "${this.bundle}: I am doing standardized ldap setup";
+
 }
 
 bundle agent libnss_ldap_conf {
 
+files:
+
+  "/etc/libnss-ldap.conf"
+         comment => "Prepare libnss_ldap configuration",
+           perms => mo("644","root"),
+          create => "true",
+          action => u_immediate,
+   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/libnss-ldap.conf.tmpl";
+
+  "/etc/libnss-ldap.secret"
+         comment => "libnss ldap secret",
+           perms => mo("600","root"),
+       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/libnss-ldap.secret","${sys.policy_hub}"),
+          action => u_immediate;
+
 methods:
 
-  "Get the libnss_ldap_conf tempate"  usebundle => get_template("libnss-ldap.conf.tmpl");
+  "Get the libnss-ldap_conf tempate"  usebundle => get_template("libnss-ldap.conf.tmpl");
+
+reports:
+
+  "${this.bundle}: I am doing standardized libnss_ldap setup";
 
 }
 
 bundle agent pam_ldap_conf {
 
+files:
+
+  "/etc/pam_ldap.conf"
+         comment => "Prepare pam_ldap configuration",
+           perms => mo("644","root"),
+          create => "true",
+          action => u_immediate,
+   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/pam_ldap.conf.tmpl";
+
+  "/etc/pam_ldap.secret"
+         comment => "pam_ldap secret",
+           perms => mo("600","root"),
+       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/pam_ldap.secret","${sys.policy_hub}"),
+          action => u_immediate;
+
 methods:
 
   "Get the pam_ldap_conf tempate"     usebundle => get_template("pam_ldap.conf.tmpl");
+
+reports:
+
+  "${this.bundle}: I am doing standardized pam_ldap setup";
 
 }
 
 bundle agent nsswitch_conf {
 
-methods:
+files:
 
-  "Get the pam_ldap_conf tempate"     usebundle => get_template("nsswitch.conf.tmpl");
+  "/etc/nsswitch.conf"
+         comment => "Prepare nsswitch configuration",
+           perms => mo("644","root"),
+          create => "true",
+       edit_line => edit_nsswitch_conf,
+          action => u_immediate;
+
+reports:
+
+  "${this.bundle}: I am doing standardized nsswitch setup";
+
+}
+
+bundle edit_line edit_nsswitch_conf {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"# Webhuis /etc/nsswitch.conf voor de roadshow
+#
+# Do not edit
+
+passwd:         compat ldap
+group:          compat ldap
+shadow:         compat ldap
+gshadow:        files ldap
+
+hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4 ldap
+networks:       files ldap
+
+protocols:      db files
+services:       db files
+ethers:         db files
+rpc:            db files
+
+netgroup:       nis ldap
+automount:      files ldap";
 
 }

@@ -47,6 +47,10 @@ files:
   edit_line                 => edit_etc_hosts("etc_hosts.hosts"),
   action                    => u_immediate;
 
+reports:
+
+ "${this.bundle}: My DNS is not perfect yet";
+
 }
 
 bundle edit_line edit_etc_hosts(hosts) {
@@ -78,4 +82,3 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters";
 
 }
-
