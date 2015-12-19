@@ -1,0 +1,12 @@
+bundle agent Data_common {
+
+files:
+
+   "$(sys.workdir)/bin/cf-messaged.py"
+      handle => "update_bin_roadshow",
+      copy_from => u_rcp("${master_dynamic}/bin/cf-messaged.py", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+}
