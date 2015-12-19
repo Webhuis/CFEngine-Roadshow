@@ -1,0 +1,27 @@
+bundle agent cf_message {
+
+vars:
+  "role"        string => "x2gvdt";
+
+  "host_info"     data => parsejson('
+      { "host": { "uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(role)" } }');
+
+  "host_store"      string => storejson(host_info);
+
+commands:
+
+  "/root/cf-message.py ${host_store}";
+
+reports:
+
+  "${this.bundle} host_store: ${host_store}";
+
+}
+
+body common control {
+
+bundlesequence => { cf_message };
+  
+inputs => { "/var/cfengine/inputs/lib/3.6/stdlib.cf" };
+
+}
