@@ -17,11 +17,3 @@ reports:
   "${this.bundle} host_store: ${host_store}";
 
 }
-
-body common control {
-
-bundlesequence => { cf_message };
-  
-inputs => { "/var/cfengine/inputs/lib/3.6/stdlib.cf" };
-
-}

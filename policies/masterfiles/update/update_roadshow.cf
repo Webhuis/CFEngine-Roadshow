@@ -13,9 +13,9 @@ bundle agent cfe_roadshow_update {
 
   files:
 
-   "$(sys.workdir)/inputs/roadshow"
+   "$(sys.workdir)/inputs/roadshow_policies"
       handle => "update_files_inputs_roadshow",
-      copy_from => u_rcp("${master_static}/roadshow", ${sys.policy_hub}),
+      copy_from => u_rcp("${master_static}/roadshow_policies", ${sys.policy_hub}),
       depth_search => u_recurse("inf"),
       file_select  => u_policies,
       action => u_immediate,
