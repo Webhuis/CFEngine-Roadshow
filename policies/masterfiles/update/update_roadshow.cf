@@ -21,6 +21,13 @@ bundle agent cfe_roadshow_update {
       action => u_immediate,
       classes => u_if_repaired("update_report");
 
+   "$(sys.workdir)/bin/cf-message.py"
+      handle => "update_bin_roadshow",
+      copy_from => u_rcp("${master_dynamic}/bin/cf-message.py", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
    "$(sys.workdir)/dynamic-inputs-local/domain/${sys.domain}.cf"
       handle => "update_files_inputs_roadshow_domain",
       copy_from => u_rcp("${master_dynamic}/domain/${sys.domain}/${sys.domain}.cf", ${sys.policy_hub}),
@@ -56,7 +63,6 @@ bundle agent cfe_roadshow_update {
       file_select  => u_policies,
       action => u_immediate,
       classes => u_if_repaired("update_report");
-
 
    "$(sys.workdir)/dynamic-inputs-local/components/${${classify.role}.inputs}"
       handle => "update_files_inputs_roadshow_components",
