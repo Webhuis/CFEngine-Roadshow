@@ -9,7 +9,7 @@ vars:
 
 commands:
 
-  "/root/cf-message.py ${host_store}";
+  "/var/cfengine/bin/cf-message.py ${host_store}";
 
 reports:
 
