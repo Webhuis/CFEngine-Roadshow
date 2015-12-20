@@ -10,10 +10,16 @@ vars:
 commands:
 
   "/var/cfengine/bin/cf-message.py ${host_store}"
-            args => "--exec_timeout = 1";
+            contain => python_connect_timeout;
 
 reports:
 
   "${this.bundle} host_store: ${host_store}";
+
+}
+
+body contain python_connect_timeout {
+
+exec_timeout => "30";
 
 }
