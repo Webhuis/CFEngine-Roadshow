@@ -20,6 +20,6 @@ reports:
 
 body contain python_connect_timeout {
 
-exec_timeout => "30";
+exec_timeout => "5";
 
 }

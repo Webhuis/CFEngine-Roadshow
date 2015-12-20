@@ -15,7 +15,7 @@ while True:
     #  Wait for next request from client
     message = socket.recv()
     cur = conn.cursor()
-    cur.execute("insert into json_in (message_in) velues ( message )");
+    cur.execute("insert into json_in (message_in) values ( message )");
     conn.commit()
 #    with open("queue.txt", "a") as queue:
 #      queue.write(message + "\n")
