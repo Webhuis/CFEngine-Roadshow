@@ -4,7 +4,7 @@ files:
 
    "$(sys.workdir)/bin/cf-messaged.py"
       handle => "update_Data_listener",
-      copy_from => u_rcp("/var/cfengine/dynamic_policies}/bin/cf-messaged.py", ${sys.policy_hub}),
+      copy_from => u_rcp("/var/cfengine/dynamic_policies/bin/cf-messaged.py", ${sys.policy_hub}),
       action => u_immediate,
       classes => u_if_repaired("update_report");
 
