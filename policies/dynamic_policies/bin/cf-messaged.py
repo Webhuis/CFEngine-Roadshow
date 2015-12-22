@@ -2,7 +2,7 @@
 
 import json
 import psycopg2
-import time
+import datetime
 import zmq
 
 context = zmq.Context()
@@ -14,8 +14,9 @@ conn = psycopg2.connect(database="raw_messages_in", user="www-data", password="W
 while True:
     #  Wait for next request from client
     message = socket.recv()
+    timestamp = datetime.now()
     cur = conn.cursor()
-    cur.execute("insert into json_in (message_in) values ( message )");
+    cur.execute("insert into json_in (id, message_in) values ( timestamp, message )");
     conn.commit()
 #    with open("queue.txt", "a") as queue:
 #      queue.write(message + "\n")
