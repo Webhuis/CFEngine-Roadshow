@@ -1,0 +1,28 @@
+bundle agent request_role_information {
+
+vars:
+
+#  "hash"                          string => file_hash("${sys.workdir}/Data/request_role_view" , "md5" );
+#  "hash"                          string => readfile("${sys.workdir}/Data/request_role_view" , "0" );
+  "role_view"                        data => parsejson('
+      { "query": "$(classify.role)" { "uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)" } }');
+
+  "request_role_view"              string => storejson(role_view);
+# "response_role_information"      string => "";
+
+files:
+
+  "${sys.workdir}/Data/request_role_view"
+    create => "true";
+
+methods:
+
+  "Request Data for updates"	usebundle => cf_message(${request_role_view}),
+                                useresult => "response_role_information";
+
+reports:
+
+  "${this.bundle} request_role_view: ${request_role_view}";
+  "${this.bundle} response_role_information: ${response_role_information}";
+
+}

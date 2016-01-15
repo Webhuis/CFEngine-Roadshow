@@ -1,0 +1,16 @@
+bundle agent icinga2 {
+
+vars:
+
+  "pkg[icinga2]"                             string => "*";
+  "pkg[icinga2-ido-mysql]"                   string => "*";
+  "pkg[icinga-idoutils]"                     string => "*";
+  "pkg[icinga-web]"                          string => "*";
+  "pkg[icinga-web-config-icinga2-ido-mysql]" string => "*";
+  "pkg[monitoring-plugins-basic]"            string => "*";
+
+methods:
+
+  "We require incinga2 packages"          usebundle => packages("icinga2.pkg");
+
+}
