@@ -1,20 +1,13 @@
-bundle agent cf_message {
-
-vars:
-
-  "host_info"     data => parsejson('
-      { "host": { "uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
-
-  "host_store"      string => storejson(host_info);
+bundle agent cf_message (request) {
 
 commands:
 
-  "/var/cfengine/bin/cf-message.py ${host_store}"
+  "/var/cfengine/bin/cf-message.py '${request}'"
             contain => python_connect_timeout;
 
 reports:
 
-  "${this.bundle} host_store: ${host_store}";
+  "${this.bundle} request: ${request}";
 
 }
 
