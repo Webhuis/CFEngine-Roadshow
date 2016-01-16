@@ -1,0 +1,78 @@
+bundle agent cf_mnmutl {
+
+vars:
+  "role"                           string => "mnmutl";
+  "role_view"                        data => parsejson('
+      { "message": "view", "query": { "view_name":  "${role}", "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${role}" } }');
+
+  "request_role_view"              string => storejson(role_view);
+
+  "response"                       string => execresult("/var/cfengine/bin/Data-test.py '${request_role_view}'","noshell");
+
+  "mnmutl"                           data => parsejson('${response}'); 
+  "domains"                         slist => getindices("mnmutl"); 
+
+methods:
+
+  "Decompose message"    usebundle => decompose_message( @(mnmutl), ${domains} );
+
+reports:
+
+#  "${this.bundle} mnmutl: ${mnmutl}";
+#  "${this.bundle} domains: ${domains}";
+
+}
+
+bundle agent decompose_message( mnmutl, domains ) {
+
+vars:
+
+  "domain_services"       string => storejson("mnmutl[$(domains)]");
+  "domain_container"        data => parsejson($(domain_services));
+  "services_index"         slist => getindices("domain_container");
+
+methods:
+
+  "The response found" usebundle => domain_services(@(domain_container), $(domains), $(services_index) );
+
+reports:
+
+#  "$(this.bundle) domain: $(mnmutl)";
+#  "$(this.bundle) domain: $(domains), $(services_index)";
+
+}
+
+bundle agent domain_services( domain_container, domains, services_idx ) {
+
+vars:
+
+  "services"        string => storejson("domain_container[$(services_idx)]");
+  "services_data"     data => parsejson($(services));
+  "services_values"   slist => getvalues("services_data");
+#  "mnm_array[$(domains)][$(services_idx)]" string => "$(services_values)";
+
+#methods:
+
+#  "Get mnm values in array" usebundle => mnm_array("$(domain_services.mnm_array)");
+
+reports:
+
+  "$(this.bundle) domains services hosts: $(domains), $(services_idx), $(services_values)";
+
+}
+
+bundle agent mnm_array( mnm_array ) {
+
+reports:
+
+  "$(this.bundle) domain_service_host: $(mnm_array)"; 
+
+}
+
+body common control {
+
+bundlesequence => { cf_mnmutl };
+
+inputs => { "/var/cfengine/inputs/lib/3.6/stdlib.cf", "/var/cfengine/bin/cf_mnmutl.cf", "/var/cfengine/bin/cf_message_test.cf" };
+
+}
