@@ -69,10 +69,10 @@ def host_feed(feed_content):
 
 def decompose_message(json_string):
   message = json.loads(json_string)
-  for key, value in message.iteritems():
-   feed = key
-   feed_content =  value
-   return ( feed, feed_content ) 
+  message_type = message["message"]
+  query = message["query"]
+  content = message["content"]
+  return ( message_type, query, content ) 
 
 def update_message_flow ( ts_id, promise ):
 
@@ -90,11 +90,14 @@ while True:
   for row in rows:
     message_id = row[0]
     json_string = row[1]
-    ( feed, feed_content ) = decompose_message(json_string)
-    if feed == 'host':
-      promise = host_feed ( feed_content )
+    print json_string
+    ( message_type, query, content ) = decompose_message(json_string)
+    if message_type == 'feed':
+      print "feed"
+#     promise = host_feed ( feed_content )
+    elif message_type == 'view':
+      promise = 99
     update_message_flow ( message_id, promise )
-
   conn.commit()
 
   time.sleep(10)
