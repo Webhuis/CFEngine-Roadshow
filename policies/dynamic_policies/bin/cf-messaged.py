@@ -90,7 +90,8 @@ while True:
     elif query == "tstutl":
       response = tstutl( content )
     else:
-      response = default( content )
+#     response = default( content )
+      response = "default, no role view"
       socket.send(response)
   elif message_json["message"] == "feed":
     write_message(message)
