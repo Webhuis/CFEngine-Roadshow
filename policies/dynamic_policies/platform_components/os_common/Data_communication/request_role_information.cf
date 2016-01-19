@@ -8,7 +8,13 @@ vars:
       { "message": "view", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
 
   "request_role_view"              string => storejson(role_view);
+  "response"                       string => execresult("/var/cfengine/bin/cf-message.py '${request_role_view}'","noshell");
 # "response_role_information"      string => "";
+
+  "role_view_write"                  data => parsejson('
+      { "message": "write", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}" } }');
+
+  "request_role_view_write"        string => storejson(role_view_write);
 
 files:
 
@@ -17,7 +23,7 @@ files:
 
 methods:
 
-  "Request Data for updates"	usebundle => cf_message(${request_role_view}),
+  "Request data from Data"    usebundle => cf_message_test( ${request_role_view_write} );
                                 useresult => "response_role_information";
 
 reports:
