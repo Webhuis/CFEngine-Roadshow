@@ -6,7 +6,8 @@ methods:
   "Basic environment stuff"      usebundle => basic_environment;
   "openssh server and client"    usebundle => ssh_all_config;
   "We use LDAP Authentication"   usebundle => authentication;
-  "Prepare for users"   	 usebundle => user_data;		# This will come from Data, role based
+  "Feed Hard Calles to Dat "   	 usebundle => feed_hard_classes;
+# "Prepare for users"   	 usebundle => user_data;		# This will come from Data, role based
 
 reports:
 
