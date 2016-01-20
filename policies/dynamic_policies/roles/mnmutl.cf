@@ -2,15 +2,17 @@ bundle agent mnmutl {
 
 vars:
 
-  "bundles[nagios3]"              string => "${sys.flavor}/nagios3.cf";
-  "bundles[mysql_server]"         string => "${sys.flavor}/mysql_server.cf";
+  "bundles[nagios3]"                        string => "${sys.flavor}/nagios3.cf";
+  "bundles[mysql_server]"                   string => "${sys.flavor}/mysql_server.cf";
+  "bundles[mnmutl_data]"                    string => "mnmutl_data.cf";
 
-  "sequence"                       slist => getindices("bundles");
-  "inputs"                         slist => getvalues("bundles");
+  "sequence"                                 slist => getindices("bundles");
+  "inputs"                                   slist => getvalues("bundles");
 
 methods:
 
-  "We are a Nagios server"     usebundle => "nagios3";
-  "We desire a mysql backend"  usebundle => "mysql_server";
+  "We are a Nagios server"               usebundle => "nagios3";
+  "We desire a mysql backend"            usebundle => "mysql_server";
+  "We desrie the Nagios data from Data"  usebundle => "mysql_server";
 
 }
