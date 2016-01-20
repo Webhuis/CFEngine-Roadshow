@@ -18,6 +18,18 @@ files:
       edit_line  => edit_yum_conf("${centos_6.yum_proxy}"),
          action  => u_immediate;
 
+ "/etc/yum/pluginconf.d/fastestmirror.conf"
+          perms  => mo("644","root"),
+         create  => "true",
+      edit_line  => edit_yum_fastest_mirror_conf,
+         action  => u_immediate;
+
+ "/etc/yum.repos.d/CentOS-Base.repo"
+          perms  => mo("644","root"),
+         create  => "true",
+      edit_line  => edit_yum_base_repo,
+         action  => u_immediate;
+
 methods:
 
   "any" usebundle => get_template("yum.conf.tmpl");
@@ -26,29 +38,40 @@ methods:
 
 }
 
-bundle edit_line edit_yum_conf(proxy) {
+bundle edit_line edit_yum_base_repo {
 
  delete_lines:
 
    ".*";
 
  insert_lines:
-"# Webhuis template voor yum.conf
-#
-# Do not edit
-#
-[main]
-cachedir=/var/cache/yum/$basearch/$releasever
-keepcache=0
-debuglevel=2
-logfile=/var/log/yum.log
-exactarch=1
-obsoletes=1
+"[base]
+name=CentOS-$releasever - Base
+baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+http://ftp.nluug.nl/ftp/pub/os/Linux/distr/CentOS/
 gpgcheck=1
-plugins=1
-installonly_limit=5
-bugtracker_url=http://bugs.centos.org/set_project.php?project_id=19&ref=http://bugs.centos.org/bug_report_page.php?category=yum
-distroverpkg=centos-release
-proxy=${proxy}";
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#released updates 
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6";
 
 }

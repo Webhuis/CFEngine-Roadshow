@@ -1,4 +1,4 @@
-bundle agent cfe_hub {
+bundle agent cfe_comp {
 
 vars:
 
@@ -7,6 +7,6 @@ vars:
 #    "cfehost_package_name"     slist  => getindices("pkg");
 
 methods:
-    "any" usebundle => packages("cfe_hub.pkg");
+    "any" usebundle => packages("cfe_comp.pkg");
 
 }
