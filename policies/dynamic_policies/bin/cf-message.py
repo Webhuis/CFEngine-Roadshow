@@ -6,8 +6,9 @@ import zmq
 context = zmq.Context()
 
 #  Socket to talk to server
-print("Connecting to server...")
+#print("Connecting to server...")
 socket = context.socket(zmq.REQ)
+socket.setsockopt(zmq.LINGER, 0)
 socket.connect("tcp://data.webhuis.nl:5309")
 
 message = ''
@@ -15,9 +16,16 @@ message = ''
 for element in sys.argv[1:]:
   message = message + element
 
-print("Sending request %s ..." % message )
+#print("Sending request %s ..." % message )
 socket.send( message )
 
-#  Get the reply.
-response = socket.recv()
+poller = zmq.Poller()
+poller.register(socket, zmq.POLLIN)
+if poller.poll(2*1000): # 10s timeout in milliseconds
+  response = socket.recv()
+else:
+# raise IOError("Timeout processing auth request")
+  response = ("Timeout processing auth request")
+# quit()
+
 print( response )
