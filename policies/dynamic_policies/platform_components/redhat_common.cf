@@ -29,3 +29,42 @@ commands:
     comment => "restarting sshd";
 
 }
+
+bundle edit_line edit_yum_conf(proxy) {
+
+ delete_lines:
+
+   ".*";
+
+ insert_lines:
+"# Webhuis template voor yum.conf
+#
+# Do not edit
+#
+[main]
+cachedir=/var/cache/yum/$basearch/$releasever
+keepcache=0
+debuglevel=2
+logfile=/var/log/yum.log
+exactarch=1
+obsoletes=1
+gpgcheck=1
+plugins=1
+installonly_limit=5
+bugtracker_url=http://bugs.centos.org/set_project.php?project_id=19&ref=http://bugs.centos.org/bug_report_page.php?category=yum
+distroverpkg=centos-release
+proxy=${proxy}";
+
+}
+
+bundle edit_line edit_yum_fastest_mirror_conf {
+
+ delete_lines:
+
+   ".*";
+
+ insert_lines:
+"[main]
+enabled=0";
+
+}
