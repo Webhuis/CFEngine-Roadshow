@@ -23,8 +23,8 @@ files:
 
 methods:
 
-  "Request data from Data"    usebundle => cf_message_test( ${request_role_view_write} );
-                                useresult => "response_role_information";
+  "Request data from Data"    usebundle => cf_message( ${request_role_view_write} );
+#                               useresult => "response_role_information";
 
 reports:
 
