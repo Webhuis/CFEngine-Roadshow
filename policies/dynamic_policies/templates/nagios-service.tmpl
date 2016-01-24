@@ -1,0 +1,13 @@
+# Webhuis template for Nagios3 service
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+define service{
+        name                    ${service.service}  ; Name of service
+        use                     generic-service              ; Name of service template to use
+
+        max_check_attempts      4
+        check_period            24x7
+        check_command           ${service.service_check}
+        }

@@ -2,17 +2,17 @@ bundle agent mnmutl_data(mnmutl_data) {
 
 vars:
 
-  "mnmutl"                         data => parsejson('${mnmutl_data}'); 
-  "domains"                       slist => getindices("mnmutl"); 
+  "mnmutl"                          data => parsejson('${mnmutl_data}'); 
+  "domains"                        slist => getindices("mnmutl"); 
 
 methods:
 
-  "Decompose message"         usebundle => decompose_message( @(mnmutl), ${domains} );
+  "Decompose message"          usebundle => decompose_mnmutl_data( @(mnmutl), ${domains} );
+  "Create Nagios host stanza"  usebundle => nagios_hostgroups( $(domains) );
 
 reports:
 
-  "${this.bundle} mnmutl: ${response}";
-  "${this.bundle} domains: ${domains}";
+  "${this.bundle} mnmutl_data: ${mnmutl_data}";
 
 }
 
@@ -30,8 +30,8 @@ methods:
 
 reports:
 
-#  "$(this.bundle) domain: $(mnmutl)";
-#  "$(this.bundle) domain: $(domains), $(services_index)";
+# "$(this.bundle) domain: $(mnmutl)";
+  "$(this.bundle) domains: $(domains)";
 
 }
 
@@ -39,14 +39,17 @@ bundle agent domain_services( domain_container, domains, services_idx ) {
 
 vars:
 
-  "services"        string => storejson("domain_container[$(services_idx)]");
-  "services_data"     data => parsejson($(services));
-  "services_values"   slist => getvalues("services_data");
-#  "mnm_array[$(domains)][$(services_idx)]" string => "$(services_values)";
+  "services"                                     string => storejson("domain_container[$(services_idx)]");
+  "services_data"                                  data => parsejson($(services));
+  "services_values"                               slist => getvalues("services_data");
+# "mnm_array[$(domains)][$(services_idx)]"       string => "$(services_values)";
 
-#methods:
+methods:
 
-#  "Get mnm values in array" usebundle => mnm_array("$(domain_services.mnm_array)");
+  "Create Nagios services"                    usebundle => nagios_services;
+  "Create Nagios host stanza"                 usebundle => nagios_host( $(domains), $(services_values) );
+  "Create Nagios host-service stanza"         usebundle => nagios_hosts_services( $(domains), $(services_values), $(services_idx) );
+#  "Get mnm values in array"                  usebundle => mnm_array("$(domain_services.mnm_array)");
 
 reports:
 
@@ -54,18 +57,141 @@ reports:
 
 }
 
-bundle agent mnm_array( mnm_array ) {
+bundle agent nagios_hostgroups( domains ) {
+
+methods:
+
+  "Create hostgroup per domain" usebundle => nagios_hostgroup(${domains} );
 
 reports:
 
-  "$(this.bundle) domain_service_host: $(mnm_array)"; 
+  "$(this.bundle) hostgroup domains: $(domains)";
 
 }
 
-body common control {
+bundle agent nagios_hostgroup( domain ) {
 
-bundlesequence => { cf_mnmutl };
+files:
+ "/etc/nagios3/hostgroups/${domain}.cfg"
+         comment  => "Hostgroups configfile for Nagios",
+           perms  => mog("664","nagios","nagios"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hostgroups.tmpl",
+         classes  => u_if_repaired("restart_nagios"); 
 
-inputs => { "/var/cfengine/inputs/lib/3.6/stdlib.cf", "/var/cfengine/bin/cf_mnmutl.cf", "/var/cfengine/bin/cf_message_test.cf" };
+reports:
+
+  "$(this.bundle) hostgroup per domain: $(domain)"; 
+
+}
+
+bundle agent nagios_host( domain, host ) {
+
+vars:
+ "fqdn"                        string => "${host}.${domain}";
+
+files:
+ "/etc/nagios3/hosts/${domain}/${fqdn}.cfg"
+         comment  => "Hosts configfile for Nagios",
+           perms  => mog("664","nagios","nagios"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts.tmpl",
+         classes  => u_if_repaired("restart_nagios");
+
+reports:
+
+  "$(this.bundle) fqdn: $(fqdn)";
+
+}
+
+bundle agent nagios_hosts_services( domain, host, services ) {
+
+vars:
+ "fqdn"                        string => "${host}.${domain}";
+
+methods:
+
+  "Create host service stanza" usebundle => nagios_host_service( ${fqdn}, ${services} );
+
+reports:
+
+  "$(this.bundle) host service: $(fqdn), ${services}";
+
+}
+
+bundle agent nagios_host_service( fqdn, services ) {
+
+files:
+ "/etc/nagios3/services/${fqdn}-${services}.cfg"
+         comment  => "Host service configfile for Nagios",
+           perms  => mog("664","nagios","nagios"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts-service.tmpl",
+         classes  => u_if_repaired("restart_nagios");
+
+reports:
+
+  "$(this.bundle) fqdn: $(fqdn)-${services}";
+
+}
+
+bundle agent nagios_services {
+
+vars:
+  "service[cfengine]"              string => "check_tcp!5308";
+  "service[http]"                  string => "check_tcp!80";
+  "service[https]"                 string => "check_tcp!443";
+  "service[mysql]"                 string => "check_tcp!3306";
+  "service[tomcat]"                string => "check_tcp!8080";
+
+  "services"                        slist => getindices("service");
+  "service_check"                   slist => getvalues("service");
+
+methods:
+
+  "Create config file per service" usebundle => services( "nagios_services.service" );
+
+reports:
+
+  "$(this.bundle) nagios_services.service-check: nagios_services.service[${services}]";
+  "$(this.bundle) service-check: ${service_check}";
+  "$(this.bundle) services: $(services)";
+
+}
+
+bundle agent services( services_array ) {
+
+vars:
+
+  "service_check_index"                      slist => getindices(${services_array});
+
+methods:
+
+  "Create config file per service" usebundle => service( "$(service_check_index)", "$($(services_array)[$(service_check_index)])" );
+
+reports:
+
+  "$(this.bundle) service: $(service_check_index)";
+
+}
+
+bundle agent service( service, service_check ) {
+
+files:
+
+  "/etc/nagios3/services/service_${service}.cfg"
+         comment  => "Services configfile for Nagios",
+           perms  => mog("664","nagios","nagios"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-service.tmpl",
+         classes  => u_if_repaired("restart_nagios");
+
+reports:
+
+  "$(this.bundle) service: $(service), ${service_check}";
 
 }

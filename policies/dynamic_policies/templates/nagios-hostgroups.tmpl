@@ -1,0 +1,11 @@
+# Webhuis template for Nagios3 hostgroups
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+define hostgroup{
+        hostgroup_name                 ${nagios_hostgroup.domain}
+        alias                          ${nagios_hostgroup.domain}
+        name                           ${nagios_hostgroup.domain}
+        register                       1
+        }
