@@ -12,9 +12,13 @@ vars:
 # "response_role_information"      string => "";
 
   "role_view_write"                  data => parsejson('
-      { "message": "write", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}" } }');
+      { "message": "feed", "query": "role_feed", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}" } }');
 
   "request_role_view_write"        string => storejson(role_view_write);
+
+classes:
+
+  "wru"                             expression => strcmp( "$(response)" , "no_role_view" );
 
 files:
 
@@ -23,12 +27,12 @@ files:
 
 methods:
 
-  "Request data from Data"    usebundle => cf_message( ${request_role_view_write} );
-#                               useresult => "response_role_information";
+  wru::
+  "Feed role to Data"           usebundle => cf_message( ${request_role_view_write} );
 
 reports:
 
-  "${this.bundle} request_role_view: ${request_role_view}";
+  "${this.bundle} response: ${response}";
   "${this.bundle} response_role_information: ${response_role_information}";
 
 }

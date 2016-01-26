@@ -6,14 +6,14 @@ vars:
 #  "hash"                          string => readfile("${sys.workdir}/Data/request_role_view" , "0" );
   "node_hard_classes"                data => parsejson('
       { "message": "feed", "query": "hard_classes", "content":
-      { "feeding_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}", 
+      { "feeding_host": "$(sys.uqhost)", "domain": "$(sys.domain)",
         "os": "${sys.os}",
         "ostype": "${sys.ostype}",
         "flavor": "${sys.flavor}",
+        "cpus": "${sys.cpus}",
         "arch": "${sys.arch}" } }');
 
   "node_hard_classes_feed"         string => storejson(node_hard_classes);
-# "response_role_information"      string => "";
 
 files:
 
@@ -22,13 +22,11 @@ files:
 
 methods:
 
-  "Feed Data with Hard Classes"	usebundle => cf_message(${node_hard_classes_feed}),
-                                useresult => "response_role_information";
+  "Feed Data with Hard Classes"	usebundle => cf_message(${node_hard_classes_feed});
+#                               useresult => "response_role_information";
 
 reports:
 
-  "${this.bundle} node_hard_classes: ${node_hard_classes}";
   "${this.bundle} node_hard_classes_feed: ${node_hard_classes_feed}";
-  "${this.bundle} response_role_information: ${response_role_information}";
 
 }

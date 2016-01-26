@@ -142,6 +142,7 @@ bundle agent nagios_services {
 
 vars:
   "service[cfengine]"              string => "check_tcp!5308";
+  "service[data]"                  string => "check_tcp!5309";
   "service[http]"                  string => "check_tcp!80";
   "service[https]"                 string => "check_tcp!443";
   "service[mysql]"                 string => "check_tcp!3306";
