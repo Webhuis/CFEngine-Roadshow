@@ -32,10 +32,10 @@ vars:
 files:
 
   "/etc/group"
-    edit_line => append_groups_starting("user_data.group_id");
+    edit_line => append_groups_starting("user_management.group_id");
 
   "/etc/passwd"
-    edit_line => append_users_starting("user_data.user");
+    edit_line => append_users_starting("user_management.user");
 
   "/etc/shadow"
     edit_line => append_users_shadow("@(user_pw_value)");
@@ -52,7 +52,7 @@ files:
      perms => mog("0700","${users}","${users}");
 
 methods:
- "any" usebundle => user_ssh_key("user_data.user_key");
+ "any" usebundle => user_ssh_key("user_management.user_key");
 
 }
 
