@@ -1,0 +1,90 @@
+bundle agent user_management {
+
+vars:
+
+ "user[cfetest]"           string => "cfetest:x:1001:1100:cfetest:/home/cfetest:/bin/bash";
+ "user[hans]"              string => "hans:x:1002:1100:hans:/home/hans:/bin/bash";
+ "user[martin]"            string => "martin:x:1000:1100:martin:/home/martin:/bin/bash";
+
+ "user_pw[cfetest]" string => "cfetest:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+ "user_pw[hans]" string => "hans:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+ "user_pw[martin]" string => "martin:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+
+ "user_key[cfetest]"       string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDvoFP5qEUBEuoAUqGmaytD/MKp2wghG0N9DCGVJR9debIaR5o8ouVfoByRUnmY0Dbk6WuTx6V6MmtYq6QwQxbRpD/jp5SIr1597/4KGYo/1IiI0aKgTSyyf+vcyGwh1zUyBhGshOP61JjNzhM2QyeD2AW5oyORrDUaYHY5qHnjFzpPm6AxbufyRSIdiuUKN2g+octR0Rt/ZEnZuQCvb4rV7kbqBx7Wz9BT8pJ3fiPxlLAdU0rU+pdD8D3kw7lshzpvXGuRXhtiO5vuhLdV5Zhot83IlLlGLSkN3sv+1bxuhETK9odrfhewGG4jxL04UmOwWBUC1viPG9p2r9fSigsNtpol109/LubYdmGQ93YOatJlQ7w2WLJhJ0mMmYBBPNUGmtAnYk9t+eSAhW3rB6BGgR9r1X/Ql2dolAyUV4zJq5IBMR2Gw9EvDWMAw92kg1SlOfggg/o/5yIhZqmYKJUZjVxffaAfj0Od9u0Ezyc8qkH8XCVwYRvAhS2yBTFRKFuq5NAUpHFUf/IqNiBfWRtocql+Vd5XJxGbIR3T/JgNo+BfEZIPbA8Qle8J3JZJA1EmZLXGLfeURjey8jGqzNvoheMCekJ65Pfah8rKWjgFp8/BHC+T3cwF1BI9D5XUvpd/8ajtRzhSRtKxfL+a4OpnApISeNEoMdsrb1IgBYdqw== martin@cfe-roadshow";
+ "user_key[hans]"          string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZq9IUNE0cQj6Zy+VPrBn9+W8bqIZyo9r5NL0ssX1eCa1NeRpm/As2DSsrIfYXPsHIqHV1VsD7bo+WoTkDBjmUHRGt0EhgwJHfAZX5eihAu3HuPqqobDPHfCqIzEWPiKe6CdsKcvajNueJXcaXZqqjKyDUBGrDtY5THKfxEvGuuyFaFJmCO9j11s2EQerzYX3tnRX4yOGuP+pAf28OwFYcV5wLqEpNOaFfoZFFZiWdnTHbvxfiXV6wuIOobmNsA1ugkSz7FUN7W6NaB3a+HxyzeqAkc3Ns1q/qauvxGS0kXLK8UXbJMFfm2DICJHpQM4pglx0PewPcqEiCT2VD+J0TzUoCW5GYfj6L1umTSAr7rNuJlKHFjLtCHHNUX9Xiy1W7k/x9QEh+M4MUkMzgiNpq1w2SE/k/BhEIWXSUOm6JtSf0eqSfV5m1Dy2O2F+kPscghI6KkzX9ZNWW1Xa1BtV+KF/RCdKnEklfB8v0JFtM5QwZPwBA3/Jo8mm3xGSJlLkJcyA8DljQzlYQ3hkuwGRfSSH5ZIWsrCJbbE5Bt/EgwSbINrnDnIJzzYGZYZkBja+1MFXmuKMkyI3tksx2g8zVLWRvDiT6S4wExKphp83h2137I0j2i1sj/jDR1pgnoXtVMLb64Ye7XD2WuQ9l9n1jDcaxACMh4Ku6QxIF7NWLJw== hspaans@voyager";
+ "user_key[martin]"        string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDvoFP5qEUBEuoAUqGmaytD/MKp2wghG0N9DCGVJR9debIaR5o8ouVfoByRUnmY0Dbk6WuTx6V6MmtYq6QwQxbRpD/jp5SIr1597/4KGYo/1IiI0aKgTSyyf+vcyGwh1zUyBhGshOP61JjNzhM2QyeD2AW5oyORrDUaYHY5qHnjFzpPm6AxbufyRSIdiuUKN2g+octR0Rt/ZEnZuQCvb4rV7kbqBx7Wz9BT8pJ3fiPxlLAdU0rU+pdD8D3kw7lshzpvXGuRXhtiO5vuhLdV5Zhot83IlLlGLSkN3sv+1bxuhETK9odrfhewGG4jxL04UmOwWBUC1viPG9p2r9fSigsNtpol109/LubYdmGQ93YOatJlQ7w2WLJhJ0mMmYBBPNUGmtAnYk9t+eSAhW3rB6BGgR9r1X/Ql2dolAyUV4zJq5IBMR2Gw9EvDWMAw92kg1SlOfggg/o/5yIhZqmYKJUZjVxffaAfj0Od9u0Ezyc8qkH8XCVwYRvAhS2yBTFRKFuq5NAUpHFUf/IqNiBfWRtocql+Vd5XJxGbIR3T/JgNo+BfEZIPbA8Qle8J3JZJA1EmZLXGLfeURjey8jGqzNvoheMCekJ65Pfah8rKWjgFp8/BHC+T3cwF1BI9D5XUvpd/8ajtRzhSRtKxfL+a4OpnApISeNEoMdsrb1IgBYdqw== martin@cfe-roadshow";
+
+ "group_id[cfegroup]"      string => "cfegroup:x:1100:";
+ "group_id[cfemanager]"    string => "cfemanager:x:1101:";
+ "group_id[cfetest]"       string => "cfetest:x:1001:";
+ "group_id[hans]"          string => "hans:x:1002:";
+ "group_id[martin]"        string => "martin:x:1000:";
+ "group_users[cfegroup]"    slist => { "cfetest", "hans", "martin" };
+
+ "users"                    slist => getindices(user);
+ "user_group"               slist => getindices(group_users);
+ "user_list"                slist => getvalues(group_users);
+ "user_pw_index"            slist => getindices(user_pw);
+ "user_pw_value"            slist => getvalues(user_pw);
+ "user_key_index"           slist => getindices(user_key);
+ "user_key_value"           slist => getvalues(user_key);
+
+files:
+
+  "/etc/group"
+    edit_line => append_groups_starting("user_data.group_id");
+
+  "/etc/passwd"
+    edit_line => append_users_starting("user_data.user");
+
+  "/etc/shadow"
+    edit_line => append_users_shadow("@(user_pw_value)");
+
+  "/etc/group"
+    edit_line => append_user_field("${user_group}","4","@(users)");
+
+  "/home/$(users)/."
+    create => "true",
+     perms => mog("2750","${users}","cfegroup");
+
+  "/home/$(users)/.ssh/."
+    create => "true",
+     perms => mog("0700","${users}","${users}");
+
+methods:
+ "any" usebundle => user_ssh_key("user_data.user_key");
+
+}
+
+bundle agent user_ssh_key(user_key) {
+
+vars:
+ "user"                     slist => getindices("$(user_key)");
+ "authorized_keys"          slist => getvalues("$(user_key)");
+
+files:
+
+  "/home/${user}/.ssh/authorized_keys"
+    create => "true",
+    handle => "set_ssh_public_key",
+   comment => "Set desired ssh_config parameters",
+     perms => mog("0600", "${user}", "${user}"),
+ edit_line => ssh_users("$($(user_key)[$(user)])");
+
+}
+
+bundle edit_line append_users_shadow(user_pw_value) {
+
+insert_lines:
+  "${user_pw_value}";
+}
+
+bundle edit_line ssh_users(param) {
+
+delete_lines:
+
+ ".*";
+
+insert_lines:
+  "${param}";
+}
