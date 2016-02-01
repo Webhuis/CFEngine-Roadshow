@@ -31,6 +31,19 @@ def check_host(host_name, domain):
     host_role_status = row[0]
   return(host_role_status)
 
+def check_hard_classes(uqhost, domain_id):
+  data = (uqhost, domain_id)
+  query = "select uqhost from hard_classes where uqhost = %s and domain_id = %s;"
+  cur = conn.cursor()
+  cur.execute(query, data);
+
+  row = cur.fetchone()
+  if row is None:
+    hard_classes_status = "no_hard_classes"
+  else:
+    hard_classes_status = row[0]
+  return(hard_classes_status)
+
 def insert_host_role ( uqhost, domain, role ):
   data = ( uqhost, domain, role )
   insert = "insert into host ( uqhost, domain_id, role_id ) values ( %s, %s, %s );"
@@ -40,12 +53,52 @@ def insert_host_role ( uqhost, domain, role ):
   promise = 8
 #  else
 #    promise = 1
+  conn.commit()
 
-def host_feed(feed_content):
-  host_container = json.dumps(feed_content, indent=0)
-  container = json.loads(host_container)
+def insert_hard_classes ( uqhost, domain, os, ostype, flavor, cpus, arch ):
+  data = ( uqhost, domain, os, ostype, flavor, cpus, arch )
+  insert = "insert into hard_classes ( uqhost, domain_id, os, ostype, flavor, cpus, arch ) values ( %s, %s, %s, %s, %s, %s, %s );"
+  cur = conn.cursor()
+  cur.execute(insert, data);
+  conn.commit()
+
+def hard_classes(content):
+  hard_classes_container = json.dumps(content, indent=0)
+  container = json.loads(hard_classes_container)
+# print container
   for key, value in container.iteritems():
-    if key == "uqhost":
+    if key == "feeding_host":
+      uqhost = value
+    elif key == "domain":
+      domain_id = value
+    elif key == "os":
+      os = value
+    elif key == "ostype":
+      ostype = value
+    elif key == "flavor":
+      flavor = value
+    elif key == "cpus":
+      cpus = value
+    elif key == "arch":
+      arch = value
+  host_role_status = check_host( uqhost, domain_id )
+  if host_role_status == "no_host":
+    promise = 1
+  else:
+    hard_classes_status = check_hard_classes(uqhost, domain_id)
+    if hard_classes_status == "no_hard_classes":
+      insert_hard_classes ( uqhost, domain_id, os, ostype, flavor, cpus, arch )
+      promise = 8
+    else:
+      promise = 9
+  return ( promise )
+
+def role_feed(content):
+  host_container = json.dumps(content, indent=0)
+  container = json.loads(host_container)
+# print container
+  for key, value in container.iteritems():
+    if key == "request_host":
       uqhost = value
     elif key == "domain":
       domain_id = value
@@ -64,7 +117,7 @@ def host_feed(feed_content):
       promise = 8
   elif host_role_status != role:
     promise = 2
-     
+# promise = 0
   return ( promise )
 
 def decompose_message(json_string):
@@ -90,14 +143,17 @@ while True:
   for row in rows:
     message_id = row[0]
     json_string = row[1]
-    print json_string
+#   print json_string
     ( message_type, query, content ) = decompose_message(json_string)
     if message_type == 'feed':
-      print "feed"
-#     promise = host_feed ( feed_content )
-    elif message_type == 'view':
-      promise = 99
-    update_message_flow ( message_id, promise )
+#     print "feed"
+      if query == "role_feed":
+        promise = role_feed ( content )
+      elif query == "hard_classes":
+        promise = hard_classes ( content )
+      else:
+        promise = 99
+      update_message_flow ( message_id, promise )
   conn.commit()
 
   time.sleep(10)
