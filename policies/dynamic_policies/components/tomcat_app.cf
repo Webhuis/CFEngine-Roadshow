@@ -52,9 +52,4 @@ files:
     depth_search  => recurse(inf),
           delete  => tidy;
 
-#  "$(tomcat.catalina_base)/webapps/."
-#      file_select => all,
-#    depth_search  => recurse(inf),
-#          delete  => tidy;
-
 }
