@@ -1,0 +1,23 @@
+# role Data!
+bundle agent dtautl {
+
+vars:
+
+  "bundles[0mq]" 	                          string => "${sys.flavor}/0mq.cf";
+  "bundles[apache2]"                              string => "${sys.flavor}/apache2.cf";
+  "bundles[postgresql]"                           string => "${sys.flavor}/postgresql.cf";
+  "bundles[Data_common]"	                  string => "Data_common.cf";
+  "bundles[Data]"	                          string => "${sys.flavor}/Data.cf";
+
+  "sequence"                                       slist => getindices("bundles");
+  "inputs"                                         slist => getvalues("bundles");
+
+methods:
+
+  "Provide and maintain the PostgreSQL Server" usebundle => "postgresql";
+  "Provide and maintain the Apache Server"     usebundle => "apache2";
+  "Provide and maintain the 0mq"  	       usebundle => "0mq";
+  "We desire the Data application"	       usebundle => "Data_common";
+  "We are Data!"		  	       usebundle => "Data";
+
+}

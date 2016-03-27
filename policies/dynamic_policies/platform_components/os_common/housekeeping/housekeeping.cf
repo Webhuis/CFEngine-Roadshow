@@ -1,8 +1,8 @@
-bundle agent os_common {
+bundle agent housekeeping {
 
 methods:
 
- "any"    usebundle => cleanup;
+ "Clean up old report files"    usebundle => cleanup;
 
 }
 

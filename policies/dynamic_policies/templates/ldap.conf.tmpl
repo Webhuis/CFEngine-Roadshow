@@ -3,9 +3,16 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-BASE   "${${do_roadshow.class_domain}.ldap_base}" 
-URI     ldaps://"${${do_roadshow.class_domain}.mldap}"."${sys.domain}"
+BASE   ${${do_roadshow.class_domain}.ldap_base}
+URI    ldaps://${${do_roadshow.class_domain}.mldap}.${sys.domain}
 
 TLS_REQCERT     never
 
-binddn ${${do_roadshow.class_domain}.ldap_admin}"
+binddn ${${do_roadshow.class_domain}.ldap_admin}
+
+nss_base_passwd         ou=Users,dc=webhuis,dc=nl?one
+nss_base_passwd         ou=Computers,dc=webhuis,dc=nl?one
+nss_base_shadow         ou=Users,dc=webhuis,dc=nl?one
+nss_base_group          ou=Groups,dc=webhuis,dc=nl?one
+
+TLS_CACERT      /etc/ssl/webhuis.nl-certs/cacert.pem

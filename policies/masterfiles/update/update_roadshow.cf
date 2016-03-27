@@ -13,6 +13,20 @@ bundle agent cfe_roadshow_update {
 
   files:
 
+   "$(sys.workdir)/inputs/roadshow_policies"
+      handle => "update_files_inputs_roadshow",
+      copy_from => u_rcp("${master_static}/roadshow_policies", ${sys.policy_hub}),
+      depth_search => u_recurse("inf"),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/bin/cf-message.py"
+      handle => "update_bin_roadshow",
+      copy_from => u_rcp("${master_dynamic}/bin/cf-message.py", ${sys.policy_hub}),
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
    "$(sys.workdir)/dynamic-inputs-local/domain/${sys.domain}.cf"
       handle => "update_files_inputs_roadshow_domain",
       copy_from => u_rcp("${master_dynamic}/domain/${sys.domain}/${sys.domain}.cf", ${sys.policy_hub}),
@@ -23,6 +37,14 @@ bundle agent cfe_roadshow_update {
    "$(sys.workdir)/dynamic-inputs-local/platform/${sys.flavor}.cf"
       handle => "update_files_inputs_roadshow_platform",
       copy_from => u_rcp("${master_dynamic}/platform/${sys.flavor}.cf", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform_components/os_common"
+      handle => "update_files_inputs_roadshow_common_platform_components",
+      copy_from => u_rcp("${master_dynamic}/platform_components/os_common", ${sys.policy_hub}),
+      depth_search => u_recurse("inf"),
       file_select  => u_policies,
       action => u_immediate,
       classes => u_if_repaired("update_report");
@@ -41,7 +63,6 @@ bundle agent cfe_roadshow_update {
       action => u_immediate,
       classes => u_if_repaired("update_report");
 
-
    "$(sys.workdir)/dynamic-inputs-local/components/${${classify.role}.inputs}"
       handle => "update_files_inputs_roadshow_components",
       copy_from => u_rcp("${master_dynamic}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
@@ -51,7 +72,7 @@ bundle agent cfe_roadshow_update {
 
 reports:
 
- "role: ${classify.role} ${${classify.role}.inputs}";
+ "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
 
 }
 

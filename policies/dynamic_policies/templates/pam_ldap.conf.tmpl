@@ -3,9 +3,9 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-host 127.0.0.1
-base   "${${do_roadshow.class_domain}.ldap_base}"
+host ${${do_roadshow.class_domain}.mldap}.${sys.domain}
+base   ${${do_roadshow.class_domain}.ldap_base}
 ldap_version 3
-rootbinddn ${${do_roadshow.class_domain}.ldap_admin}"
+rootbinddn ${${do_roadshow.class_domain}.ldap_admin}
 pam_filter &(objectclass=posixAccount)(!(uidNumber=0))
 pam_password exop

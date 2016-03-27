@@ -1,23 +1,29 @@
 bundle agent ssh_all_config {
 
-  vars:
-      "sshdconfig" string => "/etc/ssh/sshd_config";
-      "sshconfig" string => "/etc/ssh/ssh_config";
+vars:
+  "sshdconfig"                              string => "/etc/ssh/sshd_config";
+  "sshconfig"                               string => "/etc/ssh/ssh_config";
 
-      # SSHD configuration to set
-      "sshd[Protocol]"                                string => "2";
-      "sshd[PermitRootLogin]"                         string => "no";
-      "sshd[PasswordAuthentication]"                  string => "no";
-      "sshd[X11Forwarding]"                           string => "yes";
-      "sshd[UseDNS]"                                  string => "no";
-      "sshd[UsePAM]"                                  string => "no";
+  # SSHD configuration to set
+  "sshd[Protocol]"                          string => "2";
+  "sshd[PermitRootLogin]"                   string => "no";
+  "sshd[PasswordAuthentication]"            string => "no";
+  "sshd[X11Forwarding]"                     string => "yes";
+  "sshd[UseDNS]"                            string => "no";
+  "sshd[UsePAM]"                            string => "no";
 
-      # SSH configuration to set
-      "ssh[ServerAliveInterval]"                      string => "60";
+  # SSH configuration to set
+  "ssh[ServerAliveInterval]"                string => "60";
 
-  methods:
-      "sshd"    usebundle => edit_sshd("$(sshdconfig)", "ssh_config.sshd");
-      "ssh"    usebundle => edit_ssh("$(sshconfig)", "ssh_config.ssh");
+methods:
+
+  "We desire a safe PKI setup for ssh"   usebundle => edit_sshd("$(sshdconfig)", "ssh_all_config.sshd");
+  "The ssh client keeps the connection"  usebundle => edit_ssh("$(sshconfig)", "ssh_all_config.ssh");
+
+reports:
+
+ "${this.bundle}: I am implementing safe ssh configuration common to all platforms";
+
 }
 
 bundle agent edit_sshd(file,params) {

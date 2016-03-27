@@ -1,0 +1,18 @@
+#	Icinga mysql role
+#
+bundle agent micutl {
+
+vars:
+
+  "bundles[icinga2]"                string => "${sys.flavor}/icinga2.cf";
+  "bundles[mysql_server]"           string => "${sys.flavor}/mysql_server.cf";
+
+  "sequence"                         slist => getindices("bundles");
+  "inputs"                           slist => getvalues("bundles");
+
+methods:
+
+  "We require the MySQL server"  usebundle => "mysql_server";
+  "We desire Icinga"             usebundle => "icinga2";
+
+}

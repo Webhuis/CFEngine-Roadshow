@@ -50,4 +50,8 @@ NTPOPTIONS=""
   "/usr/sbin/ntpdate ${${do_roadshow.class_domain}.ntp_server}";
   "/sbin/hwclock -w";
 
+reports:
+
+ "${this.bundle}: I am doing time configuration common to all platforms";
+
 }

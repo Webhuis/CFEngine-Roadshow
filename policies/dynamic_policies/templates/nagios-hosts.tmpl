@@ -1,0 +1,16 @@
+# Webhuis template for Nagios3 host template
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+define host{
+        use                     generic-host            ; Name of host template to use
+
+        host_name               ${nagios_host.fqdn}
+        alias                   ${nagios_host.fqdn}
+        address                 ${nagios_host.fqdn}
+        hostgroups              ${nagios_host.domain}
+        notification_interval   60
+        notification_period     24x7
+        notification_options    d,u,r
+        }

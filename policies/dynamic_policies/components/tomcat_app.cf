@@ -11,7 +11,7 @@ vars:
 
 methods:
 
-  "any"                          usebundle => app_mount;
+  "Make webapps share available" usebundle => app_mount;
   "any"                          usebundle => deploy_tomcat_app("${app}");
   "any"                          usebundle => tomcat_common;
   "any"                          usebundle => tomcat;
@@ -27,12 +27,6 @@ bundle agent deploy_tomcat_app (app) {
 
 files:
 
-  "$(tomcat.catalina_base)/webapps/${app}"
-          handle  => "app_delete",
-         comment  => "deleting app",
-    depth_search  => u_recurse(inf),
-          delete  => tidy;
-
   "$(tomcat.catalina_base)/webapps/${app}.war"
           handle  => "deploy_app",
          comment  => "deploying app.war",
@@ -40,5 +34,22 @@ files:
        copy_from  => local_cp("/mnt/webapps/${app}.war"),
          classes  => if_repaired("restart_tomcat");
 
+methods:
+
+ restart_tomcat::
+  "Delete any existing app"      usebundle => delete_tomcat_app(${app});
+
 }
 
+bundle agent delete_tomcat_app (app) {
+
+files:
+
+  "$(tomcat.catalina_base)/webapps/${app}/."
+          handle  => "app_delete",
+         comment  => "deleting app",
+      file_select => all,
+    depth_search  => recurse(inf),
+          delete  => tidy;
+
+}

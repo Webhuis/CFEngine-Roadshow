@@ -3,10 +3,18 @@ bundle agent resolv_conf
 
  files:
   "/etc/resolv.conf"
-  comment                   => "Domain resolv.conf door g.class_domain",
+  comment                   => "Domain resolv.conf door class_domain",
   perms                     => mo("644","root"),
   copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl"),
   action                    => u_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl";
+
+methods:
+
+  "Get the resolv_conf tempate"       usebundle => get_template("resolv.conf.tmpl");
+
+reports:
+
+  "${this.bundle}: I am doing standardized resolv.conf setup";
 
 }

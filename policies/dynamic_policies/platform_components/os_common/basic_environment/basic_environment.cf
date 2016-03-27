@@ -1,0 +1,16 @@
+bundle agent basic_environment {
+
+methods:
+
+  "Set locales to UTF 8"           usebundle => locales;
+  "Install common packages"        usebundle => pkg_base_common;
+  "Standardize issue setup"        usebundle => login_messages;
+  "Standardize hosts setup"        usebundle => etc_hosts;
+  "Standardize resolv.conf setup"  usebundle => resolv_conf;
+  "Configure all time settings"    usebundle => time_conf;
+
+reports:
+
+ "${this.bundle}: basic settings common to all platforms";
+
+}

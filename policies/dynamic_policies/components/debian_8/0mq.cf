@@ -1,0 +1,12 @@
+bundle agent 0mq {
+
+vars:
+
+  "pkg[libzmq3]"	   	   	string => "*";
+  "pkg[python-zmq]" 	  	   	string => "*";
+
+methods:
+
+  "We desire the 0mq"                usebundle => packages("0mq.pkg");
+
+}

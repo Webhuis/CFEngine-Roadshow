@@ -1,16 +1,10 @@
-bundle agent common_setup {
+bundle agent login_messages {
 
 methods:
 
- "any"    usebundle => etc_hosts;
- "any"    usebundle => pkg_base_common;
- "any"    usebundle => issue;
- "any"    usebundle => motd;
- "any"    usebundle => time_conf;
- "any"    usebundle => etc_hosts;
- "any"    usebundle => ssh_config;
- "any"    usebundle => user_data;
-# "martin" usebundle => ssh_users;
+ "Standardize issue setup"        usebundle => issue;
+ "Standardize motd setup"         usebundle => motd;
+
 
 }
 
@@ -43,13 +37,17 @@ W                 W EEEEEEE BBBBBB   H      H U      U IIIII  SSSSSS
               create  => "true",
             edit_line => webhuis_issue($(issue)) ;
 
-     }
+reports:
+
+ "${this.bundle}: I am setting the standard banner common to all platforms";
+
+}
 
 bundle edit_line  webhuis_issue(string) {
 
 insert_lines:
   "$(string)";
- }
+}
 
 ####################################################
 
@@ -75,7 +73,11 @@ http://webhuis.nl ";
               create  => "true",
             edit_line => webhuis_motd($(motd)) ;
 
-     }
+reports:
+
+ "${this.bundle}: I am setting the motd common to all platforms";
+
+}
 
 bundle edit_line  webhuis_motd(string) {
 

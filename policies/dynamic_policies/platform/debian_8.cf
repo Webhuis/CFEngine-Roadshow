@@ -2,15 +2,26 @@ bundle agent debian_8 {
 
 vars:
 
+  "pkg[autofs5]"                       string => "*";
+  "pkg[autofs5-ldap]"                  string => "*";
+  "pkg[libzmq3]"                       string => "*";
+  "pkg[python-zmq]"                    string => "*";
+
   "bundles[os_common]"                 string => "os_common.cf";
   "bundles[debian_common]"             string => "debian_common.cf";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "sequence"                            slist => getindices("bundles");
+  "inputs"                              slist => getvalues("bundles");
 
 methods:
 
- "any" usebundle => os_common;
- "any" usebundle => debian_common;
+  "Manage generic OS stuff"         usebundle => os_common;
+  "Manage generic Debian stuff"     usebundle => debian_common;
+  "We desire Automount"             usebundle => packages("debian_8.pkg");
+
+reports:
+
+  "${this.bundle}: role";
+
 
 }

@@ -1,0 +1,18 @@
+bundle agent gbtutl {
+
+vars:
+
+  "app"            string => "gitblit";
+  "tomcat_app"     string => "tomcat_app.cf";
+
+  "inputs"          slist => { "${tomcat_app}", getvalues("tomcat_app.bundles") };
+
+methods:
+
+  "any"         usebundle => tomcat_app(${app});
+
+reports:
+
+  "gbtutl.inputs: ${inputs}";
+
+}

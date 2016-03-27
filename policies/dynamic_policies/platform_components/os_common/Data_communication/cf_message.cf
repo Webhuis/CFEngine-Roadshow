@@ -1,0 +1,18 @@
+bundle agent cf_message (request) {
+
+commands:
+
+  "/var/cfengine/bin/cf-message.py '${request}'"
+            contain => python_connect_timeout;
+
+reports:
+
+  "${this.bundle} request: ${request}";
+
+}
+
+body contain python_connect_timeout {
+
+exec_timeout => "5";
+
+}

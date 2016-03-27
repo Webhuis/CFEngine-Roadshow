@@ -1,0 +1,57 @@
+bundle agent locales {
+
+vars:
+  "locales"
+    slist => { "da_DK.UTF-8", "de_DE.UTF-8", "en_US.UTF-8",
+           "es_ES.UTF-8", "fr_FR.UTF-8", "it_IT.UTF-8",
+           "nl_NL.UTF-8", "ru_RU.UTF-8", "sv_SE.UTF-8",
+           "tr_TR.UTF-8", "id_ID.UTF-8", "nb_NO.UTF-8",
+           "pl_PL.UTF-8", "vi_VN.TCVN"  },
+    comment => "locales to generate" ;
+
+files:
+  "/etc/locale.gen"
+    edit_line => enable_locales(@(locales.locales)),
+    classes   => if_repaired("regenerate_locales"),
+    comment   => "Enable locales, trigger locale-gen if needed" ;
+
+  "/etc/environment"
+    edit_line => default_locales,
+    classes   => if_repaired("regenerate_locales"),
+    comment   => "Default language, trigger locale-gen if needed" ;
+
+  "/etc/default/locale"
+    edit_line => default_locales,
+    classes   => if_repaired("regenerate_locales"),
+    comment   => "Default locales, trigger locale-gen if needed" ;
+
+commands:
+  regenerate_locales::
+      "/usr/sbin/locale-gen"
+    comment => "Regenerate locales when needed" ;
+
+reports:
+  regenerate_locales::
+    "${this.bundle}: Locales regenerated" ;
+}
+
+bundle edit_line enable_locales(locales)
+{
+  replace_patterns:
+      "^#\s+($(locales).*)$"
+    replace_with => uncomment ;
+}
+
+bundle edit_line default_locales
+{
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+"LANG=\"en_US.UTF-8\"
+LANGUAGE=\"en_US.UTF-8\"
+LC_ALL=\"en_US.UTF-8\"";
+
+}

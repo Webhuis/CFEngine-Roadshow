@@ -2,16 +2,51 @@ bundle agent mnmutl {
 
 vars:
 
-  "bundles[nagios3]"       string => "nagios3.cf";
-  "bundles[mysql_server]"  string => "mysql_server.cf";
+  "bundles[nagios3]"                             string => "${sys.flavor}/nagios3.cf";
+  "bundles[mysql_server]"                        string => "${sys.flavor}/mysql_server.cf";
+  "bundles[mnmutl_data]"                         string => "mnmutl_data.cf";
 
-  "sequence"                slist => getindices("bundles");
-  "inputs"                  slist => getvalues("bundles");
+  "sequence"                                      slist => getindices("bundles");
+  "inputs"                                        slist => getvalues("bundles");
 
 methods:
 
-  "any"                 usebundle => "nagios3";
-  "any"                 usebundle => "mysql_server_comp";
+  "We are a Nagios server"                    usebundle => nagios3;
+  "We desire the Nagios main temlate"         usebundle => get_template("nagios.cfg.tmpl");
+  "We desire the Nagios host temlate"         usebundle => get_template("nagios-hosts.tmpl");
+  "We desire the Nagios hostgroups temlate"   usebundle => get_template("nagios-hostgroups.tmpl");
+  "We desire the Nagios host service temlate" usebundle => get_template("nagios-hosts-service.tmpl");
+  "We desire the Nagios service temlate"      usebundle => get_template("nagios-service.tmpl");
+  "We configure the  Nagios server"           usebundle => nagios_cfg;
+  "We desire a mysql backend"                 usebundle => mysql_server;
+  "We desire the Nagios data from Data"       usebundle => mnmutl_data( ${request_role_information.response} );
 
+commands:
+
+  restart_nagios::
+   "/etc/init.d/nagios3 restart";
+
+reports:
+
+# "${this.bundle} sequence inputs: ${sequence}, ${inputs}";
+  "${this.bundle} response request_role_information: ${request_role_information.response}";
+
+}
+
+bundle agent nagios_cfg {
+
+
+files:
+ "/etc/nagios3/nagios.cfg"
+         comment  => "Configfile for Nagios",
+           perms  => mog("664","nagios","nagios"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cfg.tmpl",
+         classes  => u_if_repaired("restart_nagios");
+
+reports:
+
+  "$(this.bundle) Nagios main configuration file";
 
 }

@@ -1,0 +1,10 @@
+# Webhuis template for Nagios3 host service
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+define service{
+        use                     ${nagios_host_service.services}            ; Name of host template to use
+        service_description	${nagios_host_service.services}
+        host_name               ${nagios_host_service.fqdn}
+        }
