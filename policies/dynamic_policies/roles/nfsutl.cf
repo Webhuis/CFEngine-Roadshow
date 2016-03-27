@@ -1,18 +1,14 @@
-bundle agent nfs {
+bundle agent nfsutl {
 
 vars:
 
-  "pkg[nfs-kernel-server]"           string => "*";
+  "bundles[nfs_server]"                string => "nfs_server.cf";
+
+  "sequence"                	        slist => getindices("bundles");
+  "inputs"                              slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => packages("nfs.pkg");
-
-commands:
-
- restart_nfs_server::
-  "/etc/init.d/nfs-kernel-server restart"
-     handle => "restart_nfs_kernel_server",
-    comment => "restarting nfs-kernel-server";
+  "We desire the nfs kernel server" usebundle => "nfs_server";
 
 }
