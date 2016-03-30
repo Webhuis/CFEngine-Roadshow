@@ -8,6 +8,11 @@ vars:
   "sequence"                         slist => getindices("bundles");
   "inputs"                           slist => getvalues("bundles");
 
+files:
+
+  "/var/local/webapps/."
+    create  =>  "true";
+
 methods:
 
   "Create application exports"    usebundle => app_exports;
