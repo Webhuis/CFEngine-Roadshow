@@ -1,4 +1,4 @@
-bundle agent nfs_server {
+bundle agent nfs_kernel_server {
 
 vars:
 
@@ -6,7 +6,7 @@ vars:
 
 methods:
 
-  "Provide nfs_server packages"   usebundle => packages("nfs_server.pkg");
+  "Provide nfs_server packages"   usebundle => packages("nfs_kernel_server.pkg");
 
 commands:
 
