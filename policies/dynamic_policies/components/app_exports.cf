@@ -2,8 +2,8 @@ bundle agent app_exports {
 
 vars:
 
-  "nfs_exports[${${do_roadshow.class_domain}.nfs_webapps}][export_network]"  string => "${${do_roadshow.class_domain}.export_network}";
-  "nfs_exports[${${do_roadshow.class_domain}.nfs_webapps}][nfs_permissions]" string => "${${do_roadshow.class_domain}.nfs_ro}";
+  "nfs_exports[${${do_roadshow.class_domain}.nfs_webapps}][exports_network]"     string => "${${do_roadshow.class_domain}.export_network}";
+  "nfs_exports[${${do_roadshow.class_domain}.nfs_webapps}][exports_permissions]" string => "${${do_roadshow.class_domain}.nfs_ro}";
 
 methods:
 
