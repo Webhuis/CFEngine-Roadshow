@@ -12,9 +12,9 @@ vars:
 methods:
 
   "Make webapps share available" usebundle => app_mount;
-  "any"                          usebundle => deploy_tomcat_app("${app}");
-  "any"                          usebundle => tomcat_common;
-  "any"                          usebundle => tomcat;
+  "Deploy the Tomcat App"        usebundle => deploy_tomcat_app("${app}");
+  "Provide Tomcat common"        usebundle => tomcat_common;
+  "Provide Tomcat software"      usebundle => tomcat;
 
 reports:
 

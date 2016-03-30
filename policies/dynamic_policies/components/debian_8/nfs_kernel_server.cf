@@ -1,0 +1,22 @@
+bundle agent nfs_kernel_server {
+
+vars:
+
+  "pkg[nfs-kernel-server]"                  string => "*";
+
+methods:
+
+  "Provide nfskernel__server packages"   usebundle => packages("nfs_kernel_server.pkg");
+
+commands:
+
+ restart_nfs_server::
+  "/bin/systemctl restart nfs-kernel-server"
+     handle => "restart_nfs_kernel_server",
+    comment => "restarting nfs-kernel-server";
+
+reports:
+
+  "${this.bundle}: Packages nfs_kernel_server";
+
+}

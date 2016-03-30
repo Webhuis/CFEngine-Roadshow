@@ -26,6 +26,7 @@ vars:
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
       "nfs_webapps"    string => "/var/local/webapps";
+      "export_network" string => "10.68.71.0/24";
       "nfs_backup"     string => "/bur-san";
       "san_host"       string => "san.webhuis.nl";
       "san_export"     string => "/volume1/exports";

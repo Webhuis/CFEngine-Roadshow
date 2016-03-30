@@ -1,0 +1,20 @@
+bundle agent nfs_server {
+
+vars:
+
+  "bundles[nfs_kernel_server]"      string => "${sys.flavor}/nfs_kernel_server.cf";
+  "bundles[app_exports]"            string => "app_exports.cf";
+
+  "sequence"                         slist => getindices("bundles");
+  "inputs"                           slist => getvalues("bundles");
+
+methods:
+
+  "Create application exports"    usebundle => app_exports;
+  "Provide nfs_kernel_server "    usebundle => nfs_kernel_server;
+
+reports:
+
+  "${this.bundle}: Packages nfs_server";
+
+}
