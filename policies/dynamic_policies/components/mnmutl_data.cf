@@ -146,6 +146,7 @@ vars:
   "service[http]"                  string => "check_tcp!80";
   "service[https]"                 string => "check_tcp!443";
   "service[mysql]"                 string => "check_tcp!3306";
+  "service[nfs]"                   string => "check_tcp!2049";
   "service[tomcat]"                string => "check_tcp!8080";
 
   "services"                        slist => getindices("service");
