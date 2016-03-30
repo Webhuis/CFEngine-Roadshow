@@ -2,13 +2,12 @@ bundle agent nfsutl {
 
 vars:
 
-  "bundles[nfs_kernel_server]"         string => "${sys.flavor}/nfs_kernel_server.cf";
+  "nfs_server"                         string => "nfs_server.cf";
 
-  "sequence"                	        slist => getindices("bundles");
-  "inputs"                              slist => getvalues("bundles");
+  "inputs"                              slist => { "${nfs_server}", getvalues("nfs_server.bundles") };
 
 methods:
 
-  "We desire the nfs kernel server" usebundle => "nfs_kernel_server";
+  "We desire the nfs server"        usebundle => "nfs_server";
 
 }
