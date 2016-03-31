@@ -31,7 +31,7 @@ files:
           handle  => "deploy_app",
          comment  => "deploying app.war",
            perms  => mog("644","${tomcat.user}","${tomcat.group}"),
-       copy_from  => local_cp("/mnt/webapps/${app}.war"),
+       copy_from  => local_cp("/mnt/webapps/${app}/${app}.war"),
          classes  => if_repaired("restart_tomcat");
 
 methods:
