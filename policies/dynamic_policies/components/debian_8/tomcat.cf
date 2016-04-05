@@ -4,6 +4,7 @@ vars:
 
   "user"                   string => "tomcat7";
   "group"                  string => "tomcat7";
+  "service"                string => "tomcat7";
   "home"                   string => "/usr/share/tomcat7";
   "config"                 string => "/etc/tomcat7";
   "catalina_base"          string => "/var/lib/tomcat7";
@@ -16,6 +17,10 @@ vars:
 methods:
 
   "any" usebundle => packages("tomcat.pkg");
+
+services:
+
+  "${service}"     service_policy => "start";
 
 commands:
 
