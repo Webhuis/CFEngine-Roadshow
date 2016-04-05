@@ -8,7 +8,7 @@ vars:
   "sequence"                              slist => getindices("bundles");
   "inputs"                                slist => getvalues("bundles");
 
-  "yum_proxy"                            string => "http://aptutl01.webhuis.nl:3142/";
+  "yum_proxy"                            string => "http://aptutl0001.webhuis.nl:3142/";
 
 files:
 
