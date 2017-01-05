@@ -1,4 +1,4 @@
-bundle agent debian_common {
+bundle agent debian {
 
 vars:
 
@@ -9,6 +9,7 @@ vars:
 
  any::
 
+  "pkg[apt-listchanges]"       string => "*";
   "pkg[debian-goodies]"        string => "*";
   "pkg[openssh-server]"        string => "*";
   "pkg[libpam-ldap]"           string => "*";
@@ -16,6 +17,7 @@ vars:
   "pkg[libpam-cracklib]"       string => "*";
   "pkg[ldap-utils]"            string => "*";
   "pkg[smbclient]"             string => "*";
+  "pkg[unattended-upgrades]"   string => "*";
 
   "desired"                    string => "addupdate";
   "cfengine_version"           string => "3.6.6-1";
