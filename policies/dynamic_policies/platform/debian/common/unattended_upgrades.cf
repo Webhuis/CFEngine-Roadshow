@@ -1,4 +1,4 @@
-bundle agent unattended-upgrades {
+bundle agent unattended_upgrades {
 
 vars:
   
