@@ -4,7 +4,7 @@ reports:
 
 "Hard class os:          ${sys.os}";
 "Hard class os_type:     ${sys.ostype}";
-"Hard class os_platform: ${inventory_linux.$(id_array[1])}";
+"Hard class os_platform: ${inventory_linux.id_array[1]}";
 "Hard class os_flavor:   ${sys.flavor}";
 "Hard class os_arch:     ${sys.arch}";
 
@@ -14,9 +14,9 @@ reports:
 
 body common control
 {
-  bundlesequence => { "report_sys_os", "/var/cfengine/dc_inputs/inventory/linux.cf" };
+  bundlesequence => { "report_sys_os", "inventory_linux" };
 
-  inputs         => { "/var/cfengine/dc_inputs/lib/common/immediate_dlc.cf"
-                     , "/var/cfengine/inputs/lib/stdlib.cf" };
+  inputs         => { "/var/cfengine/masterfiles/inventory/linux.cf" };
+
 }
 
