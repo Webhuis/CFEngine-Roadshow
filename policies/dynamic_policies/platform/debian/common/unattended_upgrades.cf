@@ -10,7 +10,7 @@ files:
   "/etc/apt/apt.conf.d/20auto-upgrades"
     create         => "true",
     perms          => mo("644","root"),
-    edit_line      => 20auto-upgrades,
+    edit_line      => 20auto_upgrades,
     action         => u_immediate;    
 
 methods:
@@ -18,7 +18,7 @@ methods:
 
 }
 
-bundle edit_line 20auto-upgrades {
+bundle edit_line 20auto_upgrades {
 
 delete_lines:
 
