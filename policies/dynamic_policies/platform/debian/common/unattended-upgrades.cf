@@ -1,0 +1,33 @@
+bundle agent unattended-upgrades {
+
+vars:
+  
+  "pkg[apt-listchanges]"            string => "*";
+  "pkg[unattended-upgrades]"        string => "*";
+
+files:
+
+  "/etc/apt/apt.conf.d/20auto-upgrades"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_line      => 20auto-upgrades,
+    action         => u_immediate;    
+
+methods:
+
+
+}
+
+bundle edit_line 20auto-upgrades {
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+"APT::Periodic::Update-Package-Lists \"1\"\;
+APT::Periodic::Unattended-Upgrade \"1i\"\;
+APT::Periodic::AutocleanInterval \"1\"\;";
+
+}
