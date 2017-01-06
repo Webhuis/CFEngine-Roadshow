@@ -28,7 +28,7 @@ delete_lines:
 insert_lines:
 
 "APT::Periodic::Update-Package-Lists \"1\"\;
-APT::Periodic::Unattended-Upgrade \"1i\"\;
+APT::Periodic::Unattended-Upgrade \"1\"\;
 APT::Periodic::AutocleanInterval \"1\"\;";
 
 }
