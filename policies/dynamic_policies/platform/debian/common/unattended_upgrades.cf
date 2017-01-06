@@ -15,6 +15,7 @@ files:
 
 methods:
 
+ "Install unattended upgrades"   usebundle => packages("unattended_upgrades.pkg");
 
 }
 
