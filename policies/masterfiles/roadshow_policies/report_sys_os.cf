@@ -16,8 +16,7 @@ body common control
 {
   bundlesequence => { "report_sys_os", "/var/cfengine/dc_inputs/inventory/linux.cf" };
 
-  inputs         => { "/home/adminal13070/sudoers_data.cf"
-                     ,"/var/cfengine/dc_inputs/lib/common/immediate_dlc.cf"
+  inputs         => { "/var/cfengine/dc_inputs/lib/common/immediate_dlc.cf"
                      , "/var/cfengine/inputs/lib/stdlib.cf" };
 }
 
