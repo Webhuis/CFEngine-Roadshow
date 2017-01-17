@@ -9,6 +9,7 @@ reports:
   "Hard class os_arch:     ${sys.arch}";
 
 "sys.local_libdir:     ${sys.local_libdir}";
+"sys.policy_hub:       ${sys.policy_hub}";
 
 }
 
