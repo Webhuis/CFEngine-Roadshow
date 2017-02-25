@@ -2,11 +2,22 @@ bundle agent report_sys_os {
 
 reports:
 
-"Hard class os:        ${sys.os}";
-"Hard class os_type:   ${sys.ostype}";
-"Hard class os_flavor: ${sys.flavor}";
-"Hard class os_arch:   ${sys.arch}";
+  "Hard class os:          ${sys.os}";
+  "Hard class os_type:     ${sys.ostype}";
+  "Hard class os_platform: ${inventory_linux.id_array[1]}";
+  "Hard class os_flavor:   ${sys.flavor}";
+  "Hard class os_arch:     ${sys.arch}";
 
 "sys.local_libdir:     ${sys.local_libdir}";
+"sys.policy_hub:       ${sys.policy_hub}";
 
 }
+
+body common control {
+
+  bundlesequence => { "inventory_linux", "report_sys_os" };
+
+  inputs         => { "/var/cfengine/inputs/inventory/linux.cf" };
+
+}
+
