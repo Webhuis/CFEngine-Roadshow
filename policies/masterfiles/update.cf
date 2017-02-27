@@ -13,7 +13,7 @@ body common control
 ##                          "${classify.role}",
                           "cfe_internal_dc_workflow",
                           "cfe_internal_update_policy",
-#                          "cfe_roadshow_update_policy",
+                          "roadshow_update",
                           "cfe_internal_update_bins",
                           "cfe_internal_update_processes",
       };

@@ -1,0 +1,93 @@
+#########################################################
+#
+# update_roadshow
+# - Cfengine roadshow policy update (masterfiles -> inputs)
+#
+#########################################################
+
+bundle agent roadshow_update {
+
+  vars:
+      "master_static"  string => "$(sys.workdir)/masterfiles";
+      "master_dynamic" string => "$(sys.workdir)/dynamic_policies";
+
+  files:
+
+   "$(sys.workdir)/inputs/roadshow_policies"
+      handle => "update_files_inputs_roadshow",
+      copy_from => u_rcp("${master_static}/roadshow_policies", ${sys.policy_hub}),
+      depth_search => u_recurse("inf"),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/bin/cf-message.py"
+      handle => "update_bin_roadshow",
+      copy_from => u_rcp("${master_dynamic}/bin/cf-message.py", ${sys.policy_hub}),
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/domain/${sys.domain}.cf"
+      handle => "update_files_inputs_roadshow_domain",
+      copy_from => u_rcp("${master_dynamic}/domain/${sys.domain}/${sys.domain}.cf", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform/common"
+      handle => "update_files_inputs_roadshow_platform_common",
+      depth_search => u_recurse("inf"),
+      copy_from => u_rcp("${master_dynamic}/platform/common", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform/${sys.flavor}"
+      handle => "update_files_inputs_roadshow_platform_common",
+      depth_search => u_recurse("inf"),
+      copy_from => u_rcp("${master_dynamic}/platform/common", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform_components/os_common"
+      handle => "update_files_inputs_roadshow_common_platform_components",
+      copy_from => u_rcp("${master_dynamic}/platform_components/os_common", ${sys.policy_hub}),
+      depth_search => u_recurse("inf"),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/platform_components/${${sys.flavor}.inputs}"
+      handle => "update_files_inputs_roadshow_platform_components",
+      copy_from => u_rcp("${master_dynamic}/platform_components/${${sys.flavor}.inputs}", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/role/${classify.role}.cf"
+      handle => "update_files_inputs_roadshow_role",
+      copy_from => u_rcp("${master_dynamic}/roles/${classify.role}.cf", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+   "$(sys.workdir)/dynamic-inputs-local/components/${${classify.role}.inputs}"
+      handle => "update_files_inputs_roadshow_components",
+      copy_from => u_rcp("${master_dynamic}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
+      file_select  => u_policies,
+      action => u_immediate,
+      classes => u_if_repaired("update_report");
+
+reports:
+
+ "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
+
+}
+
+body file_select u_policies {
+
+      leaf_name => { ".*.cf" };
+      file_result => "leaf_name";
+
+}
