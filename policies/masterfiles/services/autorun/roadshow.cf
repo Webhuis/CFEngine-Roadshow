@@ -18,7 +18,7 @@ bundle agent roadshow
       "" usebundle => classify;
       "" usebundle => request_role_information;
       "" usebundle => do_roadshow;
-      "" usebundle => cfe_roadshow_update;
+      "" usebundle => roadshow_dynamic_update;
       "" usebundle => ${do_roadshow.class_domain};
       "" usebundle => $(do_roadshow.os);
       "" usebundle => $(classify.role);
@@ -57,7 +57,6 @@ bundle agent do_roadshow {
   reports:
 
       "${this.bundle}: ${class_domain}";
-      "${this.bundle}: ${os}";
 
 }
 
