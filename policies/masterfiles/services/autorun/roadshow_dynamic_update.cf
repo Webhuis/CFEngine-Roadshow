@@ -15,27 +15,20 @@ bundle agent roadshow__dynamic_update {
 
    "$(sys.workdir)/dynamic-inputs-local/role/${classify.role}.cf"
       handle => "update_files_inputs_roadshow_role",
-      copy_from => u_rcp("${master_dynamic}/roles/${classify.role}.cf", ${sys.policy_hub}),
-      file_select  => u_policies,
-      action => u_immediate,
-      classes => u_if_repaired("update_report");
+      copy_from => r_rcp("${master_dynamic}/roles/${classify.role}.cf", ${sys.policy_hub}),
+      file_select  => r_policies,
+      action => r_immediate,
+      classes => r_if_repaired("update_report");
 
    "$(sys.workdir)/dynamic-inputs-local/components/${${classify.role}.inputs}"
       handle => "update_files_inputs_roadshow_components",
-      copy_from => u_rcp("${master_dynamic}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
-      file_select  => u_policies,
-      action => u_immediate,
-      classes => u_if_repaired("update_report");
+      copy_from => r_rcp("${master_dynamic}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
+      file_select  => r_policies,
+      action => r_immediate,
+      classes => r_if_repaired("update_report");
 
 reports:
 
  "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
-
-}
-
-body file_select u_policies {
-
-      leaf_name => { ".*.cf" };
-      file_result => "leaf_name";
 
 }
