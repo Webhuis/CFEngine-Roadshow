@@ -1,28 +1,19 @@
-bundle agent classify
-{
-  classes:
-      "parsed_all" expression => regextract("^(...)(...)(....).*", $(sys.uqhost), "part");
-      "parsed_role" expression => regextract("^(......)(....).*", $(sys.uqhost), "part_role");
-#      "vagrant_ubuntu" expression => strcmp($(sys.uqhost), "ubuntu-14");
+bundle agent classify {
 
-  vars:
-     
-#    parsed_role::
-      "role"                 string => "${part_role[1]}";
+classes:
 
-#    parsed_all.!vagrant_ubuntu::
-      "application"          string => "${part[1]}";
-      "function"             string => "${part[2]}";
-      "instance"             string => "${part[3]}";
-#    vagrant_ubuntu::
-#      "application"          string => "apt";
-#      "function"             string => "sys";
-#      "instance"             string => "1";
+      "parsed_all"   expression => regextract("^(...)(...)(....).*", $(sys.uqhost), "part");
+      "parsed_role"  expression => regextract("^(......)(....).*", $(sys.uqhost), "part_role");
 
-    "role_input"             string => "${sys.workdir}/dynamic-inputs-local/role/${role}.cf";
+vars:
+    
+  "role"                 string => "${part_role[1]}";
 
-#  methods:
-#      "" usebundle => file_make("/etc/roadshow/application", $(application));
-#      "" usebundle => file_make("/etc/roadshow/function", $(function));
-#      "" usebundle => file_make("/etc/roadshow/instance", $(instance));
+  "application"          string => "${part[1]}";
+  "function"             string => "${part[2]}";
+  "instance"             string => "${part[3]}";
+
+  "role_input"           string => "${sys.workdir}/dynamic-inputs-local/role/${role}.cf";
+  "vendor"               string => ${inventory_linux.id_array[1]};
+
 }

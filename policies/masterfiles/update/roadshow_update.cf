@@ -27,13 +27,6 @@ files:
      action       => r_immediate,
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/dynamic-inputs-local/domain/${sys.domain}.cf"
-     handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("${master_dynamic}/domain/${sys.domain}/${sys.domain}.cf", ${sys.policy_hub}),
-     file_select  => r_policies,
-     action       => r_immediate,
-     classes      => r_if_repaired("update_report");
-
   "$(sys.workdir)/dynamic-inputs-local/platform/common"
      handle       => "update_files_inputs_roadshow_platform_common",
      depth_search => r_recurse("inf"),
