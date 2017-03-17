@@ -143,8 +143,8 @@ files:
  "/var/cache/apt/archives/${custom_package}"
             comment => "Copy package",
              handle => "update_files_inputs_packages",
-          copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
-             action => u_immediate;
+          copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
+             action => r_immediate;
 
 reports:
  "${this.bundle}: ${custom_package}";

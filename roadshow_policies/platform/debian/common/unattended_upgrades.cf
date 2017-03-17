@@ -11,7 +11,7 @@ files:
     create         => "true",
     perms          => mo("644","root"),
     edit_line      => 20auto_upgrades,
-    action         => u_immediate;    
+    action         => r_immediate;    
 
 methods:
 
