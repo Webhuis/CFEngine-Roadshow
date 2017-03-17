@@ -53,7 +53,11 @@ body common control
                   # autorun system
                   @(services_autorun.inputs),
 
-                  "services/main.cf",
+      # Roadshow tweak, bodies for dynamic updates
+
+                 "roadshow_update_policy.cf",
+ 
+                 "services/main.cf",
       };
 
       # Roadshow tweak for dynamic policies
