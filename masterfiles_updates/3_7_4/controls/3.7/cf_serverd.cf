@@ -59,22 +59,14 @@ body server control
 bundle server access_rules()
 
 {
-  vars:
-    enterprise::      
-      "query_types" slist => {"delta", "rebase", "full"};
-
   access:
 
     any::
 
       "$(def.dir_masterfiles)"
       handle => "server_access_grant_access_policy",
+      shortcut => "masterfiles",
       comment => "Grant access to the policy updates",
-      admit => { @(def.acl) };
-
-      "$(sys.workdir)/dynamic_policies"
-      handle => "server_access_grant_access_dynamic_policy",
-      comment => "Grant access to the dynamic policy updates",
       admit => { @(def.acl) };
 
       "$(def.dir_software)"
@@ -103,7 +95,7 @@ bundle server access_rules()
       comment => "Grant access to shell for cfruncommand",
       admit => { @(def.policy_servers) };
 
-    policy_server.ha_enabled::
+    policy_server.enable_cfengine_enterprise_hub_ha::
       "$(sys.workdir)/ppkeys"
       handle => "server_access_grant_access_ppkeys_hubs",
       comment => "Grant access to ppkeys for HA hubs",
@@ -120,7 +112,7 @@ bundle server access_rules()
       handle => "server_access_grant_access_appsettings",
       comment => "Grant access to appsettings for HA hubs",
       admit => { @(def.policy_servers) };
-      
+
       # Allow access to notification_scripts directory so passive hub
       # will be able to synchronize its content. Once passive hub will
       # be promoted to act as a master all the custom scripts will be
@@ -132,7 +124,7 @@ bundle server access_rules()
 
       # When HA is enabled clients are updating active hub IP address
       # using data stored in master_hub.dat file.
-      "$(sys.workdir)/state/master_hub.dat"
+      "$(ha_def.master_hub_location)"
       handle => "server_access_grant_access_policy_server_dat",
       comment => "Grant access to policy_server.dat",
       admit => { @(def.acl) };
@@ -141,7 +133,7 @@ bundle server access_rules()
       # In order to perform failover while active hub is down clients needs to
       # have all hubs keys. This gives ability to connect to slave hub promoted to active role
       # once active is down.
-      "$(sys.workdir)/ppkeys_hubs"
+      "$(ha_def.hubs_keys_location)"
       handle => "server_access_grant_access_to_clients",
       comment => "Grant access to hubs' keys to clients",
       admit => { @(def.acl) };
@@ -151,22 +143,6 @@ bundle server access_rules()
       handle => "server_access_grant_access_agent",
       comment => "Grant access to the agent (for cf-runagent)",
       admit   => { @(def.policy_servers) };
-
-    !policy_server.enterprise::
-      "$(query_types)"
-      handle => "server_access_grant_$(query_types)_for_hosts",
-      comment => "Grant $(query_types) reporting query for the hub on the hosts",
-      resource_type => "query",
-#      report_data_select => default_data_select_host,
-      admit => { @(def.policy_servers) };
-
-    policy_server.enterprise::
-      "$(query_types)"
-      handle => "server_access_grant_$(query_types)_for_hub",
-      comment => "Grant $(query_types) reporting query for the hub on the policy server",
-      resource_type => "query",
-#     report_data_select => default_data_select_policy_hub,
-      admit => { @(def.policy_servers) };
 
   roles:
 
