@@ -17,7 +17,7 @@ body common control
 
       # Roadshow policy update
 
-                          "roadshow_update",
+                          "roadshow_update"
 
       };
 
@@ -35,7 +35,8 @@ body common control
 
       # Roadshow policy update body values
 
-                  "update/roadshow_update_policy.cf"
+                  "roadshow_update.cf",
+                  "roadshow_update_policy.cf"
 
       };
 
