@@ -30,6 +30,13 @@ bundle agent inventory_autorun
       "proc" usebundle => cfe_autorun_inventory_proc(),
       handle => "cfe_internal_autorun_inventory_proc";
 
+      "proc_cpuinfo" usebundle => cfe_autorun_inventory_proc_cpuinfo(),
+      handle => "cfe_internal_autorun_inventory_proc_cpuinfo";
+
+    !disable_inventory_cpuinfo::
+      "cpuinfo" usebundle => cfe_autorun_inventory_cpuinfo(),
+      handle => "cfe_internal_autorun_inventory_cpuinfo";
+
     !disable_inventory_fstab::
       "fstab" usebundle => cfe_autorun_inventory_fstab(),
       handle => "cfe_internal_autorun_inventory_fstab";
@@ -54,6 +61,10 @@ bundle agent inventory_autorun
 
       "loadaverage" usebundle => cfe_autorun_inventory_loadaverage(),
       handle => "cfe_internal_autorun_loadaverage";
+
+      "ipv4 addresses"
+        usebundle => cfe_autorun_inventory_ipv4_addresses,
+        handle => "cfe_internal_autorun_ipv4_addresses";
 }
 
 bundle agent cfe_autorun_inventory_listening_ports
@@ -65,6 +76,32 @@ bundle agent cfe_autorun_inventory_listening_ports
   vars:
       "ports" slist => sort( "mon.listening_ports", "int"),
       meta => { "inventory", "attribute_name=Ports listening" };
+}
+
+bundle agent cfe_autorun_inventory_ipv4_addresses
+# @brief Inventory ipv4 addresses
+# This will filter the loopback address (127.0.0.1, as it is likely not very interesting)
+{
+  vars:
+    "filter_reg"
+      string => "127\.0\.0\.1",
+      comment => "Addresses that match this regular expression will be filtered
+                  from the inventory for ipv4 addresses";
+
+    # Strings are displayed more beautifully in Mission Portal than lists, so
+    # we first generate the list of addresses to be inventoried and then do
+    # inventory using an array.
+    "ipv4_addresses"
+      slist => filter( $(filter_reg), "sys.ip_addresses", "true", "true", 999999999);
+
+    "ipv4[$(ipv4_addresses)]"
+      string => "$(ipv4_addresses)",
+      meta => { "inventory", "attribute_name=IPv4 addresses" };
+
+  reports:
+    DEBUG|DEBUG_cfe_autorun_inventory_ipv4_addresses::
+      "DEBUG $(this.bundle)";
+      "$(const.t)Inventorying: '$(ipv4_addresses)'";
 }
 
 bundle agent cfe_autorun_inventory_disk
@@ -196,6 +233,113 @@ bundle agent cfe_autorun_inventory_proc
       "$(this.bundle): we have kernel version '$(version)'";
 }
 
+bundle agent cfe_autorun_inventory_proc_cpuinfo
+{
+  classes:
+    "_have_cpuinfo" expression => isvariable("default:cfe_autorun_inventory_proc.cpuinfo_idx");
+
+      # So that we don't inventory non dereferenced variables we check to see
+      # if we have the info first This is only necessary because its currently
+      # invalid to do isvariable on an array key that contains a space
+      # Ref: redmine#7088 https://dev.cfengine.com/issues/7088
+      "have_cpuinfo_cpu_cores" expression => strcmp("cpu cores", "$(default:cfe_autorun_inventory_proc.cpuinfo_array[$(default:cfe_autorun_inventory_proc.cpuinfo_idx)][0])");
+      "have_cpuinfo_model_name" expression => strcmp("model name", "$(default:cfe_autorun_inventory_proc.cpuinfo_array[$(default:cfe_autorun_inventory_proc.cpuinfo_idx)][0])");
+
+  vars:
+    _have_cpuinfo::
+      "cpuinfo_physical_cores"
+        string => "$(default:cfe_autorun_inventory_proc.cpuinfo[cpu cores])",
+        ifvarclass => "have_cpuinfo_cpu_cores";
+
+      "cpuinfo_cpu_model_name"
+        string => "$(default:cfe_autorun_inventory_proc.cpuinfo[model name])",
+        ifvarclass => "have_cpuinfo_model_name";
+
+    # We need to be able to count the number of unique physical id lines in
+    # /proc/cpu in order to get a physical processor count.
+      "cpuinfo_lines" slist => readstringlist(
+                                                 "$(default:cfe_autorun_inventory_proc.files[cpuinfo])",
+                                                 "\s*#[^\n]*",
+                                                 "\n",
+                                                 500,
+                                                 50000);
+
+      "cpuinfo_processor_lines"
+        slist => grep("processor\s+:\s\d+", "cpuinfo_lines"),
+        comment => "The number of processor entries in $(default:cfe_autorun_inventory_proc.files[cpuinfo]). If no
+                    'physical id' entries are found this is the processor count";
+
+      "cpuinfo_processor_lines_count"
+        int => length("cpuinfo_processor_lines");
+
+      "cpuinfo_physical_id_lines"
+        slist => grep("physical id.*", "cpuinfo_lines"),
+        comment => "This identifies which physical socket a logical core is on,
+                    the count of the unique physical id lines tells you how
+                    many physical sockets you have. THis would not be present
+                    on systems that are not multicore.";
+
+      "cpuinfo_physical_id_lines_unique"
+        slist => unique("cpuinfo_physical_id_lines");
+
+      "cpuinfo_physical_id_lines_unique_count"
+        int => length("cpuinfo_physical_id_lines_unique");
+
+
+      # If we have physical id lines in cpu info use that for socket inventory,
+      # else we should use the number of processor lines. physical id lines
+      # seem to only be present when multiple cores are active.
+      "cpuinfo_physical_socket_inventory"
+        string => ifelse(isgreaterthan( length("cpuinfo_physical_id_lines"), 0 ), "$(cpuinfo_physical_id_lines_unique_count)",
+                      "$(cpuinfo_processor_lines_count)"),
+        meta => { "inventory", "attribute_name=CPU sockets" };
+
+  reports:
+    DEBUG|DEBUG_cfe_autorun_inventory_proc::
+     "DEBUG $(this.bundle)";
+     "$(const.t)cpuinfo[$(default:cfe_autorun_inventory_proc.cpuinfo_array[$(default:cfe_autorun_inventory_proc.cpuinfo_idx)][0])] = $(default:cfe_autorun_inventory_proc.cpuinfo[$(default:cfe_autorun_inventory_proc.cpuinfo_array[$(default:cfe_autorun_inventory_proc.cpuinfo_idx)][0])])";
+     "$(const.t)CPU physical cores: '$(cpuinfo_physical_cores)'"
+        ifvarclass => "have_cpuinfo_cpu_cores";
+     "$(const.t)CPU model name: '$(cpuinfo_cpu_model_name)'"
+        ifvarclass => "have_cpuinfo_model_name";
+     "$(const.t)CPU Physical Sockets: '$(cpuinfo_physical_socket_inventory)'";
+}
+
+bundle agent cfe_autorun_inventory_cpuinfo
+{
+  classes:
+    "_have_proc_cpu_model_name" expression => isvariable("default:cfe_autorun_inventory_proc_cpuinfo.cpuinfo_cpu_model_name");
+    "_have_proc_cpu_physical_cores" expression => isvariable("default:cfe_autorun_inventory_proc_cpuinfo.cpuinfo_physical_cores");
+
+    # We only accept dmidecode values that don't look like cfengine variables,
+    # (starting with dollar), or that have an apparent empty value.
+    "_have_dmidecode_cpu_model_name"
+      not => regcmp("($(const.dollar)\(.*\)|^$)", "$(default:cfe_autorun_inventory_dmidecode.dmi[processor-version])");
+
+  vars:
+    _have_proc_cpu_physical_cores::
+      "cpuinfo_physical_cores"
+        string => "$(default:cfe_autorun_inventory_proc.cpuinfo[cpu cores])",
+        #ifvarclass => "have_cpuinfo_cpu_cores",
+        meta => { "inventory", "attribute_name=CPU physical cores", "derived-from=$(default:cfe_autorun_inventory_proc.files[cpuinfo])" };
+
+    _have_proc_cpu_model_name::
+      "cpu_model"
+        string => "$(default:cfe_autorun_inventory_proc_cpuinfo.cpuinfo_cpu_model_name)",
+        meta => { "inventory", "attribute_name=CPU model", "derived-from=$(default:cfe_autorun_inventory_proc.files[cpuinfo])" };
+
+    _have_dmidecode_cpu_model_name.!_have_proc_cpu_model_name::
+      "cpu_model"
+        string => "$(default:cfe_autorun_inventory_dmidecode.dmi[processor-version])",
+        meta => { "inventory", "attribute_name=CPU model", "derived-from=$(inventory_control.dmidecoder) -s processor-version" };
+
+  reports:
+    DEBUG|DEBUG_cfe_autorun_inventory_cpuinfo::
+      "DEBUG $(this.bundle)";
+      "$(const.t) CPU model: $(cpu_model)";
+      "$(const.t) CPU physical cores: $(cpuinfo_physical_cores)";
+}
+
 bundle agent cfe_autorun_inventory_mtab
 # @brief Do mtab inventory
 #
@@ -293,7 +437,7 @@ bundle agent cfe_autorun_inventory_dmidecode
   "system-serial-number": "System serial number",
   "system-manufacturer": "System manufacturer",
   "system-version": "System version",
-  "processor-version": "CPU model"
+  "system-product-name": "System product name",
 }');
 
       # other dmidecode variables you may want:
@@ -311,20 +455,30 @@ bundle agent cfe_autorun_inventory_dmidecode
       # processor-family
       # processor-frequency
       # processor-manufacturer
-      # system-product-name
       # system-uuid
+      #"processor-version": "CPU model" <- Collected by default, but not by iterating over the list
 
       "dmivars" slist => getindices(dmidefs);
 
     have_dmidecode::
       "decoder" string => "$(inventory_control.dmidecoder)";
 
+
+    # Redhat 4 can support the -s option to dmidecode if
+    # kernel-utils-2.4-15.el4 or greater is installed.
     have_dmidecode.!(redhat_4|redhat_3)::
       "dmi[$(dmivars)]" string => execresult("$(decoder) -s $(dmivars)",
                                              "useshell"),
       meta => { "inventory", "attribute_name=$(dmidefs[$(dmivars)])" };
 
-    windows::
+      # We do not want to inventory the model name from here, as inventory for
+      # CPU info has been abstracted away from DMI so we just collect it
+      # manually.
+
+      "dmi[processor-version]" string => execresult("$(decoder) -s processor-version",
+                                             "useshell");
+
+    windows.powershell::
       "dmi[bios-vendor]" string => $(bios_array[1]),
       meta => { "inventory", "attribute_name=BIOS vendor" };
 
@@ -337,9 +491,8 @@ bundle agent cfe_autorun_inventory_dmidecode
       "dmi[system-version]" string => $(bios_array[4]),
       meta => { "inventory", "attribute_name=System version" };
 
-      "dmi[processor-version]" string => $(processor_array[1]),
-      meta => { "inventory", "attribute_name=CPU model" };
- 
+      "dmi[processor-version]" string => $(processor_array[1]);
+
       "split_pscomputername"
         slist => string_split($(system_array[1]), "PSComputerName\s.*", 2),
         comment => "Work around weird appearance of PSComputerName into System manufacturer";
@@ -350,7 +503,7 @@ bundle agent cfe_autorun_inventory_dmidecode
   classes:
       "have_dmidecode" expression => fileexists($(inventory_control.dmidecoder));
 
-    windows::
+    windows.powershell::
       "bios_match" expression => regextract(".*Manufacturer\s+:\s([a-zA-Z0-9 ]+)\n.*SerialNumber\W+([a-zA-Z0-9 ]+).*SMBIOSBIOSVersion\W+([a-zA-Z0-9 ]+).*Version\W+([a-zA-Z0-9 -]+)",
                                             execresult("gwmi -query 'SELECT SMBIOSBIOSVersion, Manufacturer, SerialNumber, Version FROM WIN32_BIOS'", "powershell"),
                                             "bios_array");
@@ -364,8 +517,8 @@ bundle agent cfe_autorun_inventory_dmidecode
                                               "system_array");
 
   reports:
-    inform_mode::
-      "$(this.bundle): Obtained $(dmidefs[$(dmivars)]) = '$(dmi[$(dmivars)])'";
+    DEBUG|DEBUG_cfe_autorun_inventory_dmidecode::
+      "DEBUG $(this.bundle): Obtained $(dmidefs[$(dmivars)]) = '$(dmi[$(dmivars)])'";
 }
 
 bundle agent cfe_autorun_inventory_LLDP
@@ -405,43 +558,55 @@ bundle agent cfe_autorun_inventory_packages
                                  "0");
 
   packages:
+    # From 3.7 onwards there is a new package promise implementation using package
+    # modules, in which case installing non_existing_package is not needed any more.
+    #(cfengine_3_5|cfengine_3_6).debian::
     debian::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => inventory_apt_get($(refresh));
+      package_method => inventory_apt_get($(refresh)),
+      action => if_elapsed_day;
 
+    # From 3.7 onwards there is a new package promise implementation using package
+    # modules, in which case installing non_existing_package is not needed any more.
+    #(cfengine_3_5|cfengine_3_6).redhat::
     redhat::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => inventory_yum_rpm($(refresh));
+      package_method => inventory_yum_rpm($(refresh)),
+      action => if_elapsed_day;
 
     suse::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => inventory_zypper($(refresh));
+      package_method => inventory_zypper($(refresh)),
+      action => if_elapsed_day;
 
     aix::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => inventory_lslpp($(refresh));
+      package_method => inventory_lslpp($(refresh)),
+      action => if_elapsed_day;
 
     gentoo::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => emerge;
+      package_method => emerge,
+      action => if_elapsed_day;
 
     !redhat.!debian.!gentoo.!suse.!aix::
       "cfe_internal_non_existing_package"
       package_policy => "add",
-      package_method => generic;
+      package_method => generic,
+      action => if_elapsed_day;
 
   reports:
-    inform_mode::
-      "$(this.bundle): refresh interval is $(refresh)";
-    inform_mode.have_inventory::
-      "$(this.bundle): we have the inventory files.";
-    inform_mode.!have_inventory::
-      "$(this.bundle): we don't have the inventory files.";
+    DEBUG|DEBUG_cfe_autorun_inventory_packages::
+      "DEBUG $(this.bundle): refresh interval is $(refresh)";
+      "DEBUG $(this.bundle): we have the inventory files."
+        ifvarclass => "have_inventory";
+      "DEBUG $(this.bundle): we don't have the inventory files."
+        ifvarclass => "!have_inventory";
 }
 
 body package_method inventory_apt_get(update_interval)
@@ -468,7 +633,7 @@ body package_method inventory_apt_get(update_interval)
       package_list_update_ifelapsed => $(update_interval);
 
       # Target a specific release, such as backports
-      package_add_command => "$(debian_knowledge.call_apt_get) $(debian_knowledge.dpkg_options) --yes install";
+      package_add_command => "$(debian_knowledge.call_apt_get) --help >/dev/null 2>&1 ; /bin/true";
       package_list_update_command => "$(debian_knowledge.call_apt_get) update";
       package_delete_command => "$(debian_knowledge.call_apt_get) $(debian_knowledge.dpkg_options) --yes -q remove";
       package_update_command =>  "$(debian_knowledge.call_apt_get) $(debian_knowledge.dpkg_options) --yes install";
@@ -499,7 +664,7 @@ body package_method inventory_yum_rpm(update_interval)
 {
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm3_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm3_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm3_version_regex)";
@@ -519,7 +684,7 @@ body package_method inventory_yum_rpm(update_interval)
       package_patch_version_regex => "$(redhat_knowledge.patch_version_regex)";
       package_patch_arch_regex    => "$(redhat_knowledge.patch_arch_regex)";
 
-      package_add_command    => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) -y install";
+      package_add_command    => "$(redhat_knowledge.call_yum) --help >/dev/null 2>&1 ; /bin/true";
       package_update_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) -y update";
       package_patch_command  => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) -y update";
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
@@ -536,9 +701,11 @@ body package_method inventory_lslpp(update_interval)
       package_list_update_ifelapsed => $(update_interval);
 
       package_list_command       => "/usr/bin/lslpp -Lqc"; # list RPMs too
-      package_list_name_regex    => "([^:]+):.*";
       package_list_version_regex => "[^:]+:[^:]+:([^:]+):.*";
-      package_installed_regex    => "[^:]+:[^:]+:[^:]+:[^:]+:[^:]+:([CA]):.*";
+      # Make sure version is not included in the name, that indicates RPM
+      # packages, which we should ignore.
+      package_list_name_regex    => "[^:]+:(([^-:]|-[^0-9])+):.*";
+      package_installed_regex    => "[^:]+:(([^-:]|-[^0-9])+):[^:]+:[^:]+:.*";
 
       package_name_convention    => "$(name)-$(version).+";
 
@@ -576,7 +743,7 @@ body package_method inventory_zypper(update_interval)
       package_patch_version_regex => "[^|]+\|[^|]+\|\s+([^\s]+).*";
 
       package_name_convention => "$(name)";
-      package_add_command => "$(suse_knowledge.call_zypper) --non-interactive install";
+      package_add_command => "$(suse_knowledge.call_zypper) --help >/dev/null 2>&1 ; /bin/true";
       package_delete_command => "$(suse_knowledge.call_zypper) --non-interactive remove --force-resolution";
       package_update_command => "$(suse_knowledge.call_zypper) --non-interactive update";
       package_patch_command => "$(suse_knowledge.call_zypper) --non-interactive patch$"; # $ means no args
@@ -630,13 +797,15 @@ bundle agent inventory_cmdb_load(file)
       "ckeys" slist => getindices("cmdb[classes]");
 
   reports:
-    inform_mode.have_cmdb_data::
-      "$(this.bundle): Got CMDB data from $(file): $(cmdb_string)";
-    verbose_mode.have_cmdb_data::
-      "$(this.bundle): Got CMDB key = $(vkeys_$(bkeys)), CMDB value = $((vkeys_$(bkeys)))";
-      "$(this.bundle): Got CMDB class = $(ckeys)";
-    inform_mode.!have_cmdb_data::
-      "$(this.bundle): Could not read the CMDB data from $(file)";
+    DEBUG|DEBUG_inventory_cmdb_load::
+      "DEBUG $(this.bundle): Got CMDB data from $(file): $(cmdb_string)"
+        ifvarclass => "have_cmdb_data";
+      "DEBUG $(this.bundle): Got CMDB key = $(vkeys_$(bkeys)), CMDB value = $((vkeys_$(bkeys)))"
+        ifvarclass => "have_cmdb_data";
+      "DEBUG $(this.bundle): Got CMDB class = $(ckeys)"
+        ifvarclass => "have_cmdb_data";
+      "DEBUG $(this.bundle): Could not read the CMDB data from $(file)"
+        ifvarclass => "!have_cmdb_data";
 }
 
 body copy_from inventory_cmdb_copy_from

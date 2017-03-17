@@ -65,3 +65,25 @@ bundle agent cfe_internal_hub_maintain
       handle => "cfe_internal_start_hub_start_maintenance",
       action => bg("60","60");
 }
+
+bundle common cfengine_enterprise_hub_ha
+{
+  vars:
+    "classification_bundles"
+        slist => { };
+
+    "management_bundles"
+        slist => { };
+}
+
+bundle agent cfe_internal_cleanup_agent_reports {}
+# @ignore
+# @brief cleanup accumulated agent reports if they grow too large (do not apply for cfengine < 3.6.0)
+
+bundle agent cfe_internal_postgresql_maintenance {}
+#@ignore
+#@brief PostgreSQL needs to be cleaned regularly with the vacuumdb command (do not apply for cfengine < 3.6.0)
+
+bundle agent cfe_internal_postgresql_vacuum {}
+#@ignore
+#@brief Vacuum (with analyze) over cfdb database. (do not apply for cfengine < 3.6.0)

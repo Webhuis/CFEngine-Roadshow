@@ -47,6 +47,35 @@
 # purchasing a commercial version of the software.#
 ###################################################
 
+bundle common package_module_knowledge
+# @brief common package_module_knowledge bundle
+#
+# This common bundle defines which package modules are the defaults on different
+# platforms.
+{
+  vars:
+    debian::
+      "platform_default" string => "apt_get";
+
+    redhat::
+      "platform_default" string => "yum";
+}
+
+body package_module apt_get
+{
+    query_installed_ifelapsed => "60";
+    query_updates_ifelapsed => "1440";
+    #default_options =>  {};
+}
+
+body package_module yum
+{
+    query_installed_ifelapsed => "60";
+    query_updates_ifelapsed => "1440";
+    #default_options => {};
+}
+
+
 bundle common packages_common
 # @ignore
 {
@@ -142,11 +171,15 @@ bundle common redhat_knowledge
       "default_arch" string => $(sys.arch);
 
       "call_yum" string => "$(paths.path[yum])";
+      "call_rpmvercmp" string => "$(sys.bindir)/rpmvercmp";
 
       # on RHEL 4, Yum doesn't know how to be --quiet
       "yum_options" string => ifelse("centos_4|redhat_4", "",
                                      "--quiet");
+      "yum_offline_options" string => "$(yum_options) -C";
 
+      "rpm_compare_equal" string => "$(call_rpmvercmp) '$(v1)' eq '$(v2)'";
+      "rpm_compare_less" string => "$(call_rpmvercmp)  '$(v1)' lt '$(v2)'";
       # yum check-update prints a lot of extra useless lines, but the format of
       # the actual package lines is:
       #
@@ -743,6 +776,8 @@ body package_method rpm_version(repo)
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_regex => ".*[^\s].*";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 ##
@@ -842,7 +877,7 @@ body package_method yum
 {
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm3_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm3_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm3_version_regex)";
@@ -868,6 +903,8 @@ body package_method yum
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 ##
@@ -896,7 +933,7 @@ body package_method yum_rpm
 {
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm3_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm3_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm3_version_regex)";
@@ -922,6 +959,8 @@ body package_method yum_rpm
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 body package_method yum_rpm_permissive
@@ -955,7 +994,7 @@ body package_method yum_rpm_permissive
 {
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm3_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm3_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm3_version_regex)";
@@ -981,6 +1020,8 @@ body package_method yum_rpm_permissive
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 ##
@@ -1007,7 +1048,7 @@ body package_method yum_rpm_enable_repo(repoid)
 {
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm2_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm2_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm2_version_regex)";
@@ -1030,6 +1071,8 @@ body package_method yum_rpm_enable_repo(repoid)
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps --allmatches";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 ##
@@ -1150,6 +1193,8 @@ body package_method rpm_filebased(path)
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --allmatches";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 }
 
 ##
@@ -1213,8 +1258,8 @@ body package_method smartos
 {
       package_changes => "bulk";
       package_list_command => "/opt/local/bin/pkgin list";
-      package_list_name_regex    => "([^\s]+)\-[0-9]+.*\s";
-      package_list_version_regex => "[^\s]+\-([0-9][^\s]+)\s";
+      package_list_name_regex    => "([^\s]+)\-[0-9][^\s;]+.*[\s;]";
+      package_list_version_regex => "[^\s]+\-([0-9][^\s;]+).*[\s;]";
 
       package_installed_regex => ".*"; # all reported are installed
 
@@ -1229,6 +1274,36 @@ body package_method smartos
       # already installed package will upgrade it however.
 
       package_update_command =>  "/opt/local/bin/pkgin -y install";
+}
+
+body package_method smartos_pkg_add(repo)
+# @brief SmartOS pkg_add installation package method
+#
+# This package method interacts with SmartOS pkg_add to install from local
+# or remote repositories. It is slightly different than the FreeBSD pkg_add.
+#
+# This example installs "perl5" from a remote repository:
+#
+# ```cf3
+# ----------------------------
+# packages:
+#   "perl5"
+#     package_policy   =>  "add",
+#     package_method   =>  smartos_pkg_add("http://pkg.example.com/packages/");
+#
+# ```
+{
+      package_changes => "individual";
+      package_list_command => "/opt/local/sbin/pkg_info";
+      package_list_name_regex    => "([^\s]+)\-[0-9]+.*\s";
+      package_list_version_regex => "[^\s]+\-([0-9][^\s]+)\s";
+
+      package_installed_regex => ".*"; # all reported are installed
+
+      package_add_command => "/usr/bin/env PKG_PATH=$(repo) /opt/local/sbin/pkg_add";
+
+      package_delete_command => "/opt/local/sbin/pkg_delete";
+      package_update_command => "/usr/bin/env PKG_PATH=$(repo) /opt/local/sbin/pkg_add";
 }
 
 body package_method opencsw
@@ -1615,7 +1690,7 @@ body package_method generic
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --queryformat \"$(rpm_knowledge.rpm_output_format)\"";
       # set it to "0" to avoid caching of list during upgrade
       package_list_update_command => "$(suse_knowledge.call_zypper) list-updates";
-      package_list_update_ifelapsed => "0";
+      package_list_update_ifelapsed => "$(common_knowledge.list_update_ifelapsed)";
       package_patch_list_command => "$(suse_knowledge.call_zypper) patches";
       package_installed_regex => "i.*";
       package_list_name_regex    => "$(rpm_knowledge.rpm_name_regex)";
@@ -1634,7 +1709,7 @@ body package_method generic
     redhat::
       package_changes => "bulk";
       package_list_command => "$(rpm_knowledge.call_rpm) -qa --qf '$(rpm_knowledge.rpm3_output_format)'";
-      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_options) check-update $(redhat_knowledge.check_update_postproc)";
+      package_patch_list_command => "$(redhat_knowledge.call_yum) $(redhat_knowledge.yum_offline_options) check-update $(redhat_knowledge.check_update_postproc)";
 
       package_list_name_regex    => "$(rpm_knowledge.rpm3_name_regex)";
       package_list_version_regex => "$(rpm_knowledge.rpm3_version_regex)";
@@ -1660,6 +1735,8 @@ body package_method generic
       package_delete_command => "$(rpm_knowledge.call_rpm) -e --nodeps";
       package_verify_command => "$(rpm_knowledge.call_rpm) -V";
       package_noverify_returncode => "1";
+      package_version_less_command => "$(redhat_knowledge.rpm_compare_less)";
+      package_version_equal_command => "$(redhat_knowledge.rpm_compare_equal)";
 
     debian::
       package_changes => "bulk";
@@ -1726,8 +1803,8 @@ body package_method generic
     gentoo::
       package_changes => "individual";
       package_list_command => "/bin/sh -c '/bin/ls -d /var/db/pkg/*/* | cut -c 13-'";
-      package_list_name_regex => ".*/([^\s]+)-\d.*";
-      package_list_version_regex => ".*/[^\s]+-(\d.*)";
+      package_list_name_regex => "([^/]+/(?:(?!-\d).)+)-\d.*";
+      package_list_version_regex => "[^/]+/(?:(?!-\d).)+-(\d.*)";
       package_installed_regex => ".*";                          # all reported are installed
       package_name_convention => "$(name)";
       package_list_update_command => "/bin/true";               # I prefer manual syncing
@@ -2067,6 +2144,6 @@ bundle agent package_specific(package_name, desired, package_version, package_ar
       package_method => generic;
 
   reports:
-    (inform_mode||verbose_mode).filebased.!suse.!debian.!redhat.!aix.!solaris_pkgadd::
-      "$(this.bundle): sorry, can't do file-based installs on $(sys.os)";
+    "(DEBUG|DEBUG_$(this.bundle)).filebased.!suse.!debian.!redhat.!aix.!solaris_pkgadd"::
+      "DEBUG $(this.bundle): sorry, can't do file-based installs on $(sys.os)";
 }

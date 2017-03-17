@@ -64,6 +64,19 @@ body file control
 # edit_line bundles
 ###################################################
 
+bundle edit_line insert_before_if_no_line(before, string)
+# @brief Insert `string` before `before` if `string` is not found in the file
+# @param before The regular expression matching the line which `string` will be
+# inserted before
+# @param string The string to be prepended
+#
+{
+  insert_lines:
+      "$(string)"
+        location => before($(before)),
+        comment => "Prepend a line to the file if it doesn't already exist";
+}
+
 bundle edit_line insert_lines(lines)
 # @brief Append `lines` if they don't exist in the file
 # @param lines The lines to be appended
@@ -415,7 +428,7 @@ bundle edit_line set_variable_values_ini(tab, sectionName)
 # @param sectionName The section in the file within which values should be
 # modified
 #
-# **See also:** `set_variable_values_ini()`
+# **See also:** `manage_variable_values_ini()`
 {
   vars:
       "index" slist => getindices("$(tab)[$(sectionName)]");
@@ -1025,11 +1038,11 @@ bundle edit_line replace_or_add(pattern,line)
       "^(?!$(eline)$)$(pattern)$"
       comment => "Replace a pattern here",
       replace_with => value("$(line)"),
-      classes => always("replace_done_$(cline)");
+      classes => scoped_classes_generic("bundle", "replace_$(cline)");
 
   insert_lines:
       "$(line)"
-      ifvarclass => "replace_done_$(cline)";
+      ifvarclass => "replace_$(cline)_reached";
 }
 
 bundle edit_line converge(marker, lines)
@@ -1843,6 +1856,15 @@ body file_select filetypes_older_than(filetypes, days)
       file_types => { @(filetypes) };
       mtime      => irange(0,ago(0,0,"$(days)",0,0,0));
       file_result => "file_types.mtime";
+}
+
+body file_select symlinked_to(target)
+# @brief Select symlinks that point to $(target)
+# @param target The file the symlink should point to in order to be selected
+{
+  file_types  => { "symlink" };
+  issymlinkto => { "$(target)" };
+  file_result => "issymlinkto";
 }
 
 ##-------------------------------------------------------

@@ -82,10 +82,18 @@ bundle common paths
     !(enterprise.(am_policy_hub|policy_server))::
       "path[git]"      string => "/usr/bin/git";
 
-    any::
-      "path[getfacl]"  string => "/usr/bin/getfacl";
+    !(freebsd|darwin|smartos)::
       "path[npm]"      string => "/usr/bin/npm";
       "path[pip]"      string => "/usr/bin/pip";
+      "path[virtualenv]" string => "/usr/bin/virtualenv";
+
+    !(freebsd|darwin)::
+      "path[getfacl]"  string => "/usr/bin/getfacl";
+
+    freebsd|darwin::
+      "path[npm]"      string => "/usr/local/bin/npm";
+      "path[pip]"      string => "/usr/local/bin/pip";
+      "path[virtualenv]" string => "/usr/local/bin/virtualenv";
 
     _have_bin_env::
       "path[env]"      string => "/bin/env";
@@ -95,7 +103,7 @@ bundle common paths
     _have_bin_systemctl::
       "path[systemctl]"      string => "/bin/systemctl";
     !_have_bin_systemctl::
-      "path[systemctl]"      string => "/usr/bin/systemctl";
+      "path[systemctl]"      string => "/bin/systemctl";
 
     linux::
       "path[lsattr]"        string => "/usr/bin/lsattr";
@@ -188,17 +196,31 @@ bundle common paths
       "path[grep]"     string => "/usr/bin/grep";
       "path[ls]"       string => "/bin/ls";
       "path[netstat]"  string => "/usr/bin/netstat";
-      "path[ping]"     string => "/usr/bin/ping";
       "path[perl]"     string => "/usr/bin/perl";
       "path[printf]"   string => "/usr/bin/printf";
       "path[sed]"      string => "/usr/bin/sed";
       "path[sort]"     string => "/usr/bin/sort";
       "path[tr]"       string => "/usr/bin/tr";
 
+    freebsd.!(freebsd_9_3|freebsd_10|freebsd_11)|netbsd|openbsd::
+
+      "path[ping]"     string => "/usr/bin/ping";
+
+    freebsd_9_3|freebsd_10|freebsd_11::
+
+      "path[ping]"     string => "/sbin/ping";
+
     freebsd|netbsd::
 
       "path[cksum]"    string => "/usr/bin/cksum";
       "path[realpath]" string => "/bin/realpath";
+
+    freebsd::
+
+      "path[getfacl]"  string => "/bin/getfacl";
+      "path[dtrace]"   string => "/usr/sbin/dtrace";
+      "path[zpool]"    string => "/sbin/zpool";
+      "path[zfs]"      string => "/sbin/zfs";
 
     openbsd::
 
@@ -239,6 +261,7 @@ bundle common paths
       "path[svcs]"     string => "/usr/bin/svcs";
       "path[svcadm]"   string => "/usr/sbin/svcadm";
       "path[svccfg]"   string => "/usr/sbin/svccfg";
+      "path[svcprop]"  string => "/usr/bin/svcprop";
       "path[netadm]"   string => "/usr/sbin/netadm";
       "path[dladm]"    string => "/usr/sbin/dladm";
       "path[ipadm]"    string => "/usr/sbin/ipadm";
@@ -286,6 +309,7 @@ bundle common paths
       "path[sort]"          string => "/bin/sort";
       "path[test]"          string => "/usr/bin/test";
       "path[tr]"            string => "/usr/bin/tr";
+      "path[wc]"            string => "/usr/bin/wc";
       "path[wget]"          string => "/usr/bin/wget";
       "path[realpath]"      string => "/usr/bin/realpath";
 
@@ -376,6 +400,7 @@ bundle common paths
       "path[sort]"          string => "/usr/bin/sort";
       "path[test]"          string => "/usr/bin/test";
       "path[tr]"            string => "/usr/bin/tr";
+      "path[wc]"            string => "/usr/bin/wc";
       "path[wget]"          string => "/usr/bin/wget";
       "path[realpath]"      string => "/usr/bin/realpath";
 
@@ -387,6 +412,8 @@ bundle common paths
       "path[aptitude]"            string => "/usr/bin/aptitude";
       "path[dpkg]"                string => "/usr/bin/dpkg";
       "path[groupadd]"            string => "/usr/sbin/groupadd";
+      "path[groupdel]"            string => "/usr/sbin/groupdel";
+      "path[groupmod]"            string => "/usr/sbin/groupmod";
       "path[ifconfig]"            string => "/sbin/ifconfig";
       "path[ip]"                  string => "/sbin/ip";
       "path[service]"             string => "/usr/sbin/service";
@@ -394,6 +421,8 @@ bundle common paths
       "path[update_alternatives]" string => "/usr/bin/update-alternatives";
       "path[update_rc_d]"         string => "/usr/sbin/update-rc.d";
       "path[useradd]"             string => "/usr/sbin/useradd";
+      "path[userdel]"             string => "/usr/sbin/userdel";
+      "path[usermod]"             string => "/usr/sbin/usermod";
 
     archlinux||darwin::
 
