@@ -40,9 +40,8 @@ bundle agent do_roadshow {
       "dir_modules"          string => "$(sys.workdir)/bin";
       "inputfiles"           string => "$(sys.inputdir)";
 
-      "roadshow_policies"     slist => findfiles("$(sys.inputdir)/roadshow_policies/*.cf");
-      "dynamic_inputs"        slist => findfiles("$(sys.workdir)/dynamic-inputs-local/**/*.cf");
-      "inputs" slist => { @(roadshow_policies), @(dynamic_inputs), "$(sys.inputdir)/update/update_roadshow.cf" };
+      "roadshow_policies"     slist => findfiles("$(sys.workdir)/roadshow_policies/*.cf");
+      "inputs"                slist => { @(roadshow_policies), "$(sys.inputdir)/services/autorun/roadshow_dynamic_update.cf" };
 
       "os"                   string => ${sys.flavor};
       "class_domain"         string => canonify("$(sys.domain)");
