@@ -8,21 +8,21 @@
 bundle agent roadshow__dynamic_update {
 
   vars:
-      "master_static"  string => "$(sys.workdir)/masterfiles";
-      "master_dynamic" string => "$(sys.workdir)/dynamic_policies";
+
+      "master_policies" string => "$(sys.workdir)/roadshow_policies";
 
   files:
 
-   "$(sys.workdir)/dynamic-inputs-local/role/${classify.role}.cf"
+   "$(sys.workdir)/roadshow_dynamic_inputs/role/${classify.role}.cf"
       handle => "update_files_inputs_roadshow_role",
-      copy_from => r_rcp("${master_dynamic}/roles/${classify.role}.cf", ${sys.policy_hub}),
+      copy_from => r_rcp("${master_policies}/roles/${classify.role}.cf", ${sys.policy_hub}),
       file_select  => r_policies,
       action => r_immediate,
       classes => r_if_repaired("update_report");
 
-   "$(sys.workdir)/dynamic-inputs-local/components/${${classify.role}.inputs}"
+   "$(sys.workdir)/roadshow_dynamic_inputs/components/${${classify.role}.inputs}"
       handle => "update_files_inputs_roadshow_components",
-      copy_from => r_rcp("${master_dynamic}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
+      copy_from => r_rcp("${master_policies}/components/${${classify.role}.inputs}", ${sys.policy_hub}),
       file_select  => r_policies,
       action => r_immediate,
       classes => r_if_repaired("update_report");
