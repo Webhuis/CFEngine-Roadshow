@@ -1,0 +1,6 @@
+bundle agent opennebula_client {
+
+vars:
+
+  "opennebula_repo_key"                             string => "
+}

@@ -2,10 +2,11 @@ bundle agent kvmutl {
 
 vars:
 
-  "bundles[kvm_host]"        string => "${sys.flavor}/kvm_host.cf";
+  "bundles[kvm_host]"                 string => "${sys.flavor}/kvm_host.cf";
+  "bundles[opennebula_client]"        string => "${sys.flavor}/opennebula_client.cf";
 
-  "sequence"                  slist => getindices("bundles");
-  "inputs"                    slist => getvalues("bundles");
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
 
 methods:
 
