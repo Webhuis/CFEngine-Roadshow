@@ -12,12 +12,3 @@ reports:
 "sys.policy_hub:       ${sys.policy_hub}";
 
 }
-
-body common control {
-
-  bundlesequence => { "inventory_linux", "report_sys_os" };
-
-  inputs         => { "/var/cfengine/inputs/inventory/linux.cf" };
-
-}
-
