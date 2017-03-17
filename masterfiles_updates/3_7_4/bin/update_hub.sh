@@ -1,6 +1,9 @@
 #!/bin/bash
 
 policy_dir=//var/lib/git/CFEngine-Roadshow
+policy_hub=`hostname -f`
+
+echo ${policy_hub}
 
 cd ${policy_dir}
 
@@ -19,4 +22,4 @@ cp -a ${policy_dir}/roadshow_policies /var/cfengine
 
 rm /var/cfengine/masterfiles/services/autorun/hello.cf
 
-cf-agent -B 10.68.71.106 
+cf-agent -B ${policy_hub}
