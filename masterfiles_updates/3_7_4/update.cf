@@ -35,7 +35,7 @@ body common control
 
       # Roadshow policy update body values
 
-                  "update/roadshow_update_policy.cf",
+                  "update/roadshow_update_policy.cf"
 
       };
 
@@ -43,7 +43,7 @@ body common control
       #protocol_version => "latest";
 }
 
-#############################################################################
+###########################################################,##################
 
 body agent control
 {
