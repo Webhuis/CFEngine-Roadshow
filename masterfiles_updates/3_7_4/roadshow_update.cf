@@ -29,7 +29,7 @@ files:
      action       => r_immediate,
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/domain/$(sys.domain}.cf"
+  "$(sys.workdir)/roadshow_inputs/domain/$(sys.domain).cf"
      handle       => "update_files_inputs_roadshow_domain",
      copy_from    => r_rcp("$(master_roadshow)/domain/$(sys.domain)/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
