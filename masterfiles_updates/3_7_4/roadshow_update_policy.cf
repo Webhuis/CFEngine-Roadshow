@@ -44,9 +44,10 @@ body copy_from r_rcp(from,server)
       source      => "$(from)";
       compare     => "digest";
       trustkey    => "false";
-      encrypt => "true";
-      purge => "true";
-      preserve => "true";
+      create      => "true";
+      encrypt     => "true";
+      purge       => "true";
+      preserve    => "true";
 
     !am_policy_hub::
 
