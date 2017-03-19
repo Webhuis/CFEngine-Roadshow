@@ -194,3 +194,12 @@ body file_select r_policies {
 
 }
 
+#########################################################
+
+body file_select r_templates {
+
+      leaf_name => { ".*.tmpl" };
+      file_result => "leaf_name";
+
+}
+

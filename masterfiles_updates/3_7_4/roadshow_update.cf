@@ -70,7 +70,7 @@ files:
      handle       => "update_files_inputs_roadshow_templates",
      depth_search => r_recurse("inf"),
      copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
-     file_select  => r_policies,
+     file_select  => r_templates,
      action       => r_immediate,
      classes      => r_if_repaired("update_report");
 
