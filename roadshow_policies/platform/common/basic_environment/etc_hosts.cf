@@ -20,7 +20,7 @@ files:
   create                    => "true",
   perms                     => mo("644","root"),
   edit_line                 => edit_etc_hosts("etc_hosts.hosts"),
-  action                    => u_immediate;
+  action                    => r_immediate;
 
 reports:
 

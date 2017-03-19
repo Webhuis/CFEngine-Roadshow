@@ -6,7 +6,7 @@ bundle agent resolv_conf
   comment                   => "Domain resolv.conf door class_domain",
   perms                     => mo("644","root"),
   copy_from                 => local_cp("$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl"),
-  action                    => u_immediate,
+  action                    => r_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/resolv.conf.tmpl";
 
 methods:

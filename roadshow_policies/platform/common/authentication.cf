@@ -18,14 +18,14 @@ files:
          comment => "Install Webhuis rootCA",
            perms => mo("644","root"),
           create => "true",
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/cacert.pem","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/cacert.pem","${sys.policy_hub}"),
+          action => r_immediate;
 
   "/etc/ldap.secret"
          comment => "ldap secret",
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
+          action => r_immediate;
 
 methods:
 
@@ -45,14 +45,14 @@ files:
          comment => "Prepare ldap configuration",
            perms => mo("644","root"),
           create => "true",
-          action => u_immediate,
+          action => r_immediate,
    edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/ldap.conf.tmpl";
 
   "/etc/ldap.secret"
          comment => "ldap secret",
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/ldap.secret","${sys.policy_hub}"),
+          action => r_immediate;
 
 methods:
 
@@ -72,14 +72,14 @@ files:
          comment => "Prepare libnss_ldap configuration",
            perms => mo("644","root"),
           create => "true",
-          action => u_immediate,
+          action => r_immediate,
    edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/libnss-ldap.conf.tmpl";
 
   "/etc/libnss-ldap.secret"
          comment => "libnss ldap secret",
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/libnss-ldap.secret","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/libnss-ldap.secret","${sys.policy_hub}"),
+          action => r_immediate;
 
 methods:
 
@@ -99,14 +99,14 @@ files:
          comment => "Prepare pam_ldap configuration",
            perms => mo("644","root"),
           create => "true",
-          action => u_immediate,
+          action => r_immediate,
    edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/pam_ldap.conf.tmpl";
 
   "/etc/pam_ldap.secret"
          comment => "pam_ldap secret",
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/pam_ldap.secret","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/pam_ldap.secret","${sys.policy_hub}"),
+          action => r_immediate;
 
 methods:
 
@@ -127,7 +127,7 @@ files:
            perms => mo("644","root"),
           create => "true",
        edit_line => edit_nsswitch_conf,
-          action => u_immediate;
+          action => r_immediate;
 
 reports:
 
