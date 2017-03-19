@@ -44,9 +44,9 @@ body copy_from r_rcp(from,server)
       source      => "$(from)";
       compare     => "digest";
       trustkey    => "false";
-      encrypt => "true";
-      purge => "true";
-      preserve => "true";
+      encrypt     => "true";
+      purge       => "true";
+      preserve    => "true";
 
     !am_policy_hub::
 
@@ -190,6 +190,15 @@ body delete r_tidy
 body file_select r_policies {
 
       leaf_name => { ".*.cf" };
+      file_result => "leaf_name";
+
+}
+
+#########################################################
+
+body file_select r_templates {
+
+      leaf_name => { ".*.tmpl" };
       file_result => "leaf_name";
 
 }

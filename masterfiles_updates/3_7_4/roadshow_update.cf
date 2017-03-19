@@ -18,65 +18,80 @@ files:
 
   "$(sys.workdir)/bin/cf-message.py"
      handle       => "update_bin_roadshow",
-     copy_from    => r_rcp("${master_roadshow}/bin/cf-message.py", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_roadshow)/bin/cf-message.py", $(sys.policy_hub)),
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/services/autorun"
+  "$(sys.workdir)/inputs/services/autorun"
      handle       => "update_files_inputs_roadshow_services_autorun",
-     copy_from    => r_rcp("${master_standard}/services/autorun", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_standard)/services/autorun", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/domain/${sys.domain}.cf"
+  "$(roadshow_inputs)/domain/$(sys.domain).cf"
      handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("${master_roadshow}/domain/${sys.domain}/${sys.domain}.cf", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_roadshow)/domain/$(sys.domain)/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/platform/common"
      handle       => "update_files_inputs_roadshow_platform_common",
      depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("${master_roadshow}/platform/${vendor}/common", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_roadshow)/platform/common", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/platform/lib"
+  "$(roadshow_inputs)/platform/lib"
      handle       => "update_files_inputs_roadshow_platform_lib",
      depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("${master_roadshow}/platform/lib", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_roadshow)/platform/lib", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/platform/$(vendor)_common"
+  "$(roadshow_inputs)/platform/$(vendor)_common"
      handle       => "update_files_inputs_roadshow_platform_components",
-     copy_from    => r_rcp("${master_roadshow}/platform/${vendor}/$(vendor)_common", ${sys.policy_hub}),
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/platform/${sys.flavor}"
-     handle       => "update_files_inputs_roadshow_platform_components",
-     copy_from    => r_rcp("${master_roadshow}/platform/${vendor}/$(sys.flavor)", ${sys.policy_hub}),
+  "$(roadshow_inputs)/platform/$(sys.flavor)"
+     handle       => "update_files_inputs_roadshow_platform_flavor_components",
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)/", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/templates"
+  "$(roadshow_inputs)/templates"
      handle       => "update_files_inputs_roadshow_templates",
      depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("${master_roadshow}/templates", ${sys.policy_hub}),
-     file_select  => r_policies,
+     copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
+     file_select  => r_templates,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
+
+methods:
+
+  "Determine the vendor"                     usebundle => vendor;
 
 reports:
 
-  "$(this.bundle) vender: $(vendor)";
+  "$(this.bundle) vendor: $(vendor)";
 
 }
 
