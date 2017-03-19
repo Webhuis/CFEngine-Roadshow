@@ -23,7 +23,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/services/autorun"
+  "$(sys.workdir)/inputs/services/autorun"
      handle       => "update_files_inputs_roadshow_services_autorun",
      copy_from    => r_rcp("$(master_standard)/services/autorun", $(sys.policy_hub)),
      depth_search => r_recurse("inf"),
