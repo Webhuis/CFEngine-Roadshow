@@ -6,6 +6,6 @@ vars:
 
 reports:
 
-  "$(this.bundle): $(test);
+  "$(this.bundle): $(test)";
 
 }
