@@ -59,7 +59,7 @@ files:
      action       => r_immediate,
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/platform/$(sys.flavor}"
+  "$(sys.workdir)/roadshow_inputs/platform/$(sys.flavor)"
      handle       => "update_files_inputs_roadshow_platform_flavor_components",
      copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)", $(sys.policy_hub)),
      file_select  => r_policies,
