@@ -5,7 +5,7 @@
 #
 #########################################################
 
-bundle agent roadshow__dynamic_update {
+bundle agent roadshow_dynamic_update {
 
   vars:
 
