@@ -20,6 +20,7 @@ files:
      handle       => "update_bin_roadshow",
      copy_from    => r_rcp("$(master_roadshow)/bin/cf-message.py", $(sys.policy_hub)),
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/services/autorun"
@@ -27,6 +28,7 @@ files:
      copy_from    => r_rcp("$(master_standard)/services/autorun", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/domain/$(sys.domain).cf"
@@ -34,6 +36,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/domain/$(sys.domain)/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/platform/common"
@@ -42,6 +45,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/platform/common", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/platform/lib"
@@ -50,6 +54,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/platform/lib", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/platform/$(vendor)_common"
@@ -57,6 +62,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/**/*.cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/platform/$(sys.flavor)"
@@ -64,6 +70,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)/**/*.cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(sys.workdir)/roadshow_inputs/templates"
@@ -72,6 +79,7 @@ files:
      copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
      file_select  => r_templates,
      action       => r_immediate,
+     create       => "true",
      classes      => r_if_repaired("update_report");
 
 methods:
