@@ -74,6 +74,9 @@ files:
      action       => r_immediate,
      classes      => r_if_repaired("update_report");
 
+methods:
+
+  "Determine the vendor"                     usebundle => vendor;
 reports:
 
   "$(this.bundle) vender: $(vendor)";
