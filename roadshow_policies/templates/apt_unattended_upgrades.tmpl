@@ -1,0 +1,26 @@
+# ESP template for apt_unattended_upgrades
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+Unattended-Upgrade::Origins-Pattern {
+   // "origin=Debian,codename=${distro_codename},label=Debian";
+      "origin=Debian,codename=${distro_codename},label=Debian-Security";
+}
+
+Unattended-Upgrade::Automatic-Reboot "false";
+
+Unattended-Upgrade::Package-Blacklist {
+       "libc6";
+       "linux-headers-.*";
+       "linux-image-.*";
+       "linux-kbuild-.*";
+       "linux-compiler-.*";
+       "linux-base-.*";
+       "firmware-.*";
+       "systemd";
+       "systemd-cron";
+       "systemd-sysv";
+       "libsystemd.*";
+       "libpam-.*";
+};

@@ -1,0 +1,22 @@
+bundle agent vlans {
+
+vars:
+
+  "vlan[301][network]"                  string => "10.30.1";
+  "vlan[301][eth_seq]"                  string => "1";
+  "vlan[501][network]"                  string => "10.50.1";
+  "vlan[501][eth_seq]"                  string => "5";
+  "vlan[502][network]"                  string => "10.50.2";
+  "vlan[502][eth_seq]"                  string => "6";
+  "vlan[505][network]"                  string => "10.50.5";
+  "vlan[505][eth_seq]"                  string => "7";
+  "vlan[520][network]"                  string => "10.52.0";
+  "vlan[520][eth_seq]"                  string => "0";
+  "vlan[531][network]"                  string => "10.53.1";
+  "vlan[531][eth_seq]"                  string => "2";
+
+reports:
+
+  "$(this.bundle):";
+
+}

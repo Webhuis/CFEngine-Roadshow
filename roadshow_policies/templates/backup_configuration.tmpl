@@ -1,0 +1,24 @@
+#!/bin/bash
+# ESP template for backup_configuration
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+export LC_CTYPE=en_US.UTF-8
+
+cd /var/backups/${sys.fqhost}
+
+/usr/bin/svn update
+
+datum=`date +%Y%m%d`
+
+cp -ur /etc /var/backups/${sys.fqhost}/
+
+/usr/bin/svn add * -q --force
+
+commit=${sys.fqhost}-$datum
+
+/usr/bin/svn commit -m $commit
+
+cd -
+

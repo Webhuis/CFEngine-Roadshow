@@ -1,0 +1,25 @@
+bundle agent backup_configuration {
+
+files:
+
+  "/var/backups/$(sys.fqhost)/."
+    create         => "true",
+    perms          => mog("755","root","root");
+
+  "/usr/local/bin/$(sys.fqhost)-configuration.sh"
+    create         => "true",
+    perms          => mog("755","root","root"),
+    edit_template  => "$(sys.workdir)/esp_inputs/templates/backup_configuration.tmpl";
+   
+commands:
+
+ Hr05.Min50_55:: 
+
+  "/usr/local/bin/$(sys.fqhost)-configuration.sh";
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
