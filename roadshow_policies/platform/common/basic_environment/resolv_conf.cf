@@ -8,10 +8,6 @@ bundle agent resolv_conf
   action                    => r_immediate,
   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/resolv.conf.tmpl";
 
-methods:
-
-  "Get the resolv_conf tempate"       usebundle => get_template("resolv.conf.tmpl");
-
 reports:
 
   "${this.bundle}: I am doing standardized resolv.conf setup";
