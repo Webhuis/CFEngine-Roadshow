@@ -75,7 +75,7 @@ bundle server access_rules()
       admit => { @(def.acl) };
 
       "/root/one_store"
-      handle => "server_access_grant_access_roadshow_policies",
+      handle => "server_access_grant_access_roadshow_data",
       comment => "Grant access to the dynamic policy updates",
       admit => { @(def.acl) };
 
