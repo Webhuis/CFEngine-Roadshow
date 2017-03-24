@@ -16,8 +16,6 @@ reports:
 
  "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
 
-reports:
-
  "${this.bundle}: component $(inputs)";
 
 
