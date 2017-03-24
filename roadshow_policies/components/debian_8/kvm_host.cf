@@ -34,13 +34,6 @@ files:
           action => r_immediate,
    edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/debootstrap.config.sdx.tmpl";
 
-#commands:
-
-#  "/usr/bin/svn update"
-#    comment => "Update the company vm xml definitions to a local copy",
-#    contain => silent_in_dir("${${guest_configs}}"),
-#    ifvarclass => canonify("$(support_svn_server)");
-
 methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");

@@ -12,7 +12,7 @@ files:
   "/var/cache/apt/opennebula.key"
     comment      => "Prepare grml debootstrap environment",
     perms        => mo("644","root"),
-    copy_from    => r_rcp("$(sys.workdir)/roadshow_policies/data/opennebula.key","$(sys.policy_hub)"),
+    copy_from    => local_cp("/tmp/opennebula.key"),
     create       => "true",
     action       => r_immediate,
     classes      => r_if_repaired("opennebula_repo");
@@ -39,6 +39,8 @@ methods:
   "We are an Opennebula client"     usebundle => packages("opennebula_client.pkg");
 
 commands:
+
+  "wget -O /tmp/opennebula.key http://downloads.opennebula.org/repo/Debian/repo.key";
 
  opennebula_repo::
  
