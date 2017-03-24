@@ -16,4 +16,7 @@ vars:
   "role_input"           string => "$(sys.workdir)/roadshow_dynamic_inputs/role/$(role).cf";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
+reports:
+
+  "$(this.bundle) role: $(role)";
 }
