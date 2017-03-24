@@ -25,7 +25,7 @@ files:
     depth_search => r_recurse("inf"),
     action       => r_immediate,
     create       => "true",
-    classes      => r_if_repaired("opennebula_restart");;
+    classes      => r_if_repaired("opennebula_restart");
 
 services:
 
