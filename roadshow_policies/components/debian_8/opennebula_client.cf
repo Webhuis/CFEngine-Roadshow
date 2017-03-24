@@ -40,7 +40,7 @@ methods:
 
 commands:
 
-  "wget -O /tmp/opennebula.key http://downloads.opennebula.org/repo/Debian/repo.key";
+  "/usr/bin/wget -O /tmp/opennebula.key http://downloads.opennebula.org/repo/Debian/repo.key";
 
  opennebula_repo::
  
