@@ -69,6 +69,16 @@ bundle server access_rules()
       comment => "Grant access to the policy updates",
       admit => { @(def.acl) };
 
+      "$(sys.workdir)/roadshow_policies"
+      handle => "server_access_grant_access_roadshow_policies",
+      comment => "Grant access to the dynamic policy updates",
+      admit => { @(def.acl) };
+
+      "/root/one_store"
+      handle => "server_access_grant_access_roadshow_policies",
+      comment => "Grant access to the dynamic policy updates",
+      admit => { @(def.acl) };
+
       "$(def.dir_software)"
       handle => "server_access_grant_access_datafiles",
       comment => "Grant access to software updates",
