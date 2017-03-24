@@ -6,7 +6,7 @@ files:
            perms  => mog("664","${tomcat.user}","${tomcat.group}"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/tomcat-users.xml.tmpl",
+   edit_template  => "$(sys.workdir)roadshow_/dynamic_inputs/templates/tomcat-users.xml.tmpl",
          classes  => r_if_repaired("restart_tomcat");
 
   "${tomcat.home}"

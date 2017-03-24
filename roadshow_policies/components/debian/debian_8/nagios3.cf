@@ -23,7 +23,7 @@ files:
   "/etc/nagios3/cgi.cfg"
    perms             => mo("644","root"),
    action            => r_immediate,
-   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl",
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios.cgi.tmpl",
    classes           => if_repaired("restart_apache2");
 
 methods:

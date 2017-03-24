@@ -42,7 +42,7 @@ files:
            perms  => mog("664","nagios","nagios"),
           create  => "true",
           action  => u_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cfg.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios.cfg.tmpl",
          classes  => u_if_repaired("restart_nagios");
 
 reports:

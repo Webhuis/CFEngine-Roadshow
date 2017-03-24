@@ -77,7 +77,7 @@ files:
            perms  => mog("664","nagios","nagios"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hostgroups.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios-hostgroups.tmpl",
          classes  => r_if_repaired("restart_nagios"); 
 
 reports:
@@ -97,7 +97,7 @@ files:
            perms  => mog("664","nagios","nagios"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios-hosts.tmpl",
          classes  => r_if_repaired("restart_nagios");
 
 reports:
@@ -129,7 +129,7 @@ files:
            perms  => mog("664","nagios","nagios"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts-service.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios-hosts-service.tmpl",
          classes  => r_if_repaired("restart_nagios");
 
 reports:
@@ -189,7 +189,7 @@ files:
            perms  => mog("664","nagios","nagios"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-service.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/nagios-service.tmpl",
          classes  => r_if_repaired("restart_nagios");
 
 reports:

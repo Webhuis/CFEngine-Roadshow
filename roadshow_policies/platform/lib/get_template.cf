@@ -2,10 +2,10 @@ bundle agent get_template(template_config) {
 
 files:
 
- "$(sys.workdir)/dynamic-inputs-local/templates/${template_config}"
+ "$(sys.workdir)/roadshow_dynamic_inputs/templates/${template_config}"
   comment       => "Copy templates from master source on policy server if a new validation was acquired",
   handle        => "update_files_inputs_templates_dir",
-  copy_from     => r_rcp("${do_roadshow.master_dynamic}/templates/${template_config}","${sys.policy_hub}"),
+  copy_from     => r_rcp("${do_roadshow.policies}/components/templates/${template_config}","${sys.policy_hub}"),
   action        => r_immediate;
 
 reports:

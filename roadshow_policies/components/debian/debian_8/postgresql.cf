@@ -22,7 +22,7 @@ files:
    perms             => mo("644","root"),
    create            => "true",
    action            => r_immediate,
-   edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/postgres.config.inc.php.tmpl",
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgres.config.inc.php.tmpl",
    classes           => r_if_repaired("restart_apache");
 
 methods:

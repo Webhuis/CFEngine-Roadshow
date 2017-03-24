@@ -46,7 +46,7 @@ files:
            perms => mo("644","root"),
           create => "true",
           action => r_immediate,
-   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/ldap.conf.tmpl";
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/ldap.conf.tmpl";
 
   "/etc/ldap.secret"
          comment => "ldap secret",
@@ -73,7 +73,7 @@ files:
            perms => mo("644","root"),
           create => "true",
           action => r_immediate,
-   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/libnss-ldap.conf.tmpl";
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/libnss-ldap.conf.tmpl";
 
   "/etc/libnss-ldap.secret"
          comment => "libnss ldap secret",
@@ -100,7 +100,7 @@ files:
            perms => mo("644","root"),
           create => "true",
           action => r_immediate,
-   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/pam_ldap.conf.tmpl";
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pam_ldap.conf.tmpl";
 
   "/etc/pam_ldap.secret"
          comment => "pam_ldap secret",

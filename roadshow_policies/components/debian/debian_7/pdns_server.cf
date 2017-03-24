@@ -25,7 +25,7 @@ files:
   perms                     => mo("600","root"),
   create                    => "true",
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql.conf.tmpl",
   classes                   => r_if_repaired("restart_pdns");
 
 commands:
@@ -43,7 +43,7 @@ files:
   create                    => "true",
   perms                     => mog("640","root","pdns"),
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/recursor.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.conf.tmpl",
   classes                   => r_if_repaired("restart_recursor");
 
 commands:

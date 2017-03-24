@@ -7,13 +7,13 @@ classes:
 
 vars:
     
-  "role"                 string => "${part_role[1]}";
+  "role"                 string => "$(part_role[1])";
 
-  "application"          string => "${part[1]}";
-  "function"             string => "${part[2]}";
-  "instance"             string => "${part[3]}";
+  "application"          string => "$(part[1])";
+  "function"             string => "$(part[2])";
+  "instance"             string => "$(part[3])";
 
-  "role_input"           string => "${sys.workdir}/dynamic-inputs-local/role/${role}.cf";
-  "vendor"               string => ${inventory_linux.id_array[1]};
+  "role_input"           string => "$(sys.workdir)/roadshow_dynamic_inputs/role/$(role).cf";
+  "vendor"               string => $(inventory_linux.id_array[1]);
 
 }

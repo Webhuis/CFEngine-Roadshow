@@ -50,7 +50,7 @@ files:
            perms  => mog("664","root","motion"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/motion.conf.tmpl",
          classes  => r_if_repaired("restart_motion");
 
 methods:
@@ -76,7 +76,7 @@ files:
            perms  => mog("664","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/motion_thread.conf.tmpl",
          classes  => r_if_repaired("restart_motion");
 
 reports:
