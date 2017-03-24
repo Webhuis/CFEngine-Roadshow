@@ -22,8 +22,8 @@ cp -a ${policy_dir}/roadshow_policies /var/cfengine
 
 rm /var/cfengine/masterfiles/services/autorun/hello.cf
 
-find /var/cfengine/masterfiles -type f -exec chmod -R 600 {}\;
-find /var/cfengine/roadshow_policies -type f -exec chmod -R 600 {}\;
+find /var/cfengine/masterfiles -type f -exec chmod -R 600 {} \;
+find /var/cfengine/roadshow_policies -type f -exec chmod -R 600 {} \;
 chmod +x /var/cfengine/roadshow_policies/bin/*.py
 
 cf-agent -B ${policy_hub}
