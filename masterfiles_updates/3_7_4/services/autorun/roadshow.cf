@@ -42,7 +42,7 @@ bundle agent do_roadshow {
 
       "roadshow_policies"        slist => findfiles("$(sys.workdir)/roadshow_inputs/**/*.cf");
       "roadshow_dynamic_inputs"  slist => findfiles("$(sys.workdir)/roadshow_dynamic_inputs/**/*.cf");
-      "inputs"                   slist => { @(roadshow_policies), @(roadshow_dynamic_inputs)" };
+      "inputs"                   slist => { @(roadshow_policies), @(roadshow_dynamic_inputs) };
 
       "os"                      string => ${sys.flavor};
       "class_domain"            string => canonify("$(sys.domain)");
