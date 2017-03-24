@@ -2,5 +2,43 @@ bundle agent opennebula_client {
 
 vars:
 
-  "opennebula_repo_key"                             string => "
+  "apt_repo[opennebula][deb]"          string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
+  "apt_repo[opennebula][deb_src]"      string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
+
+  "pkg[opennebula-node]"               string => "*";
+
+files:
+
+  "/var/cache/apt/opennebula.key"
+         comment => "Prepare grml debootstrap environment",
+           perms => mo("644","root"),
+       copy_from => r_rcp("$(sys.workdir)/roadshow_policies/data/opennebula.key","$(sys.policy_hub)"),
+          create => "true",
+          action => r_immediate,
+         classes => r_if_repaired("opennebula_repo");
+
+
+  "/home/${user}/.ssh/authorized_keys"
+    create => "true",
+    handle => "set_ssh_public_key",
+   comment => "Set desired ssh_config parameters",
+     perms => mog("0600", "${user}", "${user}"),
+ edit_line => ssh_users("$($(user_key)[$(user)])");
+
+
+methods:
+
+  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo");
+  "We are an Opennebula client"     usebundle => packages("opennebula_client.pkg");
+
+commands:
+
+ opennebula_repo::
+ 
+  "/usr/bin/apt-key add /var/cache/apt/opennebula.key";
+
+reports:
+
+  "$(this.bundle):";
+
 }

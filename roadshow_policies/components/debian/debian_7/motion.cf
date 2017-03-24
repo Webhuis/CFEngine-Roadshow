@@ -16,7 +16,7 @@ files:
 
   "/etc/default/motion"
            perms  => mo("644","root"),
-          action  => u_immediate,
+          action  => r_immediate,
        edit_line  => edit_default_motion,
          classes  => if_repaired("restart_motion");
 
@@ -49,9 +49,9 @@ files:
          comment  => "Motion configuration",
            perms  => mog("664","root","motion"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion.conf.tmpl",
-         classes  => u_if_repaired("restart_motion");
+         classes  => r_if_repaired("restart_motion");
 
 methods:
 
@@ -75,9 +75,9 @@ files:
          comment  => "Motion Tread configuration",
            perms  => mog("664","root","root"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/motion_thread.conf.tmpl",
-         classes  => u_if_repaired("restart_motion");
+         classes  => r_if_repaired("restart_motion");
 
 reports:
   "motion_thread.device: ${device}";

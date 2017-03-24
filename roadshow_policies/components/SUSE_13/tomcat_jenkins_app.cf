@@ -15,7 +15,7 @@ files:
   "$(catalina_base)/webapps/jenkins"
           handle => "jenkins_delete",
          comment => "deleting jenkins.war",
-#    depth_search => u_recurse(inf),
+#    depth_search => r_recurse(inf),
           delete => tidy;
 
   "$(catalina_base)/webapps/jenkins.war"

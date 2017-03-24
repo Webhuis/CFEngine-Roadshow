@@ -22,9 +22,9 @@ files:
   comment                   => "postfix.conf door class_domain nameserver",
   perms                     => mo("600","root"),
   create                    => "true",
-  action                    => u_immediate,
+  action                    => r_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/postfix-mysql.conf.tmpl",
-  classes                   => u_if_repaired("restart_postfix");
+  classes                   => r_if_repaired("restart_postfix");
 
 commands:
   restart_postfix::

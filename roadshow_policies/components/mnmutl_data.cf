@@ -76,9 +76,9 @@ files:
          comment  => "Hostgroups configfile for Nagios",
            perms  => mog("664","nagios","nagios"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hostgroups.tmpl",
-         classes  => u_if_repaired("restart_nagios"); 
+         classes  => r_if_repaired("restart_nagios"); 
 
 reports:
 
@@ -96,9 +96,9 @@ files:
          comment  => "Hosts configfile for Nagios",
            perms  => mog("664","nagios","nagios"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts.tmpl",
-         classes  => u_if_repaired("restart_nagios");
+         classes  => r_if_repaired("restart_nagios");
 
 reports:
 
@@ -128,9 +128,9 @@ files:
          comment  => "Host service configfile for Nagios",
            perms  => mog("664","nagios","nagios"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-hosts-service.tmpl",
-         classes  => u_if_repaired("restart_nagios");
+         classes  => r_if_repaired("restart_nagios");
 
 reports:
 
@@ -188,9 +188,9 @@ files:
          comment  => "Services configfile for Nagios",
            perms  => mog("664","nagios","nagios"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/dynamic-inputs-local/templates/nagios-service.tmpl",
-         classes  => u_if_repaired("restart_nagios");
+         classes  => r_if_repaired("restart_nagios");
 
 reports:
 

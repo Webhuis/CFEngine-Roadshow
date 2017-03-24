@@ -7,24 +7,24 @@ vars:
 files:
   "/etc/pam.d/common-account"
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/common-account","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/common-account","${sys.policy_hub}"),
+          action => r_immediate;
   "/etc/pam.d/common-auth"
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/common-auth","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/common-auth","${sys.policy_hub}"),
+          action => r_immediate;
   "/etc/pam.d/common-password"
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/common-password","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/common-password","${sys.policy_hub}"),
+          action => r_immediate;
   "/etc/pam.d/common-session"
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/common-session","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/common-session","${sys.policy_hub}"),
+          action => r_immediate;
   "/etc/pam.d/common-session-noninteractive"
            perms => mo("600","root"),
-       copy_from => u_rcp("${do_roadshow.master_dynamic}/packages/common-session-noninteractive","${sys.policy_hub}"),
-          action => u_immediate;
+       copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/common-session-noninteractive","${sys.policy_hub}"),
+          action => r_immediate;
 
 
 methods:

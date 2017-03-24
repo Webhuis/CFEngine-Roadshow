@@ -22,7 +22,7 @@ files:
 
   "/etc/nagios3/cgi.cfg"
    perms             => mo("644","root"),
-   action            => u_immediate,
+   action            => r_immediate,
    edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/nagios.cgi.tmpl",
    classes           => if_repaired("restart_apache2");
 
@@ -51,7 +51,7 @@ files:
   "/etc/nagios3/htpasswd.users"
    perms             => mo("644","root"),
    create            => "true",
-   action            => u_immediate,
+   action            => r_immediate,
    edit_line         => edit_nagios_cfg("$(users)","$($(htaccess)[$(users)])");
 
 }

@@ -31,8 +31,8 @@ files:
          comment => "Prepare grml debootstrap environment",
            perms => mo("644","root"),
           create => "true",
-          action => u_immediate,
-   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/debootstrap.config.sdx.tmpl";
+          action => r_immediate,
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/debootstrap.config.sdx.tmpl";
 
 #commands:
 
@@ -43,7 +43,12 @@ files:
 
 methods:
 
- "Provide desired packages"          usebundle => packages("kvm_host.pkg");
- "Provide grml debootstrap template" usebundle => get_template("debootstrap.config.sdx.tmpl");
+  "Provide desired packages"               usebundle => packages("kvm_host.pkg");
+  "Provide grml debootstrap template"      usebundle => get_template("debootstrap.config.sdx.tmpl");
+  "We desire Opennebula"                   usebundle => opennebula_client; 
+
+reports:
+
+  "$(this.bundle):";
 
 }

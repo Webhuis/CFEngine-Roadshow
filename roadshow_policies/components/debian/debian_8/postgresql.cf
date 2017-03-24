@@ -12,18 +12,18 @@ files:
   "/etc/apache2/conf-available/phppgadmin.conf"
    perms             => mo("644","root"),
    create            => "true",
-   action            => u_immediate,
+   action            => r_immediate,
    edit_line         => edit_phppgadmin_cfg,
-   classes           => u_if_repaired("restart_apache");
+   classes           => r_if_repaired("restart_apache");
 
 files:
 
   "/etc/phppgadmin/config.inc.php"
    perms             => mo("644","root"),
    create            => "true",
-   action            => u_immediate,
+   action            => r_immediate,
    edit_template     => "$(sys.workdir)/dynamic-inputs-local/templates/postgres.config.inc.php.tmpl",
-   classes           => u_if_repaired("restart_apache");
+   classes           => r_if_repaired("restart_apache");
 
 methods:
 

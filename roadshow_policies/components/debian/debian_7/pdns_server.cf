@@ -24,9 +24,9 @@ files:
   comment                   => "pdns.conf door class_domain nameserver",
   perms                     => mo("600","root"),
   create                    => "true",
-  action                    => u_immediate,
+  action                    => r_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/pdns-mysql.conf.tmpl",
-  classes                   => u_if_repaired("restart_pdns");
+  classes                   => r_if_repaired("restart_pdns");
 
 commands:
   restart_pdns::
@@ -42,9 +42,9 @@ files:
   comment                   => "recursor.conf door class_domain nameserver",
   create                    => "true",
   perms                     => mog("640","root","pdns"),
-  action                    => u_immediate,
+  action                    => r_immediate,
   edit_template             => "$(sys.workdir)/dynamic-inputs-local/templates/recursor.conf.tmpl",
-  classes                   => u_if_repaired("restart_recursor");
+  classes                   => r_if_repaired("restart_recursor");
 
 commands:
   restart_pdns::

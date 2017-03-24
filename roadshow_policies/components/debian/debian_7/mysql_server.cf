@@ -21,9 +21,9 @@ files:
   comment       => "Copy my.cnf templates from master source",
   handle        => "update_my_cnf_inputs_templates_dir",
   copy_from     => local_cp("${sys.workdir}/dynamic-inputs-local/templates/my.cnf.tmpl"),
-  action        => u_immediate,
+  action        => r_immediate,
   edit_template => "$(sys.workdir)/dynamic-inputs-local/templates/my.cnf.tmpl",
-  classes       => u_if_repaired("restart_mysql");
+  classes       => r_if_repaired("restart_mysql");
 
 commands:
  restart_mysql::
