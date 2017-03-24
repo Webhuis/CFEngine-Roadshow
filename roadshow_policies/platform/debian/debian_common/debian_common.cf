@@ -45,7 +45,8 @@ bundle agent aptdeb_mirror {
 
 vars:
 
-  "mirror" string => "http://aptutl0001.webhuis.nl:3142/";
+# "mirror" string => "http://aptutl0001.webhuis.nl:3142/";
+  "mirror" string => "http://mirror.webhuis.nl:3142/";
 
 files:
 
