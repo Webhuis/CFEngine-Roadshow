@@ -11,6 +11,6 @@ methods:
 
 reports:
 
- "${this.bundle}: I am doing basic configuration common to all platforms";
+ "$(this.bundle): iI am doing common policies.";
 
 }

@@ -12,4 +12,14 @@ methods:
 
   "KVM host ready for VM" usebundle => "kvm_host";
 
+reports:
+
+ "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
+
+reports:
+
+ "${this.bundle}: component $(inputs)";
+
+
+
 }
