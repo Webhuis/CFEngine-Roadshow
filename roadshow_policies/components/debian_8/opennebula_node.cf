@@ -3,7 +3,8 @@ bundle agent opennebula_node {
 vars:
 
   "apt_repo[opennebula][deb]"          string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
-  "apt_repo[opennebula][key]"          string => "downloads.opennebula.org.gpg";
+
+  "apt_key"                            string => "downloads.opennebula.org.gpg";
 
   "pkg[opennebula-node]"               string => "*";
 
