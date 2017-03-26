@@ -10,7 +10,8 @@ vars:
 
   "apt_repo[x2goserver][deb]"          string => "http://packages.x2go.org/debian jessie main";
   "apt_repo[x2goserver][deb_src]"      string => "http://packages.x2go.org/debian jessie main";
-  "apt_repo[x2goserver][repo_key]"     string => "E1F958385BFE2B6E";
+
+  "apt_key"                            string => "packages.x2go.org.gpg";
  
 methods:
 
