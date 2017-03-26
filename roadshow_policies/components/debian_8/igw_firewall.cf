@@ -1,0 +1,69 @@
+bundle agent igw_common {
+
+vars:
+
+  "pkg[arp-scan]"                string => "*";
+
+  "templates"                    string => "vlans_ip.tmpl";
+
+methods:
+
+ "Provide desired packages"   usebundle => packages("igw_common.pkg");
+ "Provide vlan templates"     usebundle => get_template("$(templates)");
+ "Provide vlan data"          usebundle => vlans;
+ "Build the Firewall"         usebundle => create_firewall("vlans.vlan");
+ "Provide vlans"              usebundle => create_vlans("vlans.vlan");
+
+reports:
+
+  "$(this.bundle) vlans: $(vlans.vlan)";
+
+}
+
+bundle agent create_vlans(vlans) {
+
+vars:
+
+  "vlans_index"                   slist => getindices($(vlans));
+
+methods:
+
+ "Create vlan"                usebundle => create_vlan(
+                                            "$(vlans_index)",
+                                            "$($(vlans)[$(vlans_index)][network])",
+                                            "$($(vlans)[$(vlans_index)][eth_seq])");
+
+commands:
+
+ restart_network::
+
+  "/usr/sbin/service networking restart";
+
+reports:
+
+  "$(this.bundle) vlans: $(vlans_index)";
+
+}
+
+bundle agent create_vlan(vlan, network, eth_seq) {
+
+vars:
+
+  "vlan_dir"                            string => "/etc/network/interfaces.d";
+
+files:
+  "$(vlan_dir)/$(vlan)"
+         comment  => "Vlans at esptl",
+           perms  => mog("644","root","root"),
+          create  => "true",
+   edit_defaults  => no_backup,
+          action  => e_immediate,
+   edit_template  => "$(sys.workdir)/esp_dynamic_inputs/templates/vlans_ip.tmpl",
+         classes  => e_if_repaired("restart_network");
+
+reports:
+
+ "$(this.bundle) vlan: $(vlan), $(network), $(eth_seq)";
+
+}
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+# ESP template for backup_configuration
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+#    iptables -A FORWARD -i ${int} -o ${ext} -s 10.68.71.0/24 -d 10.68.71.224/27 -j ACCEPT
+#    iptables -A FORWARD -i ${ext} -o ${int} -s 10.68.71.224/27 -d 10.68.71.0/24 -j ACCEPT
+
+#    iptables -A FORWARD -s 10.68.71.128/28 -d 10.68.71.0/24 -j ACCEPT
+#    iptables -t nat -A POSTROUTING -s 10.68.71.128/28 -d 10.68.71.0/24 -j ACCEPT
+
+#    iptables -A FORWARD -s 10.68.71.128/28 ! -d 10.68.71.0/24 -j ACCEPT
+#    iptables -t nat -A POSTROUTING -s 10.68.71.128/28 ! -d 10.68.71.0/24 -j MASQUERADE
+
+     iptables -A INPUT -i ${ext}  -p udp -s 77.107.233.35 -d 10.68.71.0/24 --sport 1194 -j ACCEPT
+     iptables -A OUTPUT -o ${ext} -p udp -s 10.68.71.0/24 -d 77.107.233.35 --dport 1194 -j ACCEPT
+     iptables -A FORWARD -i ${ext} -o ${int} -p udp -s 77.107.233.35 -d 10.68.71.0/24 -j ACCEPT
+     iptables -t nat -A POSTROUTING -s 77.107.233.35 -d 10.68.71.0/24 -j ACCEPT
+     iptables -A FORWARD -i ${int} -o ${ext} -p udp -s 10.68.71.0/24 -d 77.107.233.35 -j ACCEPT
+     iptables -t nat -A POSTROUTING -s 10.68.71.0/24 -d 77.107.233.35 -j ACCEPT

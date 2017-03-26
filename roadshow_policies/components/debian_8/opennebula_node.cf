@@ -1,18 +1,18 @@
-bundle agent opennebula_client {
+bundle agent opennebula_node {
 
 vars:
 
   "apt_repo[opennebula][deb]"          string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
-  "apt_repo[opennebula][deb_src]"      string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
+  "apt_repo[opennebula][key]"          string => "downloads.opennebula.org.gpg";
 
   "pkg[opennebula-node]"               string => "*";
 
 files:
 
-  "/var/cache/apt/opennebula.key"
+  "/var/cache/apt/downloads.opennebula.org.gpg"
     comment      => "Prepare grml debootstrap environment",
     perms        => mo("644","root"),
-    copy_from    => local_cp("/tmp/opennebula.key"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
     create       => "true",
     action       => r_immediate,
     classes      => r_if_repaired("opennebula_repo");
@@ -40,7 +40,7 @@ methods:
 
 commands:
 
-  "/usr/bin/wget -O /tmp/opennebula.key http://downloads.opennebula.org/repo/Debian/repo.key";
+  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://downloads.opennebula.org/repo/Debian/repo.key";
 
  opennebula_repo::
  

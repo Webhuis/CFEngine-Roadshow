@@ -1,0 +1,57 @@
+#!/bin/bash
+# ESP template for backup_configuration
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+#	Postrouting, van binnen naar buiten
+
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+iptables -F
+iptables -t nat -F
+iptables -t nat -F PREROUTING
+iptables -t nat -F POSTROUTING
+
+IPTABLES="/sbin/iptables"
+int="eth0"
+ext="eth1" 
+
+#       Beperk de toegang tot de externe interface (ext)
+#
+i="A"
+  $IPTABLES -${i} INPUT -i ${int} -p tcp --dport 22 -j ACCEPT ;
+  $IPTABLES -${i} INPUT -i ${ext} -p tcp --dport 22 -m recent --update --seconds 600 --hitcount 7 --name SSH -j DROP ;
+  $IPTABLES -${i} INPUT -i ${ext} -p tcp --dport 22 -m state --state NEW -m recent --set --name SSH -j ACCEPT ;
+  $IPTABLES -${i} OUTPUT -p tcp --sport 22 -j ACCEPT ;
+
+
+  $IPTABLES -A FORWARD -p tcp --dport 25 -j REJECT
+  $IPTABLES -A OUTPUT -p tcp --dport 25 -j REJECT
+
+#    iptables -A FORWARD -i ${ext} -o ${ext} -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+#    iptables -t nat -A PREROUTING -p tcp -i ${ext} -d 213.127.130.125 --dport 222 -j DNAT --to-destination 10.68.71.169:22
+    iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 2222 -j DNAT --to-destination 10.168.0.7:22
+    iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 5308 -j DNAT --to-destination 10.168.0.10:5308
+    iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 5309 -j DNAT --to-destination 10.68.71.110:5309
+
+#	Basale ipv6 rules
+ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+ip6tables -A FORWARD -i eth1 -s 2001:7b8:2ff:36f::/64 -j ACCEPT
+ip6tables -A FORWARD -j DROP
+
+#    iptables -A FORWARD -s 10.68.71.0/24 -d 0.0.0.0/0 -j ACCEPT
+#    iptables -t nat -A POSTROUTING -s 10.68.71.0/24 -d 0.0.0.0/0 -j MASQUERADE
+
+. /usr/local/bin/local-rules-eth0.sh
+
+. /usr/local/bin/local-rules-eth1.sh
+#	Weiger de rest
+#    iptables -A INPUT -d 192.168.1.132 -j REJECT
+ 
+#	Or, even more stringent, reject misaddressed packets aimed at ANY IP, in case some benighted soul is trying to spoof addresses:
+ 
+#    iptables -A INPUT -j DROP
+#    iptables -A FORWARD -j DROP
+
