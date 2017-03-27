@@ -1,0 +1,12 @@
+bundle agent get_apt_repo_key(apt_key_name) {
+
+commands:
+
+  "/usr/bin/wget -O /tmp/$(apt_key_name) http://mirror.webhuis.nl/keys/$(apt_key_name)";
+
+reports:
+
+  "$(this.bundle):";
+
+}
+

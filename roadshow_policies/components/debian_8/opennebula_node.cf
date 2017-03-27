@@ -2,7 +2,7 @@ bundle agent opennebula_node {
 
 vars:
 
-  "apt_repo[opennebula][deb]"          string => "http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
+  "apt_repo[opennebula]"                slist => { "deb http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula" };
 
   "apt_key"                            string => "downloads.opennebula.org.gpg";
 
@@ -36,12 +36,12 @@ services:
 
 methods:
 
-  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo");
+  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo", "$(apt_key)");
   "We are an Opennebula client"     usebundle => packages("opennebula_client.pkg");
 
 commands:
 
-  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://downloads.opennebula.org/repo/Debian/repo.key";
+  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://mirror.webhuis.nl/keys/";
 
  opennebula_repo::
  

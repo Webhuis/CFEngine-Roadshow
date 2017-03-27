@@ -1,4 +1,4 @@
-bundle agent apt_repo (apt_repo) {
+bundle agent apt_repo (apt_repo, apt_key) {
 
 vars:
 
@@ -6,7 +6,7 @@ vars:
 
 methods:
 
-  "Create apt repo" usebundle => create_apt_repo("${repo_index}", "$($(apt_repo)[$(repo_index)][deb])", "$($(apt_repo)[$(repo_index)][deb_src])", "$($(apt_repo)[$(repo_index)][repo_key])");
+  "Create apt repo" usebundle => create_apt_repo("${repo_index}", "$($(apt_repo)[$(repo_index)])");
 
 reports:
 

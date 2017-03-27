@@ -8,13 +8,14 @@ vars:
   "pkg[x2goserver-printing]"	       string => "*";
   "pkg[x2goserver-xsession]"	       string => "*";
 
-  "apt_repo[x2goserver][deb]"          string => "http://packages.x2go.org/debian jessie main";
-  "apt_repo[x2goserver][deb_src]"      string => "http://packages.x2go.org/debian jessie main";
-  "apt_repo[x2goserver][repo_key]"     string => "E1F958385BFE2B6E";
+  "apt_repo[x2goserver]"                slist => { "deb     http://packages.x2go.org/debian jessie main",
+                                                   "deb-src http://packages.x2go.org/debian jessie main" };
+
+  "apt_key"                            string => "packages.x2go.org.gpg";
  
 methods:
 
-  "We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo");
+  "We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo", "$(apt_key)");
   "We desire x2goserver"            usebundle => packages("x2goserver.pkg");
 
 commands:
