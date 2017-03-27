@@ -27,7 +27,8 @@ commands:
 
 reports:
 
-  "$(this.bundle) apt repositories $(repo_index)";
+  "$(this.bundle) apt repositories: $(repo_index)";
+  "$(this.bundle) apt key: $(apt_key)";
 
 }
 
