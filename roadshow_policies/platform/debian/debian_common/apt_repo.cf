@@ -2,7 +2,7 @@ bundle agent apt_repo (apt_repo, apt_key) {
 
 vars:
 
-  "repo_index"          slist => getindices(${apt_repo});
+  "repo_index"          slist => getindices($(apt_repo));
 
 methods:
 
@@ -10,7 +10,7 @@ methods:
 
 reports:
 
-  "${this.bundle} apt repositories ${repo_index}";
+  "$(this.bundle) apt repositories $(repo_index)";
 
 }
 
@@ -18,21 +18,21 @@ bundle agent create_apt_repo (apt_repo, deb, deb_src, repo_key) {
 
 files:
 
-  "/etc/apt/sources.list.d/${apt_repo}.list"
+  "/etc/apt/sources.list.d/$(apt_repo).list"
            create => "true",
     edit_defaults => no_backup,
-        edit_line => edit_apt_repo(${apt_repo}, ${deb}, ${deb_src}),
+        edit_line => edit_apt_repo($(apt_repo), $(deb), $(deb_src)),
           classes => if_repaired("new_apt_repo");
 
 commands:
 
  new_apt_repo::
-  "/usr/bin/apt-key adv --recv-keys --keyserver keys.gnupg.net ${repo_key}";
+  "/usr/bin/apt-key adv --recv-keys --keyserver keys.gnupg.net $(repo_key)";
   "/usr/bin/apt-get update";
 
 reports:
 
-  "${this.bundle} apt repository ${apt_repo}, ${deb}, ${deb_src}";
+  "$(this.bundle) apt repository $(apt_repo), $(apt_key)";
 
 }
 
@@ -44,7 +44,6 @@ delete_lines:
 
 insert_lines:
 
-"deb ${deb}";
-"deb-src ${deb_src}";
+"deb $(deb)";
 
 }

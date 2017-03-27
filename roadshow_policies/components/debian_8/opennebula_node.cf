@@ -36,16 +36,23 @@ services:
 
 methods:
 
+<<<<<<< HEAD
   "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo", "$(apt_key)");
+=======
+>>>>>>> 874369c56c8e2ddfbc4d46d435ab08614f1e29d1
   "We are an Opennebula client"     usebundle => packages("opennebula_client.pkg");
+
+ opennebula_repo::
+
+<<<<<<< HEAD
+  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://mirror.webhuis.nl/keys/";
+=======
+  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo", "$(apt_key)");
+>>>>>>> 874369c56c8e2ddfbc4d46d435ab08614f1e29d1
 
 commands:
 
-  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://mirror.webhuis.nl/keys/";
-
- opennebula_repo::
- 
-  "/usr/bin/apt-key add /var/cache/apt/opennebula.key";
+  "/usr/bin/wget -O /tmp/downloads.opennebula.org.gpg http://mirror.webhuis.nl/keys/downloads.opennebula.org.gpg";
 
 reports:
 
