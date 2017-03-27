@@ -16,7 +16,7 @@ files:
     copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
     create       => "true",
     action       => r_immediate,
-    classes      => r_if_repaired("opennebula_repo");
+    classes      => r_if_repaired("new_repo_key");
 
 
   "/var/lib/one/.ssh"

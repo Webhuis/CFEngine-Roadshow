@@ -12,7 +12,17 @@ vars:
                                                    "deb-src http://packages.x2go.org/debian jessie main" };
 
   "apt_key"                            string => "packages.x2go.org.gpg";
- 
+
+files:
+
+  "/var/cache/apt/downloads.opennebula.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
 methods:
 
   "We desire the x2goserver key"    usebundle => get_apt_repo_key( "$(apt_key)");

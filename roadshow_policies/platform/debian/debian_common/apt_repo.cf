@@ -4,9 +4,26 @@ vars:
 
   "repo_index"          slist => getindices($(apt_repo));
 
+
+files:
+
+  "/var/cache/apt/$(apt_key)"
+    comment      => "Check the repository key for update",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/$(apt_key)"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
 methods:
 
   "Create apt repo" usebundle => create_apt_repo("${repo_index}", "$($(apt_repo)[$(repo_index)])");
+
+commands:
+
+ new_repo_key::
+
+  "/usr/bin/apt-key add /var/cache/apt/$(apt_key)";
 
 reports:
 
@@ -14,29 +31,23 @@ reports:
 
 }
 
-bundle agent create_apt_repo (apt_repo, deb, deb_src, repo_key) {
+bundle agent create_apt_repo (apt_repo_name, apt_repo) {
 
 files:
 
-  "/etc/apt/sources.list.d/$(apt_repo).list"
+  "/etc/apt/sources.list.d/$(apt_repo_name).list"
            create => "true",
     edit_defaults => no_backup,
-        edit_line => edit_apt_repo($(apt_repo), $(deb), $(deb_src)),
+        edit_line => edit_apt_repo($(apt_repo)),
           classes => if_repaired("new_apt_repo");
-
-commands:
-
- new_apt_repo::
-  "/usr/bin/apt-key adv --recv-keys --keyserver keys.gnupg.net $(repo_key)";
-  "/usr/bin/apt-get update";
 
 reports:
 
-  "$(this.bundle) apt repository $(apt_repo), $(apt_key)";
+  "$(this.bundle) apt repo: $(apt_repo_name)";
 
 }
 
-bundle edit_line edit_apt_repo(apt_repo, deb, deb_src) {
+bundle edit_line edit_apt_repo(apt_repo) {
 
 delete_lines:
 
@@ -44,6 +55,6 @@ delete_lines:
 
 insert_lines:
 
-"deb $(deb)";
+"$(apt_repo)";
 
 }
