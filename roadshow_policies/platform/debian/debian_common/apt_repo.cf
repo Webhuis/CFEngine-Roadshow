@@ -27,7 +27,7 @@ commands:
 
 reports:
 
-  "$(this.bundle) apt repositories: $(repo_index)";
+  "$(this.bundle) apt repositories: $($(apt_repo)[$(repo_index)])";
   "$(this.bundle) apt key: $(apt_key)";
 
 }
@@ -44,7 +44,8 @@ files:
 
 reports:
 
-  "$(this.bundle) apt repo: $(apt_repo_name)";
+  "$(this.bundle) apt repo name: $(apt_repo_name)";
+  "$(this.bundle) apt repo: $(apt_repo)";
 
 }
 
