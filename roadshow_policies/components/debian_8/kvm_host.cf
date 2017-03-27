@@ -38,7 +38,7 @@ methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("debootstrap.config.sdx.tmpl");
-  "We desire Opennebula"                   usebundle => opennebula_client; 
+  "We desire Opennebula"                   usebundle => opennebula_node; 
 
 reports:
 
