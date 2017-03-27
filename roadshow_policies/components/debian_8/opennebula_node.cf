@@ -38,9 +38,9 @@ methods:
 
   "We desire the OpenNebual key"    usebundle => get_apt_repo_key( "$(apt_key)");
 
-  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_client.apt_repo", "$(apt_key)");
+  "We desire OpenNebual repo"       usebundle => apt_repo("opennebula_node.apt_repo", "$(apt_key)");
 
-  "We are an Opennebula client"     usebundle => packages("opennebula_client.pkg");
+  "We are an Opennebula client"     usebundle => packages("opennebula_node.pkg");
 
 reports:
 
