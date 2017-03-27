@@ -8,8 +8,7 @@ vars:
   "pkg[x2goserver-printing]"	       string => "*";
   "pkg[x2goserver-xsession]"	       string => "*";
 
-  "apt_repo[x2goserver]"                slist => { "deb     http://packages.x2go.org/debian jessie main",
-                                                   "deb-src http://packages.x2go.org/debian jessie main" };
+  "apt_repo[x2goserver]"               string => "deb     http://packages.x2go.org/debian jessie main$(const.n)deb-src http://packages.x2go.org/debian jessie main";
 
   "apt_key"                            string => "packages.x2go.org.gpg";
 

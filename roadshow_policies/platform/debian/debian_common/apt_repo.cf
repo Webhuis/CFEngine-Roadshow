@@ -4,7 +4,6 @@ vars:
 
   "repo_index"          slist => getindices($(apt_repo));
 
-
 files:
 
   "/var/cache/apt/$(apt_key)"
@@ -17,7 +16,7 @@ files:
 
 methods:
 
-  "Create apt repo" usebundle => create_apt_repo("$(repo_index)", "$(apt_repo)[$(repo_index)]");
+  "Create apt repo" usebundle => create_apt_repo("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
 
 commands:
 
@@ -28,7 +27,6 @@ commands:
 reports:
 
   "$(this.bundle) apt repository name: $(repo_index)";
-  "$(this.bundle) apt repositories: $(apt_repo)[$(repo_index)]";
   "$(this.bundle) apt key: $(apt_key)";
 
 }
