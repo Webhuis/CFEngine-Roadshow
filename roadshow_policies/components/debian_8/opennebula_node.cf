@@ -32,7 +32,7 @@ services:
 
  opennebula_restart::
 
-  "libvertd"     service_policy => "start";
+  "libvirtd"     service_policy => "start";
 
 methods:
 
