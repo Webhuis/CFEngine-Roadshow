@@ -10,17 +10,20 @@ vars:
 
   "apt_repo[x2goserver]"                slist => { "deb     http://packages.x2go.org/debian jessie main",
                                                    "deb-src http://packages.x2go.org/debian jessie main" };
+
   "apt_key"                            string => "packages.x2go.org.gpg";
  
 methods:
 
+  "We desire the x2goserver key"    usebundle => get_apt_repo_key( "$(apt_key)");
+
   "We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo", "$(apt_key)");
+
   "We desire x2goserver"            usebundle => packages("x2goserver.pkg");
 
 commands:
 
   "/usr/sbin/locale-gen en_US en_US.UTF-8";
   "/usr/bin/apt-get install x2go-keyring";
-  "/usr/bin/apt-get update";
 
 }
