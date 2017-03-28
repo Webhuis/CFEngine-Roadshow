@@ -1,0 +1,22 @@
+bundle agent igw_common {
+
+vars:
+
+  "pkg[arp-scan]"                string => "*";
+  "pkg[ntopng]"                  string => "*";
+
+  "templates"                    string => "vlans_ip.tmpl";
+
+methods:
+
+ "Provide desired packages"   usebundle => packages("egw_common.pkg");
+ "Provide vlan templates"     usebundle => get_template("$(templates)");
+#"Provide vlan data"          usebundle => vlans;
+#"Build the Firewall"         usebundle => create_firewall("vlans.vlan");
+#"Provide vlans"              usebundle => create_vlans("vlans.vlan");
+
+reports:
+
+  "$(this.bundle) vlans: $(vlans.vlan)";
+
+}
