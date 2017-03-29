@@ -1,9 +1,10 @@
-bundle agent igw_common {
+bundle agent egw_common {
 
 vars:
 
   "pkg[arp-scan]"                string => "*";
   "pkg[ntopng]"                  string => "*";
+# "pkg[ntopng]"                  string => "2.4";
 
   "templates"                    string => "vlans_ip.tmpl";
 
@@ -17,6 +18,6 @@ methods:
 
 reports:
 
-  "$(this.bundle) vlans: $(vlans.vlan)";
+  "$(this.bundle) egw:";
 
 }
