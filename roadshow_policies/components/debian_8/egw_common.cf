@@ -1,16 +1,23 @@
-bundle agent igw_common {
+bundle agent egw_common {
 
 vars:
 
   "pkg[arp-scan]"                string => "*";
-  "pkg[ntopng]"                  string => "*";
+
+  "backports[ntopng]"            string => "2.4";
+
+  "backports_repo"               string => "jessie-backports";
+
 
   "templates"                    string => "vlans_ip.tmpl";
 
 methods:
 
- "Provide desired packages"   usebundle => packages("egw_common.pkg");
- "Provide vlan templates"     usebundle => get_template("$(templates)");
+  "Provide desired packages"  usebundle => packages("egw_common.pkg");
+
+  "Install backports"         usebundle => backports("backports", "backports_repo");
+
+  "Provide vlan templates"    usebundle => get_template("$(templates)");
 #"Provide vlan data"          usebundle => vlans;
 #"Build the Firewall"         usebundle => create_firewall("vlans.vlan");
 #"Provide vlans"              usebundle => create_vlans("vlans.vlan");

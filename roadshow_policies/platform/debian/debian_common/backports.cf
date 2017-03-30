@@ -1,0 +1,50 @@
+bundle agent backports (pkgs_array, repo) {
+
+vars: 
+
+  "package_name"         slist => getindices($(pkgs_array));
+
+packages: 
+
+  "$(package_name)" 
+    package_policy  => "addupdate", 
+    package_version => "$($(pkgs_array)[$(package_name)])",
+    package_method  => apt_bpo($(repo));
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
+body package_method apt_bpo(repo) { 
+
+package_changes => "bulk"; 
+package_list_command => "/usr/bin/dpkg -l"; 
+package_list_name_regex    => "ii\s+([^\s]+).*"; 
+package_list_version_regex => "ii\s+[^\s]+\s+([^\s]+).*"; 
+package_installed_regex => ".*"; # all reported are installed 
+#package_name_convention => "$(name)"; 
+package_list_update_ifelapsed => "240";                # 4 hours 
+
+have_aptitude:: 
+   package_add_command => "/usr/bin/aptitude -t $(repo) --assume-yes
+install"; 
+   package_list_update_command => "/usr/bin/aptitude update"; 
+   package_delete_command => "/usr/bin/aptitude -t $(repo) --assume-yes
+remove"; 
+   package_update_command =>  "/usr/bin/aptitude -t $(repo) --assume-yes
+install"; 
+   package_verify_command =>  "/usr/bin/aptitude show"; 
+   package_noverify_regex => "(State: not installed|E: Unable to locate package .*)"; 
+
+!have_aptitude:: 
+   package_add_command => "/usr/bin/apt-get -t $(repo) --yes install"; 
+   package_list_update_command => "/usr/bin/apt-get update"; 
+   package_delete_command => "/usr/bin/apt-get -t $(repo) --yes remove"; 
+   package_update_command =>  "/usr/bin/apt-get -t $(repo) --yes install"; 
+   package_verify_command => "/usr/bin/dpkg -s"; 
+   package_noverify_returncode => "1"; 
+
+} 
+
