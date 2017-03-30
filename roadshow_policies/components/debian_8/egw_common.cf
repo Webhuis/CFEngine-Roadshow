@@ -6,7 +6,8 @@ vars:
 
   "backports[ntopng]"            string => "2.4";
 
-  "backports_repo"               string => "jessie-backports";
+  "backports_name"               string => "jessie-backports";
+  "backports_repo"               string => "deb http://ftp.debian.org/debian/ jessie-backports main contrib non-free";
 
   "templates"                    string => "vlans_ip.tmpl";
 
@@ -14,6 +15,7 @@ methods:
 
   "Provide desired packages"  usebundle => packages("egw_common.pkg");
 
+  "Backports repository"      usebundle => apt_repo_list("backports_name", "backports_repo");
   "Install backports"         usebundle => backports("backports", "backports_repo");
 
   "Provide vlan templates"    usebundle => get_template("$(templates)");

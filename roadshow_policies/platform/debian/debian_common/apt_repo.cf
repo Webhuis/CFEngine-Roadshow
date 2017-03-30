@@ -16,7 +16,7 @@ files:
 
 methods:
 
-  "Create apt repo" usebundle => create_apt_repo("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
+  "Create apt repo list" usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
 
 commands:
 
@@ -31,7 +31,7 @@ reports:
 
 }
 
-bundle agent create_apt_repo (apt_repo_name, apt_repo) {
+bundle agent apt_repo_list (apt_repo_name, apt_repo) {
 
 files:
 
