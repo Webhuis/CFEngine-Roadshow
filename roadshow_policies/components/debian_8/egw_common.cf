@@ -8,7 +8,6 @@ vars:
 
   "backports_repo"               string => "jessie-backports";
 
-
   "templates"                    string => "vlans_ip.tmpl";
 
 methods:
@@ -24,6 +23,6 @@ methods:
 
 reports:
 
-  "$(this.bundle) vlans: $(vlans.vlan)";
+  "$(this.bundle) egw:";
 
 }

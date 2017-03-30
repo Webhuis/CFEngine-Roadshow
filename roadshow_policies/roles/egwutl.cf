@@ -10,7 +10,7 @@ vars:
 
 methods:
 
-  "Manage the gateway"   usebundle => "igw_common";
+  "Manage the gateway"   usebundle => "egw_common";
 
 reports:
 
