@@ -1,0 +1,82 @@
+bundle agent ha_main
+{
+ classes:
+   enable_cfengine_enterprise_hub_ha::
+    "have_ha_hub_active_ip" expression => isvariable("sys.hub_active_ip");
+
+ methods:
+  policy_server.enterprise::
+    "manage_mp_enable_cfengine_enterprise_hub_ha_file" usebundle => ha_manage_mp_status_file;
+
+  policy_server.enable_cfengine_enterprise_hub_ha.hub_active::
+    "manage_mp_enable_cfengine_enterprise_hub_ha_file" usebundle => ha_manage_notification_scripts_dir;
+
+  policy_server.!hub_active.have_ha_hub_active_ip::
+    "sync_config_data" usebundle => ha_hub_sync_config_data;
+}
+
+# enable_cfengine_enterprise_hub_ha file is used by MP as a first test to figure out if
+# HA functionality is switched on or not. Based on existence of this
+# file further actions are performed.
+bundle agent ha_manage_mp_status_file
+{
+ files:
+  policy_server.!enable_cfengine_enterprise_hub_ha::
+    "$(sys.workdir)/httpd/htdocs/ha_enabled" -> { "Mission Portal" }
+      delete => tidy,
+      comment => "If this file is present when HA is not enabled
+                  Mission Portal will incorrectly report HA status.";
+
+  policy_server.enable_cfengine_enterprise_hub_ha::
+    "$(sys.workdir)/httpd/htdocs/ha_enabled" -> { "Mission Portal" }
+     create => "true",
+     perms => mog("0644",$(def.cf_apache_user),$(def.cf_apache_group)),
+     comment => "This file is used by mission portal to know that HA
+                 is enabled. Without it the UI will not report the
+                 correct HA status.";
+}
+
+bundle agent ha_manage_notification_scripts_dir
+{
+ files:
+    "/opt/cfengine/notification_scripts/." -> { "Mission Portal" }
+     create => "true",
+     perms => mog("0755",$(def.cf_apache_user),$(def.cf_apache_group)),
+     comment => "This directory is used by Mission Portal to store custom
+                 user-defined scripts. Having HA set up we need to synchronize
+                 content of this directory between active and passive hubs. 
+                 In case of no user-scripts being defined directory may not
+                 exist on active hub.
+                 To avoid policy synchronizing content of this directory
+                 being not kept we are creating directory in advance.";
+}
+
+bundle agent ha_hub_sync_config_data
+{
+ files:
+  "$(sys.workdir)/httpd/htdocs/application/config/cf_robot.php"
+     copy_from => ha_no_backup_scp("$(sys.workdir)/httpd/htdocs/application/config/cf_robot.php", $(sys.hub_active_ip)),
+     comment => "Synchronize cf_robot configuration",
+     handle => "ha_sync_robot_config";
+
+  "$(sys.workdir)/share/GUI/application/config/appsettings.php"
+     copy_from => ha_no_backup_scp("$(sys.workdir)/share/GUI/application/config/appsettings.php", $(sys.hub_active_ip)),
+     comment => "Synchronize appsetings configuration",
+     handle => "ha_sync_appsettings_config";
+
+  "/opt/cfengine/notification_scripts"
+      copy_from => ha_no_backup_scp("/opt/cfengine/notification_scripts", $(sys.hub_active_ip)),
+      comment => "Copy MP notification scripts",
+      handle => "ha_copy_notification_scripts",
+      depth_search => recurse("1");
+}
+
+body copy_from ha_no_backup_scp(from,server)
+{
+ servers     => { "$(server)" };
+ source      => "$(from)";
+ compare     => "digest";
+ copy_backup => "false";
+ encrypt     => "true";
+}
+
