@@ -1,0 +1,22 @@
+bundle agent classify {
+
+classes:
+
+      "parsed_all"   expression => regextract("^(...)(...)(....).*", $(sys.uqhost), "part");
+      "parsed_role"  expression => regextract("^(......)(....).*", $(sys.uqhost), "part_role");
+
+vars:
+    
+  "role"                 string => "$(part_role[1])";
+
+  "application"          string => "$(part[1])";
+  "function"             string => "$(part[2])";
+  "instance"             string => "$(part[3])";
+
+  "role_input"           string => "$(sys.workdir)/roadshow_dynamic_inputs/role/$(role).cf";
+  "vendor"               string => $(inventory_linux.id_array[1]);
+
+reports:
+
+  "$(this.bundle) role: $(role)";
+}

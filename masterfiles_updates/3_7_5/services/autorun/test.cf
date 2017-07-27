@@ -1,0 +1,11 @@
+bundle agent test {
+
+vars:
+
+  "test"                          string => "test";
+
+reports:
+
+  "$(this.bundle): $(test)";
+
+}
