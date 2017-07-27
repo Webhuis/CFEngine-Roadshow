@@ -37,7 +37,7 @@ vars:
 
       "ntp_server"     string => "inuc-01.webhuis.nl";
 #     "nameserver"      slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
-      "nameserver"      slist => { "10.68.71.187", "10.68.71.98" };
+      "nameserver"      slist => { "10.68.71.103", "10.68.71.98" };
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
