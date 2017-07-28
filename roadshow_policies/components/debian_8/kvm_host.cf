@@ -5,6 +5,7 @@ vars:
   "guest_configs"               string => "/etc/libvirt/qemu/";
   "support_svn_server"          string => "https://support-svn.webhuis.nl/dom0-hosts";
 
+  "pkg[arp-scan]"               string => "*";
   "pkg[array-info]"             string => "*";
   "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
