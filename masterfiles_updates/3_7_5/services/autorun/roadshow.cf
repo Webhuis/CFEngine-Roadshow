@@ -1,4 +1,4 @@
-###############################################################################
+####################################################y###########################
 #
 #   roadshow.cf - autorun policy
 #
@@ -15,13 +15,13 @@ bundle agent roadshow
       "tags" slist => { "autorun" };
 
   methods:
-      "" usebundle => classify;
-      "" usebundle => request_role_information;
-      "" usebundle => do_roadshow;
-      "" usebundle => roadshow_dynamic_update;
-      "" usebundle => ${do_roadshow.class_domain};
-      "" usebundle => $(do_roadshow.os);
-      "" usebundle => $(classify.role);
+      "Determiine the role organisation and geograph" usebundle => classify;
+      "Request Data for machine information"          usebundle => request_role_information;
+      "Collect values and policies"                   usebundle => do_roadshow;
+      "Update the dynamic policies specific to us"    usebundle => roadshow_dynamic_update;
+      "We require the domain information"             usebundle => ${do_roadshow.class_domain};
+      "Carry out the platform specific policies"      usebundle => $(do_roadshow.os);
+      "What purpose do we have living in this World"  usebundle => $(classify.role);
 
 reports:
 
