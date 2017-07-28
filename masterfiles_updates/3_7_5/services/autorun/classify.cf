@@ -7,7 +7,7 @@ classes:
 vars:
     
   "role"                 string => "$(part[1])";
-  "organization"         string => "$(part[2])";
+  "organisation"         string => "$(part[2])";
   "environment"          string => "$(part[3])";
   "department"           string => "$(part[4])";
   "location"             string => "$(part[5])";
