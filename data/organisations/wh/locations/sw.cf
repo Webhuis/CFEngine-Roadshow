@@ -1,0 +1,11 @@
+bundle agent sw {
+
+vars:
+
+  "location"                        string => "Schoolweg";
+
+reports:
+
+  "$(this.bundle):";
+
+}

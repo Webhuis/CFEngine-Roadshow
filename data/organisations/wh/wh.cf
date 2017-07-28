@@ -1,0 +1,11 @@
+bundle agent wh {
+
+vars:
+
+  "organisation"                    string => "Webhuis";
+
+reports:
+
+  "$(this.bundle):";
+
+}
