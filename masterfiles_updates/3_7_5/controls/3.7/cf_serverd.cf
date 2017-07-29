@@ -80,7 +80,7 @@ bundle server access_rules()
       admit => { @(def.acl) };
 
       "/root/one_store"
-      handle => "server_access_grant_access_roadshow_data",
+      handle => "server_access_grant_access_roadshow_opennebula",
       comment => "Grant access to the dynamic policy updates",
       admit => { @(def.acl) };
 
