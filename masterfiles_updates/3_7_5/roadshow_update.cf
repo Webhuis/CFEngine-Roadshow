@@ -16,6 +16,7 @@ vars:
   "organisation"    string => "$(classify.organisation)";
   "environment"     string => "$(classify.environment)";
   "department"      string => "$(classify.department)";
+  "location"        string => "$(classify.location)";
   "role"            string => "$(classify.role)";
   "vendor"          string => "$(vendor.vendor)";
 
