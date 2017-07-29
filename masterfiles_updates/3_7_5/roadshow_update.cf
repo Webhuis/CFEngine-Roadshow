@@ -114,7 +114,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/environment/$(environments).cf"
+  "$(roadshow_inputs)/environment/$(environment).cf"
      handle       => "update_files_inputs_roadshow_environment",
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/environments/$(environment).cf", $(sys.policy_hub)),
      file_select  => r_policies,
