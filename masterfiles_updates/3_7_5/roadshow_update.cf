@@ -121,7 +121,6 @@ files:
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
-     classes      => r_if_repaired("update_report");
 
   "$(roadshow_inputs)/role/$(role).cf"
      handle       => "update_files_inputs_roadshow_role",
