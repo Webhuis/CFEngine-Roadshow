@@ -11,7 +11,12 @@ vars:
 
   "master_standard" string => "$(sys.workdir)/masterfiles";
   "master_roadshow" string => "$(sys.workdir)/roadshow_policies";
+  "master_data"     string => "$(sys.workdir)/data";
   "roadshow_inputs" string => "$(sys.workdir)/roadshow_inputs";
+  "organisation"    string => "$(classify.organisation)";
+  "environment"     string => "$(classify.environment";
+  "department"      string => "$(classify.department)";
+  "role"            string => "$(classify.role)";
   "vendor"          string => "$(vendor.vendor)";
 
 files:
@@ -58,18 +63,18 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/platform/$(vendor)_common"
-     handle       => "update_files_inputs_roadshow_platform_components",
-     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
+  "$(roadshow_inputs)/platform/$(sys.flavor)"
+     handle       => "update_files_inputs_roadshow_platform_flavor_components",
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)/", $(sys.policy_hub)),
      depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/platform/$(sys.flavor)"
-     handle       => "update_files_inputs_roadshow_platform_flavor_components",
-     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)/", $(sys.policy_hub)),
+  "$(roadshow_inputs)/platform/$(vendor)_common"
+     handle       => "update_files_inputs_roadshow_platform_components",
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
      depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
@@ -85,9 +90,58 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+  "$(roadshow_inputs)/organisation/$(organisation).cf"
+     handle       => "update_files_inputs_roadshow_organisation",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/department/$(department).cf"
+     handle       => "update_files_inputs_roadshow_department",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/departments/$(department).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/location/$(location).cf"
+     handle       => "update_files_inputs_roadshow_location",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/locations/$(location).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/environment/$(environments).cf"
+     handle       => "update_files_inputs_roadshow_environment",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/environments/$(environment).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/domain/$(sys.domain).cf"
+     handle       => "update_files_inputs_roadshow_domain",
+     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/role/$(role).cf"
+     handle       => "update_files_inputs_roadshow_role",
+     copy_from    => r_rcp("$(master_roadshow)/roles/$(role).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
 methods:
 
   "Determine the vendor"                     usebundle => vendor;
+  "Determine role and organisation"          usebundle => classify;
 
 reports:
 

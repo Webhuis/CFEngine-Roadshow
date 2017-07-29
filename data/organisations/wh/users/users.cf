@@ -1,0 +1,29 @@
+bundle agent users {
+
+vars:
+
+ "user[martin]"            string => "martin:x:1000:1100:martin:/home/martin:/bin/bash";
+
+ "user_pw[martin]" string => "martin:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+
+ "user_key[martin]"        string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCqBG7gtIFRR3fLRnKraGeF01xw0bT7KIy2ZjH8fkrl+A4Q8sE3pahic/FLg8mtGp1rflanl8hBWsZqyrA0UX35jytJ0XJU52fSMN7Ap4+SXLmK1/cT/zvomPrwUJ1gITBd+LiLxtBtncqjgLszp8iJHaylTTqeJ82Ko49a8Xoo9Thf1BHiyIgkNkERruFmeWgRQtPO/w7RgA92lPjjpdvUTnc5/B8oI4rJXVZBNLmAet/fq0cmI+XvZ/hLbgcNDsGYOZpLMQzq6/9uVWT9YlXrnlTMNSEyGPBKmfZdS8uADxLB/QG4a8/9oCPoLuopvpivhe21wnILZ8I20s3Sw+2141PU0WCj97pATo0IVpic97bqSNdefeDiJ+zDCqOLlROeiON5SeQQdse87gcGQlJiAKbd66OU29j77aaY1OybiHNfALIp11PtsszhWw+JtrVcFDHv1IvzzIGgnCqPnp+4HvnZU2xkyEl2RgTENIGv0LCYnTk/ADxldYj4bjwOeCCzckytovSgSwKxoZ7ON82/9tS+Ne+ms3rzVrYZDmoa4EYRZTZX6RqAwYJ3mq57NechM/cdM34up7dfgUlMwtqSaSNsTBdthGzbUORZXQW/Vz1l9LT/zASVJeayBnRaw/AXR/N7Qq7bNASXsXos4/yO302UeGtsPl133jMWvjvoGQ== martin@NewVMHost1";
+
+ "group_id[cfegroup]"      string => "cfegroup:x:1100:";
+ "group_id[cfemanager]"    string => "cfemanager:x:1101:";
+ "group_id[martin]"        string => "martin:x:1000:";
+ "group_users[cfegroup]"    slist => { "martin" };
+
+ "users"                    slist => getindices(user);
+ "user_group"               slist => getindices(group_users);
+ "user_list"                slist => getvalues(group_users);
+ "user_pw_index"            slist => getindices(user_pw);
+ "user_pw_value"            slist => getvalues(user_pw);
+ "user_key_index"           slist => getindices(user_key);
+ "user_key_value"           slist => getvalues(user_key);
+
+reports:
+
+  "$(this.bundle):";
+
+}

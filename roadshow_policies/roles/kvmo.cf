@@ -1,6 +1,8 @@
-bundle agent kvmutl {
+bundle agent kvmo {
 
 vars:
+
+  "role_name"                         string => "kvm hypervisor opennebula node";
 
   "bundles[kvm_host]"                 string => "${sys.flavor}/kvm_host.cf";
   "bundles[opennebula_node]"          string => "${sys.flavor}/opennebula_node.cf";

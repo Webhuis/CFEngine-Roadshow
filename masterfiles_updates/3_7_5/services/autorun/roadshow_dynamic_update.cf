@@ -13,13 +13,6 @@ bundle agent roadshow_dynamic_update {
 
   files:
 
-   "$(sys.workdir)/roadshow_dynamic_inputs/role/$(classify.role).cf"
-      handle => "update_files_inputs_roadshow_role",
-      copy_from => r_rcp("${master_policies}/roles/$(classify.role).cf", $(sys.policy_hub)),
-      file_select  => r_policies,
-      action => r_immediate,
-      classes => r_if_repaired("update_report");
-
    "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role).inputs)"
       handle => "update_files_inputs_roadshow_components",
       copy_from => r_rcp("${master_policies}/components/$($(classify.role).inputs)", $(sys.policy_hub)),

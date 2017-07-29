@@ -35,6 +35,7 @@ body common control
 
       # Roadshow policy update body values
 
+                  "services/autorun/classify.cf",
                   "roadshow_update.cf",
                   "roadshow_update_policy.cf"
 
