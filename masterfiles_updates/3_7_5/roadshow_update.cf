@@ -36,10 +36,11 @@ files:
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
+     classes      => r_if_repaired("update_report");
 
   "$(roadshow_inputs)/domain/$(sys.domain).cf"
      handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("$(master_roadshow)/domain/$(sys.domain)/$(sys.domain).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
@@ -121,13 +122,6 @@ files:
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
-
-  "$(roadshow_inputs)/domain/$(sys.domain).cf"
-     handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
-     file_select  => r_policies,
-     action       => r_immediate,
-     create       => "true",
      classes      => r_if_repaired("update_report");
 
   "$(roadshow_inputs)/role/$(role).cf"
