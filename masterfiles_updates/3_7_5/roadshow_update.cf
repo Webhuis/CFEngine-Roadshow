@@ -14,7 +14,7 @@ vars:
   "master_data"     string => "$(sys.workdir)/data";
   "roadshow_inputs" string => "$(sys.workdir)/roadshow_inputs";
   "organisation"    string => "$(classify.organisation)";
-  "environment"     string => "$(classify.environment";
+  "environment"     string => "$(classify.environment)";
   "department"      string => "$(classify.department)";
   "role"            string => "$(classify.role)";
   "vendor"          string => "$(vendor.vendor)";
