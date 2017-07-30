@@ -1,0 +1,11 @@
+bundle agent p {
+
+vars:
+
+  "environment"                     string => "Production";
+
+reports:
+
+  "$(this.bundle):";
+
+}
