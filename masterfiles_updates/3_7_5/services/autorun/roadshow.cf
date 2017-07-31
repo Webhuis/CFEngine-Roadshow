@@ -28,34 +28,3 @@ reports:
  "${this.bundle} role:  $(classify.role)";
 
 }
-
-bundle agent do_roadshow {
-
-  vars:
-      # List here the IP masks that we grant access to on the server
-      "acl"                      slist => { "10.*", "192.168.125.*", "62.45.247.173" };
-      "master_location"         string => "$(sys.masterdir)";
-      "master_dynamic"          string => "$(sys.workdir)/roadshow_policies";
-      "dir_bin"                 string => "$(sys.bindir)";
-      "dir_modules"             string => "$(sys.workdir)/bin";
-      "inputfiles"              string => "$(sys.inputdir)";
-
-      "roadshow_policies"        slist => findfiles("$(sys.workdir)/roadshow_inputs/**/*.cf");
-      "roadshow_dynamic_inputs"  slist => findfiles("$(sys.workdir)/roadshow_dynamic_inputs/**/*.cf");
-      "inputs"                   slist => { @(roadshow_policies), @(roadshow_dynamic_inputs) };
-
-      "os"                      string => ${sys.flavor};
-      "class_domain"            string => canonify("$(sys.domain)");
-      "class_host"              string => canonify("$(sys.uqhost)");
-
-      "policyhost"              string => "cfeutl01.webhuis.nl";
-      "ntp_server"              string => "inuc-01.webhuis.nl";
-      "nameserver"               slist => { "10.168.0.17", "8.8.8.8"};
-      "punt_komma"              string => ";";
-
-
-  reports:
-
-      "${this.bundle}: ${class_domain}";
-
-}
