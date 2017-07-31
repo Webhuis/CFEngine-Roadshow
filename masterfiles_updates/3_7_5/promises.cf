@@ -298,7 +298,7 @@ body classes u_kept_successful_command
       kept_returncodes => { "0" };
 }
 
-bundle agent do_roadshow {
+bundle common do_roadshow {
 
   vars:
       # List here the IP masks that we grant access to on the server
