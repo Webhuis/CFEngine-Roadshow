@@ -2,7 +2,7 @@ bundle agent classify {
 
 classes:
 
-      "parsed_all"   expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
+  "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
 vars:
     
