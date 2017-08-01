@@ -18,5 +18,5 @@ vars:
 
 reports:
 
-  "$(this.bundle) role: $(role) $($role.rolename))";
+  "$(this.bundle) role: $(role) $($role).role_name)";
 }

@@ -2,6 +2,8 @@ bundle agent cfeh {
 
 vars:
 
+  "role_name"                         string => "CFiEngine policy hub";
+
   "bundles[cfe_hub]"      string => "cfe_hub.cf";
 
   "sequence"  slist => getindices("bundles");
