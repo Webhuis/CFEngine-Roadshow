@@ -1,0 +1,45 @@
+bundle agent apt_cacher {
+
+vars:
+
+  "apt_proxy"          string =>  "/etc/apt/apt.conf.d/01proxy";
+  "mirror"             string => "http://10.168.0.11:3142/";
+
+files:
+
+  "$(apt_proxy)"
+    create                    => "true",
+    edit_defaults             => no_backup,
+    edit_line                 => edit_apt_mirror($(mirror)),
+    classes                   => if_repaired("update_apt");
+
+  "/etc/apt/apt.conf"
+    delete => tidy,
+    classes                   => if_repaired("update_apt");
+
+methods:
+
+ update_apt::
+  "Update the apt cache" usebundle => update_apt_repo;
+
+reports:
+
+ "${this.bundle}: ${mirror}";
+
+}
+
+bundle edit_line  edit_apt_mirror(string) {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+  "Acquire::http::Proxy \"${string}\"${do_roadshow.semi_colon}";
+
+}
+# The following allows Squeeze Security updates to continue
+# despite Squeeze no longer LTS. Remove after last squeeze box removeal.
+#Acquire::Check-Valid-Until false${do_roadshow.semi_colon}
+
