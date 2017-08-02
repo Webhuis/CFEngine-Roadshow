@@ -1,0 +1,13 @@
+bundle agent debian {
+
+methods:
+
+  "We desire debian_common policies in place" usebundle => debian_common;
+  "We desire sys.flavour policies in place"   usebundle => $(sys.flavour);
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
