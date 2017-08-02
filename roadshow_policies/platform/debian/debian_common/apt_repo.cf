@@ -16,8 +16,8 @@ files:
 
   "/etc/apt/apt.conf.d/.*.dist"
 
-        comment         => "Clean up invalid repository entries",
-        delete          => tidy;
+    comment      => "Clean up invalid repository entries",
+    delete       => tidy;
 
 methods:
 
