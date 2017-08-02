@@ -6,11 +6,11 @@ methods:
   "Basic environment stuff"      usebundle => basic_environment;
   "openssh server and client"    usebundle => ssh_all_config;
   "We use LDAP Authentication"   usebundle => authentication;
-  "Feed Hard Calles to Dat "   	 usebundle => feed_hard_classes;
+# "Feed Hard Classes to Data" 	 usebundle => feed_hard_classes;
   "Prepare for users"   	 usebundle => user_management;		# This will come from Data, role based
 
 reports:
 
- "$(this.bundle): iI am doing common policies.";
+ "$(this.bundle): I am doing common policies.";
 
 }

@@ -21,7 +21,11 @@ files:
 
 methods:
 
-  "Create apt repo list" usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
+  "Create apt repo list"       usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
+
+ new_repo_key::
+
+  "Update package repo list"   usebundle => update_apt_repo_list;
 
 commands:
 
