@@ -25,6 +25,6 @@ bundle agent roadshow
 
 reports:
 
- "${this.bundle} role:  $(classify.role)";
+ "${this.bundle} role: $($(classify.role).role_name)";
 
 }

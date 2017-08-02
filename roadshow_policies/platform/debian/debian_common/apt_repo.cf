@@ -14,6 +14,11 @@ files:
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
 
+  "/etc/apt/apt.conf.d/*.dist"
+
+        comment         => "Clean up invalid repository entries",
+        delete          => tidy;
+
 methods:
 
   "Create apt repo list" usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
