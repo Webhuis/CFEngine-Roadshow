@@ -29,7 +29,7 @@ vars:
 
 methods:
  
- "Configure apt mirror"      usebundle => aptdeb_mirror;
+ "Configure apt mirror"      usebundle => apt_cacher;
  "Install common packages"   usebundle => packages("debian_common.pkg");
  "Automate Security Upgras"  usebundle => unattended_upgrades;
 # "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
@@ -38,33 +38,6 @@ methods:
 reports:
 
  "${this.bundle}: CFEngine package string = ${package_cache}/${cfengine_package}";
-
-}
-
-bundle agent aptdeb_mirror {
-
-vars:
-
-# "mirror" string => "http://aptutl0001.webhuis.nl:3142/";
-  "mirror" string => "http://10.168.0.11:3142/";
-
-files:
-
-  "/etc/apt/apt.conf"
-          create  => "true",
-        edit_line => edit_apt_mirror($(mirror)),
-          classes => if_repaired("update_mirror");
-
-commands:
- update_mirror::
-  "/bin/rm /var/lib/apt/lists/lock";
-  "/bin/rm /var/lib/dpkg/lock";
-  "/usr/bin/apt-get update";
-  "/usr/bin/apt-get upgrade -y";
-
-reports:
-
- "${this.bundle}: ${mirror}";
 
 }
 
