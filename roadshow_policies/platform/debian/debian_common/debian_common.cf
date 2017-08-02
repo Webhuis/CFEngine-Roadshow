@@ -41,16 +41,6 @@ reports:
 
 }
 
-bundle edit_line  edit_apt_mirror(string) {
-
-delete_lines:
-  ".*";
-
-insert_lines:
-  "Acquire::http::Proxy \"${string}\"${do_roadshow.punt_komma}";
-
-}
-
 bundle agent packages (pkgs_array) {
 
 vars:
