@@ -14,7 +14,7 @@ files:
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
 
-  "/etc/apt/apt.conf.d/*.dist"
+  "/etc/apt/apt.conf.d/.*.dist"
 
         comment         => "Clean up invalid repository entries",
         delete          => tidy;
