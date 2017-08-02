@@ -1,4 +1,4 @@
-bundle agent debian_7 {
+bundle agent debian_wheezy {
 
 vars:
 
