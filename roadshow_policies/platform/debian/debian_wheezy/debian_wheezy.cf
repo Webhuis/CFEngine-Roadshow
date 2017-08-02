@@ -2,15 +2,25 @@ bundle agent debian_wheezy {
 
 vars:
 
-  "bundles[os_common]"                 string => "os_common.cf";
-  "bundles[debian_common]"             string => "debian_common.cf";
+  "pkg[autofs5]"                       string => "*";
+  "pkg[autofs5-ldap]"                  string => "*";
+  "pkg[libzmq3]"                       string => "*";
+  "pkg[python-zmq]"                    string => "*";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "sources_list"      string => "deb http://ftp.ie.debian.org/debian/ wheezy main contrib non-free
+deb-src http://ftp.ie.debian.org/debian/ wheezy main contrib non-free
+
+deb http://security.debian.org/debian-security wheezy/updates main
+deb-src http://security.debian.org/debian-security wheezy/updates main";
 
 methods:
 
- "any" usebundle => os_common;
- "any" usebundle => debian_common;
+  "We desire wheezy packages"         usebundle => packages("debian_wheezy.pkg");
+
+  "We desire the wheezy sources_list" usebundle => sources_list("$(sources_list)");
+
+reports:
+
+  "$(this.bundle):";
 
 }
