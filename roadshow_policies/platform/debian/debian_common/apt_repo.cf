@@ -2,7 +2,7 @@ bundle agent apt_repo (apt_repo, apt_key) {
 
 vars:
 
-  "repo_index"          slist => getindices($(apt_repo));
+  "repo_index"          slist => getindices("$(apt_repo)");
 
 files:
 
