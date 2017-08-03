@@ -1,4 +1,4 @@
-bundle agent debian_jessie {
+bundle agent debian_8 {
 
 vars:
 
