@@ -1,4 +1,4 @@
-bundle agent os_common {
+bundle agent common {
 
 methods:
 

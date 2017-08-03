@@ -25,7 +25,7 @@ methods:
 
  new_repo_key::
 
-  "Update package repo list"   usebundle => update_apt_repo_list;
+  "Update package repo list"   usebundle => update_apt_repo;
 
 commands:
 
