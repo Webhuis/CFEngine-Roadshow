@@ -3,6 +3,9 @@ bundle agent x2go_desktop (pam) {
 vars:
 
   "pkg[chromium]"			string => "*";
+  "pkg[git]"                            string => "*";
+  "pkg[unzip]"                          string => "*";
+  "pkg[zip]"                            string => "*";
 
   "pam_index"				 slist => getindices($(pam));
 
