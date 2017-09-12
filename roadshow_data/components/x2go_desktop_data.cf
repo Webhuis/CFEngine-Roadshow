@@ -1,0 +1,24 @@
+bundle agent x2go_desktop_data {
+
+vars:
+
+  "pam[common-account]"                  string => "account  sufficient pam_unix.so\
+account  sufficient pam_ldap.so\
+account  required   pam_deny.so";
+  "pam[common-auth]"                     string => "auth     sufficient pam_ldap.so\
+auth     sufficient pam_unix.so shadow use_first_pass\
+auth     required   pam_deny.so";
+  "pam[common-password]"                 string => "password requisite  pam_passwdqc.so min=12,10,10,8,6 random=25 retry=3 passphrase=2\
+password sufficient pam_ldap.so     type=network use_authtok first_pass\
+password sufficient pam_unix.so     type=machine use_authtok md5\
+password required   pam_deny.so";
+  "pam[common-session]"                  string => "session  sufficient pam_ldap.so\
+session  required   pam_unix.so";
+  "pam[common-session-noninteractive]"   string => "session [default=1]                     pam_permit.so\
+session requisite                       pam_deny.so\
+session required                        pam_permit.so\
+session required        		pam_unix.so\
+session optional                        pam_ldap.so";
+
+}
+
