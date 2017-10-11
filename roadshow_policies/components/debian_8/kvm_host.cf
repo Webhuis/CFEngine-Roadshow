@@ -46,7 +46,7 @@ files:
          comment => "Modules for vlans",
            perms => mo("644","root"),
           create => "true",
-          action => e_immediate,
+          action => r_immediate,
    edit_template => "$(sys.workdir)/esp_dynamic_inputs/templates/modules.tmpl";
 
 methods:
