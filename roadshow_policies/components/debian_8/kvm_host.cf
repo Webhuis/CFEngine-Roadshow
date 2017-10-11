@@ -2,11 +2,14 @@ bundle agent kvm_host {
 
 vars:
 
+  "templates"                    slist => { "debootstrap.config.sdx.tmpl", "modules.tmpl" };
+  "modules"                      slist => { "8021q" };
   "guest_configs"               string => "/etc/libvirt/qemu/";
   "support_svn_server"          string => "https://support-svn.webhuis.nl/dom0-hosts";
 
   "pkg[arp-scan]"               string => "*";
   "pkg[array-info]"             string => "*";
+  "pkg[clvm]"                   string => "*";
   "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
   "pkg[grml-debootstrap]"       string => "*";
@@ -15,6 +18,8 @@ vars:
   "pkg[lvm2]"                   string => "*";
   "pkg[mdadm]"                  string => "*";
   "pkg[minicom]"                string => "*";
+  "pkg[openvswitch-common]"     string => "*";
+  "pkg[openvswitch-switch]"     string => "*";
   "pkg[parted]"                 string => "*";
   "pkg[qemu]"                   string => "*";
   "pkg[raidutils]"              string => "*";
@@ -23,6 +28,7 @@ vars:
   "pkg[virtinst]"               string => "*";
   "pkg[virt-manager]"           string => "*";
   "pkg[virt-top]"               string => "*";
+  "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
@@ -36,10 +42,17 @@ files:
           action => r_immediate,
    edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/debootstrap.config.sdx.tmpl";
 
+  "/etc/modules"
+         comment => "Modules for vlans",
+           perms => mo("644","root"),
+          create => "true",
+          action => r_immediate,
+   edit_template => "$(sys.workdir)/esp_dynamic_inputs/templates/modules.tmpl";
+
 methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
-  "Provide grml debootstrap template"      usebundle => get_template("debootstrap.config.sdx.tmpl");
+  "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
   "We desire Opennebula"                   usebundle => opennebula_node; 
 
 reports:

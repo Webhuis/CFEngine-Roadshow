@@ -5,14 +5,17 @@ vars:
   # packages are defined in the following form:
   # "pkg[<pkg-name>]" string => "<pkg-version>";
 
+  "pkg[dnsutils]"                        string => "*";
   "pkg[git]"                             string => "*";
   "pkg[gzip]"                            string => "*";
   "pkg[less]"                            string => "*";
+  "pkg[locales-all]"                     string => "*";
   "pkg[lynx]"                            string => "*";
   "pkg[mc]"                              string => "*";
   "pkg[rsync]"                           string => "*";
   "pkg[subversion]"                      string => "*";
   "pkg[sudo]"                            string => "*";
+  "pkg[vim]"                             string => "*";
 
   "nopkg[nano]"                          string => "*";
 
