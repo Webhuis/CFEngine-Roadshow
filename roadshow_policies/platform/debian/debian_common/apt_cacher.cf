@@ -36,7 +36,7 @@ delete_lines:
 
 insert_lines:
 
-  "Acquire::http::Proxy \"${string}\"${do_roadshow.semi_colon}";
+  "Acquire::http::Proxy \"${string}\"${do_roadshow.punt_komma}";
 
 }
 # The following allows Squeeze Security updates to continue
