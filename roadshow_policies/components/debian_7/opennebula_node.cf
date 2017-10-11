@@ -1,0 +1,50 @@
+bundle agent opennebula_node {
+
+vars:
+
+  "apt_repo[opennebula]"               string => "deb http://downloads.opennebula.org/repo/5.2/Debian/8 stable opennebula";
+
+  "apt_key"                            string => "downloads.opennebula.org.gpg";
+
+  "pkg[clvm]"                          string => "*";
+  "pkg[opennebula-node]"               string => "*";
+
+files:
+
+  "/var/cache/apt/downloads.opennebula.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
+
+  "/var/lib/one/.ssh"
+    handle       => "set_ssh_key",
+    comment      => "Set desired ssh_config parameters",
+    copy_from    => r_rcp("/root/one_store/", $(sys.policy_hub)),
+    depth_search => r_recurse("inf"),
+    action       => r_immediate,
+    create       => "true",
+    classes      => r_if_repaired("opennebula_restart");
+
+services:
+
+ opennebula_restart::
+
+  "libvirtd"     service_policy => "start";
+
+methods:
+
+  "We desire the OpenNebuala key"   usebundle => get_apt_repo_key( "$(apt_key)");
+
+  "We desire OpenNebuala repo"      usebundle => apt_repo("opennebula_node.apt_repo", "$(apt_key)");
+
+  "We are an Opennebula client"     usebundle => packages("opennebula_node.pkg");
+
+reports:
+
+  "$(this.bundle):";
+
+}
