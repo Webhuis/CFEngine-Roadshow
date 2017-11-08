@@ -1,0 +1,14 @@
+bundle agent postfix_mysql {
+
+vars:
+
+  "pkg[postfix-mysql]"            string => "*";
+  "pkg[libpam-mysql]"             string => "*";
+
+  "postfix_mysql_package_name"    slist  => getindices("pkg");
+
+methods:
+
+  "any" usebundle => packages("postfix_mysql.pkg");
+
+}
