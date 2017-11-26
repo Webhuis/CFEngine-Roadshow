@@ -1,7 +1,8 @@
-# role X2go Virtual DeskTop
-bundle agent x2gvdt {
+bundle agent x2go {
 
 vars:
+
+  "role_name"                                  string => "x2go virtual desktop";
 
   "bundles[x2go_desktop]"                      string => "${sys.flavor}/x2go_desktop.cf";
   "bundles[x2goserver]"                        string => "${sys.flavor}/x2goserver.cf";
