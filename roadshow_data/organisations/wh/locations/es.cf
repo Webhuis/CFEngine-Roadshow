@@ -1,0 +1,11 @@
+bundle agent rg {
+
+vars:
+
+  "location"                        string => "Ronge";
+
+reports:
+
+  "$(this.bundle):";
+
+}
