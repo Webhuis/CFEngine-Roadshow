@@ -1,0 +1,24 @@
+bundle agent pfxm {
+
+vars:
+
+  "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
+  "bundles[postfix_server]"    string => "${sys.flavor}/postfix_server.cf";
+  "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
+  "bundles[courier]"           string => "${sys.flavor}/courier.cf";
+  "bundles[squirrelmail]"      string => "${sys.flavor}/squirrelmail.cf";
+  "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
+
+  "sequence"  slist => getindices("bundles");
+  "inputs"    slist => getvalues("bundles");
+
+methods:
+
+  "any" usebundle => "mysql_server";
+  "any" usebundle => "postfix_server";
+  "any" usebundle => "postfix_mysql";
+  "any" usebundle => "courier";
+  "any" usebundle => "squirrelmail";
+  "any" usebundle => "apache2";
+
+}
