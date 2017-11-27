@@ -2,7 +2,7 @@ bundle agent cfeh {
 
 vars:
 
-  "role_name"                         string => "CFEngine Hub";
+  "role_name"                         string => "CFEngine policy hub";
 
   "bundles[cfe_hub]"      string => "cfe_hub.cf";
 
@@ -12,5 +12,9 @@ vars:
 methods:
 
   "any" usebundle => "cfe_hub";
+
+reports:
+
+ "${this.bundle}:";
 
 }

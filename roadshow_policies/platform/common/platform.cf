@@ -1,0 +1,12 @@
+bundle agent platform(vendor) {
+
+methods:
+
+  "We desire common policies in place"           usebundle => common;
+  "We desire vendor specific policies in place"  usebundle => $(vendor);
+
+reports:
+
+  "$(this.bundle):";
+
+}

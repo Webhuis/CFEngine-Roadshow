@@ -2,7 +2,7 @@ bundle agent apt_repo (apt_repo, apt_key) {
 
 vars:
 
-  "repo_index"          slist => getindices($(apt_repo));
+  "repo_index"          slist => getindices("$(apt_repo)");
 
 files:
 
@@ -14,9 +14,18 @@ files:
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
 
+  "/etc/apt/apt.conf.d/.*.dist"
+
+    comment      => "Clean up invalid repository entries",
+    delete       => tidy;
+
 methods:
 
-  "Create apt repo list" usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
+  "Create apt repo list"       usebundle => apt_repo_list("$(repo_index)", "$($(apt_repo)[$(repo_index)])");
+
+ new_repo_key::
+
+  "Update package repo list"   usebundle => update_apt_repo;
 
 commands:
 

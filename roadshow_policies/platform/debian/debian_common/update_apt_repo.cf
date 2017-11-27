@@ -1,0 +1,11 @@
+bundle agent update_apt_repo {
+
+commands:
+
+  "/usr/bin/apt-get update";
+
+reports:
+
+  "${this.bundle}:";
+
+}

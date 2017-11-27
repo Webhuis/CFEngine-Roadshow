@@ -16,15 +16,15 @@ bundle agent roadshow
 
   methods:
       "Determiine the role organisation and geograph" usebundle => classify;
-      "Request Data for machine information"          usebundle => request_role_information;
+#     "Request Data for machine information"          usebundle => request_role_information;
       "Collect values and policies"                   usebundle => do_roadshow;
       "Update the dynamic policies specific to us"    usebundle => roadshow_dynamic_update;
       "We require the domain information"             usebundle => ${do_roadshow.class_domain};
-      "Carry out the platform specific policies"      usebundle => $(do_roadshow.os);
+      "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
       "What purpose do we have living in this World"  usebundle => $(classify.role);
 
 reports:
 
- "${this.bundle} role:  $(classify.role)";
+ "${this.bundle} role: $($(classify.role).role_name)";
 
 }

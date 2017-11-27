@@ -1,0 +1,39 @@
+bundle agent sources_list (sources_list) {
+
+vars:
+
+  "pkg[apt-transport-https]"       string => "*";
+
+files:
+
+  "/etc/apt/sources.list"
+           create => "true",
+    edit_defaults => no_backup,
+        edit_line => edit_sources_list($(sources_list)),
+          classes => if_repaired("new_sources_list");
+
+methods:
+
+  "Provide desired packages"   usebundle => packages("sources_list.pkg");
+
+ new_sources_list::
+
+  "Update package repo list"   usebundle => update_apt_repo;
+
+reports:
+
+  "${this.bundle}:";
+
+}
+
+bundle edit_line edit_sources_list(sources_list) {
+
+delete_lines:
+
+".*";
+
+insert_lines:
+
+"$(sources_list)";
+
+}
