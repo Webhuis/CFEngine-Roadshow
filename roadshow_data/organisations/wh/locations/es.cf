@@ -3,6 +3,7 @@ bundle agent rg {
 vars:
 
   "location"                        string => "Ronge";
+  "subdomain"                       string => "evoswitch.webhuis.nl";
 
 reports:
 

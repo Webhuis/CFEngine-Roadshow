@@ -2,7 +2,8 @@ bundle agent rg {
 
 vars:
 
-  "location"                        string => "Ronge";
+  "location"                        string => "ronge";
+  "subdomain"                       string => "ronge.webhuis.nl";
 
 reports:
 
