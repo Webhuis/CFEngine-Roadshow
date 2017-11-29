@@ -1,0 +1,151 @@
+bundle agent manage_users(users, sudoer_rules) {
+
+vars:
+
+  "index"                           slist => getindices( $(users) );
+
+files:
+
+  "/root/.ssh/"
+    file_select    => all,
+    depth_search   => recurse(inf),
+    delete         => tidy;
+
+methods:
+
+  "We desire groups"            usebundle => create_group( "$(index)", "$($(users)[$(index)][gname])", "$($(users)[$(index)][gid])" ),
+                                  comment => "groups needed for users promise";
+
+  "We desire users"             usebundle => create_user( "$(index)"
+                                                        , "$($(users)[$(index)][fullname])" , "$($(users)[$(index)][uid])"
+                                                        , "$($(users)[$(index)][gid])" , "$($(users)[$(index)][password])"
+                                                        , "$($(users)[$(index)][shell])" , "$($(users)[$(index)][auth_key])");
+
+
+  "Our users are sudoers"       usebundle => create_sudoer("$(index)", "$(sudoer_rules)");
+
+reports:
+
+  "$(this.bundle) user: $(index), $(sudoer_rules)";
+
+}
+
+bundle agent manage_users_nopasswd(users) {
+#bundle agent manage_users_nopasswd(user, sudoer_rules) {
+
+vars:
+
+  "index"                           slist => getindices( $(users) );
+
+methods:
+
+  "We desire groups"            usebundle => create_group( "$(index)", "$($(users)[$(index)][gname])", "$($(users)[$(index)][gid])" ),
+                                  comment => "groups needed for users promise";
+
+  "We desire users"             usebundle => create_user_nopasswd( "$(index)", "$($(users)[$(index)][fullname])" ,"$($(users)[$(index)][uid])" 
+                                                                  ,"$($(users)[$(index)][gid])" , "$($(users)[$(index)][shell])" ); 
+
+# "Our users are sudoers"       usebundle => create_sudoer("$(index)", "$(sudoer_rules)");
+
+reports:
+
+  "$(this.bundle)user: $(index)";
+
+}
+
+bundle agent create_group(index, gname, gid) {
+
+vars:
+
+classes:
+
+  "add_$(gid)" not => groupexists("$(gid)"),
+                              comment => "Check if group exists, and create class if it doesn't";
+
+commands:
+
+ "add_$(gid)"::
+  "/usr/sbin/groupadd -g $(gid) $(gname)";
+
+}
+
+bundle agent create_user( user,fullname, uid, gid, password, shell, auth_key ) {
+
+users:
+
+  "$(user)"
+    policy         => "present",
+    description    => "$(fullname)",
+    uid            => "$(uid)",
+    home_dir       => "/home/$(user)",
+    home_bundle    => home_skel("$(user)", "/etc/skel", "$(gid)"),
+    group_primary  => "$(gid)",
+    password       => hashed_password("$(password)"),
+    shell          => "$(shell)";
+
+files:
+
+  "/home/$(user)/."
+    perms          => mog("700","$(user)","$(gid)"),
+    create         => "true";
+
+  "/home/$(user)/.ssh/."
+    perms          => mog("700","$(user)","$(gid)"),
+    create         => "true";
+
+  "/home/$(user)/.ssh/authorized_keys"
+    create         => "true",
+    perms          => mog("400","$(user)","$(gid)"),
+    edit_defaults  => no_backup,
+    edit_line      => append_if_no_line( "$(auth_key)");
+
+}
+
+bundle agent create_user_nopasswd( user, fullname, uid, gid, shell) {
+
+users:
+
+  "$(user)"
+    policy         => "present",
+    description    => "$(fullname)",
+    uid            => "$(uid)",
+    group_primary  => "$(gname)",
+    shell          => "$(shell)";
+
+}
+
+bundle agent home_skel(user, skel, group) {
+
+files:
+  "/home/$(user)/."
+    create         => "true",
+    perms          => mog("700", "$(user)", "$(group)"),
+    copy_from      => seed_cp($(skel)),
+    depth_search   => recurse("inf");
+
+}
+
+bundle agent create_sudoer(user, sudoers_rules) {
+
+files:
+
+  "/etc/sudoers.d/$(user)"
+     comment                => "ESP sudoers_config",
+     create                 => "true",
+     perms                  => mog("0440","root","root"),
+     edit_defaults          => no_backup,
+     edit_line              => write_sudoers_rules($(user), $(sudoers_rules) );
+
+}
+
+bundle edit_line write_sudoers_rules(user, sudoer_rules) {
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+"$(user) $(sudoer_rules)";
+
+}
