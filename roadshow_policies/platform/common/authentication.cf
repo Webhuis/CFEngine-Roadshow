@@ -2,11 +2,11 @@ bundle agent authentication {
 
 methods:
 
-  "Install Webhuis RootCA"            usebundle => webhuis_nl_rootca;
-  "Set LDAP configuration"            usebundle => ldap_conf;
-  "Set libnss LDAP configuration"     usebundle => libnss_ldap_conf;
-  "Set pam LDAP configuration"        usebundle => pam_ldap_conf;
-  "Set nsswitch configuration"        usebundle => nsswitch_conf;
+# "Install Webhuis RootCA"            usebundle => webhuis_nl_rootca;
+# "Set LDAP configuration"            usebundle => ldap_conf;
+# "Set libnss LDAP configuration"     usebundle => libnss_ldap_conf;
+# "Set pam LDAP configuration"        usebundle => pam_ldap_conf;
+# "Set nsswitch configuration"        usebundle => nsswitch_conf;
 
 }
 
