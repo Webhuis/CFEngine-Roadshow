@@ -74,7 +74,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(inputs_dir)/common_data"
+  "$(roadshow_inputs)/common_data"
      comment      => "Copy data bundles that are common",
      copy_from    => r_rcp("$(master_data)/common", $(sys.policy_hub)),
      depth_search => r_recurse("inf"),
