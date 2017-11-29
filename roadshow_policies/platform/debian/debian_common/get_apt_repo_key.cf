@@ -2,7 +2,7 @@ bundle agent get_apt_repo_key(apt_key_name) {
 
 commands:
 
-  "/usr/bin/wget -O /tmp/$(apt_key_name) http://support-svn.webhuis.nl/gpg-keys/$(apt_key_name)";
+# "/usr/bin/wget -O /tmp/$(apt_key_name) http://support-svn.webhuis.nl/gpg-keys/$(apt_key_name)";
 
 reports:
 
