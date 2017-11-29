@@ -21,7 +21,7 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,${ldap_base}";
-      "resolvers"       slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
+      "resolvers"       slist => { "8.8.8.8", "10.168.0.17", "10.68.71.103" };
       "searchlist"     string => "webhuis.nl";
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
@@ -36,8 +36,6 @@ vars:
       "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
       "ntp_server"     string => "inuc-01.webhuis.nl";
-#     "nameserver"      slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
-      "nameserver"      slist => { "10.68.71.103", "10.68.71.98" };
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
@@ -52,27 +50,4 @@ vars:
         "ntp_master"   slist => { "inuc-01" };
         "restrict"     slist => { "127.0.0.1", "::1" };
 
-#files:
-#   "/mnt/export/${sys.domain}/${sys.fqhost}"
-#     create    => "true";
-#     edit_line => add_export_directory;
- 
-#methods:
-
-#   "any" usebundle => get_template("ntp.conf.tmpl");
-#   "any" usebundle => ntp_conf;
-
-#   "any" usebundle => get_template("resolv.conf.tmpl");
-#   "any" usebundle => resolv_conf;
-
-#   "any" usebundle => mnt_common_backups;
-#   "any" usebundle => common_backups;
-
 }
-
-#bundle edit_line add_export_directory {
-
-#insert_lines:
-#  "${sys.fqhost}";
-
-#}

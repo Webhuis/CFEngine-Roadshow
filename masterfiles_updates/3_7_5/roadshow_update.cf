@@ -18,6 +18,7 @@ vars:
   "department"      string => "$(classify.department)";
   "location"        string => "$(classify.location)";
   "role"            string => "$(classify.role)";
+  "eco_vars"        string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"          string => "$(vendor.vendor)";
 
 files:
@@ -99,6 +100,14 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+  "$(roadshow_inputs)/organisation/$(eco_vars).cf"
+     handle       => "update_files_inputs_roadshow_eco_vars",
+     copy_from    => r_rcp("$(master_data)/organisations/$(eco_vars).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
   "$(roadshow_inputs)/department/$(department).cf"
      handle       => "update_files_inputs_roadshow_department",
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/departments/$(department).cf", $(sys.policy_hub)),
@@ -139,6 +148,7 @@ methods:
 reports:
 
   "$(this.bundle) vendor: $(vendor)";
+  "$(this.bundle) ecosystem variables: $(eco_vars)";
 
 }
 
