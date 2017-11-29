@@ -74,6 +74,14 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+  "$(inputs_dir)/common_data"
+     comment      => "Copy data bundles that are common",
+     copy_from    => r_rcp("$(master_data)/common", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("validated_updates_ready");
+
   "$(roadshow_inputs)/platform/$(vendor)_common"
      handle       => "update_files_inputs_roadshow_platform_components",
      copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
