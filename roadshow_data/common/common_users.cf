@@ -1,0 +1,17 @@
+bundle agent common_users {
+
+vars:
+
+  "users[martin][fullname]"    string => "Martin Simons";
+  "users[martin][uid]"         string => "1000";
+  "users[martin][gname]"       string => "martin";
+  "users[martin][gid]"         string => "1000";
+  "users[martin][password]"    string => "$6$bAwGtmCv$WEjZ95uHUcOE2bsKKXSPtyiMlk80g3yUhkw6hiepnJ8jSkwPHqzDvkfRXVklunDBpQUfGxOhhUs1JET3HtfAn/";
+  "users[martin][shell]"       string => "/bin/bash";
+  "users[martin][auth_key]"    string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3aWij2tdDkMHVAl+FZi1SkwOJGtABHYIPPrQWEblb1OXnECs3rBRCG6vA9MqIfMfEo/NqdqhTy4XezEFrXBREsy9bafpcyKlaz4cNxJHZ0fgNun+UTR4C9RFNnWsRdK5E3XMjX7dkp9Dml9Ad5Uxr/vn49hp5kFei1yNKsRuXpfQI4GdgRqet+ksgNLXCibeeMHjZssQ/cVjoYghfc6v65p3WON2vVvaIuLQqVME8pBWXoZuC9QHW566fTsoGGQFZnv1BTCn2wkSR5e6F1/7H1ojf+Y0zOziF6VsLvUiv3w+rMyoX9AFp2N8Q4enierDspPkhSJwoJcXkDXhj2vwCoFMaPj3CrH27QXN/LhnODJI5GDfNie2mRvvuO4yoMuPsShe3Ysua+GfqzEBNS2Xb+t+A7097/HA+wchCx6TlXIaIBWtEpBHAQCgckqZnmMNafeSnY33mcjH7es9Eujqf7fWdSnoRGF5gDPK5Qczr34j2jeugdTJy26xQSPR2PArYySDFJXUbOedjDFXmGxB5QOf2rToqOStv+0VSWwGR2IP13cooMuABqsdgx4AyH18UgrB8BsaLq6t3cpbNiyPh23hiThLT2lPPAyXWMstIcZcHlV/f468HUz+6B+nKG+OsM9nP34JV8bffR4dwlKNNU+QeNF5FSuhg2fDOuQA9Lw== aaron@NewVMHost1
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCqBG7gtIFRR3fLRnKraGeF01xw0bT7KIy2ZjH8fkrl+A4Q8sE3pahic/FLg8mtGp1rflanl8hBWsZqyrA0UX35jytJ0XJU52fSMN7Ap4+SXLmK1/cT/zvomPrwUJ1gITBd+LiLxtBtncqjgLszp8iJHaylTTqeJ82Ko49a8Xoo9Thf1BHiyIgkNkERruFmeWgRQtPO/w7RgA92lPjjpdvUTnc5/B8oI4rJXVZBNLmAet/fq0cmI+XvZ/hLbgcNDsGYOZpLMQzq6/9uVWT9YlXrnlTMNSEyGPBKmfZdS8uADxLB/QG4a8/9oCPoLuopvpivhe21wnILZ8I20s3Sw+2141PU0WCj97pATo0IVpic97bqSNdefeDiJ+zDCqOLlROeiON5SeQQdse87gcGQlJiAKbd66OU29j77aaY1OybiHNfALIp11PtsszhWw+JtrVcFDHv1IvzzIGgnCqPnp+4HvnZU2xkyEl2RgTENIGv0LCYnTk/ADxldYj4bjwOeCCzckytovSgSwKxoZ7ON82/9tS+Ne+ms3rzVrYZDmoa4EYRZTZX6RqAwYJ3mq57NechM/cdM34up7dfgUlMwtqSaSNsTBdthGzbUORZXQW/Vz1l9LT/zASVJeayBnRaw/AXR/N7Qq7bNASXsXos4/yO302UeGtsPl133jMWvjvoGQ== martin@NewVMHost1";
+
+  "user"                        slist => getindices("users");
+  "sudoer_rules"               string => "ALL = (ALL) ALL";
+
+}

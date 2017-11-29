@@ -7,7 +7,7 @@ methods:
   "openssh server and client"    usebundle => ssh_all_config;
   "We use LDAP Authentication"   usebundle => authentication;
 # "Feed Hard Classes to Data" 	 usebundle => feed_hard_classes;
-  "Prepare for users"   	 usebundle => user_management;		# This will come from Data, role based
+  "Prepare for users"   	 usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
 reports:
 
