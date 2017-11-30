@@ -3,7 +3,7 @@ bundle agent apt_cacher {
 vars:
 
   "apt_proxy"          string =>  "/etc/apt/apt.conf.d/01proxy";
-  "mirror"             string => "http://10.168.0.11:3142/";
+  "mirror"             string => "http://10.68.71.11:3142/";
 
 files:
 
