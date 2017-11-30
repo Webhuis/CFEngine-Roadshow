@@ -4,7 +4,7 @@ vars:
 
   "role_name"                  string => "apt-cache-ng common cacher for Debian and rpm packages";
 
-  "bundles[apt-cacher-ng]"     string => "${sys.flavor}/apt-cacher-ng.cf";
+  "bundles[apt_cacher_ng]"     string => "${sys.flavor}/apt-cacher-ng.cf";
 
   "sequence"                    slist => getindices("bundles");
   "inputs"                      slist => getvalues("bundles");
