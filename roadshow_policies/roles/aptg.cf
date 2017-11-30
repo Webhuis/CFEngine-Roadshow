@@ -1,13 +1,20 @@
-bundle agent aptutl {
+bundle agent aptg {
 
 vars:
 
-  "role_name"                         string => "apt-cache-ng common cacher for Debian and rpm packages";
+  "role_name"                  string => "apt-cache-ng common cacher for Debian and rpm packages";
 
-  "pkg[apt-cacher-ng]"           string => "*";
+  "bundles[apt-cacher-ng]"     string => "${sys.flavor}/apt-cacher-ng.cf";
+
+  "sequence"                    slist => getindices("bundles");
+  "inputs"                      slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => packages("aptutl.pkg");
+  "We desire apt-cacher"    usebundle => "apache2";
+
+reports:
+
+ "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
 
 }
