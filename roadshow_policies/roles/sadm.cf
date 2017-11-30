@@ -1,0 +1,20 @@
+bundle agent sadm {
+
+vars:
+
+  "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
+  "bundles[nfs_kernel_server]" string => "${sys.flavor}/nfs_kernel_server.cf";
+
+  "sequence"                    slist => getindices("bundles");
+  "inputs"                      slist => getvalues("bundles");
+
+methods:
+
+  "We desire Apache2"       usebundle => "apache2";
+  "We desire nfs"           usebundle => "nfs_kernel_server";
+
+reports:
+
+ "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
+
+}
