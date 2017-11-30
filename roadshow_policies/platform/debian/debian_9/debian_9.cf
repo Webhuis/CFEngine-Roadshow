@@ -1,4 +1,4 @@
-bundle agent debian_stretch {
+bundle agent debian_9 {
 
 vars:
 
