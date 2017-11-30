@@ -1,0 +1,47 @@
+bundle agent x2go_desktop (pam) {
+
+vars:
+
+  "pkg[chromium]"			string => "*";
+  "pkg[git]"                            string => "*";
+  "pkg[unzip]"                          string => "*";
+  "pkg[zip]"                            string => "*";
+
+  "pam_index"				 slist => getindices($(pam));
+
+methods:
+
+  "provide desktop packages"         usebundle => packages("x2go_desktop.pkg");
+
+  "pam common files"                 usebundle => pam_common_files("$(pam_index)", "$($(pam)[$(pam_index)])");
+
+
+reports:
+
+  "${this.bundle}: role";
+
+}
+
+bundle agent pam_common_files (pam_index, pam_file) {
+
+files:
+
+  "/etc/pam.d/pam_index"
+     create    => "true",
+     perms     => mo("600","root"),
+     action    => r_immediate;
+     edit_line => pam_common_file($(pam_file)) ;
+}
+
+bundle edit_line  pam_common_file(pam_file) {
+
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+  "$(pam_file)";
+}
+
