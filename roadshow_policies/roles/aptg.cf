@@ -11,7 +11,7 @@ vars:
 
 methods:
 
-  "We desire apt-cacher"    usebundle => "apache2";
+  "We desire apt-cacher"    usebundle => "apt_cacher_ng";
 
 reports:
 
