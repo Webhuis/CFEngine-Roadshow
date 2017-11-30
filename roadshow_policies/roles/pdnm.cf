@@ -1,6 +1,8 @@
-bundle agent pdsmys {
+bundle agent pdnm {
 
 vars:
+
+  "role_name"                         string => "Powerdns Mysql name server";
 
   "bundles[mysql_server]"  string => "${sys.flavor}/mysql_server.cf";
   "bundles[pdns_server]"   string => "${sys.flavor}/pdns_server.cf";
