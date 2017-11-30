@@ -4,14 +4,14 @@ vars:
 
   "role_name"                         string => "CFEngine policy hub";
 
-  "bundles[cfe_hub]"      string => "cfe_hub.cf";
+  "bundles[cfe_hub]"                  string => "cfe_hub.cf";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
 
 methods:
 
-  "any" usebundle => "cfe_hub";
+  "We are the CFEngine policy Hub" usebundle => "cfe_hub";
 
 reports:
 
