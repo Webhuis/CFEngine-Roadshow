@@ -9,7 +9,7 @@ vars:
     "pdns_package_name"          slist  => getindices("pkg");
 
 methods:
- "any" usebundle => packages("pdns_server_comp.pkg");
+ "any" usebundle => packages("pdns_server.pkg");
  "any" usebundle => get_template("pdns-mysql.conf.tmpl");
  "any" usebundle => pdns_conf;
  "any" usebundle => get_template("recursor.conf.tmpl");
