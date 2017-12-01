@@ -7,6 +7,12 @@ vars:
  "hosts[cfeutl01]"     string => "10.168.0.10";
  "hosts[aptutl01]"     string => "10.168.0.11";
  "hosts[nfsutl01]"     string => "10.168.0.12";
+ "hosts[cfehwhpdcsw1]" string => "10.68.71.10";
+ "hosts[aptgwhpdcsw1]" string => "10.68.71.11";
+ "hosts[sadmwhpdcsw1]" string => "10.68.71.12";
+ "hosts[support]"      string => "10.68.71.12";
+ "hosts[pdnmwhpdcrg2]" string => "10.68.71.17";
+ "hosts[x2gowhpdcrg1]" string => "10.68.71.19";
 
 #aptubu01.webhuis.nl.sh:export ip="10.68.71.22"
 #cfeutl0010.webhuis.nl.sh:export ip="10.168.1.10"
@@ -48,8 +54,6 @@ insert_lines:
 ${sys.ipv4} ${sys.fqhost} ${sys.uqhost}
 
 $($(hosts)[$(host_index)]) $(host_index).${sys.domain} $(host_index)
-
-10.68.71.181    mirror.webhuis.nl mirror
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
