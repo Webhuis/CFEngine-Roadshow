@@ -4,15 +4,23 @@ vars:
 
   "role_name"                         string => "Powerdns Mysql name server";
 
-  "bundles[mysql_server]"  string => "${sys.flavor}/mysql_server.cf";
-  "bundles[pdns_server]"   string => "${sys.flavor}/pdns_server.cf";
+  "bundles[mysql_server]"          string => "${sys.flavor}/mysql_server.cf";
+  "bundles[pdns_server]"           string => "${sys.flavor}/pdns_server.cf";
+  "bundles[apache2]"               string => "${sys.flavor}/apache2.cf";
+  "bundles[apache2_php5]"          string => "${sys.flavor}/apache2_php5.cf";
 
-  "sequence"                slist => getindices("bundles");
-  "inputs"                  slist => getvalues("bundles");
+  "sequence"                        slist => getindices("bundles");
+  "inputs"                          slist => getvalues("bundles");
 
 methods:
 
-  "any"                 usebundle => "mysql_server";
-  "any"                 usebundle => "pdns_server";
+  "The MySQL database server"   usebundle => mysql_server;
+  "The PowerDNS server"         usebundle => pdns_server;
+  "The Apache2 webserver"       usebundle => apache2;
+  "PHP5 for Apapche2"           usebundle => apache2_php5;
+
+reports:
+
+  "${this.bundle} app.inputs: ${inputs}";
 
 }
