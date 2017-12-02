@@ -2,12 +2,12 @@ bundle agent apache_php {
 
 vars:
 
-    "pkg[apache_php2]"		string => "*";
+    "pkg[libapache2-mod-php5]"		string => "*";
 
 #    "ips_package_name"     slist  => getindices("pkg");
 
 methods:
-    "any" usebundle => packages("apache_php.pkg");
+    "PHP module for Apache2"         usebundle => packages("apache_php.pkg");
 
 reports:
   apache_php::
