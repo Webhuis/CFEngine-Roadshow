@@ -7,7 +7,7 @@ vars:
   "bundles[mysql_server]"          string => "${sys.flavor}/mysql_server.cf";
   "bundles[pdns_server]"           string => "${sys.flavor}/pdns_server.cf";
   "bundles[apache2]"               string => "${sys.flavor}/apache2.cf";
-  "bundles[apache2_php5]"          string => "${sys.flavor}/apache2_php.cf";
+  "bundles[apache_php]"            string => "${sys.flavor}/apache_php.cf";
 
   "sequence"                        slist => getindices("bundles");
   "inputs"                          slist => getvalues("bundles");
