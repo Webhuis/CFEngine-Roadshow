@@ -12,6 +12,7 @@ vars:
  "hosts[sadmwhpdcsw1]" string => "10.68.71.12";
  "hosts[support]"      string => "10.68.71.12";
  "hosts[pdnmwhpdcrg2]" string => "10.68.71.17";
+ "hosts[poweradmin]"   string => "10.68.71.17";
  "hosts[x2gowhpdcrg1]" string => "10.68.71.19";
 
 #aptubu01.webhuis.nl.sh:export ip="10.68.71.22"
