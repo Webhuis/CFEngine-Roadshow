@@ -17,7 +17,7 @@ methods:
   "The MySQL database server"   usebundle => mysql_server;
   "The PowerDNS server"         usebundle => pdns_server;
   "The Apache2 webserver"       usebundle => apache2;
-  "PHP for Apapche2"            usebundle => apache2_php;
+  "PHP for Apache2"            usebundle => apache_php;
 
 reports:
 
