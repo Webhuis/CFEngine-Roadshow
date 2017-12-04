@@ -5,6 +5,7 @@ vars:
   "role_name"                         string => "Powerdns Mysql name server";
 
   "bundles[mysql_server]"          string => "${sys.flavor}/mysql_server.cf";
+  "bundles[php5_mysql]"            string => "${sys.flavor}/php5_mysql.cf";
   "bundles[pdns_server]"           string => "${sys.flavor}/pdns_server.cf";
   "bundles[apache2]"               string => "${sys.flavor}/apache2.cf";
   "bundles[apache_php]"            string => "${sys.flavor}/apache_php.cf";
@@ -15,9 +16,10 @@ vars:
 methods:
 
   "The MySQL database server"   usebundle => mysql_server;
+  "PHP% for MySQL server"       usebundle => php5_mysql;
   "The PowerDNS server"         usebundle => pdns_server;
   "The Apache2 webserver"       usebundle => apache2;
-  "PHP for Apache2"            usebundle => apache_php;
+  "PHP for Apache2"             usebundle => apache_php;
 
 reports:
 
