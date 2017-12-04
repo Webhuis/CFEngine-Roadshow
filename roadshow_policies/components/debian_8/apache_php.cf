@@ -3,6 +3,7 @@ bundle agent apache_php {
 vars:
 
     "pkg[libapache2-mod-php5]"		string => "*";
+    "pkg[php5-mysql]"	        	string => "*";
 
 #    "ips_package_name"     slist  => getindices("pkg");
 
