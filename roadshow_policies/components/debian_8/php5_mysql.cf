@@ -3,6 +3,7 @@ bundle agent php5_mysql {
 vars:
 
     "pkg[gettext]"	        	string => "*";
+    "pkg[php5-mcrypt]"	        	string => "*";
     "pkg[php5-mysql]"	        	string => "*";
     "pkg[php-db]"	        	string => "*";
     "pkg[php-dev]"	        	string => "*";
