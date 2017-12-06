@@ -12,7 +12,7 @@ vars:
   "sequence"                    slist => getindices("bundles");
   "inputs"                      slist => getvalues("bundles");
 
-  "admin_nics"                  slist => { "$(sys.flavor).nic[admin]" };
+  "admin_nics"                  slist => { "$(sys.flavor).nics[admin]" };
 
 methods:
 

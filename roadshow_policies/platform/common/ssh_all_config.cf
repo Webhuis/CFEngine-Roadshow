@@ -3,7 +3,7 @@ bundle agent ssh_all_config {
 vars:
 
   "sshd_config"                             string => "/etc/ssh/sshd_config";
-  "ssh-config"                              string => "/etc/ssh/ssh_config";
+  "ssh_config"                              string => "/etc/ssh/ssh_config";
 
   "ssh[ServerAliveInterval]"                string => "60";
 
