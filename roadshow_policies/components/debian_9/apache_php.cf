@@ -1,4 +1,4 @@
-bundle agent apache2_php {
+bundle agent apache_php {
 
 vars:
 
@@ -8,7 +8,7 @@ vars:
 
 methods:
 
-    "PHP5 for Apache2"                 usebundle => packages("apache2_php.pkg");
+    "PHP5 for Apache2"                 usebundle => packages("apache_php.pkg");
 
 reports:
 
