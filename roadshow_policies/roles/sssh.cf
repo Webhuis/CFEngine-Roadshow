@@ -1,0 +1,22 @@
+bundle agent sssh {
+
+vars:
+
+  "role_name"                         string => "ssh stepping stone";
+
+  "bundles[stepping_stone]"           string => "stepping_stone.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+  "admin_nics"                         slist => { "$(sys.flavor).nic[function]", "$(sys.flavor).nic[admin]" };
+
+methods:
+
+  "We are an ssh stepping stone"   usebundle => "stepping_stone";
+
+reports:
+
+ "${this.bundle}:";
+
+}

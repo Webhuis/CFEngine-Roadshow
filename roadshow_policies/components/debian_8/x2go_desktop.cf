@@ -18,7 +18,7 @@ methods:
 
 reports:
 
-  "${this.bundle}: role";
+  "${this.bundle}: ";
 
 }
 

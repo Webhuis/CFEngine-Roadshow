@@ -1,12 +1,11 @@
-bundle agent cfe_comp {
+bundle agent cfe_hub {
 
 vars:
 
-  "pkg[cfengine_community]"           string => "*";
+  "cfe_hub"                     string => "I am The Policy Hub"; 
 
-#    "cfehost_package_name"     slist  => getindices("pkg");
+reports:
 
-methods:
-    "any" usebundle => packages("cfe_comp.pkg");
+  "${this.bundle}: $(cfe_hub)";
 
 }
