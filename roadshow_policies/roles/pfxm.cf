@@ -9,8 +9,10 @@ vars:
   "bundles[squirrelmail]"      string => "${sys.flavor}/squirrelmail.cf";
   "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
 
-  "sequence"  slist => getindices("bundles");
-  "inputs"    slist => getvalues("bundles");
+  "sequence"                    slist => getindices("bundles");
+  "inputs"                      slist => getvalues("bundles");
+
+  "admin_nics"                  slist => { "$(sys.flavor).nic[admin]" };
 
 methods:
 

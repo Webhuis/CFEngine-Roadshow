@@ -4,7 +4,7 @@ vars:
 
   "role_name"                         string => "CFEngine policy hub";
 
-  "bundles[cfe_hub]"                  string => "$(sys.flavor)/cfe_hub.cf";
+  "bundles[cfe_hub]"                  string => "cfe_hub.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");

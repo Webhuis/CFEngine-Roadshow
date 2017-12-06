@@ -10,6 +10,8 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
+  "admin_nics"                         slist => { "$(sys.flavor).nic[admin]" };
+
 methods:
 
   "KVM host ready for VM" usebundle => "kvm_host";

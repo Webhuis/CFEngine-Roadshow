@@ -1,46 +1,34 @@
 bundle agent ssh_all_config {
 
 vars:
-  "sshdconfig"                              string => "/etc/ssh/sshd_config";
-  "sshconfig"                               string => "/etc/ssh/ssh_config";
 
-  # SSHD configuration to set
-  "sshd[Protocol]"                          string => "2";
-  "sshd[PermitRootLogin]"                   string => "no";
-  "sshd[PasswordAuthentication]"            string => "no";
-  "sshd[X11Forwarding]"                     string => "yes";
-  "sshd[UseDNS]"                            string => "no";
-  "sshd[UsePAM]"                            string => "no";
+  "sshd_config"                             string => "/etc/ssh/sshd_config";
+  "ssh-config"                              string => "/etc/ssh/ssh_config";
 
-  # SSH configuration to set
   "ssh[ServerAliveInterval]"                string => "60";
+
+ files:
+
+   "$(sshd_config)"
+   comment                   => "sshd config",
+   perms                     => mo("644","root"),
+   action                    => "true",
+   action                    => r_immediate,
+   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/sshd_config.tmpl",
+   classes                   => if_repaired("restart_sshd");
 
 methods:
 
-  "We desire a safe PKI setup for ssh"   usebundle => edit_sshd("$(sshdconfig)", "ssh_all_config.sshd");
-  "The ssh client keeps the connection"  usebundle => edit_ssh("$(sshconfig)", "ssh_all_config.ssh");
+  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
+
+ restart_sshd::
+  "A daemon restart is required"         usebundle => restart_sshd;
 
 reports:
 
  "${this.bundle}: I am implementing safe ssh configuration common to all platforms";
 
 }
-
-bundle agent edit_sshd(file,params) {
-
-  files:
-      "$(file)"
-               handle => "edit_sshd",
-              comment => "Set desired sshd_config parameters",
-            edit_line => set_config_values("$(params)"),
-              classes => if_repaired("restart_sshd");
-
-methods:
- restart_sshd::
-   "any" usebundle => restart_sshd;
-
-}
-
 
 bundle agent edit_ssh(file,params) {
 
