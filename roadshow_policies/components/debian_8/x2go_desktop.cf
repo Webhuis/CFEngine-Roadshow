@@ -29,7 +29,7 @@ files:
   "/etc/pam.d/pam_index"
      create    => "true",
      perms     => mo("600","root"),
-     action    => r_immediate;
+     action    => r_immediate,
      edit_line => pam_common_file($(pam_file)) ;
 }
 
