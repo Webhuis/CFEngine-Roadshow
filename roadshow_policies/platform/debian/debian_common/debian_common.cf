@@ -40,3 +40,15 @@ reports:
  "${this.bundle}: CFEngine package string = ${package_cache}/${cfengine_package}";
 
 }
+
+
+bundle agent restart_sshd {
+
+commands:
+
+  "service sshd restart"
+   handle => "restart_ssdd",
+   comment => "restarting sshd";
+
+}
+
