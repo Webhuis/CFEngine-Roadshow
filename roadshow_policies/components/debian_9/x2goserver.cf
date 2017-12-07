@@ -2,6 +2,7 @@ bundle agent x2goserver {
 
 vars:
 
+  "pkg[lxde]"                          string => "*";
   "pkg[x2goserver]"		       string => "*";
   "pkg[x2goserver-extensions]"	       string => "*";
   "pkg[x2goserver-fmbindings]"	       string => "*";
