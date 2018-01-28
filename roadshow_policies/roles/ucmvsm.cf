@@ -2,6 +2,8 @@ bundle agent ucmvsm {
 
 vars:
 
+  "role_name"                     string => "USB Surveillance Video";
+
   "bundles[motion]"               string => "${sys.flavor}/motion.cf";
   "bundles[surveillance_mount]"   string => "surveillance_mount.cf";
 

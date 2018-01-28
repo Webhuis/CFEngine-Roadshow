@@ -2,6 +2,8 @@ bundle agent sadm {
 
 vars:
 
+  "role_name"                         string => "support administration with nfs";
+
   "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
   "bundles[nfs_kernel_server]" string => "${sys.flavor}/nfs_kernel_server.cf";
 

@@ -2,10 +2,10 @@ bundle agent stepping_stone {
 
 vars:
 
-  "stepping_stone]"           string => "I am the stepping stone";
+  "stepping_stone"            string => "I am the stepping stone";
 
 reports:
 
-  "${this.bundle}: $(stepping_tone)";
+  "${this.bundle}: $(stepping_stone)";
 
 }
