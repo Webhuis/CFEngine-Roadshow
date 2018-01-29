@@ -1,4 +1,4 @@
-bundle agent rg {
+bundle agent rs {
 
 vars:
 
