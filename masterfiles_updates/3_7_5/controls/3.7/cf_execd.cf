@@ -48,6 +48,6 @@ body executor control
     !(windows|hpux|aix).cfengine_3_5::
       exec_command => "LD_LIBRARY_PATH=\"$(sys.workdir)/lib-twin\" $(sys.cf_twin) -Dfrom_cfexecd,cf_execd_initiated -f \"$(sys.workdir)/inputs/update.cf\" ; $(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated";
     !(windows|hpux|aix).!cfengine_3_5::
-      exec_command => "$(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated -f \"$(sys.update_policy_path)\" ; $(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated -f \"$(sys.workdir)/inputs/roadshow_dynamic_update.cf\" ; $(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated";
+      exec_command => "$(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated -f \"$(sys.update_policy_path)\" ; $(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated -f \"$(sys.workdir)\"/inputs/roadshow_dynamic_update.cf ; $(sys.cf_agent) -Dfrom_cfexecd,cf_execd_initiated";
 
 }
