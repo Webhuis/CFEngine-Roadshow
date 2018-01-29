@@ -3,5 +3,5 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-search ${sys.domain}
-nameserver ${${do_roadshow.class_domain}.resolvers}
+search $(sys.domain)
+nameserver $($(classify.eco_vars).resolvers)
