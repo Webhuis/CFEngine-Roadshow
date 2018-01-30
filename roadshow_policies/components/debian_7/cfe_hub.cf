@@ -1,0 +1,11 @@
+bundle agent cfe_hub {
+
+vars:
+
+  "cfe_hub"                     string => "I am The Policy Hub"; 
+
+reports:
+
+  "${this.bundle}: $(cfe_hub)";
+
+}
