@@ -1,10 +1,10 @@
 ###############################################################################
 #
-#   whpdcsw.cf - Basic Policy for Community
+#   whpdcrg.cf - Basic Policy for Community
 #
 ###############################################################################
 
-bundle agent whpdcsw {
+bundle agent whpdcrg {
 
 vars:
 
