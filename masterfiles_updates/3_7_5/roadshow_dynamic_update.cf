@@ -18,6 +18,7 @@ files:
       copy_from   => r_rcp("${master_policies}/components/$(components.inputs)", $(sys.policy_hub)),
       file_select => r_policies,
       action      => r_immediate,
+      create      => "true",
       classes     => r_if_repaired("update_report");
 
 #methods:
