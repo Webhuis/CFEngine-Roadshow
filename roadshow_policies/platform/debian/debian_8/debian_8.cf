@@ -28,5 +28,8 @@ reports:
   "$(this.bundle): $(nics[function])";
   "$(this.bundle): $(nics[support])";
   "$(this.bundle): $(nics[admin])";
+  "$(this.bundle): $(sys.ipv4[eth0])";
+  "$(this.bundle): $(sys.ipv4[eth1])";
+  "$(this.bundle): $(sys.ipv4[eth2])";
 
 }
