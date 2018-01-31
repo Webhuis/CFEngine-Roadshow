@@ -4,11 +4,6 @@ vars:
 
   "role_name"                         string => "CFEngine policy hub";
 
-  "bundles[cfe_hub]"                  string => "cfe_hub.cf";
-
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
-
   "admin_nics"                         slist => { "$($(sys.flavor).nics[admin])" };
 
 methods:
@@ -17,6 +12,21 @@ methods:
 
 reports:
 
- "${this.bundle}:";
+ "${this.bundle}: $(role_name)";
+
+}
+
+bundle agent components {
+
+vars:
+
+  "bundles[cfe_hub]"                  string => "cfe_hub.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+reports:
+
+ "${this.bundle}: components $(inputs)";
 
 }
