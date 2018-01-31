@@ -19,6 +19,6 @@ vars:
 
 reports:
 
-  "$(this.bundle) role: $(role)";
+  "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) eco_vars: $(eco_vars)";
 }
