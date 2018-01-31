@@ -25,6 +25,8 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(nics)";
+  "$(this.bundle): $(nics[function])";
+  "$(this.bundle): $(nics[support])";
+  "$(this.bundle): $(nics[admin])";
 
 }
