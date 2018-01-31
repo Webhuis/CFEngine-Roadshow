@@ -13,7 +13,7 @@ vars:
   "location"             string => "$(part[5])";
   "instance"             string => "$(part[6])";
 
-  "role_input"           string => "$(sys.workdir)/roadshow_dynamic_inputs/role/$(role).cf";
+  "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
