@@ -25,6 +25,6 @@ methods:
 
 reports:
 
-  "$(this.bundle):";
+  "$(this.bundle): $(nics)";
 
 }
