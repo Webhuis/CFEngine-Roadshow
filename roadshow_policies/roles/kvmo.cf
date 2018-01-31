@@ -23,5 +23,7 @@ reports:
  "${this.bundle}: component $(inputs)";
 
  "${this.bundle}: $(admin_nics)";
+ "${this.bundle}: $($(sys.flavor).nics[function])";
+ "${this.bundle}: $($(sys.flavor).nics[admin])";
 
 }
