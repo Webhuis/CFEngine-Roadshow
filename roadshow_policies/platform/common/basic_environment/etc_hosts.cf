@@ -5,7 +5,7 @@ vars:
  "hosts[inuc-01]"      string => "10.168.0.7";
  "hosts[dell-lat]"     string => "10.168.0.9";
  "hosts[cfeutl01]"     string => "10.168.0.10";
- "hosts[aptutl01]"     string => "10.168.0.11";
+ "hosts[aptgwhpdcrs1]" string => "10.68.71.11";
  "hosts[nfsutl01]"     string => "10.168.0.12";
  "hosts[cfehwhpdcsw1]" string => "10.68.71.10";
  "hosts[aptgwhpdcsw1]" string => "10.68.71.11";
