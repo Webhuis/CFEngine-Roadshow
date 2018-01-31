@@ -10,6 +10,7 @@ bundle agent roadshow_dynamic_update {
 vars:
 
   "master_policies" string => "$(sys.workdir)/roadshow_policies";
+  "roadshow_role"   slist   => findfiles("$(sys.workdir)/roadshow_inputs/role/*.cf");
 
 files:
 
@@ -19,6 +20,10 @@ files:
       file_select => r_policies,
       action      => r_immediate,
       classes     => r_if_repaired("update_report");
+
+methods:
+
+  "We desire the role name"    usebundle => classify;
 
 reports:
 
@@ -40,7 +45,7 @@ body common control
       # Roadshow policy update body values
 
                   "services/autorun/classify.cf",
-                  "roadshow-inputs/role/$(classify.role).cf",
+#                 "roadshow-inputs/role/$(classify.role).cf",
                   "roadshow_dynamic_update.cf",
                   "roadshow_update_policy.cf"
 
