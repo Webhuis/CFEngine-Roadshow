@@ -38,7 +38,7 @@ body common control {
                           "components",
                           "roadshow_dynamic_update"
 
-      };
+  };
 
   inputs => {
 
@@ -49,7 +49,9 @@ body common control {
                   "roadshow_dynamic_update.cf",
                   "roadshow_update_policy.cf"
 
-      };
+  };
+
+  ignore_missing_bundles => "true";
 
       # Uncomment to connect to the hub using latest protocol.
       #protocol_version => "latest";
