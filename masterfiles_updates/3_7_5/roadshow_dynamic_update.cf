@@ -10,13 +10,12 @@ bundle agent roadshow_dynamic_update {
 vars:
 
   "master_policies" string => "$(sys.workdir)/roadshow_policies";
-  "roadshow_role"   slist   => findfiles("$(sys.workdir)/roadshow_inputs/role/*.cf");
 
 files:
 
-  "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role).inputs)"
+  "$(sys.workdir)/roadshow_dynamic_inputs/components/$(components.inputs)"
       handle      => "update_files_inputs_roadshow_components",
-      copy_from   => r_rcp("${master_policies}/components/$($(classify.role).inputs)", $(sys.policy_hub)),
+      copy_from   => r_rcp("${master_policies}/components/$(components.inputs)", $(sys.policy_hub)),
       file_select => r_policies,
       action      => r_immediate,
       classes     => r_if_repaired("update_report");
@@ -27,7 +26,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
+  "$(this.bundle): $(classify.role) $(components.inputs)";
 
 }
 
@@ -36,6 +35,7 @@ body common control
   bundlesequence => {
 
                           "classify",
+                          "components",
                           "roadshow_dynamic_update"
 
       };
@@ -45,8 +45,8 @@ body common control
       # Roadshow policy update body values
 
                   "services/autorun/classify.cf",
+                  "roadshow_inputs/role/$(classify_role).cf",
                   "roadshow_dynamic_update.cf",
-                  @(roadshow_dynamic_update.roadshow_role),
                   "roadshow_update_policy.cf"
 
       };
