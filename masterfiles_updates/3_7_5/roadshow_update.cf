@@ -102,15 +102,15 @@ files:
 
   "$(roadshow_inputs)/organisation/$(organisation).cf"
      handle       => "update_files_inputs_roadshow_organisation",
-     copy_from    => r_rcp("$(master_data)/organisations/$(organisation).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(organisation).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/organisation/$(eco_vars).cf"
+  "$(roadshow_inputs)/eco_vars/$(eco_vars).cf"
      handle       => "update_files_inputs_roadshow_eco_vars",
-     copy_from    => r_rcp("$(master_data)/organisations/$(eco_vars).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(eco_vars).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",

@@ -1,10 +1,10 @@
 ###############################################################################
 #
-#   whpdcrg.cf - Basic Policy for Community
+#   webhuis.nl.cf - Basic Policy for Community
 #
 ###############################################################################
 
-bundle agent whpdcrg {
+bundle agent rs_webhuis_nl {
 
 vars:
 
@@ -21,7 +21,7 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,${ldap_base}";
-      "resolvers"       slist => { "10.68.71.17", "10.168.0.17", "8.8.8.8" };
+      "resolvers"       slist => { "8.8.8.8", "10.168.0.17", "10.68.71.103" };
       "searchlist"     string => "webhuis.nl";
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
@@ -36,8 +36,6 @@ vars:
       "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
       "ntp_server"     string => "inuc-01.webhuis.nl";
-#     "nameserver"      slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
-      "nameserver"      slist => { "10.68.71.103", "8.8.8.8" };
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 

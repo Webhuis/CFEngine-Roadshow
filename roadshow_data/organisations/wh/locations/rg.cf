@@ -3,7 +3,7 @@ bundle agent rg {
 vars:
 
   "location"                        string => "ronge";
-  "subdomain"                       string => "ronge.webhuis.nl";
+  "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
 
 reports:
 

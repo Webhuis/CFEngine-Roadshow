@@ -1,9 +1,9 @@
-bundle agent rg {
+bundle agent rs {
 
 vars:
 
   "location"                        string => "Ronge";
-  "subdomain"                       string => "roadshow.webhuis.nl";
+  "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
 
 reports:
 

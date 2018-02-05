@@ -4,13 +4,8 @@ vars:
 
   "role_name"                         string => "kvm hypervisor opennebula node";
 
-  "bundles[kvm_host]"                 string => "${sys.flavor}/kvm_host.cf";
-  "bundles[opennebula_node]"          string => "${sys.flavor}/opennebula_node.cf";
-
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
-
-  "admin_nics"                         slist => { "$(sys.flavor).nic[admin]" };
+# "admin_nics"                         slist => { "$($(sys.flavor).nics[function])", "$($(sys.flavor).nics[admin])" };
+  "admin_nics"                         slist => { "$(sys.ipv4)" };
 
 methods:
 
@@ -22,6 +17,24 @@ reports:
 
  "${this.bundle}: component $(inputs)";
 
+ "${this.bundle}: $(admin_nics)";
+ "${this.bundle}: $($(sys.flavor).nics[function])";
+ "${this.bundle}: $($(sys.flavor).nics[admin])";
 
+}
+
+bundle agent components {
+
+vars:
+
+  "bundles[kvm_host]"                 string => "${sys.flavor}/kvm_host.cf";
+  "bundles[opennebula_node]"          string => "${sys.flavor}/opennebula_node.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+reports:
+
+ "${this.bundle}: components $(inputs)";
 
 }

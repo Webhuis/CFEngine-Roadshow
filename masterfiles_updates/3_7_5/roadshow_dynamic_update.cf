@@ -1,0 +1,84 @@
+#########################################################
+#
+# update_roadshow
+# - Cfengine roadshow policy update (masterfiles -> inputs)
+#
+#########################################################
+
+bundle agent roadshow_dynamic_update {
+
+vars:
+
+  "master_policies" string => "$(sys.workdir)/roadshow_policies";
+
+files:
+
+  "$(sys.workdir)/roadshow_dynamic_inputs/components/$(components.inputs)"
+      handle      => "update_files_inputs_roadshow_components",
+      copy_from   => r_rcp("${master_policies}/components/$(components.inputs)", $(sys.policy_hub)),
+      file_select => r_policies,
+      action      => r_immediate,
+      create      => "true",
+      classes     => r_if_repaired("update_report");
+
+#methods:
+
+# "We desire the role name"    usebundle => classify;
+
+reports:
+
+  "$(this.bundle): $(classify.role) $(components.inputs)";
+
+}
+
+body common control {
+
+  bundlesequence => {
+
+                          "classify",
+                          "components",
+                          "roadshow_dynamic_update"
+
+  };
+
+  inputs => {
+
+      # Roadshow policy update body values
+
+                  "services/autorun/classify.cf",
+                  @(roadshow_role.role),
+                  "roadshow_dynamic_update.cf",
+                  "roadshow_update_policy.cf"
+
+  };
+
+  ignore_missing_bundles => "true";
+
+      # Uncomment to connect to the hub using latest protocol.
+      #protocol_version => "latest";
+}
+
+bundle common roadshow_role {
+
+vars:
+
+      "role"        slist => findfiles("$(sys.workdir)/roadshow_inputs/role/*.cf");
+
+}
+
+###########################################################,##################
+
+body agent control
+{
+      ifelapsed => "1";
+      skipidentify => "true";
+}
+
+#############################################################################
+
+body classes u_kept_successful_command
+# @brief Set command to "kept" instead of "repaired" if it returns 0
+{
+      kept_returncodes => { "0" };
+      failed_returncodes => { "1" };
+}
