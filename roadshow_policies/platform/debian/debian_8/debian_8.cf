@@ -16,6 +16,8 @@ deb-src http://security.debian.org/debian-security jessie/updates main";
   "nics[function]"                       string => $(sys.ipv4[eth0]);
   "nics[support]"                        string => $(sys.ipv4[eth1]);
   "nics[admin]"                          string => $(sys.ipv4[eth2]);
+  "nics[hosts]"                          string => $(sys.ipv4[eth3]);
+  "nics[gateway]"                        string => $(sys.ipv4[eth4]);
 
 methods:
 

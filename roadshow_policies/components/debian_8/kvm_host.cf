@@ -31,6 +31,9 @@ vars:
   "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
+  "nics[hosts]"                 string => $(sys.ipv4[breth0_22]); # temporarily
+  "nics[gateway]"               string => $(sys.ipv4[breth0_42]);
+
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
 files:
