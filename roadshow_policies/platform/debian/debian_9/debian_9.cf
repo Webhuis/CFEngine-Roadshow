@@ -16,6 +16,8 @@ deb-src http://security.debian.org/debian-security stretch/updates main";
   "nics[function]"                       string => $(sys.ipv4[ens3]);
   "nics[support]"                        string => $(sys.ipv4[ens7]);
   "nics[admin]"                          string => $(sys.ipv4[ens8]);
+  "nics[hosts]"                          string => $(sys.ipv4[ens9]);
+  "nics[gateway]"                        string => $(sys.ipv4[ens0]);
 
 methods:
 

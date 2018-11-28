@@ -4,8 +4,9 @@ vars:
 
   "role_name"                         string => "kvm hypervisor opennebula node";
 
-# "admin_nics"                         slist => { "$($(sys.flavor).nics[function])", "$($(sys.flavor).nics[admin])" };
-  "admin_nics"                         slist => { "$(sys.ipv4)" };
+# "admin_nics"                         slist => { "$($(sys.flavor).nics[admin])", "$($(sys.flavor).nics[hosts])" };
+# "admin_nics"                         slist => { "$(sys.ipv4)" };
+  "admin_nics"                         slist => { "$($(kvm_host).nics[admin])", "$($(kvm_host).nics[hosts])" };
 
 methods:
 

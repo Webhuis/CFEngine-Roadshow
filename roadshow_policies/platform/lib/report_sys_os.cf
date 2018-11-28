@@ -7,8 +7,10 @@ reports:
   "Hard class os_platform: ${inventory_linux.id_array[1]}";
   "Hard class os_flavor:   ${sys.flavor}";
   "Hard class os_arch:     ${sys.arch}";
+  "Hard class uqhost:      ${sys.uqhost}";
+  "Hard class fqhost:      ${sys.fqhost}";
 
-"sys.local_libdir:     ${sys.local_libdir}";
-"sys.policy_hub:       ${sys.policy_hub}";
+  "sys.local_libdir:       ${sys.local_libdir}";
+  "sys.policy_hub:         ${sys.policy_hub}";
 
 }
