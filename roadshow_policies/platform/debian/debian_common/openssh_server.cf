@@ -10,7 +10,7 @@ files:
   "$(sshd_config)"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_template  => "$(sys.workdir)/esp_inputs/templates/sshd_config.tmpl",
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/sshd_config.tmpl",
     classes        => if_repaired("restart_sshd");
 
 services:
