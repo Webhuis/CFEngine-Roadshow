@@ -2,8 +2,9 @@ bundle agent rs {
 
 vars:
 
-  "location"                        string => "Ronge";
-  "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
+  "location"                        string => "Roadshow";
+# "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
+  "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
 
 reports:
 
