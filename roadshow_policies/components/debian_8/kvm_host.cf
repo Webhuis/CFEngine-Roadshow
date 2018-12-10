@@ -50,7 +50,7 @@ files:
            perms => mo("644","root"),
           create => "true",
           action => r_immediate,
-   edit_template => "$(sys.workdir)/esp_dynamic_inputs/templates/modules.tmpl";
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/modules.tmpl";
 
 methods:
 

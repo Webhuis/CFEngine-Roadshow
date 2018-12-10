@@ -31,12 +31,12 @@ vars:
 
 files:
   "$(vlan_dir)/$(vlan)"
-         comment  => "Vlans at esptl",
+         comment  => "Vlans at Webhuis",
            perms  => mog("644","root","root"),
           create  => "true",
    edit_defaults  => no_backup,
           action  => e_immediate,
-   edit_template  => "$(sys.workdir)/esp_dynamic_inputs/templates/vlans_ip.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/vlans_ip.tmpl",
          classes  => e_if_repaired("restart_network");
 
 reports:

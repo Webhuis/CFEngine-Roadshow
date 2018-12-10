@@ -21,8 +21,8 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,${ldap_base}";
-      "resolvers"       slist => { "8.8.8.8", "10.168.0.17", "10.68.71.103" };
-      "searchlist"     string => "webhuis.nl";
+      "resolvers"       slist => { "8.8.8.8", "10.68.171.17", "10.168.0.17" };
+      "searchlist"     string => "rs.webhuis.nl";
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
       "nfs_webapps"    string => "/var/local/webapps";
