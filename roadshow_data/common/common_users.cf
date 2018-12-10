@@ -6,7 +6,7 @@ vars:
   "users[martin][uid]"         string => "1000";
   "users[martin][gname]"       string => "martin";
   "users[martin][gid]"         string => "1000";
-  "users[martin][password]"    string => "$6$bAwGtmCv$WEjZ95uHUcOE2bsKKXSPtyiMlk80g3yUhkw6hiepnJ8jSkwPHqzDvkfRXVklunDBpQUfGxOhhUs1JET3HtfAn/";
+  "users[martin][password]"    string => "$6$0vpcpVAV$kz8zAfF2S30Tnrfh/TaJc7dJvGY2iYKX1BFhUGjPVHgiiRCuXRvQMVXf9ho/2RmeId80HoY.Wl/fH9CVfgDRH.";
   "users[martin][shell]"       string => "/bin/bash";
   "users[martin][auth_key]"    string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150";
 
