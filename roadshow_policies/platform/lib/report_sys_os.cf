@@ -10,6 +10,8 @@ reports:
   "Hard class uqhost:      ${sys.uqhost}";
   "Hard class fqhost:      ${sys.fqhost}";
 
+  "sys.domain:             ${sys.domain}";
+  "sys.fqdn:               ${sys.fqhost}";
   "sys.local_libdir:       ${sys.local_libdir}";
   "sys.policy_hub:         ${sys.policy_hub}";
 
