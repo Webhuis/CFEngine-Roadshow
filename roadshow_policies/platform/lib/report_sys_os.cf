@@ -1,5 +1,13 @@
 bundle agent report_sys_os {
 
+vars:
+
+  "nics[front]"                          string => $(sys.ipv4[eth0]);
+  "nics[support]"                        string => $(sys.ipv4[eth1]);
+  "nics[admin]"                          string => $(sys.ipv4[eth2]);
+  "nics[hosts]"                          string => $(sys.ipv4[eth3]);
+  "nics[gateway]"                        string => $(sys.ipv4[eth4]);
+
 reports:
 
   "Hard class os:          ${sys.os}";
@@ -14,5 +22,7 @@ reports:
   "sys.fqdn:               ${sys.fqhost}";
   "sys.local_libdir:       ${sys.local_libdir}";
   "sys.policy_hub:         ${sys.policy_hub}";
+
+  "nic front               $(nic[front])";
 
 }
