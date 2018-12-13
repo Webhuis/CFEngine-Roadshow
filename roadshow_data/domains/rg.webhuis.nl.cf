@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-bundle agent rg_webhuis_nl {
+bundle agent rg.webhuis_nl {
 
 vars:
 
@@ -13,7 +13,7 @@ vars:
       "dns"             slist => {"ns1", "ns2"};
       "idns"            slist => {"nsid1", "nsid2"};
       "ttl"            string => "300"; 
-      "network"        string => "10.94.12.0";
+      "network"        string => "10.68.71.0";
       "mask"           string => "255.255.255.0";
 
 #      "mldap"           slist => {"ldapm1", "ldapm2"};
@@ -21,7 +21,7 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,${ldap_base}";
-      "resolvers"       slist => { "8.8.8.8", "10.94.12.17", "10.68.171.17" };
+      "resolvers"       slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
       "searchlist"     string => "rg.webhuis.nl";
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
@@ -35,19 +35,12 @@ vars:
       "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
       "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
-      "ntp_server"     string => "0.nl.pool.ntp.org";
+      "ntp_server"     string => "inuc-01.webhuis.nl";
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
-
-   kvm_host::
         "ntp_pool"    string => "nl.pool.ntp.org";
-        "ntp_master"   slist => { "0", "1", "2", "3" };
-        "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
-
-   !kvm_host::
-        "ntp_pool"    string => "${sys.domain}";
-        "ntp_master"   slist => { "inuc-01" };
-        "restrict"     slist => { "127.0.0.1", "::1" };
+        "ntp_master"   slist => { "1", "2", "3" };
+#       "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
 
 }

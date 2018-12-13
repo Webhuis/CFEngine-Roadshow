@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-bundle agent rs_webhuis_nl {
+bundle agent rs.webhuis_nl {
 
 vars:
 
@@ -21,7 +21,7 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,${ldap_base}";
-      "resolvers"       slist => { "8.8.8.8", "10.68.171.17", "10.168.0.17" };
+      "resolvers"       slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
       "searchlist"     string => "rs.webhuis.nl";
  
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
@@ -39,15 +39,8 @@ vars:
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
-
-   kvm_host::
         "ntp_pool"    string => "nl.pool.ntp.org";
         "ntp_master"   slist => { "1", "2", "3" };
-        "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
-
-   !kvm_host::
-        "ntp_pool"    string => "${sys.domain}";
-        "ntp_master"   slist => { "inuc-01" };
-        "restrict"     slist => { "127.0.0.1", "::1" };
+#       "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
 
 }

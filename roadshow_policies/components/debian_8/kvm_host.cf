@@ -56,9 +56,12 @@ methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
+  "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks;
 
 reports:
 
   "$(this.bundle):";
 
 }
+
+bundle 
