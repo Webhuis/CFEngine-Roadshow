@@ -23,6 +23,6 @@ reports:
   "sys.local_libdir:       ${sys.local_libdir}";
   "sys.policy_hub:         ${sys.policy_hub}";
 
-  "nic front               $(nic[front])";
+  "nic front               $(nics[front])";
 
 }
