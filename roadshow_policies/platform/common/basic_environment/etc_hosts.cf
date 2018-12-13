@@ -6,7 +6,7 @@ files:
   comment                   => "/etc/hosts voor elke host",
   create                    => "true",
   perms                     => mo("644","root"),
-  edit_template             => "$(sys.workdir)/roadshow_inputs/templates/etc_hosts.tmpl";
+  edit_template             => "$(sys.workdir)/roadshow_inputs/templates/etc_hosts.tmpl",
   action                    => r_immediate;
 
 reports:
