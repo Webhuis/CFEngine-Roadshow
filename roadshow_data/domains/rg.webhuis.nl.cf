@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-bundle agent rg.webhuis_nl {
+bundle agent rg_webhuis_nl {
 
 vars:
 
