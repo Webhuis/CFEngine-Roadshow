@@ -29,6 +29,7 @@ vars:
 
 methods:
  
+ "We want to knoe the nics"  usebundle => nic;
  "Configure apt mirror"      usebundle => apt_cacher;
  "Install common packages"   usebundle => packages("debian_common.pkg");
  "Automate Security Upgras"  usebundle => unattended_upgrades;

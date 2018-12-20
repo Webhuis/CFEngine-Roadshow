@@ -11,8 +11,8 @@ vars:
   "inputs"                             slist => getvalues("bundles");
 
 # "admin_nics"                         slist => { "$($(sys.flavor).nics[admin])", "$($(sys.flavor).nics[hosts])" };
-# "admin_nics"                         slist => { "$(sys.ipv4)" };
-  "admin_nics"                         slist => { "$($(kvm_host).nics[admin])", "$($(kvm_host).nics[hosts])" };
+  "admin_nics"                         slist => { "$(sys.ipv4[eth0.1001])" };
+# "admin_nics"                         slist => { "$($(kvm_host).nics[admin])", "$($(kvm_host).nics[hosts])" };
 
 methods:
 
