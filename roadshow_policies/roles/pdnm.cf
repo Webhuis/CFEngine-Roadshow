@@ -4,16 +4,16 @@ vars:
 
   "role_name"                         string => "Powerdns Mysql name server";
 
-  "bundles[mysql_server]"          string => "${sys.flavor}/mysql_server.cf";
-  "bundles[php5_mysql]"            string => "${sys.flavor}/php5_mysql.cf";
-  "bundles[pdns_server]"           string => "${sys.flavor}/pdns_server.cf";
-  "bundles[apache2]"               string => "${sys.flavor}/apache2.cf";
-  "bundles[apache_php]"            string => "${sys.flavor}/apache_php.cf";
+  "bundles[mysql_server]"             string => "${sys.flavor}/mysql_server.cf";
+  "bundles[php5_mysql]"               string => "${sys.flavor}/php5_mysql.cf";
+  "bundles[pdns_server]"              string => "${sys.flavor}/pdns_server.cf";
+  "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
+  "bundles[apache_php]"               string => "${sys.flavor}/apache_php.cf";
 
-  "sequence"                        slist => getindices("bundles");
-  "inputs"                          slist => getvalues("bundles");
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
 
-  "admin_nics"                  slist => { "$($(sys.flavor).nics[admin])" };
+  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[two])" };
 
 methods:
 
