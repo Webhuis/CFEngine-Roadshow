@@ -1,0 +1,25 @@
+bundle agent opennebula_server {
+
+vars:
+
+  "pkg[opennebula]"	                 string => "*";
+  "pkg[opennebula-sunstone]"	         string => "*";
+  "pkg[opennebula-gate]"	         string => "*";
+  "pkg[opennebula-flow]"	         string => "*";
+
+  "apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.4/Debian/9 stable opennebula";
+  "apt_key"                              string => "opennebula.pubkey.gpg";
+ 
+methods:
+
+  "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need the opennebula repo"       usebundle => apt_repo("opennebula_server.apt_repo", "$(apt_key)");
+
+  "We desire opennebula"              usebundle => packages("opennebula_server.pkg");
+
+reports:
+
+ "${this.bundle}: The OpenNebula Server";
+
+}

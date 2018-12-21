@@ -1,0 +1,20 @@
+bundle agent oned {
+
+vars:
+
+  "bundles[opennebula_server]"                 string => "$(sys.flavor)/opennebula_server.cf";
+
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => getvalues("bundles");
+
+  "admin_nics"                                  slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
+
+methods:
+
+  "We desire the opennebula server"         usebundle => opennebula_server;
+
+reports:
+
+  "$(this.bundle): $(inputs)";
+
+}
