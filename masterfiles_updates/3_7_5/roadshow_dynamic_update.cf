@@ -27,7 +27,7 @@ files:
 
 reports:
 
-  "$(this.bundle): $(classify.role) $(components.inputs)";
+  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
 
 }
 
