@@ -29,14 +29,3 @@ reports:
  "${this.bundle}: $(admin_nics)";
 
 }
-
-bundle agent components {
-
-vars:
-
-
-reports:
-
- "${this.bundle}: components $(inputs)";
-
-}
