@@ -18,8 +18,8 @@ vars:
 
 methods:
 
-  "KVM host ready for VM"          usebundle => kvm_host;
-  "We desire Opennebula"           usebundle => opennebula_node; 
+  "KVM host ready for VM"          usebundle => "kvm_host";
+  "We desire Opennebula"           usebundle => "opennebula_node"; 
 
 reports:
 
