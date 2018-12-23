@@ -31,8 +31,7 @@ vars:
   "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
-  "nics[hosts]"                 string => $(sys.ipv4[breth0_22]); # temporarily
-  "nics[gateway]"               string => $(sys.ipv4[breth0_42]);
+  "vlans"                        slist =>  { "$($(classify.role).vlan)" };
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
@@ -56,7 +55,7 @@ methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
-  "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks;
+  "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks(S(vlans));
 
 reports:
 
@@ -64,4 +63,23 @@ reports:
 
 }
 
-bundle 
+bundle edit_xml libvirt_vlan_networks(vlans) {
+
+insert_tree:
+
+   "<network>
+  <name>$(vlan)</name>
+  <forward mode='bridge'/>
+  <bridge name='breth0.$(vlan)'/>
+  <virtualport type='openvswitch'/>
+  <portgroup name='$(vlan)'>
+    <vlan>
+      <tag id='$(vlan)'/>
+    </vlan>
+  </portgroup>
+  </network>"
+
+   select_xpath => " /var/lib/libvirt/qemu/networks";
+
+}
+

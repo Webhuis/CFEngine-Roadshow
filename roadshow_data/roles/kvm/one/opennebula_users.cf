@@ -1,0 +1,17 @@
+bundle agent opennebula_users {
+
+vars:
+
+
+  "users[oneadmin][fullname]"    string => "Open Nebula";
+  "users[oneadmin][uid]"         string => "9869";
+  "users[oneadmin][gname]"       string => "oneadmin";
+  "users[oneadmin][gid]"         string => "9869";
+  "users[oneadmin][shell]"       string => "/bin/bash";
+
+  "groups[oneadmin][gid]"        string => "9869";
+
+  "user"                        slist => getindices("users");
+  "sudoers_rules"              string => "ALL=NOPASSWD: /bin/dd, /sbin/lvremove, /sbin/lvcreate, /sbin/lvs, /sbin/vgdisplay";
+
+}
