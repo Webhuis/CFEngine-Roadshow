@@ -3,5 +3,6 @@
 # Do not edit
 #
 [%CFEngine any:: %]
+domain $(sys.domain)
 search $(sys.domain)
 nameserver $($(classify.eco_vars).resolvers)

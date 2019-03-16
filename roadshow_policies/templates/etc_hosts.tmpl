@@ -4,7 +4,7 @@
 #
 [%CFEngine any:: %]
 127.0.0.1       localhost
-$($(classify.role)).etc_hosts_nic)    ${sys.fqhost}      ${sys.uqhost}
+$($(classify.role).etc_hosts_nic)    ${sys.fqhost}      ${sys.uqhost}
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
