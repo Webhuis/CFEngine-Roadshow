@@ -7,6 +7,6 @@ methods:
 
 reports:
 
-  "$(this.bundle):";
+  "$(this.bundle): $(vendor) $(sys.flavour)";
 
 }
