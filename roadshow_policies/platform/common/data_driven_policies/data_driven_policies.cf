@@ -1,0 +1,9 @@
+bundle agent data_driven_policies {
+
+methods:
+
+  "openssh server and client"      usebundle => ssh_all_config.cf;
+  "Standardize hosts setup"        usebundle => etc_hosts;
+  "Standardize resolv.conf setup"  usebundle => resolv_conf;
+
+}

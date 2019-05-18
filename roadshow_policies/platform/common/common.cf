@@ -4,7 +4,6 @@ methods:
 
   "We desire a clean house"      usebundle => housekeeping;
   "Basic environment stuff"      usebundle => basic_environment;
-  "openssh server and client"    usebundle => ssh_all_config;
   "We use LDAP Authentication"   usebundle => authentication;
 # "Feed Hard Classes to Data" 	 usebundle => feed_hard_classes;
   "Prepare for users"   	 usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );

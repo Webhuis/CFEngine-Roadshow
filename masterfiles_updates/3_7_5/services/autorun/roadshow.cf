@@ -15,10 +15,11 @@ bundle agent roadshow
       "tags" slist => { "autorun" };
 
   methods:
-      "Determiine the role organisation and geograph" usebundle => classify;
+      "Determine the role organisation and geograph"  usebundle => classify;
 #     "Request Data for machine information"          usebundle => request_role_information;
       "Collect values and policies"                   usebundle => do_roadshow;
-      "We require the domain information"             usebundle => $(do_roadshow.class_domain);
+#     "Update the dynamic policies specific to us"    usebundle => roadshow_dynamic_update;   # New Dynamic Update Mechanism through cf-execd
+      "We require the domain information"             usebundle => ${do_roadshow.class_domain};
       "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
       "What purpose do we have living in this World"  usebundle => $(classify.role);
 
