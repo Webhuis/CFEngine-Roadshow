@@ -9,6 +9,7 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
+  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[one])" };
   "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
 
 methods:
