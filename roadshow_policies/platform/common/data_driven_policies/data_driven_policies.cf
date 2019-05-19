@@ -22,6 +22,6 @@ methods:
 
   !invalid_ip::
 
-    "openssh server and client"         usebundle => ssh_all_config.cf;
+    "openssh server and client"         usebundle => ssh_all_config;
 
 }
