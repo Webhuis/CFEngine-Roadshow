@@ -23,5 +23,15 @@ methods:
   !invalid_ip::
 
     "openssh server and client"         usebundle => ssh_all_config;
+                                                                                                                                                                                       
+reports:                                                                                                                                                                               
+                                                                                                                                                                                       
+  "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
+
+  invalid::
+   "Invalid IP Address! $(sys.ipv4)";
+
+  !invalid::
+   "Valid IP Address! $(sys.ipv4)";
 
 }
