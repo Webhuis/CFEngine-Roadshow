@@ -21,7 +21,7 @@ bundle agent roadshow
 #     "Update the dynamic policies specific to us"    usebundle => roadshow_dynamic_update;   # New Dynamic Update Mechanism through cf-execd
       "We require the domain information"             usebundle => ${do_roadshow.class_domain};
       "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
-      "What purpose do we have living in this World"  usebundle => $(classify.role);
+      "What purpose do we have living in life"        usebundle => $(classify.role);
 
 reports:
 

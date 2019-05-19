@@ -9,7 +9,7 @@ vars:
 
  files:
 
-   "$(sshd_config)"
+  "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
    create                    => "true",
@@ -41,8 +41,8 @@ bundle agent edit_ssh(file,params) {
 
   files:
       "$(file)"
-               handle => "edit_ssh",
-              comment => "Set desired ssh_config parameters",
-            edit_line => set_config_values("$(params)");
+       handle                => "edit_ssh",
+       comment               => "Set desired ssh_config parameters",
+       edit_line             => set_config_values("$(params)");
 
 }

@@ -1,0 +1,29 @@
+bundle agent check_ip(ip_address) {
+
+  classes:
+
+  "match_$(ip_address)"   expression => regextract(
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
+            $(ip_address), "octet"
+            );
+  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[1])");
+  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[2])");
+  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[3])");
+  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[4])");
+
+reports:
+
+  "${this.bundle} nic: $(ip_address)";
+
+}
+bundle agent check_ip_list(ip_address_list) {
+
+methods:
+
+  "Check list on valid IP Addresses"  usebundle => check_ip(ip_address_list);
+
+reports:
+
+  "${this.bundle} ip_addresses: $(ip_address_list)";
+
+}
