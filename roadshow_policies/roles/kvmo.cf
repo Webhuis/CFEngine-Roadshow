@@ -12,9 +12,8 @@ vars:
 
   "vlan"                               slist => { "22", "42", "80", "123", "213", "254", "443", "1001", "1007", "1008", "1010", "1094", "1111" };
 
-  "etc_hosts_nic"                      slist => { "$(sys.ipv4[breth0_123])" };
-  "admin_nics"                         slist => { "$(sys.ipv4[breth0_42])", "$(sys.ipv4[breth0_1001])" };
-
+  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[two])" };
+  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[four])" };
 
 methods:
 
