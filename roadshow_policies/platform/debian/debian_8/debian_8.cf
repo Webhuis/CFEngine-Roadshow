@@ -13,6 +13,7 @@ deb-src http://ftp.nl.debian.org/debian/ jessie main contrib non-free
 deb http://security.debian.org/debian-security jessie/updates main
 deb-src http://security.debian.org/debian-security jessie/updates main";
 
+  "nic_index"                             slist => getindices($(sys.ipv4);
   "nics[one]"                            string => $(sys.ipv4[eth0]);
   "nics[two]"                            string => $(sys.ipv4[eth1]);
   "nics[three]"                          string => $(sys.ipv4[eth2]);
@@ -33,5 +34,7 @@ reports:
   "$(this.bundle): $(sys.ipv4[eth0])";
   "$(this.bundle): $(sys.ipv4[eth1])";
   "$(this.bundle): $(sys.ipv4[eth2])";
+
+  "nic_index: $(nic_index)";
 
 }
