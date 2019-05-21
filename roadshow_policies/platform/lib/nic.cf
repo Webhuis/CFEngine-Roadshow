@@ -7,6 +7,6 @@ vars:
 
 reports:
 
-  "${this.bundle} nics: $(nic_index) $(sys.ipv4[nic_index])";
+  "${this.bundle} nics: $(nic_index) $(sys.ipv4[$(nic_index)])";
 
 }
