@@ -2,6 +2,7 @@ bundle agent common {
 
 methods:
 
+  "We want to know the nics"     usebundle => nic;
   "We desire a clean house"      usebundle => housekeeping;
   "Basic environment stuff"      usebundle => basic_environment;
   "We use LDAP Authentication"   usebundle => authentication;

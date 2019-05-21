@@ -1,0 +1,13 @@
+bundle agent nic {
+
+vars:
+
+  "nic_index"          slist  => getindices("sys.ipv4");
+  "nic_values"         slist  => getindices("sys.ipv4");
+
+reports:
+
+  "${this.bundle} nics: $(nic_index)";
+  "${this.bundle} nics: $(nic_values)";
+
+}
