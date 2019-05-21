@@ -1,0 +1,26 @@
+bundle agent kddd {
+
+vars:
+
+  "role_name"                         string => "kea DHCP Dynamic DNS server";
+
+  "bundles[kvm_host]"                 string => "${sys.flavor}/kea_dhcp_ddns_server.cf";
+  "bundles[kvm_host]"                 string => "${sys.flavor}/kea_admin.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+  "etc_hosts_nic"                      slist => { "$(sys.ipv4[eth0_123])" };
+  "admin_nics"                         slist => { "$(sys.ipv4[eth0_42])", "$(sys.ipv4[eth0_1001])" };
+
+
+methods:
+
+  "We desire the Kea server"       usebundle => "kea_dhcp_ddns_server";
+  "We desire Kea Administration"   usebundle => "kea_admin"; 
+
+reports:
+
+ "${this.bundle}: The Kea DHCP Dynamic DNS server";
+
+}
