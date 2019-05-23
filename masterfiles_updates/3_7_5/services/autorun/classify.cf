@@ -13,7 +13,7 @@ vars:
   "location"             string => "$(part[5])";
   "instance"             string => "$(part[6])";
 
-  "nic_index"             slist => getindices)"sys.ipv4");
+  "nic_index"             slist => getindices("sys.ipv4");
 
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
