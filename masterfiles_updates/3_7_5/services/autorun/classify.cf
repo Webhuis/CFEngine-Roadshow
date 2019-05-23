@@ -13,12 +13,15 @@ vars:
   "location"             string => "$(part[5])";
   "instance"             string => "$(part[6])";
 
+  "nic_index"             slist => getindices)"sys.ipv4");
+
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
 reports:
 
+  "$(this.bundle) ipv4: $(sys.ipv4[nic_index])";
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) eco_vars: $(eco_vars)";
 }
