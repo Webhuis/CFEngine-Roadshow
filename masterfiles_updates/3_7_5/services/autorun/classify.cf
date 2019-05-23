@@ -21,7 +21,7 @@ vars:
 
 reports:
 
-  "$(this.bundle) ipv4: $(sys.ipv4[nic_index])";
+  "$(this.bundle) ipv4: $(nic_index) $(sys.ipv4[$(nic_index)])";
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) eco_vars: $(eco_vars)";
 }
