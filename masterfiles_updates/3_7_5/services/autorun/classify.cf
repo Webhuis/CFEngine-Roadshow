@@ -46,8 +46,8 @@ classes:
 
   "nic_front"        expression => regcmp('.*[1001]', 'bridge_ord');
   "nic_support"      expression => regcmp('.*[123]', 'bridge_ord');
-  "nic_admin"        expression => regcmp('.*[22]' 'bridge_ord');
-  "nic_life"         expression => regcmp('.*[42]' 'bridge_ord');
+  "nic_admin"        expression => regcmp('.*[22]', 'bridge_ord');
+  "nic_life"         expression => regcmp('.*[42]', 'bridge_ord');
 
 vars:
 
