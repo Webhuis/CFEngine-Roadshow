@@ -1,4 +1,4 @@
-bundle agent nic(nic_index) {
+bundle agent nic (nic_index) {
 
 classes:
 
