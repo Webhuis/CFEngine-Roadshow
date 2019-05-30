@@ -17,5 +17,6 @@ methods:
 reports:
 
  "$(this.bundle): I am doing common policies.";
+ "$(this.bundle) nics: $(nic.nic_front)";
 
 }
