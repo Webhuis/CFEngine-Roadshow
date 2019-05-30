@@ -16,12 +16,11 @@ bundle agent roadshow
 
   methods:
       "Determine the role organisation and geograph"  usebundle => classify;
+      "What purpose do we have living in life"        usebundle => $(classify.role);
 #     "Request Data for machine information"          usebundle => request_role_information;
       "Collect values and policies"                   usebundle => do_roadshow;
-#     "Update the dynamic policies specific to us"    usebundle => roadshow_dynamic_update;   # New Dynamic Update Mechanism through cf-execd
       "We require the domain information"             usebundle => ${do_roadshow.class_domain};
       "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
-      "What purpose do we have living in life"        usebundle => $(classify.role);
 
 reports:
 
