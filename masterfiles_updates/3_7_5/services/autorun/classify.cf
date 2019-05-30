@@ -51,6 +51,7 @@ classes:
 
 vars:
 
+  "nic_ord"              string => "$(nic_ord)";
   "nic_ord_1"            string => "$(nic_ord[1])";
   "nic_ord_2"            string => "$(nic_ord[2])";
   "nic_ord_3"            string => "$(nic_ord[3])";
