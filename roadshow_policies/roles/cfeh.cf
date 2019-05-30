@@ -18,7 +18,7 @@ methods:
 
 reports:
 
-  "${this.bundle}: $(role_name)";
+  "${this.bundle}: $(role_name) $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
 }
