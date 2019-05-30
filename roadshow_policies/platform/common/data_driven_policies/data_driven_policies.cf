@@ -2,7 +2,7 @@ bundle agent data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role).etc_hosts_nic)");
+  "We want a valid host IP Address"     usebundle => check_ip("$(nic.nic_front)");
 
   !invalid_ip::
 
