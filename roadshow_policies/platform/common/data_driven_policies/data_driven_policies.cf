@@ -27,11 +27,12 @@ methods:
 reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
+  "${this.bundle}: $(nic.nic_front)";  
 
   invalid::
-   "Invalid IP Address! $(sys.ipv4)";
+   "${this.bundle}: Invalid IP Address! $(sys.ipv4)";
 
   !invalid::
-   "Valid IP Address! $(sys.ipv4)";
+   "${this.bundle}: Valid IP Address! $(sys.ipv4)";
 
 }
