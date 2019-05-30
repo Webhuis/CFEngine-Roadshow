@@ -19,10 +19,6 @@ vars:
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
-methods:
-
-  "Determine nics"    usebundle => nic($(nic_index));
-
 reports:
 
   "$(this.bundle) ipv4: $(nic_index) $(sys.ipv4[$(nic_index)])";
