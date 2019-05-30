@@ -38,19 +38,20 @@ classes:
 
   "common_nic"       expression => regextract('[a-z]*[0-9]', $(nic_index), "nic_ord");
 
-  "nic_front"        expression => regcmp('.*[0]', 'nic_ord');
-  "nic_support"      expression => regcmp('.*[1]', 'nic_ord');
-  "nic_admin"        expression => regcmp('.*[2]', 'nic_ord');
+  "nic_front"        expression => regcmp('.*[0]', '$(nic_ord)');
+  "nic_support"      expression => regcmp('.*[1]', '$(nic_ord)');
+  "nic_admin"        expression => regcmp('.*[2]', '$(nic_ord)');
 
   "bridge_nic"       expression => regextract('br[a-z]*[_][1-9][0-9][0-9]*', $(nic_index), "bridge_ord");
 
-  "nic_front"        expression => regcmp('.*[1001]', 'bridge_ord');
-  "nic_support"      expression => regcmp('.*[123]', 'bridge_ord');
-  "nic_admin"        expression => regcmp('.*[22]', 'bridge_ord');
-  "nic_life"         expression => regcmp('.*[42]', 'bridge_ord');
+  "nic_front"        expression => regcmp('.*[1001]', '$(bridge_ord)');
+  "nic_support"      expression => regcmp('.*[123]', '$(bridge_ord)');
+  "nic_admin"        expression => regcmp('.*[22]', '$(bridge_ord)');
+  "nic_life"         expression => regcmp('.*[42]', '$(bridge_ord)');
 
 vars:
 
+  "nic_index"            string => "$(nic_index)";
   "nic_found"            string => "$(nic_ord)";
   "nic_ord_1"            string => "$(nic_ord[1])";
   "nic_ord_2"            string => "$(nic_ord[2])";
