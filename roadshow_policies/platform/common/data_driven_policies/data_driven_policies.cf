@@ -2,7 +2,7 @@ bundle agent data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$(nic.nic_front)");
+  "We want a valid host IP Address"     usebundle => check_ip($(nic.nic_front));
 
   !invalid_ip::
 
@@ -10,7 +10,7 @@ methods:
 
   any::
 
-    "Check list of resolvers"           usebundle => check_ip_list("$($(classify.eco_vars).resolvers)");
+    "Check list of resolvers"           usebundle => check_ip_list($($(classify.eco_vars).resolvers));
 
   !invalid_ip::
 
@@ -18,7 +18,7 @@ methods:
 
   any::
 
-    "Check list of admin IP Addresses"  usebundle => check_ip_list("$($(classify.role).admin_nics)");
+    "Check list of admin IP Addresses"  usebundle => check_ip_list($($(classify.role).admin_nics));
 
   !invalid_ip::
 
