@@ -24,7 +24,7 @@ methods:
 
     "openssh server and client"         usebundle => ssh_all_config;
                                                                                                                                                                                        
-reports:                                                                                                                                                                               
+reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
 
