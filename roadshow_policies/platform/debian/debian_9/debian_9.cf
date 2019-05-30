@@ -13,12 +13,6 @@ deb-src http://ftp.nl.debian.org/debian/ stretch main contrib non-free
 deb http://security.debian.org/debian-security stretch/updates main
 deb-src http://security.debian.org/debian-security stretch/updates main";
 
-  "nics[one]"                            string => $(sys.ipv4[ens3]);
-  "nics[two]"                            string => $(sys.ipv4[ens7]);
-  "nics[three]"                          string => $(sys.ipv4[ens8]);
-  "nics[four]"                           string => $(sys.ipv4[ens9]);
-  "nics[five]"                           string => $(sys.ipv4[ensa]);
-
 methods:
 
   "We desire the Stretch sources_list" usebundle => sources_list("$(sources_list)");

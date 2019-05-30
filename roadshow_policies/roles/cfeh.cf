@@ -18,6 +18,7 @@ methods:
 
 reports:
 
- "${this.bundle}: $(role_name)";
+  "${this.bundle}: $(role_name)";
+  "${this.bundle} admin_nics: ${admin_nics}";
 
 }

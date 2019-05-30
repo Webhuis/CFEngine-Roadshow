@@ -7,17 +7,11 @@ vars:
   "pkg[libzmq3]"                         string => "*";
   "pkg[python-zmq]"                      string => "*";
 
-  "sources_list"      string => "deb http://ftp.nl.debian.org/debian/ jessie main contrib non-free
+  "sources_list"                         string => "deb http://ftp.nl.debian.org/debian/ jessie main contrib non-free
 deb-src http://ftp.nl.debian.org/debian/ jessie main contrib non-free
 
 deb http://security.debian.org/debian-security jessie/updates main
 deb-src http://security.debian.org/debian-security jessie/updates main";
-
-  "nics[one]"                            string => $(sys.ipv4[eth0]);
-  "nics[two]"                            string => $(sys.ipv4[eth1]);
-  "nics[three]"                          string => $(sys.ipv4[eth2]);
-  "nics[four]"                           string => $(sys.ipv4[eth3]);
-  "nics[five]"                           string => $(sys.ipv4[eth4]);
 
 methods:
 
@@ -27,11 +21,6 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(nics[function])";
-  "$(this.bundle): $(nics[support])";
-  "$(this.bundle): $(nics[admin])";
-  "$(this.bundle): $(sys.ipv4[eth0])";
-  "$(this.bundle): $(sys.ipv4[eth1])";
-  "$(this.bundle): $(sys.ipv4[eth2])";
+  "$(this.bundle):";
 
 }
