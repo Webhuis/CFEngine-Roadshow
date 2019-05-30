@@ -36,49 +36,48 @@ bundle agent nic(nic_index) {
 
 classes:
 
-  "common_nic"       expression => regextract('[a-z]*[0-9]', $(nic_index), "nic_ord");
+  "common_nic"       expression => regextract("^([be][nrt][ehs][th]*)(.*)", $(nic_index), "nic_ord");
 
-  "nic_front"        expression => regcmp('.*[0]', '$(nic_ord)');
-  "nic_support"      expression => regcmp('.*[1]', '$(nic_ord)');
-  "nic_admin"        expression => regcmp('.*[2]', '$(nic_ord)');
+  "ens"              expression => regcmp("ens", "$(nic_ord[1])");
+  "eth"              expression => regcmp("eth", "$(nic_ord[1])");
+  "breth"            expression => regcmp("breth", "$(nic_ord[1])");
 
-  "bridge_nic"       expression => regextract('br[a-z]*[_][1-9][0-9][0-9]*', $(nic_index), "bridge_ord");
+ ens::
 
-  "nic_front"        expression => regcmp('.*[1001]', '$(bridge_ord)');
-  "nic_support"      expression => regcmp('.*[123]', '$(bridge_ord)');
-  "nic_admin"        expression => regcmp('.*[22]', '$(bridge_ord)');
-  "nic_life"         expression => regcmp('.*[42]', '$(bridge_ord)');
+  "front"            expression => regcmp("3", "$(nic_ord[2])");
+  "support"          expression => regcmp("7", "$(nic_ord[2])");
+  "admin"            expression => regcmp("8", "$(nic_ord[2])");
+
+ eth::
+
+  "front"            expression => regcmp("0", "$(nic_ord[2])");
+  "support"          expression => regcmp("1", "$(nic_ord[2])");
+  "admin"            expression => regcmp("2", "$(nic_ord[2])");
+
+ breth::
+
+  "front"            expression => regcmp("1001", "$(nic_ord[2])");
+  "support"          expression => regcmp("123", "$(nic_ord[2])");
+  "admin"            expression => regcmp("22", "$(nic_ord[2])");
+  "life"             expression => regcmp("42", "$(nic_ord[2])");
 
 vars:
 
-  "nic"                  string => "$(nic_index)";
-  "nic_found"            string => "$(nic_ord)";
-  "nic_ord_1"            string => "$(nic_ord[1])";
-  "nic_ord_2"            string => "$(nic_ord[2])";
-  "nic_ord_3"            string => "$(nic_ord[3])";
-  nic_front::
-   "nic_front"           string => "$(nic_index)";
+  front::
+   "nic_front"           string => "$(nic_ord[1])$(nic_ord[2])";
 
-  nic_support::
-   "nic_support"         string => "$(nic_index)";
+  support::
+   "nic_support"         string => "$(nic_ord[1])$(nic_ord[2])";
 
-  nic_admin::
-   "nic_admin"           string => "$(nic_index)";
+  admin::
+   "nic_admin"           string => "$(nic_ord[1])$(nic_ord[2])";
 
-  nic_life::
-   "nic_life"            string => "$(nic_index)";
+  life::
+   "nic_life"            string => "$(nic_ord[1])$(nic_ord[2])";
 
 reports:
 
-  "$(this.bundle): nic $(nic)";
-  "$(this.bundle): nic_found $(nic_found)";
-  "$(this.bundle): nic_ord_1 $(nic_ord_1)";
-  "$(this.bundle): nic_ord_2 $(nic_ord_2)";
-  "$(this.bundle): nic_ord_3 $(nic_ord_3)";
-  "$(this.bundle): bridge_ord $(bridge_ord)";
-  "$(this.bundle): nic_front $(nic_front)";
-  "$(this.bundle): nic_support $(nic_support)";
-  "$(this.bundle): nic_admin $(nic_admin)";
-  "$(this.bundle): nic_life $(nic_life)";
+  "$(this.bundle) nic_ord:";
 
 }
+
