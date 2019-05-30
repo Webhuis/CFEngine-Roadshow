@@ -1,0 +1,49 @@
+bundle agent nic(nic_index) {
+
+classes:
+
+  "common_nic"       expression => regextract("^([be][nrt][ehs][th]*)(.*)", $(nic_index), "nic_ord");
+
+  "ens"              expression => regcmp("ens", "$(nic_ord[1])");
+  "eth"              expression => regcmp("eth", "$(nic_ord[1])");
+  "breth"            expression => regcmp("breth", "$(nic_ord[1])");
+
+ ens::
+
+  "front"            expression => regcmp("3", "$(nic_ord[2])");
+  "support"          expression => regcmp("7", "$(nic_ord[2])");
+  "admin"            expression => regcmp("8", "$(nic_ord[2])");
+
+ eth::
+
+  "front"            expression => regcmp("0", "$(nic_ord[2])");
+  "support"          expression => regcmp("1", "$(nic_ord[2])");
+  "admin"            expression => regcmp("2", "$(nic_ord[2])");
+
+ breth::
+
+  "front"            expression => regcmp("1001", "$(nic_ord[2])");
+  "support"          expression => regcmp("123", "$(nic_ord[2])");
+  "admin"            expression => regcmp("22", "$(nic_ord[2])");
+  "life"             expression => regcmp("42", "$(nic_ord[2])");
+
+vars:
+
+  front::
+   "nic_front"           string => "$(nic_ord[1])$(nic_ord[2])";
+
+  support::
+   "nic_support"         string => "$(nic_ord[1])$(nic_ord[2])";
+
+  admin::
+   "nic_admin"           string => "$(nic_ord[1])$(nic_ord[2])";
+
+  life::
+   "nic_life"            string => "$(nic_ord[1])$(nic_ord[2])";
+
+reports:
+
+  "$(this.bundle) nic_ord:";
+
+}
+
