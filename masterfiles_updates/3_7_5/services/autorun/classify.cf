@@ -21,19 +21,53 @@ vars:
 
 methods:
 
-  "Determine nics"    usebundle => determine_nics;
+  "Determine nics"    usebundle => nic($(nic_index));
 
 reports:
 
   "$(this.bundle) ipv4: $(nic_index) $(sys.ipv4[$(nic_index)])";
+  "$(this.bundle) nics: $(nic.nic_front), $(nic.nic_support), $(nic.nic_admin)";
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) eco_vars: $(eco_vars)";
+
 }
 
-bundle agent determine_nics {
+bundle agent nic(nic_index) {
 
-ireports:
+classes:
 
-  "$(this.bundle) ipv4: $(nic_index) $(sys.ipv4[$(nic_index)])";
+  "common_nic"       expression => regextract('.*[0-9]'), $(nic_index), "nic_ord");
+
+  "nic_front"        expression => regcmp('.*[0], "nic_ord');
+  "nic_support"      expression => regcmp('.*[1], "nic_ord');
+  "nic_admin"        expression => regcmp('.*[2], "nic_ord');
+
+  "bridge_nic"       expression => regextract('.*[_][1-9][0-9][0-9]*'), $(nic_index), "bridge_ord");
+
+  "nic_front"        expression => regcmp('.*[1001], "bridge_ord');
+  "nic_support"      expression => regcmp('.*[123], "bridge_ord');
+  "nic_admin"        expression => regcmp('.*[22], "bridge_ord');
+  "nic_life"         expression => regcmp('.*[42], "bridge_ord');
+
+vars:
+
+  nic_front::
+   "nic_front"           string => "$(nic_index)";
+
+  nic_support::
+   "nic_support"         string => "$(nic_index)";
+
+  nic_admin::
+   "nic_admin"           string => "$(nic_index)";
+
+  nic_life::
+   "nic_life"            string => "$(nic_index)";
+
+reports:
+
+  "$(this.bundle): nic_front $(nic_front)";
+  "$(this.bundle): nic_support $(nic_support)";
+  "$(this.bundle): nic_admin $(nic_admin)";
+  "$(this.bundle): nic_life $(nic_life)";
 
 }
