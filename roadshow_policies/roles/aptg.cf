@@ -19,5 +19,6 @@ methods:
 reports:
 
  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
+  "${this.bundle} admin_nics: ${admin_nics}";
 
 }
