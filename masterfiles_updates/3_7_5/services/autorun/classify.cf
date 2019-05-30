@@ -51,7 +51,7 @@ classes:
 
 vars:
 
-  "nic_ord"              string => "$(nic_ord)";
+  "nic_found"            string => "$(nic_ord)";
   "nic_ord_1"            string => "$(nic_ord[1])";
   "nic_ord_2"            string => "$(nic_ord[2])";
   "nic_ord_3"            string => "$(nic_ord[3])";
@@ -69,6 +69,7 @@ vars:
 
 reports:
 
+  "$(this.bundle): nic_found $(nic_found)";
   "$(this.bundle): nic_ord_1 $(nic_ord_1)";
   "$(this.bundle): nic_ord_2 $(nic_ord_2)";
   "$(this.bundle): nic_ord_3 $(nic_ord_3)";
