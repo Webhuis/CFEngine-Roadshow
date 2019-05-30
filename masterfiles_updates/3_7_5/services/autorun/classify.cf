@@ -36,13 +36,13 @@ bundle agent nic(nic_index) {
 
 classes:
 
-  "common_nic"       expression => regextract('.*[0-9]'), $(nic_index), "nic_ord");
+  "common_nic"       expression => regextract('.*[0-9]', $(nic_index), "nic_ord");
 
   "nic_front"        expression => regcmp('.*[0], "nic_ord');
   "nic_support"      expression => regcmp('.*[1], "nic_ord');
   "nic_admin"        expression => regcmp('.*[2], "nic_ord');
 
-  "bridge_nic"       expression => regextract('.*[_][1-9][0-9][0-9]*'), $(nic_index), "bridge_ord");
+  "bridge_nic"       expression => regextract('.*[_][1-9][0-9][0-9]*', $(nic_index), "bridge_ord");
 
   "nic_front"        expression => regcmp('.*[1001], "bridge_ord');
   "nic_support"      expression => regcmp('.*[123], "bridge_ord');
