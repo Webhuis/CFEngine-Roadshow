@@ -23,7 +23,7 @@ bundle agent check_ip_list(ip_address_list) {
 
 methods:
 
-  "Check list on valid IP Addresses"  usebundle => check_ip(ip_address_list);
+  "Check list on valid IP Addresses"  usebundle => check_ip($(ip_address_list));
 
 reports:
 
