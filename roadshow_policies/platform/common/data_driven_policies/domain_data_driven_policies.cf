@@ -1,17 +1,25 @@
-bundle agent data_driven_policies {
+bundle agent domain_data_driven_policies {
 
 methods:
 
-    "Check list of admin IP Addresses"  usebundle => check_ip_list("$($(classify.role).admin_nics)");
+  "We want a valid host IP Address"     usebundle => check_ip($(nic.nic_front));
 
   !invalid_ip::
 
-    "openssh server and client"         usebundle => ssh_all_config;
+    "Standardize hosts setup"           usebundle => etc_hosts;
+
+  any::
+
+    "Check list of resolvers"           usebundle => check_ip_list("$($(classify.eco_vars).resolvers)");
+
+  !invalid_ip::
+
+    "Standardize resolv.conf setup"     usebundle => resolv_conf;
                                                                                                                                                                                        
 reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
-  "${this.bundle}: $(nic.nic_admin)";  
+  "${this.bundle}: $(sys.domain) $(nic.nic_front)";  
 
   invalid::
    "${this.bundle}: Invalid IP Address! $(sys.ipv4)";
