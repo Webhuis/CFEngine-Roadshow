@@ -2,7 +2,7 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip($(nic.nic_front));
+  "We want a valid host IP Address"     usebundle => check_ip_list($(nic.nic_front));
 
   !invalid_ip::
 
