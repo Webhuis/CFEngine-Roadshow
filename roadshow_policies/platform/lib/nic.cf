@@ -30,16 +30,16 @@ classes:
 vars:
 
   front::
-   "nic_front"           string => "$(nic_ord[1])$(nic_ord[2])";
+   "nic_front"           string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
   support::
-   "nic_support"         string => "$(nic_ord[1])$(nic_ord[2])";
+   "nic_support"         string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
   admin::
-   "nic_admin"           string => "$(nic_ord[1])$(nic_ord[2])";
+   "nic_admin"           string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
   life::
-   "nic_life"            string => "$(nic_ord[1])$(nic_ord[2])";
+   "nic_life"            string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
 reports:
 
