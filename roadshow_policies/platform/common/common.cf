@@ -6,7 +6,6 @@ vars:
 
 methods:
 
-  "We want to know the nics"     usebundle => nic($(nic_index));
   "Valid IP address depending"   usebundle => data_driven_policies;
   "We desire a clean house"      usebundle => housekeeping;
   "Basic environment stuff"      usebundle => basic_environment;

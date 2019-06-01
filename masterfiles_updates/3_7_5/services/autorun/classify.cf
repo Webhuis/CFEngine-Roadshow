@@ -19,6 +19,10 @@ vars:
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
+methods:
+
+  "We want to know the nics"     usebundle => nic($(nic_index));
+
 reports:
 
   "$(this.bundle) role: $(role) $(role_input)";

@@ -47,4 +47,8 @@ methods:
 
   "Domain data driven policies go here"  usebundle => domain_data_driven_policies;
 
+reports:
+
+  "${this.bundle}: We do domain_data_driven_policies";
+
 }
