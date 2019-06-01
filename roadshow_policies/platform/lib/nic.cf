@@ -43,7 +43,7 @@ vars:
 
 reports:
 
-  "$(this.bundle) nic_ord:";
+  "$(this.bundle) nic_ord: $(nic_ord[1[) $(nic_ord[2])";
   "$(this.bundle) nic_front: $(nic_front)";
   "$(this.bundle) nic_support: $(nic_support)";
   "$(this.bundle) nic_admin: $(nic_admin)";
