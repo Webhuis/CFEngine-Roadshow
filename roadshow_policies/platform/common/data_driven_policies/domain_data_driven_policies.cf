@@ -22,9 +22,9 @@ reports:
   "${this.bundle}: $(sys.domain) $(nic.nic_front)";  
 
   invalid::
-   "${this.bundle}: Invalid IP Address! $(sys.ipv4[$(nic.nic_front)])";
+   "${this.bundle}: Invalid IP Address! $(nic.nic_front)";
 
   !invalid::
-   "${this.bundle}: Valid IP Address! $(sys.ipv4[$(nic.nic_front)])";
+   "${this.bundle}: Valid IP Address! $(nic.nic_front)";
 
 }
