@@ -22,10 +22,10 @@ classes:
 
  breth::
 
-  "front"            expression => regcmp("1001", "$(nic_ord[2])");
-  "support"          expression => regcmp("123", "$(nic_ord[2])");
-  "admin"            expression => regcmp("22", "$(nic_ord[2])");
-  "life"             expression => regcmp("42", "$(nic_ord[2])");
+  "front"            expression => regcmp(".1001", "$(nic_ord[2])");
+  "support"          expression => regcmp(".123", "$(nic_ord[2])");
+  "admin"            expression => regcmp(".22", "$(nic_ord[2])");
+  "life"             expression => regcmp(".42", "$(nic_ord[2])");
 
 vars:
 
