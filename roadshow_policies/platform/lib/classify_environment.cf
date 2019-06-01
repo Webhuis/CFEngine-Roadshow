@@ -1,0 +1,15 @@
+bundle agent classify_environment {
+  
+vars:
+
+  "nic_index"             slist => getindices("sys.ipv4");
+
+methods:
+
+  "We want to know the nics"     usebundle => nic($(nic_index));
+
+reports:
+
+  "$(this.bundle) nic_index: $(nic_index)";
+
+}

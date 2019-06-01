@@ -1,16 +1,3 @@
-bundle agent classify_all {
-
-vars:
-
-  "nic_index"             slist => getindices("sys.ipv4");
-
-methods:
-
-  "We want to classify"          usebundle => classify;
-  "We want to know the nics"     usebundle => nic($(nic_index));
-
-}
-
 bundle agent classify {
 
 classes:
