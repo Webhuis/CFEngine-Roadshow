@@ -1,3 +1,12 @@
+bundle agent classify_all {
+
+methods:
+
+  "We want to classify"          usebundle => classify;
+  "We want to know the nics"     usebundle => nic($(nic_index));
+
+}
+
 bundle agent classify {
 
 classes:
@@ -18,10 +27,6 @@ vars:
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
-
-methods:
-
-  "We want to know the nics"     usebundle => nic($(nic_index));
 
 reports:
 

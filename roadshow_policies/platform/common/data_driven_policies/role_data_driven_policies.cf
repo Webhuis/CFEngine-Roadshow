@@ -1,4 +1,4 @@
-bundle agent data_driven_policies {
+bundle agent role_data_driven_policies {
 
 methods:
 

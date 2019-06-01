@@ -15,7 +15,7 @@ bundle agent roadshow
       "tags" slist => { "autorun" };
 
   methods:
-      "Determine the role organisation and geograph"  usebundle => classify;
+      "Determine the role organisation and geograph"  usebundle => classify_all;
 #     "Request Data for machine information"          usebundle => request_role_information;
       "Collect values and policies"                   usebundle => do_roadshow;
       "We require the domain information"             usebundle => ${do_roadshow.class_domain};
