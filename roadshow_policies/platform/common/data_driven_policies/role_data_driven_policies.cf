@@ -14,9 +14,10 @@ reports:
   "${this.bundle}: $(nic.nic_admin)";  
 
   invalid::
-   "${this.bundle}: Invalid IP Address! $(sys.ipv4)";
+   "${this.bundle}: Invalid IP Address! $($(classify.role).admin_nics)";
 
   !invalid::
-   "${this.bundle}: Valid IP Address! $(sys.ipv4)";
+   "${this.bundle}: Valid IP Address! $($(classify.role).admin_nics)";
+
 
 }
