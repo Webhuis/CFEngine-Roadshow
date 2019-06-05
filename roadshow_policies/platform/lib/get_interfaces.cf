@@ -1,4 +1,4 @@
-bundle agent get_interfaces(vlans) {
+bundle agent get_interfaces(vlan) {
 
 classes:
 
