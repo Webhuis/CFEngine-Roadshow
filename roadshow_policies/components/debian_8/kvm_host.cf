@@ -33,7 +33,7 @@ vars:
 
   "interface_prefix"            string =>  "eth0";
   "bridge_prefix"               string =>  "breth0";
-  "vlans"                        slist =>  { "$($(classify.role).$(vlan)" };
+  "vlans"                        slist =>  { "$(classify.role).$(vlan)" };
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
