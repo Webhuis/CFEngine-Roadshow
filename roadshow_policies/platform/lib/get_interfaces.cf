@@ -1,0 +1,33 @@
+bundle agent get_interfaces(vlans) {
+
+classes:
+
+  "$(kvm_host.$(interface_prefix))_$(vlan)" expression => regextract(
+                                     ".*HWaddr ([^\s]+).*(\n.*)*",
+                                     "$(interface_eth0_$(vlan))",
+                                     "mac_eth0_$(vlan)");
+
+  "$(kvm_host.$(bridge_prefix))_$(vlan)" expression => regextract(
+                                     ".*HWaddr ([^\s]+).*(\n.*)*",
+                                     "$(interface_breth0_$(vlan))",
+                                     "mac_breth0_$(vlan)");
+
+vars:
+
+# "interface_eth0_$(vlan)"   string => execresult("/sbin/ip link show dev eth0.$(vlan)","noshell");
+  "interface_$(vlan)"        string => execresult("/sbin/ifconfig $(kvm_host.$(interface_prefix)).$(vlan)","noshell");
+# "interface_breth0_$(vlan)" string => execresult("/sbin/ip link show dev breth0.$(vlan)","noshell");
+  "bridge_$(vlan)"           string => execresult("/sbin/ifconfig $(kvm_host.$(bridge_prefix)).$(vlan)","noshell");
+
+reports:
+
+ "eth0_$(vlan)"::
+  "$(this.bundle): eth0_$(vlan) $(mac_eth0_$(vlan)[1])";
+ "breth0_$(vlan)"::
+  "$(this.bundle): breth0_$(vlan) $(mac_breth0_$(vlan)[1])";
+ "!$(kvm_host.$(interface_prefix))_$(vlan)"::
+  "$(this.bundle):  Bingo!";
+ "!$(kvm_host.$(bridge_prefix))_$(vlan)"::
+  "$(this.bundle): breth0_$(vlan) Bingo!";
+
+}
