@@ -2,12 +2,12 @@ bundle agent get_interfaces(vlans) {
 
 classes:
 
-  "$(kvm_host.$(interface_prefix))_$(vlan)" expression => regextract(
+  "$(kvm_host.interface_prefix)_$(vlan)" expression => regextract(
                                      ".*HWaddr ([^\s]+).*(\n.*)*",
                                      "$(interface_$(vlan))",
                                      "mac_eth0_$(vlan)");
 
-  "$(kvm_host.$(bridge_prefix))_$(vlan)" expression => regextract(
+  "$(kvm_host.bridge_prefix)_$(vlan)" expression => regextract(
                                      ".*HWaddr ([^\s]+).*(\n.*)*",
                                      "$(bridge_$(vlan))",
                                      "mac_breth0_$(vlan)");
