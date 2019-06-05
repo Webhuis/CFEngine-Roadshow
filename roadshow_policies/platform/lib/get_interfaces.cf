@@ -4,12 +4,12 @@ classes:
 
   "$(kvm_host.$(interface_prefix))_$(vlan)" expression => regextract(
                                      ".*HWaddr ([^\s]+).*(\n.*)*",
-                                     "$(interface_eth0_$(vlan))",
+                                     "$(interface_$(vlan))",
                                      "mac_eth0_$(vlan)");
 
   "$(kvm_host.$(bridge_prefix))_$(vlan)" expression => regextract(
                                      ".*HWaddr ([^\s]+).*(\n.*)*",
-                                     "$(interface_breth0_$(vlan))",
+                                     "$(bridge_$(vlan))",
                                      "mac_breth0_$(vlan)");
 
 vars:
