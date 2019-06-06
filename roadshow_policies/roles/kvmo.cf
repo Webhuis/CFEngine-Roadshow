@@ -10,7 +10,13 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
-  "vlan"                               slist => { "22", "42", "123", "213", "254", "1001" };
+  "vlan[front]"                       string => "1001";
+  "vlan[support]"                     string => "123";
+  "vlan[admin]"                       string => "22";
+  "vlan[wan]"                         string => "213";
+  "vlan[gw]"                          string => "254";
+  "vlan[life]"                        string => "42";
+
 # "vlan"                               slist => { "22", "42", "80", "123", "213", "254", "443", "1001", "1007", "1008", "1010", "1094" };
 
   "etc_hosts_nic"                      slist => { $(nic.nic_front) };
