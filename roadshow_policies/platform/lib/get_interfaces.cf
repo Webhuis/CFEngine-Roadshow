@@ -1,5 +1,21 @@
 bundle agent get_interfaces(vlan) {
 
+vars:
+
+  "vlan_index"                slist => getindices($(vlan));
+
+methods:
+
+  "Get vlan status"       usebundle => vlan_status("$(vlan_index)");
+
+reports:
+
+  "$(this.bundle): $(vlan_index)";
+
+}
+
+bundle agent vlan_status(vlan) {
+
 classes:
 
   "$(kvm_host.interface_prefix)_$(vlan)" expression => regextract(
