@@ -28,11 +28,10 @@ methods:
 reports:
 
   "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan), $(kvm_host.bridge_prefix)_$(vlan)";
-  "$(this.bundle): $(interface)_$(vlan), $(bridge)_$(vlan)";
 
- "!interface_$(vlan)"::
+ "!$(kvm_host.interface_prefix)_$(vlan)"::
   "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan) Bingo!";
- "!bridge_$(vlan)"::
+ "!$(kvm_host.bridge_prefix)_$(vlan)"::
   "$(this.bundle): $(kvm_host.bridge_prefix)_$(vlan) Bingo!";
 
 }
