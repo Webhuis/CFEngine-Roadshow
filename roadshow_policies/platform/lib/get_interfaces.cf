@@ -14,10 +14,8 @@ classes:
 
 vars:
 
-# "interface_eth0_$(vlan)"   string => execresult("/sbin/ip link show dev eth0.$(vlan)","noshell");
-  "interface_$(vlan)"        string => execresult("/sbin/ifconfig $(kvm_host.interface_prefix).$(vlan)","noshell");
-# "interface_breth0_$(vlan)" string => execresult("/sbin/ip link show dev breth0.$(vlan)","noshell");
-  "bridge_$(vlan)"           string => execresult("/sbin/ifconfig $(kvm_host.bridge_prefix).$(vlan)","noshell");
+  "interface_$(vlan)"        string => execresult("/sbin/ip link show dev $(kvm_host.interface_prefix).$(vlan)","noshell");
+  "bridge_$(vlan)"           string => execresult("/sbin/ip link show dev $(kvm_host.bridge_prefix).$(vlan)","noshell");
 
 methods:
 
@@ -43,8 +41,7 @@ bundle agent bring_link_up(device) {
 
 commands:
 
-# "/sbin/ip link set dev $(device) up";
-  "/sbin/ifconfig $(device) up";
+  "/sbin/ip link set dev $(device) up";
 
 reports:
 
