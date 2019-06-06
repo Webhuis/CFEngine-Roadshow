@@ -33,7 +33,7 @@ vars:
 
   "interface_prefix"            string =>  "eth0";
   "bridge_prefix"               string =>  "breth0";
-  "vlans"                        slist =>  { "$($(classify.role).vlan)" };
+  "vlan"                         slist =>  { "$($(classify.role).vlan)" };
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
@@ -55,7 +55,7 @@ files:
 
 methods:
 
-  "Check interfaces and bridges are up"    usebundle => get_interfaces("kvm_host.vlans");
+  "Check interfaces and bridges are up"    usebundle => get_interfaces("$(kvm_host.vlan)");
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
 # "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks(S(vlans));

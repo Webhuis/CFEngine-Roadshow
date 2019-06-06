@@ -15,19 +15,39 @@ classes:
 vars:
 
 # "interface_eth0_$(vlan)"   string => execresult("/sbin/ip link show dev eth0.$(vlan)","noshell");
-  "interface_$(vlan)"        string => execresult("/sbin/ifconfig $(kvm_host.$(interface_prefix)).$(vlan)","noshell");
+  "interface_$(vlan)"        string => execresult("/sbin/ifconfig $(kvm_host.interface_prefix).$(vlan)","noshell");
 # "interface_breth0_$(vlan)" string => execresult("/sbin/ip link show dev breth0.$(vlan)","noshell");
-  "bridge_$(vlan)"           string => execresult("/sbin/ifconfig $(kvm_host.$(bridge_prefix)).$(vlan)","noshell");
+  "bridge_$(vlan)"           string => execresult("/sbin/ifconfig $(kvm_host.bridge_prefix).$(vlan)","noshell");
+
+methods:
+
+ "!interface_$(vlan)"::
+  "Bring up bridge $(vlan)"        usebundle => bring_link_up("$(kvm_host.interface_prefix).$(vlan)");
+
+ "!bridge_$(vlan)"::
+  "Bring up bridge $(vlan)"        usebundle => bring_link_up("$(kvm_host.bridge_prefix).$(vlan)");
 
 reports:
 
- "eth0_$(vlan)"::
-  "$(this.bundle): eth0_$(vlan) $(mac_eth0_$(vlan)[1])";
- "breth0_$(vlan)"::
-  "$(this.bundle): breth0_$(vlan) $(mac_breth0_$(vlan)[1])";
- "!$(kvm_host.$(interface_prefix))_$(vlan)"::
-  "$(this.bundle):  Bingo!";
- "!$(kvm_host.$(bridge_prefix))_$(vlan)"::
-  "$(this.bundle): breth0_$(vlan) Bingo!";
+  "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan), $(kvm_host.bridge_prefix)_$(vlan)";
+  "$(this.bundle): $(interface)_$(vlan), $(bridge)_$(vlan)";
+
+ "!interface_$(vlan)"::
+  "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan) Bingo!";
+ "!bridge_$(vlan)"::
+  "$(this.bundle): $(kvm_host.bridge_prefix)_$(vlan) Bingo!";
+
+}
+
+bundle agent bring_link_up(device) {
+
+commands:
+
+# "/sbin/ip link set dev $(device) up";
+  "/sbin/ifconfig $(device) up";
+
+reports:
+
+ "$(this.bundle): $(device) up!";
 
 }
