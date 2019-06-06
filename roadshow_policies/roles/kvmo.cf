@@ -29,10 +29,8 @@ methods:
 
 reports:
 
- "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
+ "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
 
- "${this.bundle}: component $(inputs)";
-
- "${this.bundle}: $(admin_nics)";
+ "$(this.bundle): $(admin_nics)";
 
 }
