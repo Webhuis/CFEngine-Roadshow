@@ -55,7 +55,7 @@ files:
 
 methods:
 
-  "Check interfaces and bridges are up"    usebundle => get_interfaces("kvm_host.vlan");
+  "Check interfaces and bridges are up"    usebundle => get_interfaces("$($(classify.role).vlan)");
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
 # "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks(S(vlans));
