@@ -2,7 +2,9 @@ bundle agent get_interfaces(vlan) {
 
 vars:
 
-  "vlan_index"                slist => getindices($(vlan));
+  "vlans[$(vlan)]"           string => $(vlan);
+
+  "vlan_index"                slist => getindices($(vlans));
 
 methods:
 
