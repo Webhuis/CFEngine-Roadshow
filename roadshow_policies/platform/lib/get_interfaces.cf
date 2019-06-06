@@ -3,14 +3,14 @@ bundle agent get_interfaces(vlan) {
 classes:
 
   "$(kvm_host.interface_prefix)_$(vlan)" expression => regextract(
-                                     ".*HWaddr ([^\s]+).*(\n.*)*",
+                                     ".*DOWN.*",
                                      "$(interface_$(vlan))",
-                                     "mac_eth0_$(vlan)");
+                                     "down_interface_$(vlan)");
 
   "$(kvm_host.bridge_prefix)_$(vlan)" expression => regextract(
                                      ".*HWaddr ([^\s]+).*(\n.*)*",
                                      "$(bridge_$(vlan))",
-                                     "mac_breth0_$(vlan)");
+                                     "down_bridge_$(vlan)");
 
 vars:
 
@@ -48,3 +48,24 @@ reports:
  "$(this.bundle): $(device) up!";
 
 }
+
+bundle agent get_interfaces(vlan) {
+  
+classes:
+
+  "$(kvm_host.interface_prefix)_$(vlan)" expression => regextract(
+                                     ".*HWaddr ([^\s]+).*(\n.*)*",
+                                     "$(interface_$(vlan))",
+                                     "mac_interface_$(vlan)");
+
+  "$(kvm_host.bridge_prefix)_$(vlan)" expression => regextract(
+                                     ".*HWaddr ([^\s]+).*(\n.*)*",
+                                     "$(bridge_$(vlan))",
+                                     "mac_bridge_$(vlan)");
+
+reports:
+
+ "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan), $(mac_interface[1])";
+
+}
+
