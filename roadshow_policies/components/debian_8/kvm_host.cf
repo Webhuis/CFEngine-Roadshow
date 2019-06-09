@@ -31,8 +31,8 @@ vars:
   "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
-  "interface_prefix"            string =>  "eth0";
-  "bridge_prefix"               string =>  "breth0";
+  "interface_prefix"            string => "eth0";
+  "bridge_prefix"               string => "breth0";
 
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
@@ -54,14 +54,13 @@ files:
 
 methods:
 
-  "Check interfaces and bridges are up"    usebundle => get_interfaces("$($(classify.role).vlan)");
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
   "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
 # "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks(S(vlans));
 
 reports:
 
-  "$(this.bundle) vlans: $($(classify.role).vlan)";
+  "$(this.bundle) interfaces: $(interface_prefix) $(bridge_prefix)";
 
 }
 

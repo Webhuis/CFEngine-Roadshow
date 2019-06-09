@@ -16,21 +16,23 @@ vars:
   "vlan[wan]"                         string => "213";
   "vlan[gw]"                          string => "254";
   "vlan[life]"                        string => "42";
+  "vlan[roadshow]"                    string => "1111";
 
-# "vlan"                               slist => { "22", "42", "80", "123", "213", "254", "443", "1001", "1007", "1008", "1010", "1094" };
+  "vlan_index"                         slist => getindices("kvmo.vlan");
 
   "etc_hosts_nic"                      slist => { $(nic.nic_front) };
   "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support), $(nic.nic_life) };
 
 methods:
 
-  "KVM host ready for VM"          usebundle => "kvm_host";
-  "We desire Opennebula"           usebundle => "opennebula_node"; 
+  "KVM host ready for VM"                  usebundle => "kvm_host";
+  "Check interfaces and bridges are up"    usebundle => get_interfaces( "kvmo.vlan" );
+  "We desire Opennebula"                   usebundle => "opennebula_node"; 
 
 reports:
 
  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
-
  "$(this.bundle): $(admin_nics)";
+ "$(this.bundle): $(vlan_index), $(vlan[$(vlan_index)])";
 
 }

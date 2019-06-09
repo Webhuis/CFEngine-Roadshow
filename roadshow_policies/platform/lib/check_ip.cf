@@ -10,6 +10,7 @@ bundle agent check_ip(ip_address) {
   "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[2])");
   "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[3])");
   "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[4])");
+
 vars:
 
   "checked_ip_address"        string => $(ip_address);
@@ -19,6 +20,7 @@ reports:
   "${this.bundle}: $(checked_ip_address)";
 
 }
+
 bundle agent check_ip_list(ip_address_list) {
 
 methods:

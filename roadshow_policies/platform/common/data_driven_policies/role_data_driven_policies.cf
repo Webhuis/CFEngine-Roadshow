@@ -11,12 +11,11 @@ methods:
 reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
-  "${this.bundle}: $(nic.nic_admin)";  
 
-  invalid::
+  invalid_ip::
    "${this.bundle}: Invalid IP Address! $($(classify.role).admin_nics)";
 
-  !invalid::
+  !invalid_ip::
    "${this.bundle}: Valid IP Address! $($(classify.role).admin_nics)";
 
 
