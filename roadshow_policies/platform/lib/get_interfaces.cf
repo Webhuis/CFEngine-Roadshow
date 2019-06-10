@@ -51,6 +51,10 @@ classes:
                                      ".*DOWN.*",
                                      "$(var_bridge_vlan)");
 
+  "no_device_$(vlan)"             expression => regcmp(
+                                     ".*does not exist.*",
+                                     "$(var_bridge_vlan)");
+
 methods:
 
  "interface_$(vlan)"::
@@ -58,6 +62,9 @@ methods:
 
  "bridge_$(vlan)"::
   "Bring up bridge $(vlan)"        usebundle => bring_link_up("$(kvm_host.bridge_prefix).$(vlan)");
+
+ "no_device_$(vlan)"::
+  "Bring up bridge $(vlan)"        usebundle => bring_device_up("$(vlan)");
 
 reports:
 
@@ -86,5 +93,19 @@ commands:
 reports:
 
  "$(this.bundle): $(device) up!";
+
+}
+
+bundle agent bring_device_up(vlan) {
+
+commands:
+
+  "/sbin/vconfig add $(kvm_host.interface_prefix) $(vlan)";
+  "/usr/bin/ovs-vsctl add-br $(kvm_host.bridge_prefix).$(vlan)";
+  "/usr/bin/ovs-vsctl add-port $(kvm_host.bridge_prefix).$(vlan) $(kvm_host.interface_prefix).$(vlan) vlan_mode=trunk tag=$(vlan)";
+
+reports:
+
+ "$(this.bundle): bridge $(kvm_host.bridge_prefix).$(vlan) interface $(kvm_host.interface_prefix).$(vlan) created!";
 
 }
