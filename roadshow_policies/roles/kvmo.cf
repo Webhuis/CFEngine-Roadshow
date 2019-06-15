@@ -10,6 +10,22 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
+methods:
+
+  "KVM host ready for VM"                  usebundle => "kvm_host";
+  "We desire Opennebula"                   usebundle => "opennebula_node"; 
+
+reports:
+
+ "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
+ "$(this.bundle): $(admin_nics)";
+
+}
+
+bundle agent kvmo_data {
+  
+vars:
+
   "vlan[front]"                       string => "1001";
   "vlan[support]"                     string => "123";
   "vlan[admin]"                       string => "22";
@@ -18,21 +34,19 @@ vars:
   "vlan[life]"                        string => "42";
   "vlan[roadshow]"                    string => "1111";
 
-  "vlan_index"                         slist => getindices("kvmo.vlan");
+  "vlan_index"                         slist => getindices("kvmo_data.vlan");
 
   "etc_hosts_nic"                      slist => { $(nic.nic_front) };
   "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support), $(nic.nic_life) };
 
 methods:
 
-  "KVM host ready for VM"                  usebundle => "kvm_host";
-  "Check interfaces and bridges are up"    usebundle => get_interfaces( "kvmo.vlan" );
-  "We desire Opennebula"                   usebundle => "opennebula_node"; 
+  "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
+                                           comment   => "This is a layer I and II check on the virtual switch";
 
 reports:
 
- "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
- "$(this.bundle): $(admin_nics)";
  "$(this.bundle): $(vlan_index), $(vlan[$(vlan_index)])";
 
 }
+

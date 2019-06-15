@@ -1,36 +1,36 @@
-bundle agent check_ip(ip_address) {
+bundle agent check_ip(ips) {
 
-  classes:
-
-  "match_$(ip_address)"   expression => regextract( "^([12][0-5]*[0-9]*).([0-2][0-5]*[0-9]*).([0-2][0-5]*[0-9]*).([0-2][0-5]*[0-9]*).*",
-            $(ip_address), "octet");
-  "invalid_ip"                   not => regcmp("[1-9][0-9]*", "$(octet[1])");
-  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[2])");
-  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[3])");
-  "invalid_ip"                   not => regcmp("[0-9][0-9]*", "$(octet[4])");
-
-vars:
-
-  "checked_ip_address"        string => $(ip_address);
-  
-reports:
-
-  "${this.bundle} cehcked ipaddress: $(checked_ip_address)";
-  "${this.bundle} octets: $(octet[1])";
-  "${this.bundle}: $(octet[2])";
-  "${this.bundle}: $(octet[3])";
-  "${this.bundle}: $(octet[4])";
-
-}
-
-bundle agent check_ip_list(ip_address_list) {
+classes:
+  "match_$(ips)"
+   comment    => "Oh, the horror!",
+   expression => regcmp(
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
+            $(ips)
+            );
 
 methods:
 
-  "Check list on valid IP Addresses"  usebundle => check_ip($(ip_address_list));
+ "!match_$(ips)"::
+  "Bell!!"            usebundle => bell($(ips));
 
 reports:
 
-  "${this.bundle} ip_addresses: $(ip_address_list)";
+  "$(this.bundle): match_$(ips)";
+
+}
+
+bundle agent bell(ips) {
+
+classes:
+
+  "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
+
+vars:
+
+  "bad_ip"            string => "bad_ip";
+
+reports:
+
+  "$(this.bundle): Yell Bell! $(ips)";
 
 }

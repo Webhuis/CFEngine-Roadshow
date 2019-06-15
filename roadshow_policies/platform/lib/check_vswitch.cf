@@ -1,0 +1,79 @@
+bundle agent check_vswitch (vlan) {
+
+vars:
+
+  "interface"                         string => "$(kvm_host.interface_prefix)";
+  "bridge"                            string => "$(kvm_host.bridge_prefix)";
+  "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(interface).$(vlan)","noshell");
+  "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(bridge).$(vlan)","noshell");
+
+methods:
+
+  "Set bridge interface class"     usebundle => set_vlan_class( "$(vlan)", "$(var_interface_$(vlan))", "$(var_bridge_$(vlan))" );
+
+reports:
+
+  "$(this.bundle): $(interface)_$(vlan)";
+  "$(this.bundle): $(bridge)_$(vlan)";
+
+}
+
+bundle agent set_vlan_class(vlan, var_interface_vlan, var_bridge_vlan) {
+
+classes:
+
+  "interface_$(vlan)"             expression => regcmp(
+                                     ".*DOWN.*",
+                                     "$(var_interface_vlan)");
+
+  "bridge_$(vlan)"                expression => regcmp(
+                                     ".*DOWN.*",
+                                     "$(var_bridge_vlan)");
+
+  "no_device_$(vlan)"             expression => regcmp(
+                                     ".*does not exist.*",
+                                     "$(var_bridge_vlan)");
+
+methods:
+
+ "no_device_$(vlan)"::
+  "Bring up bridge $(vlan)"        usebundle => bring_device_up("$(vlan)");
+
+ "interface_$(vlan)"::
+  "Bring up interface $(vlan)"     usebundle => bring_link_up("$(kvm_host.interface_prefix).$(vlan)");
+
+ "bridge_$(vlan)"::
+  "Bring up bridge $(vlan)"        usebundle => bring_link_up("$(kvm_host.bridge_prefix).$(vlan)");
+
+reports:
+
+  "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan)";
+  "$(this.bundle): $(kvm_host.bridge_prefix)_$(vlan)";
+
+}
+
+bundle agent bring_link_up(device) {
+
+commands:
+
+  "/sbin/ip link set dev $(device) up";
+
+reports:
+
+ "$(this.bundle): $(device) up!";
+
+}
+
+bundle agent bring_device_up(vlan) {
+
+commands:
+
+  "/sbin/vconfig add $(kvm_host.interface_prefix) $(vlan)";
+  "/usr/bin/ovs-vsctl add-br $(kvm_host.bridge_prefix).$(vlan)";
+  "/usr/bin/ovs-vsctl add-port $(kvm_host.bridge_prefix).$(vlan) $(kvm_host.interface_prefix).$(vlan) vlan_mode=trunk tag=$(vlan)";
+
+reports:
+
+ "$(this.bundle): bridge $(kvm_host.bridge_prefix).$(vlan) interface $(kvm_host.interface_prefix).$(vlan) created!";
+
+}

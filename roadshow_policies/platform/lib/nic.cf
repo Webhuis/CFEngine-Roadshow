@@ -23,9 +23,11 @@ classes:
  breth::
 
   "front"            expression => regcmp("0_1001", "$(nic_ord[2])");
-  "support"          expression => regcmp("0_123", "$(nic_ord[2])");
-  "admin"            expression => regcmp("0_22", "$(nic_ord[2])");
-  "life"             expression => regcmp("0_42", "$(nic_ord[2])");
+  "support"          expression => regcmp("0_123",  "$(nic_ord[2])");
+  "admin"            expression => regcmp("0_22",   "$(nic_ord[2])");
+  "wan"              expression => regcmp("0_213",  "$(nic_ord[2])");
+  "gw"               expression => regcmp("0_254",  "$(nic_ord[2])");
+  "life"             expression => regcmp("0_42",   "$(nic_ord[2])");
 
 vars:
 
@@ -40,6 +42,12 @@ vars:
 
   life::
    "nic_life"            string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+
+  wan::
+   "nic_wan"             string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+
+  life::
+   "nic_gw"              string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
 reports:
 

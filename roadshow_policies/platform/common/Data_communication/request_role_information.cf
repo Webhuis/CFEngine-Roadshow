@@ -4,21 +4,21 @@ vars:
 
 #  "hash"                          string => file_hash("${sys.workdir}/Data/request_role_view" , "md5" );
 #  "hash"                          string => readfile("${sys.workdir}/Data/request_role_view" , "0" );
-  "role_view"                        data => parsejson('
-      { "message": "view", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
+# "role_view"                        data => parsejson('
+#     { "message": "view", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
 
-  "request_role_view"              string => storejson(role_view);
-  "response"                       string => execresult("/var/cfengine/bin/cf-message.py '${request_role_view}'","noshell");
-# "response_role_information"      string => "";
+# "request_role_view"              string => storejson(role_view);
+# "response"                       string => execresult("/var/cfengine/bin/cf-message.py '${request_role_view}'","noshell");
+  "response_role_information"      string => "";
 
-  "role_view_write"                  data => parsejson('
-      { "message": "feed", "query": "role_feed", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}" } }');
+# "role_view_write"                  data => parsejson('
+#     { "message": "feed", "query": "role_feed", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "${classify.role}" } }');
 
-  "request_role_view_write"        string => storejson(role_view_write);
+# "request_role_view_write"        string => storejson(role_view_write);
 
 classes:
 
-  "wru"                             expression => strcmp( "$(response)" , "no_role_view" );
+# "wru"                             expression => strcmp( "$(response)" , "no_role_view" );
 
 files:
 
@@ -27,8 +27,13 @@ files:
 
 methods:
 
-  wru::
-  "Feed role to Data"           usebundle => cf_message( ${request_role_view_write} );
+  "Collect environment information" usebundle => classify_environment;
+  "Collect role data"               usebundle => $(classify.role)_data;
+  "Check nic_front"                 usebundle => check_ips($($classify.role)_data.$(etc_front_nic)));
+  "Check nic_admin"                 usebundle => check_ips($($classify.role)_data.$(admin_nics)));
+
+# wru::
+# "Feed role to Data"           usebundle => cf_message( ${request_role_view_write} );
 
 reports:
 
