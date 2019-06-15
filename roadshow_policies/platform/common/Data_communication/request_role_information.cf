@@ -28,9 +28,9 @@ files:
 methods:
 
   "Collect environment information" usebundle => classify_environment;
-  "Collect role data"               usebundle => $(classify.role)_data;
-  "Check nic_front"                 usebundle => check_ips($($classify.role)_data.$(etc_front_nic)));
-  "Check nic_admin"                 usebundle => check_ips($($classify.role)_data.$(admin_nics)));
+  "Collect role data"               usebundle => "$(classify.role)_data";
+  "Check nic_front"                 usebundle => check_ips( "$($(classify.role)_data.$(etc_front_nic))" );
+  "Check nic_admin"                 usebundle => check_ips( "$($(classify.role)_data.$(admin_nics))" );
 
 # wru::
 # "Feed role to Data"           usebundle => cf_message( ${request_role_view_write} );
