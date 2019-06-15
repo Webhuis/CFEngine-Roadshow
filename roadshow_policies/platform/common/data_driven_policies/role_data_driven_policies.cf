@@ -2,9 +2,9 @@ bundle agent role_data_driven_policies {
 
 methods:
 
-    "Check list of admin IP Addresses"  usebundle => check_ip_list("$($(classify.role).admin_nics)");
+    "Check list of admin IP Addresses"  usebundle => check_ip("$($(classify.role).admin_nics)");
 
-  !invalid_ip::
+  !bad_ip::
 
     "openssh server and client"         usebundle => ssh_all_config;
                                                                                                                                                                                        
@@ -12,10 +12,10 @@ reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
 
-  invalid_ip::
+  bad_ip::
    "${this.bundle}: Invalid IP Address! $($(classify.role).admin_nics)";
 
-  !invalid_ip::
+  !bad_ip::
    "${this.bundle}: Valid IP Address! $($(classify.role).admin_nics)";
 
 
