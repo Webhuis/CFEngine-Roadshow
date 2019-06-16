@@ -40,4 +40,9 @@ reports:
   "${this.bundle} response: ${response}";
   "${this.bundle} response_role_information: ${response_role_information}";
 
+  bad_ip::
+  "${this.bundle} bad front and admin ip's:  $($(classify.role)_data.$(etc_front_nic)), $($(classify.role)_data.$(admin_nics)) ";
+  !bad_ip::
+  "${this.bundle} good front and admin ip's:  $($(classify.role)_data.$(etc_front_nic)), $($(classify.role)_data.$(admin_nics)) ";
+
 }
