@@ -25,7 +25,7 @@ bundle agent cfeh_data {
 vars:
 
   "etc_hosts_nic"                      slist => { $(nic.nic_front) };
-  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support), $(nic.nic_life) };
+  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support) };
 
 reports:
 
