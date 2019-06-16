@@ -28,7 +28,7 @@ files:
 methods:
 
   "Collect environment information" usebundle => classify_environment;
-  "Collect role data"               usebundle => $($(classify.role)_data);
+  "Collect role data"               usebundle => "$($(classify.role)_data)";
   "Check nic_front"                 usebundle => check_ip( "$($(classify.role)_data.$(etc_front_nic))" );
   "Check nic_admin"                 usebundle => check_ip( "$($(classify.role)_data.$(admin_nics))" );
 
