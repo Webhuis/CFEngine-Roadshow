@@ -52,6 +52,7 @@ vars:
 reports:
 
   "$(this.bundle) nic: $(nic_index)";
+  "$(this.bundle) nic: $(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
 }
 

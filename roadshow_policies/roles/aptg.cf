@@ -9,17 +9,13 @@ vars:
   "sequence"                    slist => getindices("bundles");
   "inputs"                      slist => getvalues("bundles");
 
-  "etc_hosts_nic"                      slist => { $(nic.nic_front) };
-  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support) };
-
 methods:
 
   "We desire apt-cacher"    usebundle => "apt_cacher_ng";
 
 reports:
 
- "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
-  "${this.bundle} admin_nics: ${admin_nics}";
+  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
 
 }
 
