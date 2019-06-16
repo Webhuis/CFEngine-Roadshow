@@ -9,9 +9,6 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
-  "etc_hosts_nic"                      slist => { $(nic.nic_front) };
-  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support) };
-
 methods:
 
   "We are the CFEngine policy Hub" usebundle => "cfe_hub";
@@ -22,3 +19,18 @@ reports:
   "${this.bundle} admin_nics: ${admin_nics}";
 
 }
+
+bundle agent cfeh_data {
+  
+vars:
+
+  "etc_hosts_nic"                      slist => { $(nic.nic_front) };
+  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support), $(nic.nic_life) };
+
+reports:
+
+  "${this.bundle} front_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+
