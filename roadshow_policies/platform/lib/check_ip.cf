@@ -23,6 +23,11 @@ reports:
   "$(this.bundle) ip's: $(ips)";
   "$(this.bundle) ip list: $(ip_list)";
 
+  match_$(ips)::
+   "$(this.bundle) good ip: $(ips)";
+
+  "!match_$(ips)"::
+   "$(this.bundle) bad ip: $(ips)";
 }
 
 bundle agent bell(ips) {
