@@ -2,7 +2,7 @@ bundle agent role_data_driven_policies {
 
 methods:
 
-    "Check list of admin IP Addresses"  usebundle => check_ip("$($(classify.role).admin_nics)");
+    "Check list of admin IP Addresses"  usebundle => check_ip("$($(classify.role)_data.admin_nics)");
 
   !bad_ip::
 
@@ -13,10 +13,10 @@ reports:
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
 
   bad_ip::
-   "${this.bundle}: Invalid IP Address! $($(classify.role).admin_nics)";
+   "${this.bundle}: Invalid IP Address! $($(classify.role)_data.admin_nics)";
 
   !bad_ip::
-   "${this.bundle}: Valid IP Address! $($(classify.role).admin_nics)";
+   "${this.bundle}: Valid IP Address! $($(classify.role)_data.admin_nics)";
 
 
 }
