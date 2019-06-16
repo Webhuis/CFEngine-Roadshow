@@ -16,7 +16,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): match_$(ips), $(ips)";
+  "$(this.bundle): $(ips)";
 
 }
 
