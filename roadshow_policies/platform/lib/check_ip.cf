@@ -12,11 +12,11 @@ classes:
 methods:
 
  "!match_$(ips)"::
-  "Bell!!"            usebundle => bell($(ips));
+  "Bell!!"            usebundle => bell("$(ips)");
 
 reports:
 
-  "$(this.bundle): match_$(ips)";
+  "$(this.bundle): match_$(ips), $(ips)";
 
 }
 
