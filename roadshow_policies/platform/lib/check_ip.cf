@@ -9,6 +9,9 @@ classes:
             $(ips)
             );
 
+vars:
+
+  "ip_list"               slist => $(ips);
 methods:
 
  "!match_$(ips)"::
@@ -16,7 +19,8 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(ips)";
+  "$(this.bundle) ip's: $(ips)";
+  "$(this.bundle) ip list: $(ip_list)";
 
 }
 
