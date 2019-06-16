@@ -22,3 +22,18 @@ reports:
   "${this.bundle} admin_nics: ${admin_nics}";
 
 }
+
+bundle agent aptg_data {
+  
+vars:
+
+  "etc_hosts_nic"                      slist => { $(nic.nic_support) };
+  "admin_nics"                         slist => { $(nic.nic_support), $(nic.nic_admin) };
+
+reports:
+
+  "${this.bundle} front_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

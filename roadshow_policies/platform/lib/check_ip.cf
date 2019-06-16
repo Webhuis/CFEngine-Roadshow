@@ -1,8 +1,9 @@
 bundle agent check_ip(ips) {
 
 classes:
+
   "match_$(ips)"
-   comment    => "Oh, the horror!",
+   comment    => "Oh, the horror! Process the list of IP Addresses.",
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
             $(ips)
