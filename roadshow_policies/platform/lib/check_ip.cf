@@ -11,7 +11,8 @@ classes:
 
 vars:
 
-  "ip_list"               slist => $(ips);
+  "ip_list"               slist => { $(ips) };
+
 methods:
 
  "!match_$(ips)"::
