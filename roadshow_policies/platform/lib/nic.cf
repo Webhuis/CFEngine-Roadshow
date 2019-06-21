@@ -34,20 +34,38 @@ vars:
   front::
    "nic_front"           string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
+  !front::
+   "nic_front"           string => "nic_front not present";
+
   support::
    "nic_support"         string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+
+  !support::
+   "nic_support"         string => "nic_support not present";
 
   admin::
    "nic_admin"           string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
-  life::
-   "nic_life"            string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+  !admin::
+   "nic_admin"           string => "nic_admin not present";
 
   wan::
    "nic_wan"             string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
+  !wan::
+   "nic_wan"             string => "nic_wan not present";
+
+  gw::
+   "nic_life"            string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+
+  !gw::
+   "nic_life"            string => "nic_gw not present";
+
   life::
    "nic_gw"              string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+
+  !life::
+   "nic_gw"              string => "nic_life not present";
 
 reports:
 
