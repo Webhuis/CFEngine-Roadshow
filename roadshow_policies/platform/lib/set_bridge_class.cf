@@ -1,4 +1,4 @@
-undle agent set_bridge_class(vlan, var_bridge_vlan) {
+bundle agent set_bridge_class(vlan, var_bridge_vlan) {
 
 classes:
 
