@@ -134,8 +134,8 @@ bundle agent bring_bridge_up(bridge, vlan) {
 commands:
  
   "/sbin/ip link set dev $(bridge).$(vlan) up";
-  "/sbin/ifup $(bridge).$(vlan)",
-   comment => "Make sure of layer three if bridge has an IP addres";
+  "/sbin/ifup $(bridge).$(vlan)";
+#  comment => "Make sure of layer three if bridge has an IP addres";
 
 reports:
 
