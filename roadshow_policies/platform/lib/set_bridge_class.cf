@@ -1,24 +1,4 @@
-bundle agent set_bridge_class(vlan) {
-
-vars:
-
-  "interface"                         string => "eth0";
-  "bridge"                            string => "breth0";
-  "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(interface).$(vlan)","noshell");
-  "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(bridge).$(vlan)","noshell");
-
-methods:
-
-  "Set interface class"            usebundle => set_interface_class( "$(vlan)", "$(var_interface_$(vlan))" );
-  "Set bridge class"               usebundle => set_bridge_class( "$(vlan)", "$(var_bridge_$(vlan))" );
-
-reports:
-
-  "$(this.bundle): $(interface)_$(vlan)";
-
-}
-
-bundle agent set_bridge_class(vlan, var_bridge_vlan) {
+undle agent set_bridge_class(vlan, var_bridge_vlan) {
 
 classes:
 
