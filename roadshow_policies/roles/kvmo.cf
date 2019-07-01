@@ -2,13 +2,13 @@ bundle agent kvmo {
 
 vars:
 
-  "role_name"                         string => "kvm hypervisor opennebula node";
+  "role_name"                                 string => "kvm hypervisor opennebula node";
 
-  "bundles[kvm_host]"                 string => "${sys.flavor}/kvm_host.cf";
-  "bundles[opennebula_node]"          string => "${sys.flavor}/opennebula_node.cf";
+  "bundles[kvm_host]"                         string => "${sys.flavor}/kvm_host.cf";
+  "bundles[opennebula_node]"                  string => "${sys.flavor}/opennebula_node.cf";
 
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
+  "sequence"                                  slist  => getindices("bundles");
+  "inputs"                                    slist  => getvalues("bundles");
 
 methods:
 
@@ -26,7 +26,7 @@ bundle agent kvmo_data {
   
 vars:
 
-  "vlan[front]"                       string => "1001";
+  "vlan[service]"                     string => "1001";
   "vlan[support]"                     string => "123";
   "vlan[admin]"                       string => "22";
   "vlan[wan]"                         string => "213";
@@ -34,10 +34,10 @@ vars:
   "vlan[life]"                        string => "42";
   "vlan[roadshow]"                    string => "1111";
 
-  "vlan_index"                         slist => getindices("kvmo_data.vlan");
+  "vlan_index"                        slist  => getindices("kvmo_data.vlan");
 
-  "etc_hosts_nic"                      slist => { $(nic.nic_front) };
-  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support), $(nic.nic_life) };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[breth0_$(vlan[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[breth0_$(vlan[service])])", "$(sys.ipv4[breth0_$(vlan[life])])" };
 
 methods:
 
@@ -46,7 +46,10 @@ methods:
 
 reports:
 
- "$(this.bundle): $(vlan_index), $(vlan[$(vlan_index)])";
+ "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
+ "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
+ "$(this.bundle) admin_nics: $(admin_nics)";
+
 
 }
 

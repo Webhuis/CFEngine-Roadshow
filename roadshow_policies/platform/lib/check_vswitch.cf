@@ -36,10 +36,12 @@ methods:
 
  "no_device_$(vlan)"::
   "Add device $(vlan)"             usebundle => add_device( "$(interface)", "$(vlan)" );
-  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" );
+  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
+                                     comment => "layer one";
 
  "if_down_$(vlan)"::
-  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" );
+  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
+                                     comment => "layer one";
 
 reports:
 
@@ -70,10 +72,14 @@ methods:
 
  "no_bridge_$(vlan)"::
   "Add bridge $(vlan)"             usebundle => add_bridge( "$(bridge)", "$(vlan)" );
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" );
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
+                                     comment => "layer two";
+  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
 
  "bridge_down_$(vlan)"::
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" );
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
+                                     comment => "layer two";
+  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
 
 reports:
 
@@ -128,9 +134,34 @@ bundle agent bring_bridge_up(bridge, vlan) {
 commands:
  
   "/sbin/ip link set dev $(bridge).$(vlan) up";
+  "/sbin/ifup $(bridge).$(vlan)",
+   comment => "Make sure of layer three if bridge has an IP addres";
 
 reports:
 
  "$(this.bundle): bridge $(bridge).$(vlan) up!";
 
 }
+
+bundle agent bad_ip(ips) {
+
+classes:
+
+  "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
+
+vars:
+
+  "bad_ip"            string => "bad_ip";
+
+methods:
+
+ bad_ip::
+
+  "The show stops here!"  usebundle => stop_the_show;
+
+reports:
+
+  "$(this.bundle) Bad IP addresson interface: $(ips)!";
+
+}
+

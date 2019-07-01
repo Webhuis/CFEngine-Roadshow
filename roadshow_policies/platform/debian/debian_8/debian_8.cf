@@ -13,6 +13,16 @@ deb-src http://ftp.nl.debian.org/debian/ jessie main contrib non-free
 deb http://security.debian.org/debian-security jessie/updates main
 deb-src http://security.debian.org/debian-security jessie/updates main";
 
+  "vnic[service]"                        string => "eth0";
+  "vnic[support]"                        string => "eth1";
+  "vnic[admin]"                          string => "eth2";
+  "vnic[wan]"                            string => "eth4";
+  "vnic[gw]"                             string => "eth5";
+  "vnic[life]"                           string => "eth6";
+  "vnic[roadshow]"                       string => "eth7";
+
+  "vnic_index"                            slist => getindices("vnic");
+
 methods:
 
   "We desire jessie packages"         usebundle => packages("debian_8.pkg");
