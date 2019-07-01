@@ -1,0 +1,16 @@
+bundle agent bad_ip(ips) {
+
+classes:
+
+  "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
+
+vars:
+
+  "bad_ip"            string => "bad_ip";
+
+reports:
+
+  "$(this.bundle) Bad IP addresson interface: $(ips)!";
+
+}
+
