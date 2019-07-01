@@ -24,8 +24,8 @@ bundle agent cfeh_data {
   
 vars:
 
-  "vnic[support]"                     string => "$($(sys.flavour.vnic[support])";
-  "vnic[admin]"                       string => "$($(sys.flavour.vnic[admin])";
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
 
   "vnic_index"                         slist => getindices("vnic");
 
