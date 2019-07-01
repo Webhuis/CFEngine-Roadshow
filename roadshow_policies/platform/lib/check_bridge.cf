@@ -1,4 +1,4 @@
-bundle agent check_vswitch(vlan) {
+bundle agent check_bridge(vlan) {
 
 vars:
 
