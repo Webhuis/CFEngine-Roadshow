@@ -144,26 +144,3 @@ reports:
  "$(this.bundle): bridge $(bridge).$(vlan) up!";
 
 }
-
-bundle agent bad_ip(ips) {
-
-classes:
-
-  "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
-
-vars:
-
-  "bad_ip"            string => "bad_ip";
-
-methods:
-
- bad_ip::
-
-  "The show stops here!"  usebundle => stop_the_show;
-
-reports:
-
-  "$(this.bundle) Bad IP addresson interface: $(ips)!";
-
-}
-
