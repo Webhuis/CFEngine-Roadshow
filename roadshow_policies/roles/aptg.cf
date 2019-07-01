@@ -23,11 +23,24 @@ bundle agent aptg_data {
   
 vars:
 
-  "etc_hosts_nic"                      slist => { "$(nic.nic_support)" };
-  "admin_nics"                         slist => { "$(nic.nic_support)", "$(nic.nic_admin)" };
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+
+  "vnic_index"                         slist => getindices("vnic");
+
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
+
+methods:
+
+  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
+                                   comment   => "This is a layer I and II check on the virtual switch";
+
 
 reports:
 
+  "${this.bundle} nics: $(vnic)";
   "${this.bundle} front_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
