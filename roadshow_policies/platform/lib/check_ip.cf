@@ -16,7 +16,7 @@ vars:
 methods:
 
  "!match_$(ips)"::
-  "Bell!!"            usebundle => bell("$(ips)");
+  "Bell!!"            usebundle => bad_ip("$(ips)");
 
 reports:
 
@@ -28,20 +28,4 @@ reports:
 
   "!match_$(ips)"::
    "$(this.bundle) bad ip: $(ips)";
-}
-
-bundle agent bell(ips) {
-
-classes:
-
-  "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
-
-vars:
-
-  "bad_ip"            string => "bad_ip";
-
-reports:
-
-  "$(this.bundle): Yell Bell! $(ips)";
-
 }

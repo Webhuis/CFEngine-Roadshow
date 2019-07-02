@@ -2,7 +2,7 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data).$(etc_front_nic)");
+  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data).$(etc_hosts_nic)");
 
   !bad_ip::
 
@@ -19,12 +19,14 @@ methods:
 reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
-  "${this.bundle}: $(sys.domain) $(nic.nic_front)";  
 
-  bad_ip::
-   "${this.bundle}: Invalid IP Address! $(nic.nic_front)";
+  "${this.bundle}: $(sys.domain) $($(classify.role)_data).$(etc_hosts_nic)";  
+  "${this.bundle}: $(sys.domain) $($(classify.eco_vars).resolvers)";  
 
-  !bad_ip::
-   "${this.bundle}: Valid IP Address! $(nic.nic_front)";
+ bad_ip::
+  "${this.bundle}: Invalid IP Address!";
+
+ !bad_ip::
+   "${this.bundle}: Valid IP Address!";
 
 }
