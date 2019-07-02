@@ -13,9 +13,6 @@ vars:
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
-  "etc_hosts_nic"                      slist => { $(nic.nic_front) };
-  "admin_nics"                         slist => { $(nic.nic_front), $(nic.nic_support) };
-
 methods:
 
   "The MySQL database server"   usebundle => mysql_server;
@@ -27,7 +24,6 @@ methods:
 reports:
 
   "${this.bundle} app.inputs: ${inputs}";
-  "${this.bundle} admin_nics: ${admin_nics}";
 
 }
 
