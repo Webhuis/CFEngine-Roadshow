@@ -4,7 +4,7 @@ methods:
 
     "Check list of admin IP Addresses"  usebundle => check_ip("$($(classify.role)_data.admin_nics)");
 
-  !bad_ip.bad_ip::
+  !bad_ip::
 
     "openssh server and client"         usebundle => ssh_all_config;
                                                                                                                                                                                        
