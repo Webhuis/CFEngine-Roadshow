@@ -1,4 +1,4 @@
-bundle common bad_ip(ips) {
+bundle common bad_ip {
 
 classes:
 
@@ -7,10 +7,6 @@ classes:
 vars:
 
   "bad_ip"            string => "bad_ip";
-
-reports:
-
-  "$(this.bundle) Bad IP addresson interface: $(ips)!";
 
 }
 

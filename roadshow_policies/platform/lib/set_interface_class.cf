@@ -14,12 +14,12 @@ methods:
   "Add device $(vlan)"             usebundle => add_device( "$(interface)", "$(vlan)" );
   "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
                                      comment => "layer one";
-  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
+  "Bad IP $(vlan)"                 usebundle => bad_ip;
 
  "if_down_$(vlan)"::
   "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
                                      comment => "layer one";
-  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
+  "Bad IP $(vlan)"                 usebundle => bad_ip;
 
 reports:
 

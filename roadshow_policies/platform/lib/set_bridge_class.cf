@@ -18,12 +18,12 @@ methods:
   "Add bridge $(vlan)"             usebundle => add_bridge( "$(bridge)", "$(vlan)" );
   "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
-  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
+  "Bad IP $(vlan)"                 usebundle => bad_ip;
 
  "bridge_down_$(vlan)"::
   "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
-  "Bad IP $(vlan)"                 usebundle => bad_ip( "$(vlan)" );
+  "Bad IP $(vlan)"                 usebundle => bad_ip;
 
 reports:
 

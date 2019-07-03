@@ -16,7 +16,7 @@ vars:
 methods:
 
  "!match_$(ips)"::
-  "Bell!!"            usebundle => bad_ip("$(ips)");
+  "Bell!!"            usebundle => bad_ip;
 
 reports:
 
