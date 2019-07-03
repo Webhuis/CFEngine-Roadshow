@@ -16,7 +16,7 @@ reports:
    "${this.bundle}: Invalid IP Address! $($(classify.role)_data.admin_nics)";
 
   !bad_ip::
-   "${this.bundle}: Valid IP Address! $($(classify.role)_data.admin_nics)";
+   "${this.bundle}:  $($(classify.role)_data.admin_nics)" Valid IP Address!";
 
 
 }

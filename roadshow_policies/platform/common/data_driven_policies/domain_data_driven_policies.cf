@@ -20,13 +20,13 @@ reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
 
-  "${this.bundle}: $(sys.domain) $($(classify.role)_data).$(etc_hosts_nic)";  
-  "${this.bundle}: $(sys.domain) $($(classify.eco_vars).resolvers)";  
-
  bad_ip::
   "${this.bundle}: Invalid IP Address!";
 
+  "${this.bundle}: $(sys.domain) $($(classify.role)_data).$(etc_hosts_nic)";  
+  "${this.bundle}: $(sys.domain) $($(classify.eco_vars).resolvers)";  
+
  !bad_ip::
-   "${this.bundle}: Valid IP Address!";
+   "${this.bundle}: Valid IP Addresses!";
 
 }
