@@ -27,7 +27,7 @@ files:
 
 methods:
 
-  "Collect environment information" usebundle => classify_environment;
+# "Collect environment information" usebundle => classify_environment;
   "Collect role data"               usebundle => "$(classify.role)_data";
 
  !bad_ip::
@@ -42,7 +42,7 @@ reports:
   "${this.bundle} response: ${response}";
   "${this.bundle} response_role_information: ${response_role_information}";
 
-  bad_ip::
+  no_device|no_bridge::
   "${this.bundle} bad etc_hosts and admin ip's:  $($(classify.role)_data.$(etc_support_nic)), $($(classify.role)_data.$(admin_nics)) ";
   !bad_ip::
   "${this.bundle}: good etc_hosts and admin ip's.";

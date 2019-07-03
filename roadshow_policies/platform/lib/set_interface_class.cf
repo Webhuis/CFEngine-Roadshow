@@ -15,11 +15,13 @@ methods:
   "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
                                      comment => "layer one";
   "No device $(vlan)"              usebundle => no_device;
+  "bad_ip $(vlan)"                 usebundle => bad_ip;
 
  "if_down_$(vlan)"::
   "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
                                      comment => "layer one";
   "Interface down $(vlan)"         usebundle => interface_down;
+  "bad_ip $(vlan)"                 usebundle => bad_ip;
 
 reports:
 

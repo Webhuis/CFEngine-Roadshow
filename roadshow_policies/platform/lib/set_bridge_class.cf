@@ -19,11 +19,13 @@ methods:
   "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
   "No bridge $(vlan)"              usebundle => no_bridge;
+  "bad_ip $(vlan)"                 usebundle => bad_ip;
 
  "bridge_down_$(vlan)"::
   "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
   "Bridge down $(vlan)"            usebundle => bridge_down;
+  "bad_ip $(vlan)"                 usebundle => bad_ip;
 
 reports:
 
