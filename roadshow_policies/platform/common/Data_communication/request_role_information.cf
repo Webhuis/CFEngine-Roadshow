@@ -42,9 +42,11 @@ reports:
   "${this.bundle} response: ${response}";
   "${this.bundle} response_role_information: ${response_role_information}";
 
-  no_device|no_bridge::
-  "${this.bundle} bad etc_hosts and admin ip's:  $($(classify.role)_data.$(etc_support_nic)), $($(classify.role)_data.$(admin_nics)) ";
-  !bad_ip::
-  "${this.bundle}: good etc_hosts and admin ip's.";
+ no_device::
+  "${this.bundle}i: bad device";
+ no_bridge::
+  "${this.bundle}: bad bridge";
+ !bad_ip::
+  "${this.bundle}: good devices and bridges.";
 
 }
