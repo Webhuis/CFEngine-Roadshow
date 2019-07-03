@@ -48,7 +48,7 @@ reports:
   "$(this.bundle): $(show_vnic) Bingo!";
 
  '!no_device_$(vnic).!if_down_$(vnic)'::
-  "$(this.bundle): $(vnic) Ok!";
+  "$(this.bundle) vnic device and interface: $(vnic) Ok!";
 
 }
 
