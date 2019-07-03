@@ -47,7 +47,7 @@ reports:
  "if_down_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
 
- "!no_device_$(vnic)"|"!if_down_$(vnic)"::
+ ("!no_device_$(vnic)").("!if_down_$(vnic)")::
   "$(this.bundle): $(vnic) Ok!";
 
 }
