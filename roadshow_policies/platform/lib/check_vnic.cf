@@ -47,6 +47,9 @@ reports:
  "if_down_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
 
+ !bad_ip::
+  "$(this.bundle): $(vnic) Ok!";
+
 }
 
 bundle agent add_vnic(vnic) {
