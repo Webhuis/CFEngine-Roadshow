@@ -1,0 +1,12 @@
+bundle common interface_down {
+
+classes:
+
+  "interface_down"     expression => regcmp( "interface_down", $(interface_down) );
+
+vars:
+
+  "interface_down"         string => "interface_down";
+
+}
+

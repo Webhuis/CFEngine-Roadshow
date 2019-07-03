@@ -1,0 +1,12 @@
+bundle common no_device {
+
+classes:
+
+  "no_device"     expression => regcmp( "no_device", $(no_device) );
+
+vars:
+
+  "no_device"         string => "no_device";
+
+}
+

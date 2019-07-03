@@ -1,0 +1,12 @@
+bundle common bridge_down {
+
+classes:
+
+  "bridge_down"     expression => regcmp( "bridge_down", $(bridge_down) );
+
+vars:
+
+  "bridge_down"         string => "bridge_down";
+
+}
+

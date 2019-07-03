@@ -14,12 +14,12 @@ methods:
   "Add device $(vnic)"             usebundle => add_vnic( "$(vnic)" );
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
                                      comment => "layer one";
-  "Bad IP $(vlan)"                 usebundle => bad_ip;
+  "No device $(vlan)"              usebundle => no_device;
 
  "if_down_$(vnic)"::
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
                                      comment => "layer one";
-  "Bad IP $(vlan)"                 usebundle => bad_ip;
+  "Interface down $(vlan)"         usebundle => interface_down;
 
 reports:
 
