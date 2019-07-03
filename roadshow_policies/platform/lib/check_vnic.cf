@@ -10,6 +10,66 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(vnic)";
+  "$(this.bundle): $(vnic) $(var_vnic_$(vnic))";
+
+}
+
+bundle agent set_vnic_class(vnic, show_vnic) {
+
+classes:
+
+  "no_device_$(vnic)"             expression => regcmp( ".*does not exist.*",
+                                                        "$(show_vnic)");
+
+  "if_down $(vnic)"               expression => regcmp( ".*DOWN.*",
+                                                        "$(show_vnic)");
+
+methods:
+
+ "no_device_$(vnic)"::
+  "Add device $(vnic)"             usebundle => add_vnic( "$(vnic)" );
+  "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
+                                     comment => "layer one";
+  "No device"                      usebundle => no_device;
+  "bad_ip"                         usebundle => bad_ip;
+
+ "if_down_$(vnic)"::
+  "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
+                                     comment => "layer one";
+  "Interface down"                 usebundle => interface_down;
+  "bad_ip"                         usebundle => bad_ip;
+
+reports:
+
+ "no_device_$(vnic)"::
+  "$(this.bundle): $(show_vnic) Bingo!";
+
+ "if_down_$(vnic)"::
+  "$(this.bundle): $(show_vnic) Bingo!";
+
+}
+
+bundle agent add_vnic(vnic) {
+
+commands:
+ 
+  "/sbin/ip link add link $(vnic)";
+
+reports:
+
+ "$(this.bundle): vnic $(vnic) added!";
+
+}
+
+bundle agent bring_vnic_up(vnic) {
+
+commands:
+ 
+  "/sbin/ip link set dev $(vnic) up";
+  "/sbin/ifup $(vnic)";
+
+reports:
+
+ "$(this.bundle): vnic $(vnic) up!";
 
 }
