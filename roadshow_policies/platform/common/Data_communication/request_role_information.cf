@@ -43,7 +43,7 @@ reports:
 # "${this.bundle} response_role_information: ${response_role_information}";
 
  bad_ip::
-  "${this.bundle}i: bad device or down";
+  "${this.bundle}: bad device or down";
  good_ip::
   "${this.bundle}: good devices and bridges.";
 

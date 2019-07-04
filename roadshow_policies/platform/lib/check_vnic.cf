@@ -50,8 +50,14 @@ reports:
  "no_device_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
 
+ "!no_device_$(vnic)"::
+  "$(this.bundle): $(vnic) good!";
+
  "if_down_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
+
+ "!if_down_$(vnic)"::
+  "$(this.bundle): $(vnic) good!";
 
  '!no_device_$(vnic).!if_down_$(vnic)'::
   "$(this.bundle) vnic device and interface: $(vnic) Ok!";
