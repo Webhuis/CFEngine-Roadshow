@@ -39,14 +39,12 @@ methods:
 
 reports:
 
-  "${this.bundle} response: ${response}";
-  "${this.bundle} response_role_information: ${response_role_information}";
+# "${this.bundle} response: ${response}";
+# "${this.bundle} response_role_information: ${response_role_information}";
 
- no_device::
-  "${this.bundle}i: bad device";
- no_bridge::
-  "${this.bundle}: bad bridge";
- !bad_ip::
+ bad_ip::
+  "${this.bundle}i: bad device or down";
+ good_ip::
   "${this.bundle}: good devices and bridges.";
 
 }
