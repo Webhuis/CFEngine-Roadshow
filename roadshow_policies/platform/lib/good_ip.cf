@@ -1,0 +1,12 @@
+bundle common good_ip {
+
+classes:
+
+  "good_ip"        expression => regcmp( "good_ip", $(good_ip) );
+
+vars:
+
+  "good_ip"            string => "good_ip";
+
+}
+

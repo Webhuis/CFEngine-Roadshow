@@ -33,11 +33,17 @@ methods:
   "No device"                      usebundle => no_device;
   "bad_ip"                         usebundle => bad_ip;
 
+ '!no_device_$(vnic)'::
+  "good_ip"                        usebundle => good_ip;
+
  "if_down_$(vnic)"::
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
                                      comment => "layer one";
   "Interface down"                 usebundle => interface_down;
   "bad_ip"                         usebundle => bad_ip;
+
+ '!if_down_$(vnic)'::
+  "good_ip"                        usebundle => good_ip;
 
 reports:
 
