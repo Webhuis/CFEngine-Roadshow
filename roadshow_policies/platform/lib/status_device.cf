@@ -1,8 +1,12 @@
-bundle agent status_device(status) {
+bundle agent status_device(device_status) {
 
 classes:
 
   "stop"                 expression => regcmp( "bad", "$(status)");
+
+vars:
+
+  "status"                   string => $(device_status);
 
 methods:
 

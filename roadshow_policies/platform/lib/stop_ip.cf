@@ -2,11 +2,17 @@ bundle common stop_ip {
 
 classes:
 
-  "stop_ip"       expression => regcmp( "stop", "stop" );
+  "stop_ip"       expression => regcmp( "bad", "$(status_device.status)" );
+  "good_ip"       expression => regcmp( "good", "$(status_device.status)" );
 
 vars:
 
   "no_device"         string => "no_device";
+
+reports:
+
+  "$(this.bundle): $(bad_ip)";
+  "$(this.bundle): $(stop_ip)";
 
 }
 
