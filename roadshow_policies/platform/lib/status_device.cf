@@ -2,7 +2,7 @@ bundle agent status_device(device) {
 
 defaults:
 
-  "status_device"   string => "Ok", if_match_regex => "$(device)";
+  "status_device"   string => "Ok", if_match_regex => "";
 
 reports:
 
