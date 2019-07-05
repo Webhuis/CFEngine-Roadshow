@@ -6,6 +6,6 @@ defaults:
 
 reports:
 
-  "$(this.bundle) device: $(vnic) $(status_device)";
+  "$(this.bundle) device: $(device) $(status_device)";
 
 }
