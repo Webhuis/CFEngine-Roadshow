@@ -47,6 +47,9 @@ methods:
 
 reports:
 
+  "$(this.bundle) no_device_$(vnic): $(no_device_$(vnic))";
+  "$(this.bundle) if_down_$(vnic): $(if_down_$(vnic))";
+
  "no_device_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
 
