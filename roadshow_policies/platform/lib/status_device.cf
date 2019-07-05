@@ -1,4 +1,4 @@
-bundle agent status_devicei(device) {
+bundle agent status_device(device) {
 
 defaults:
 
