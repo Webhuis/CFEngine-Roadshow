@@ -42,9 +42,9 @@ reports:
 # "${this.bundle} response: ${response}";
 # "${this.bundle} response_role_information: ${response_role_information}";
 
- bad_ip::
+ stop_ip::
   "${this.bundle}: bad device or down";
- good_ip::
+ !stop_ip::
   "${this.bundle}: good devices and bridges.";
 
 }
