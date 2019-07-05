@@ -1,8 +1,13 @@
-bundle agent status_device(device) {
+bundle agent status_device(status) {
 
-defaults:
+classes:
 
-  "status_device"   string => "Ok", if_match_regex => "";
+  "stop"                 expression => regcmp( "bad", "$(status)");
+
+methods:
+
+ stop::
+  "Stop IP processing"    usebundle => "stop_ip";
 
 reports:
 

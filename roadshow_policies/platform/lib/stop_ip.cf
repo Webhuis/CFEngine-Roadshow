@@ -1,0 +1,12 @@
+bundle common stop_ip {
+
+classes:
+
+  "stop_ip"       expression => regcmp( "stop", "stop" );
+
+vars:
+
+  "no_device"         string => "no_device";
+
+}
+

@@ -30,7 +30,7 @@ methods:
 # "Collect environment information" usebundle => classify_environment;
   "Collect role data"               usebundle => "$(classify.role)_data";
 
- 'good_ip.!bad_ip'::
+ '!stop_ip'::
   "Check etc hosts nic"             usebundle => check_ip( "$($(classify.role)_data.$(etc_hosts_nic))" );
   "Check nic_admin"                 usebundle => check_ip( "$($(classify.role)_data.$(admin_nics))" );
 
