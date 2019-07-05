@@ -1,0 +1,11 @@
+bundle agent status_devicei(device) {
+
+defaults:
+
+  "status_device"   string => "Ok", if_match_regex => "$(device)";
+
+reports:
+
+  "$(this.bundle) device: $(vnic) $(status_device)";
+
+}

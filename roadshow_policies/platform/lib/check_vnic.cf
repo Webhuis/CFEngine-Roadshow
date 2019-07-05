@@ -34,7 +34,7 @@ methods:
   "bad_ip"                         usebundle => bad_ip;
 
  '!no_device_$(vnic)'::
-  "good_ip"                        usebundle => good_ip;
+  "status_device"                  usebundle => status_device( "$(vnic)" ), 
 
  "if_down_$(vnic)"::
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
@@ -43,7 +43,7 @@ methods:
   "bad_ip"                         usebundle => bad_ip;
 
  '!if_down_$(vnic)'::
-  "good_ip"                        usebundle => good_ip;
+  "status_device"                  usebundle => status_device( "$(vnic)" ), 
 
 reports:
 
