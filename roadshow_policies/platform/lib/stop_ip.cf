@@ -6,7 +6,7 @@ classes:
 
 reports:
 
- stop+ip:: 
+ stop_ip:: 
   "$(this.bundle): $(stop_ip)";
 
 }
