@@ -4,7 +4,7 @@ methods:
 
   "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data).$(etc_hosts_nic)");
 
-  'good_ip.!bad_ip'::
+  '!stop_ip'::
 
     "Standardize hosts setup"           usebundle => etc_hosts;
 
@@ -12,7 +12,7 @@ methods:
 
     "Check list of resolvers"           usebundle => check_ip("$($(classify.eco_vars).resolvers)");
 
-  'good_ip.!bad_ip'::
+  '!stop_ip'::
 
     "Standardize resolv.conf setup"     usebundle => resolv_conf;
                                                                                                                                                                                        
@@ -20,13 +20,13 @@ reports:
                                                                                                                                                                                        
   "${this.bundle}: I am doing data driven policies and my verdict is as folows";  
 
- bad_ip::
+ stop_ip::
   "${this.bundle}: Invalid IP Address!";
 
   "${this.bundle}: $(sys.domain) $($(classify.role)_data).$(etc_hosts_nic)";  
   "${this.bundle}: $(sys.domain) $($(classify.eco_vars).resolvers)";  
 
- 'good_ip.!bad_ip'::
+ '!stop_ip'::
    "${this.bundle}: Valid IP Addresses!";
 
 }
