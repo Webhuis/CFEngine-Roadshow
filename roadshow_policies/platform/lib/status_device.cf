@@ -10,12 +10,10 @@ defaults:
 
 methods:
 
- stop_network_editing::
   "Stop IP processing" usebundle => "stop_ip";
 
 reports:
 
-  "$(this.bundle) device parameter: $(device_parameter)";
   "$(this.bundle) device status: $(device_status)";
 
 }
