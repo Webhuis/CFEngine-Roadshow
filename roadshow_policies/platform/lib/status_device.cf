@@ -10,7 +10,7 @@ defaults:
 
 methods:
 
- stop::
+ stop_network_editing::
   "Stop IP processing" usebundle => "stop_ip";
 
 reports:
