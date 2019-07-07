@@ -24,10 +24,6 @@ classes:
   "if_down $(vnic)"               expression => regcmp( ".*DOWN.*",
                                                         "$(show_vnic)");
 
-vars:
-
-  "old_status_devices"                string => readfile( "/var/cfengine/state/status_devices" );
-
 methods:
 
  "no_device_$(vnic)"::
