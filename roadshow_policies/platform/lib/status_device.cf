@@ -1,12 +1,12 @@
-bundle agent status_device(device_parameter) {
+bundle agent status_device(device_status) {
 
 classes:
 
-  "stop_network_editing"     expression => regcmp( "bad", $(device_parameter) );
+  "stop_network_editing"     expression => regcmp( "bad", $(device_status) );
 
 defaults:
 
-  "device_status"                string => "good", if_match_regex => "$(device_parameter)";
+  "device_status"                string => "good", if_match_regex => "";
 
 methods:
 
