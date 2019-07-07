@@ -15,11 +15,11 @@ vars:
 
 methods:
 
-  "The MySQL database server"   usebundle => mysql_server;
-  "PHP% for MySQL server"       usebundle => php5_mysql;
-  "The PowerDNS server"         usebundle => pdns_server;
-  "The Apache2 webserver"       usebundle => apache2;
-  "PHP for Apache2"             usebundle => apache_php;
+  "The MySQL database server"   usebundle => "mysql_server";
+  "PHP% for MySQL server"       usebundle => "php5_mysql";
+  "The PowerDNS server"         usebundle => "pdns_server";
+  "The Apache2 webserver"       usebundle => "apache2";
+  "PHP for Apache2"             usebundle => "apache_php";
 
 reports:
 
