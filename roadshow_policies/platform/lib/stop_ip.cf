@@ -2,7 +2,7 @@ bundle common stop_ip {
 
 vars:
 
-  "bad_ip"            string => $(status_device.device.status);
+  "bad_ip"            string => $(status_device.device_status);
 
 classes:
 
