@@ -6,7 +6,7 @@ classes:
 
 reports:
 
-  "$(this.bundle): "$(status_device.device.status)" );
+  "$(this.bundle): $(status_device.device.status)" );
 
  stop_ip:: 
   "$(this.bundle): stop configuring network ip";
