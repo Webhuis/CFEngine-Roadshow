@@ -2,19 +2,19 @@ bundle agent status_device(device_parameter) {
 
 classes:
 
-  "stop"                 expression => regcmp( "bad", $(device_parameter) );
+  "stop_network_editing"     expression => regcmp( "bad", $(device_status) );
 
 defaults:
 
-  "device_status"            string => "good", if_match_regex => "bad";
+  "device_status"                string => "good", if_match_regex => "bad";
 
 methods:
 
  stop::
-  "Stop IP processing"    usebundle => "stop_ip";
+  "Stop IP processing" usebundle => "stop_ip";
 
 reports:
 
-  "$(this.bundle): $(status)";
+  "$(this.bundle): $(device_parameter)";
 
 }
