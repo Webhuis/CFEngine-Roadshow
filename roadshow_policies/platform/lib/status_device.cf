@@ -15,6 +15,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(device_parameter)";
+  "$(this.bundle) device parameter: $(device_parameter)";
+  "$(this.bundle) device status: $(device_status)";
 
 }
