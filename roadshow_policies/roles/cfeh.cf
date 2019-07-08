@@ -42,7 +42,7 @@ methods:
 reports:
 
   "${this.bundle} nics: $(vnic)";
-  "${this.bundle} front_nic: $(etc_hosts_nic)";
+  "${this.bundle} support_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
 }

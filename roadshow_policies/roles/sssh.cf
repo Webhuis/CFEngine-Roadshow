@@ -34,8 +34,8 @@ vars:
   "vnic_index"                         slist => getindices("vnic");
 
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[sservice])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[sservice])])", "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[service])])", "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
 
 methods:
 
@@ -46,7 +46,7 @@ methods:
 reports:
 
   "${this.bundle} nics: $(vnic)";
-  "${this.bundle} front_nic: $(etc_hosts_nic)";
+  "${this.bundle} service_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
 }
