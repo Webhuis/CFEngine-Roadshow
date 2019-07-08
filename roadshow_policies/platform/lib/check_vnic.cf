@@ -32,16 +32,10 @@ methods:
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
                                      comment => "layer one";
 
-#'!no_device_$(vnic)'::
-# "Set status to old"              usebundle => status_device("good");
-
  "if_down_$(vnic)"::
   "Set status bad"                 usebundle => status_device("bad");
   "Bring up vnic $(vnic)"          usebundle => bring_vnic_up( "$(vnic)" ),
                                      comment => "layer one";
-
-#'!if_down_$(vnic)'::
-# "Set status"                     usebundle => status_device("good");
 
 reports:
 
@@ -51,17 +45,8 @@ reports:
  "no_device_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
 
-#"!no_device_$(vnic)"::
-# "$(this.bundle): $(vnic) good!";
-
  "if_down_$(vnic)"::
   "$(this.bundle): $(show_vnic) Bingo!";
-
-#"!if_down_$(vnic)"::
-# "$(this.bundle): $(vnic) good!";
-
-#'!no_device_$(vnic).!if_down_$(vnic)'::
-# "$(this.bundle) vnic device and interface: $(vnic) Ok!";
 
 }
 
