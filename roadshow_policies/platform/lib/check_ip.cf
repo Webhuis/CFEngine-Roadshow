@@ -2,20 +2,20 @@ bundle agent check_ip(ips) {
 
 classes:
 
-  "match_$(ips)"
+  "match_$(can_ips)"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(ips)
+            $(can_ips)
             );
 
 vars:
 
-  "ip_list"               slist => { $(ips) };
+  "can_ips"              string => canonify( $(ips) );
 
 methods:
 
- '!match_$(ips)'::
+ '!match_$(can_ips)'::
   "Set status bad"                 usebundle => status_ip("bad");
 # "Bell!!"            usebundle => bad_ip;
 
@@ -24,9 +24,9 @@ reports:
 # "$(this.bundle) ip's: $(ips)";
 # "$(this.bundle) ip list: $(ip_list)";
 
-  'match_$(ips)'::
-   "$(this.bundle) good ip: $(ips)";
+  'match_$(can_ips)'::
+   "$(this.bundle) good ip: $(can_ips)";
 
-  '!match_$(ips)'::
-   "$(this.bundle) bad ip: $(ips)";
+  '!match_$(can_ips)'::
+   "$(this.bundle) bad ip: $(can_ips)";
 }
