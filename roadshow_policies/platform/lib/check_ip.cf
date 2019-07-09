@@ -15,17 +15,18 @@ vars:
 
 methods:
 
- "!match_$(ips)"::
-  "Bell!!"            usebundle => bad_ip;
+ '!match_$(ips)'::
+  "Set status bad"                 usebundle => status_ip("bad");
+# "Bell!!"            usebundle => bad_ip;
 
 reports:
 
-  "$(this.bundle) ip's: $(ips)";
-  "$(this.bundle) ip list: $(ip_list)";
+# "$(this.bundle) ip's: $(ips)";
+# "$(this.bundle) ip list: $(ip_list)";
 
-  "match_$(ips)"::
+  'match_$(ips)'::
    "$(this.bundle) good ip: $(ips)";
 
-  "!match_$(ips)"::
+  '!match_$(ips)'::
    "$(this.bundle) bad ip: $(ips)";
 }

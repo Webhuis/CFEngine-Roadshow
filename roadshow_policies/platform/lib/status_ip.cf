@@ -1,0 +1,19 @@
+bundle agent status_ip(ip_status) {
+
+classes:
+
+  "stop_ip_editing"          expression => regcmp( "bad", $(ip_status) );
+
+defaults:
+
+  "ip_status"                    string => "good", if_match_regex => "";
+
+methods:
+
+  "Stop IP processing" usebundle => "bad_ip";
+
+reports:
+
+  "$(this.bundle) ip status: $(ip_status)";
+
+}
