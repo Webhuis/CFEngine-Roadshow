@@ -1,20 +1,19 @@
 bundle agent common {
 
-vars:
-    
-  "nic_index"                        slist => getindices("sys.ipv4");
-
 methods:
 
-  "We desire a clean house"      usebundle => housekeeping;
-  "Basic environment stuff"      usebundle => basic_environment;
-  "We use LDAP Authentication"   usebundle => authentication;
-# "Feed Hard Classes to Data" 	 usebundle => feed_hard_classes;
-  "Prepare for users"   	 usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
+  "We desire a clean house"                 usebundle => housekeeping;
+  "Basic environment stuff"                 usebundle => basic_environment;
+  "We use LDAP Authentication"              usebundle => authentication;
+# "Feed Hard Classes to Data"               usebundle => feed_hard_classes;
+  "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
+
+ '!stop_ip'::
+  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+  "We do role date driven policies here"    usebundle => role_data_driven_policies;
 
 reports:
 
  "$(this.bundle): I am doing common policies.";
- "$(this.bundle) nics: $(nic.nic_front)";
 
 }
