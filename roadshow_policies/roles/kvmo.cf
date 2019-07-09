@@ -37,7 +37,8 @@ vars:
   "vlan_index"                        slist  => getindices("kvmo_data.vlan");
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[breth0_$(vlan[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[breth0_$(vlan[service])])", "$(sys.ipv4[breth0_$(vlan[life])])" };
+  "support_ip"                        slist  => { "$(sys.ipv4[breth0_$(vlan[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[breth0_$(vlan[support])])", "$(sys.ipv4[breth0_$(vlan[life])])" };
 
 methods:
 

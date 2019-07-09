@@ -30,6 +30,7 @@ vars:
 
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
 
 methods:

@@ -45,7 +45,7 @@ vars:
    kvm_host::
         "ntp_pool"    string => "nl.pool.ntp.org";
         "ntp_master"   slist => { "1", "2", "3" };
-        "restrict"     slist => { "${g.ip_address}", "127.0.0.1", "::1" };
+        "restrict"     slist => { "$($(classify.role)_data.support_ip)", "127.0.0.1", "::1" };
 
    !kvm_host::
         "ntp_pool"    string => "${sys.domain}";
