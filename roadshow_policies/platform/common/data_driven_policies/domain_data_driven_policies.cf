@@ -2,7 +2,7 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data).$(etc_hosts_nic)");
+  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data.etc_hosts_nic)");
 
   !bad_ip::
 
@@ -23,8 +23,8 @@ reports:
  bad_ip::
   "$(this.bundle): Invalid IP Address!";
 
-  "$(this.bundle): $(sys.domain) $($(classify.role)_data).$(etc_hosts_nic)";  
-  "$(this.bundle): $(sys.domain) $($(classify.eco_vars).resolvers)";  
+  "$(this.bundle) etc_hosts_nic: $($(classify.role)_data.etc_hosts_nic)";  
+  "$(this.bundle) resolvers: $($(classify.eco_vars).resolvers)";  
 
  !bad_ip::
    "$(this.bundle): Valid IP Addresses!";
