@@ -10,7 +10,7 @@ defaults:
 
 methods:
 
-  "Stop IP processing" usebundle => "bad_ip";
+  "Stop IP processing"        usebundle => "bad_ip";
 
 reports:
 

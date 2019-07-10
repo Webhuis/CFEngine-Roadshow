@@ -1,12 +1,19 @@
 bundle common bad_ip {
 
+vars:
+
+  "bad_ip"            string => "$(status_ip.ip_status";
+
 classes:
 
   "bad_ip"        expression => regcmp( "bad_ip", $(bad_ip) );
 
-vars:
+reports:
 
-  "bad_ip"            string => "bad_ip";
+  "$(this.bundle) bad ip: $(bad_ip)";
+
+ stop_ip:: 
+  "$(this.bundle): prevent configuring bad ip addresses";
 
 }
 

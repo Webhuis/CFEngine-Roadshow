@@ -10,10 +10,10 @@ classes:
 
 reports:
 
-  "$(this.bundle) bad ip: $(bad_device)";
+  "$(this.bundle) bad device: $(bad_device)";
 
  stop_ip:: 
-  "$(this.bundle): stop configuring network ip";
+  "$(this.bundle): prevent configuring network ip";
 
 }
 
