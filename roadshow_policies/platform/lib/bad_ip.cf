@@ -2,7 +2,7 @@ bundle common bad_ip {
 
 vars:
 
-  "bad_ip"            string => "$(status_ip.ip_status";
+  "bad_ip"            string => "$(status_ip.ip_status)";
 
 classes:
 
