@@ -18,6 +18,7 @@ vars:
   "pkg[vim]"                             string => "*";
 
   "nopkg[nano]"                          string => "*";
+  "nopkg[nscd]"                          string => "*";
 
 methods:
 
