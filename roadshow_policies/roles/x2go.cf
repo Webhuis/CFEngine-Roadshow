@@ -10,8 +10,6 @@ vars:
   "sequence"                                    slist => getindices("bundles");
   "inputs"                                      slist => getvalues("bundles");
 
-  "admin_nics"                                  slist => { "$($(sys.flavor).nics[admin])" };
-
 methods:
 
   "We desire the x2go desktop"              usebundle => "x2go_desktop";
