@@ -4,8 +4,8 @@ classes:
 
   "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
-  "eno"              expression => regcmp("ens", "$(sys.ipv4[1])");
-  "eth"              expression => regcmp("eth", "$(sys.ipv4[1])");
+  "eno"              expression => regcmp(".*eno.*", "$(ipv4_index)");
+  "eth"              expression => regcmp(".*eth.*", "$(ipv4_index)");
 
 vars:
     
@@ -19,6 +19,8 @@ vars:
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
+
+  "ipv4_index"            slist => getindices("sys.ipv4");
 
  eno::
   "interface"            string => "eno";
