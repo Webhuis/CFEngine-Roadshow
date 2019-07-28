@@ -1,0 +1,38 @@
+bundle agent debian_10 {
+
+vars:
+
+  "pkg[autofs5]"                         string => "*";
+  "pkg[autofs5-ldap]"                    string => "*";
+  "pkg[libzmq3]"                         string => "*";
+  "pkg[python-zmq]"                      string => "*";
+
+  "sources_list"      string => "deb http://ftp.nl.debian.org/debian/ buster main contrib non-free
+deb-src http://ftp.nl.debian.org/debian/ buster main contrib non-free
+
+deb http://security.debian.org/debian-security buster/updates main contrib non-free
+deb-src http://security.debian.org/debian-security buster/updates main contrib non-free
+# buster-updates, previously known as 'volatile'
+deb http://ftp.debian.org/debian/ buster-updates main contrib non-free
+deb-src http://ftp.debian.org/debian/ buster-updates main contrib non-free";
+
+  "vnic[service]"                        string => "ens3";
+  "vnic[support]"                        string => "ens7";
+  "vnic[admin]"                          string => "ens8";
+  "vnic[wan]"                            string => "ens9";
+  "vnic[gw]"                             string => "ensa";
+  "vnic[life]"                           string => "ensb";
+  "vnic[roadshow]"                       string => "ensc";
+
+  "vnic_index"                            slist => getindices("vnic");
+
+methods:
+
+  "We desire the Stretch sources_list" usebundle => sources_list("$(sources_list)");
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
