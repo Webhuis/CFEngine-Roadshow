@@ -40,7 +40,7 @@ vars:
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])", "$(sys.ipv4[$(bridge)_$(vlan[life])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])", "$(sys.ipv4[$(classify.bridge)_$(vlan[life])])" };
 
 methods:
 
