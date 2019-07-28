@@ -4,8 +4,10 @@ classes:
 
   "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
-  "eno"              expression => regcmp(".*eno.*", "$(ipv4_index)");
-  "eth"              expression => regcmp(".*eth.*", "$(ipv4_index)");
+  "eno"              expression => regcmp("^eno.*", "$(ipv4_index)");
+  "eth"              expression => regcmp("^eth.*", "$(ipv4_index)");
+  "breno1"           expression => regcmp("^breno1.*", "$(ipv4_index)");
+  "breth0"           expression => regcmp("^breth0.*", "$(ipv4_index)");
 
 vars:
     
@@ -27,6 +29,14 @@ vars:
 
  eth::
   "interface"            string => "eth";
+
+ breno1::
+  "interface"            string => "eno1";
+  "bridge"               string => "breno1";
+
+ breth0::
+  "interface"            string => "eth0";
+  "bridge"               string => "breth0";
 
 reports:
 

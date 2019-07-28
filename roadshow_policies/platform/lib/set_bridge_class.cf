@@ -16,13 +16,13 @@ methods:
 
  "no_bridge_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Add bridge $(vlan)"             usebundle => add_bridge( "$(bridge)", "$(vlan)" );
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
+  "Add bridge $(vlan)"             usebundle => add_bridge( "$(classify.bridge)", "$(vlan)" );
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(classify.bridge)", "$(vlan)" ),
                                      comment => "layer two";
 
  "bridge_down_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(classify.bridge)", "$(vlan)" ),
                                      comment => "layer two";
 
 reports:
@@ -40,7 +40,7 @@ bundle agent add_bridge(bridge, vlan) {
 commands:
  
   "/usr/bin/ovs-vsctl add-br $(bridge).$(vlan)";
-  "/usr/bin/ovs-vsctl add-port $(bridge).$(vlan) $(classify.interface)0.$(vlan) vlan_mode=trunk tag=$(vlan)";
+  "/usr/bin/ovs-vsctl add-port $(bridge).$(vlan) $(classify.interface).$(vlan) vlan_mode=trunk tag=$(vlan)";
 
 reports:
 

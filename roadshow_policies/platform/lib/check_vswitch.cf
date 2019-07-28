@@ -2,10 +2,11 @@ bundle agent check_vswitch(vlan) {
 
 vars:
 
-  "interface"                         string => "$(classify.interface)0";
-  "bridge"                            string => "br$(classify.interface)0";
-  "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(interface).$(vlan)","noshell");
-  "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(bridge).$(vlan)","noshell");
+# "interface"                         string => $(classify.interface);
+# "bridge"                            string => $(classify.bridge);
+
+  "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(classify.interface).$(vlan)","noshell");
+  "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(classify.bridge).$(vlan)","noshell");
 
 methods:
 
@@ -14,8 +15,8 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(interface)_$(vlan)";
   "$(this.bundle): $(var_interface_$(vlan))";
+  "$(this.bundle): $(var_bridge_$(vlan))";
   "$(this.bundle): $(interface) $(bridge)";
 
 }
