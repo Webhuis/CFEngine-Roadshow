@@ -36,11 +36,11 @@ vars:
 
   "vlan_index"                        slist  => getindices("kvmo_data.vlan");
 
-  "bridge"                            string => "br$(classify.interface)0";
+# "bridge"                            string => "br$(classify.interface)0";
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(bridge)_$(vlan[support])])" };
-  "support_ip"                        slist  => { "$(sys.ipv4[$(bridge)_$(vlan[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(bridge)_$(vlan[support])])", "$(sys.ipv4[$(bridge)_$(vlan[life])])" };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
+  "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])", "$(sys.ipv4[$(bridge)_$(vlan[life])])" };
 
 methods:
 
