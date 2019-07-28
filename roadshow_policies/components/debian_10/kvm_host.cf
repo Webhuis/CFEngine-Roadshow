@@ -13,7 +13,11 @@ vars:
   "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
   "pkg[grml-debootstrap]"       string => "*";
-  "pkg[kvm]"                    string => "*";
+  "pkg[libguestfs-tools]"       string => "*";
+  "pkg[libosinfo-bin]"          string => "*";
+  "pkg[libvirt-bin]"            string => "*";
+  "pkg[libvirt-daemon]"         string => "*";
+  "pkg[libvirt-daemon-system]"  string => "*";
   "pkg[libvirt-bin]"            string => "*";
   "pkg[lvm2]"                   string => "*";
   "pkg[mdadm]"                  string => "*";
@@ -21,7 +25,8 @@ vars:
   "pkg[openvswitch-common]"     string => "*";
   "pkg[openvswitch-switch]"     string => "*";
   "pkg[parted]"                 string => "*";
-  "pkg[qemu]"                   string => "*";
+  "pkg[qemu-kvm]"               string => "*";
+  "pkg[qemu-system]"            string => "*";
   "pkg[raidutils]"              string => "*";
   "pkg[smartmontools]"          string => "*";
   "pkg[virt-goodies]"           string => "*";
