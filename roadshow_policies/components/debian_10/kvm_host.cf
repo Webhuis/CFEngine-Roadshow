@@ -1,0 +1,86 @@
+bundle agent kvm_host {
+
+vars:
+
+  "templates"                    slist => { "debootstrap.config.sdx.tmpl", "modules.tmpl" };
+  "modules"                      slist => { "8021q" };
+  "guest_configs"               string => "/etc/libvirt/qemu/";
+  "support_svn_server"          string => "https://support-svn.webhuis.nl/dom0-hosts";
+
+  "pkg[arp-scan]"               string => "*";
+  "pkg[array-info]"             string => "*";
+  "pkg[clvm]"                   string => "*";
+  "pkg[bridge-utils]"           string => "*";
+  "pkg[gdisk]"                  string => "*";
+  "pkg[grml-debootstrap]"       string => "*";
+  "pkg[kvm]"                    string => "*";
+  "pkg[libvirt-bin]"            string => "*";
+  "pkg[lvm2]"                   string => "*";
+  "pkg[mdadm]"                  string => "*";
+  "pkg[minicom]"                string => "*";
+  "pkg[openvswitch-common]"     string => "*";
+  "pkg[openvswitch-switch]"     string => "*";
+  "pkg[parted]"                 string => "*";
+  "pkg[qemu]"                   string => "*";
+  "pkg[raidutils]"              string => "*";
+  "pkg[smartmontools]"          string => "*";
+  "pkg[virt-goodies]"           string => "*";
+  "pkg[virtinst]"               string => "*";
+  "pkg[virt-manager]"           string => "*";
+  "pkg[virt-top]"               string => "*";
+  "pkg[vlan]"                   string => "*";
+  "pkg[xvnc4viewer]"            string => "*";
+
+  "interface_prefix"            string => "eth0";
+  "bridge_prefix"               string => "breth0";
+
+#   "kvm_host_package_name"     slist  => getindices("pkg");
+
+files:
+
+  "/etc/debootstrap/config.sdx"
+         comment => "Prepare grml debootstrap environment",
+           perms => mo("644","root"),
+          create => "true",
+          action => r_immediate,
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/debootstrap.config.sdx.tmpl";
+
+  "/etc/modules"
+         comment => "Modules for vlans",
+           perms => mo("644","root"),
+          create => "true",
+          action => r_immediate,
+   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/modules.tmpl";
+
+methods:
+
+  "Provide desired packages"               usebundle => packages("kvm_host.pkg");
+  "Provide grml debootstrap template"      usebundle => get_template("$(templates)");
+# "Provide libvirt vlan networks"          usebundle => libvirt_vlan_networks(S(vlans));
+
+reports:
+
+  "$(this.bundle) interfaces: $(interface_prefix) $(bridge_prefix)";
+
+}
+
+bundle edit_xml libvirt_vlan_networks(vlans) {
+
+insert_tree:
+
+   "<network>
+  <name>$(vlan)</name>
+  <forward mode='bridge'/>
+  <bridge name='breth0.$(vlan)'/>
+  <virtualport type='openvswitch'/>
+  <portgroup name='$(vlan)'>
+    <vlan>
+      <tag id='$(vlan)'/>
+    </vlan>
+  </portgroup>
+  </network>"
+
+   select_xpath => " /var/lib/libvirt/qemu/networks";
+
+}
+

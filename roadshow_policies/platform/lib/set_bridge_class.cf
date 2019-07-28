@@ -10,7 +10,7 @@ classes:
 
 vars:
 
-  "bridge"                            string => "breth0";
+  "bridge"                            string => "br$(classify.interface)0";
 
 methods:
 
@@ -39,8 +39,8 @@ bundle agent add_bridge(bridge, vlan) {
 
 commands:
  
-  "/usr/bin/ovs-vsctl add-br breth0.$(vlan)";
-  "/usr/bin/ovs-vsctl add-port breth0.$(vlan) eth0.$(vlan) vlan_mode=trunk tag=$(vlan)";
+  "/usr/bin/ovs-vsctl add-br $(bridge).$(vlan)";
+  "/usr/bin/ovs-vsctl add-port $(bridge).$(vlan) $(classify.interface)0.$(vlan) vlan_mode=trunk tag=$(vlan)";
 
 reports:
 

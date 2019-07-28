@@ -2,8 +2,8 @@ bundle agent check_vswitch(vlan) {
 
 vars:
 
-  "interface"                         string => "eth0";
-  "bridge"                            string => "breth0";
+  "interface"                         string => "$(classify.interface)0";
+  "bridge"                            string => "br$(classify.interface)0";
   "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(interface).$(vlan)","noshell");
   "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(bridge).$(vlan)","noshell");
 

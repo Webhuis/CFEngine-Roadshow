@@ -4,6 +4,9 @@ classes:
 
   "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
+  "ens"              expression => regcmp("ens", "$(sys.ipv4[1])");
+  "eth"              expression => regcmp("eth", "$(sys.ipv4[1])");
+
 vars:
     
   "role"                 string => "$(part[1])";
@@ -16,6 +19,12 @@ vars:
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
+
+ ens::
+  "interface"            string => "ens";
+
+ eth::
+  "interface"            string => "eth";
 
 reports:
 
