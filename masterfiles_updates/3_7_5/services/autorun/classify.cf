@@ -4,7 +4,7 @@ classes:
 
   "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
-  "ens"              expression => regcmp("ens", "$(sys.ipv4[1])");
+  "eno"              expression => regcmp("ens", "$(sys.ipv4[1])");
   "eth"              expression => regcmp("eth", "$(sys.ipv4[1])");
 
 vars:
@@ -20,8 +20,8 @@ vars:
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
   "vendor"               string => $(inventory_linux.id_array[1]);
 
- ens::
-  "interface"            string => "ens";
+ eno::
+  "interface"            string => "eno";
 
  eth::
   "interface"            string => "eth";
