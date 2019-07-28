@@ -36,9 +36,6 @@ vars:
   "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
-  "interface_prefix"            string => "eth0";
-  "bridge_prefix"               string => "breth0";
-
 #   "kvm_host_package_name"     slist  => getindices("pkg");
 
 files:
@@ -65,7 +62,7 @@ methods:
 
 reports:
 
-  "$(this.bundle) interfaces: $(interface_prefix) $(bridge_prefix)";
+  "$(this.bundle): ";
 
 }
 
