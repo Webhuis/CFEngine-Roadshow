@@ -9,16 +9,12 @@ vars:
 
   "pkg[arp-scan]"               string => "*";
   "pkg[array-info]"             string => "*";
-  "pkg[clvm]"                   string => "*";
   "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
-  "pkg[grml-debootstrap]"       string => "*";
   "pkg[libguestfs-tools]"       string => "*";
   "pkg[libosinfo-bin]"          string => "*";
-  "pkg[libvirt-bin]"            string => "*";
   "pkg[libvirt-daemon]"         string => "*";
   "pkg[libvirt-daemon-system]"  string => "*";
-  "pkg[libvirt-bin]"            string => "*";
   "pkg[lvm2]"                   string => "*";
   "pkg[mdadm]"                  string => "*";
   "pkg[minicom]"                string => "*";
