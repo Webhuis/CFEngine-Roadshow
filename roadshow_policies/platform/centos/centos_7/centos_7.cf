@@ -8,7 +8,18 @@ vars:
   "sequence"                              slist => getindices("bundles");
   "inputs"                                slist => getvalues("bundles");
 
-  "yum_proxy"                            string => "http://aptutl0001.webhuis.nl:3142/";
+
+  "vnic[service]"                        string => "ens3";
+  "vnic[support]"                        string => "ens7";
+  "vnic[admin]"                          string => "ens8";
+  "vnic[wan]"                            string => "ens9";
+  "vnic[gw]"                             string => "ensa";
+  "vnic[life]"                           string => "ensb";
+  "vnic[roadshow]"                       string => "ensc";
+
+  "vnic_index"                            slist => getindices("vnic");
+
+  "yum_proxy"                            string => "http://aptgwhpdcrg1.sw.webhuis.nl:3142/";
 
 files:
 
