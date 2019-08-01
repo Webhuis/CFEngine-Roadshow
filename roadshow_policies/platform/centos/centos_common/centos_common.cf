@@ -1,0 +1,44 @@
+bundle agent centos_common {
+
+vars:
+
+  "pkg[openssh-server]"        string => "*";
+  "pkg[libpam-ldap]"           string => "*";
+  "pkg[libnss-ldap]"           string => "*";
+  "pkg[libpam-cracklib]"       string => "*";
+  "pkg[ldap-utils]"            string => "*";
+  "pkg[smbclient]"             string => "*";
+
+  "desired"                    string => "addupdate";
+  "cfengine_version"           string => "3.6.6-1";
+  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
+  "package_cache"              string => "/var/cache/apt/archives";
+
+  "cpkg[cfengine_community][package]"   string => "${package_cache}/${cfengine_package}";
+  "cpkg[cfengine_community][desired]"   string => "${desired}";
+  "cpkg[cfengine_community][version]"   string => "${cfengine_version}";
+  "cpkg[cfengine_community][arch]"      string => "${sys.arch}";
+
+methods:
+ 
+#"Configure yum mirror"      usebundle => apt_cacher;
+ "Install common packages"   usebundle => packages("centos_common.pkg");
+ "Automate Security Upgras"  usebundle => unattended_upgrades;
+
+reports:
+
+ "${this.bundle}: CFEngine package string = ${package_cache}/${cfengine_package}";
+
+}
+
+
+bundle agent restart_sshd {
+
+commands:
+
+  "service sshd restart"
+   handle => "restart_ssdd",
+   comment => "restarting sshd";
+
+}
+
