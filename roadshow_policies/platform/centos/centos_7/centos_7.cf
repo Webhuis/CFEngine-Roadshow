@@ -102,15 +102,6 @@ packages:
 
 }
 
-bundle agent restart_sshd {
-
-commands:
-  "/etc/init.d/sshd restart"
-     handle => "restart_sshd",
-    comment => "restarting sshd";
-
-}
-
 bundle edit_line edit_yum_conf(proxy) {
 
  delete_lines:
