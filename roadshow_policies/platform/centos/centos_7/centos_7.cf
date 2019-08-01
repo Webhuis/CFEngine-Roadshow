@@ -16,19 +16,19 @@ files:
           perms  => mo("644","root"),
          create  => "true",
       edit_line  => edit_yum_conf("${centos_7.yum_proxy}"),
-         action  => u_immediate;
+         action  => r_immediate;
 
  "/etc/yum/pluginconf.d/fastestmirror.conf"
           perms  => mo("644","root"),
          create  => "true",
       edit_line  => edit_yum_fastest_mirror_conf,
-         action  => u_immediate;
+         action  => r_immediate;
 
  "/etc/yum.repos.d/CentOS-Base.repo"
           perms  => mo("644","root"),
          create  => "true",
       edit_line  => edit_yum_base_repo,
-         action  => u_immediate;
+         action  => r_immediate;
 
 methods:
 

@@ -1,10 +1,10 @@
-bundle agent cfeh {
+bundle agent knut {
 
 vars:
 
   "role_name"                         string => "Knutsel sandbox machine";
 
-  "bundles[knutsel]"                  string => "knutsel.cf";
+  "bundles[knutsel]"                  string => "no_arch/knutsel.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -20,7 +20,7 @@ reports:
 
 }
 
-bundle agent cfeh_data {
+bundle agent knut_data {
   
 vars:
 

@@ -1,27 +1,23 @@
-bundle agent x2go {
+bundle agent gitb {
 
 vars:
 
-  "role_name"                                  string => "x2go virtual desktop";
+  "app"            string => "gitblit";
+  "tomcat_app"     string => "no_arch/tomcat_app.cf";
 
-  "bundles[x2go_desktop]"                      string => "${sys.flavor}/x2go_desktop.cf";
-  "bundles[x2goserver]"                        string => "${sys.flavor}/x2goserver.cf";
-
-  "sequence"                                    slist => getindices("bundles");
-  "inputs"                                      slist => getvalues("bundles");
+  "inputs"          slist => { "${tomcat_app}", getvalues("tomcat_app.bundles") };
 
 methods:
 
-  "We desire the x2go desktop"              usebundle => "x2go_desktop";
-  "We desire the x2go system"               usebundle => "x2goserver";
+  "any"         usebundle => tomcat_app(${app});
 
 reports:
 
-  "${this.bundle}:";
+  "${this.bundle} : ${inputs}");
 
 }
 
-bundle agent x2go_data {
+bundle agent gitb_data {
   
 vars:
 
@@ -33,7 +29,6 @@ vars:
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
 
 methods:
 
