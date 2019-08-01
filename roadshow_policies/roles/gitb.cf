@@ -21,14 +21,16 @@ bundle agent gitb_data {
   
 vars:
 
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
 
   "vnic_index"                         slist => getindices("vnic");
 
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
 
 methods:
 
