@@ -19,7 +19,7 @@ vars:
 
   "vnic_index"                            slist => getindices("vnic");
 
-  "yum_proxy"                            string => "http://aptgwhpdcrg1.sw.webhuis.nl:3142/";
+  "yum_proxy"                            string => "http://aptgwhpdcrg1.rg.webhuis.nl:3142/";
 
 files:
 
