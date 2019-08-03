@@ -3,7 +3,7 @@ bundle agent centos_7 {
 vars:
 
   "bundles[os_common]"                   string => "os_common.cf";
-  "bundles[redhat_common]"               string => "redhat_common.cf";
+  "bundles[centos_common]"               string => "centos_common.cf";
 
   "sequence"                              slist => getindices("bundles");
   "inputs"                                slist => getvalues("bundles");
@@ -45,7 +45,6 @@ methods:
 
   "Provide the template for yum.conf" usebundle => get_template("yum.conf.tmpl");
   "Manage generic OS stuff"           usebundle => "os_common";
-  "Manage generic Red Hat stuff"      usebundle => "redhat_common";
 
 }
 

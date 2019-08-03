@@ -17,6 +17,7 @@ vars:
   "pkg[sudo]"                            string => "*";
   "pkg[vim]"                             string => "*";
 
+  "nopkg[NetworkManager]"                string => "*";
   "nopkg[nano]"                          string => "*";
   "nopkg[nscd]"                          string => "*";
 

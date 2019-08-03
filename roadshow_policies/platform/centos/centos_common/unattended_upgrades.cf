@@ -1,0 +1,57 @@
+bundle agent unattended_upgrades {
+
+vars:
+  
+  "pkg[apt-listchanges]"            string => "*";
+  "pkg[unattended-upgrades]"        string => "*";
+
+  "periodic"                        string => "/etc/apt/apt.conf.d/02periodic";
+  "apt_unattended_upgrades"         string => "/etc/apt/apt.conf.d/50unattended-upgrades";
+  "apt_listchanges"                 string => "/etc/apt/apt_listchanges.conf";
+
+files:
+
+  "$(periodic)"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_defaults  => no_backup,
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/apt_periodic.tmpl";
+
+  "$(apt_unattended_upgrades)"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_defaults  => no_backup,
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/apt_unattended_upgrades.tmpl";
+
+  "$(apt_listchanges)"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_defaults  => no_backup,
+    edit_line      => apt_listchanges;
+
+methods:
+
+  "We desire the policy packages installed" usebundle => packages("unattended_upgrades.pkg");
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
+bundle edit_line  apt_listchanges {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"[apt]
+frontend=pager
+email_address=martin@webhuis.nl
+confirm=0
+save_seen=/var/lib/apt/listchanges.db
+which=both";
+
+}

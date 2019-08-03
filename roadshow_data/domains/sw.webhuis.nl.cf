@@ -24,6 +24,9 @@ vars:
       "resolvers"       slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
       "searchlist"     string => "sw.webhuis.nl";
  
+      "apt_cacher"     string => "aptgwhpdcrg1.rg.webhuis.nl:3142";
+#     "ntp_server"     string => "inuc-01.webhuis.nl";
+      "ntp_server"     string => "pool.ntp.org";
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
       "nfs_webapps"    string => "/var/local/webapps";
       "export_network" string => "10.0.0.0/8";
@@ -34,8 +37,6 @@ vars:
       "exports_rw"     string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
       "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
       "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
-
-      "ntp_server"     string => "inuc-01.webhuis.nl";
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
