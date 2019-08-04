@@ -3,11 +3,6 @@ bundle agent centos_common {
 vars:
 
   "pkg[openssh-server]"        string => "*";
-  "pkg[libpam-ldap]"           string => "*";
-  "pkg[libnss-ldap]"           string => "*";
-  "pkg[libpam-cracklib]"       string => "*";
-  "pkg[ldap-utils]"            string => "*";
-  "pkg[smbclient]"             string => "*";
   "pkg[vim-enhanced]"          string => "*";
 
 files:

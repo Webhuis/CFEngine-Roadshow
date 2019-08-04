@@ -2,6 +2,8 @@ bundle agent gitb {
 
 vars:
 
+  "role_name"      string => "gitblit tomcat frontend git server";
+
   "app"            string => "gitblit";
   "tomcat_app"     string => "no_arch/tomcat_app.cf";
 
