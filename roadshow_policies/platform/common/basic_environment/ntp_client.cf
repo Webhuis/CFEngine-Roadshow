@@ -19,7 +19,6 @@ commands:
  restart_ntp::
 
   "service ntpd restart"
-   handle => "restart_ntpd",
    comment => "restarting ntpd"; 
 
 reports:
