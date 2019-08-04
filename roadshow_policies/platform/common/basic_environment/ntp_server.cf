@@ -18,12 +18,12 @@ commands:
 
  restart_ntp::
 
-  "/usr/sbin/service ntpd restart"
+  "/usr/sbin/service ntp restart"
    handle => "restart_ntpd",
    comment => "restarting ntpd"; 
 
 reports:
 
- "${this.bundle}: I am doing time server configuration";
+ "$(this.bundle): I am doing time server configuration";
 
 }

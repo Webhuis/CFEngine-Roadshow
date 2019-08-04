@@ -1,5 +1,9 @@
 bundle agent time_conf {
 
+classes:
+
+  "kvmo"                        expression => regcmp( "kvmo", $(classify.role) );
+
 vars:
 
   "ntp_conf"                        string => "/etc/ntp.conf";
@@ -41,10 +45,12 @@ methods:
  kvmo::
 
   "The host is a timeserver"     usebundle => ntp_server,
-                                 comment   => "physical hosts serve time, for the time being";
+                                 comment   => "physical hosts service time, for the time being";
 
 reports:
 
- "${this.bundle}: I am doing time configuration common to all platforms";
+ "$(this.bundle): I am doing time configuration common to all platforms";
+
+  
 
 }
