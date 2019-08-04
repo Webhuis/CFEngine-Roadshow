@@ -42,15 +42,4 @@ vars:
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
-
-   kvm_host::
-        "ntp_pool"    string => "nl.pool.ntp.org";
-        "ntp_master"   slist => { "1", "2", "3" };
-        "restrict"     slist => { "$($(classify.role)_data.support_ip)", "127.0.0.1", "::1" };
-
-   !kvm_host::
-        "ntp_pool"    string => "${sys.domain}";
-        "ntp_master"   slist => { "inuc-01" };
-        "restrict"     slist => { "127.0.0.1", "::1" };
-
 }
