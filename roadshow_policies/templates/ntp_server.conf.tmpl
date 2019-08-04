@@ -22,7 +22,7 @@ server  127.127.1.0     # local clock
 fudge   127.127.1.0 stratum 8
 
 restrict 10.0.0.0 mask 255.0.0.0 nomodify notrap
-restrict default kod nomodify notrap nopeer noquery
-restrict -6 default kod nomodify notrap nopeer noquery
+restrict default kod limited nomodify notrap nopeer noquery
+restrict -6 default kod limited nomodify notrap nopeer noquery
 restrict 127.0.0.1
 restrict -6 ::1
