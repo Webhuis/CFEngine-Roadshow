@@ -1,0 +1,28 @@
+# Webhuis template voor ntp.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+driftfile /var/lib/ntp/ntp.drift
+statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+#   server ${${do_roadshow_domain}.ntp_master}.${${do_roadshow_domain}.ntp_pool}
+server 0.nl.pool.ntp.org
+server 1.nl.pool.ntp.org
+server 2.nl.pool.ntp.org
+server 3.nl.pool.ntp.org
+server pool.ntp.org
+
+server  127.127.1.0     # local clock
+fudge   127.127.1.0 stratum 8
+
+restrict 10.0.0.0 mask 255.0.0.0 nomodify notrap
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+restrict 127.0.0.1
+restrict -6 ::1

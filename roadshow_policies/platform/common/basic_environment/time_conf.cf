@@ -1,54 +1,47 @@
 bundle agent time_conf {
 
- vars:
-     "ntp_conf"               string => "/etc/ntp.conf";
-     "ntp_default"            string => "/etc/default/ntpdate";
-     "timezone"               string => "GMT";
-     "localtime"              string => "/etc/localtime";
-     "gmt"                    string => "/usr/share/zoneinfo/${timezone}";
+vars:
+
+  "ntp_conf"                        string => "/etc/ntp.conf";
+  "ntp_default"                     string => "/etc/default/ntpdate";
+  "timezone"                        string => "GMT";
+  "localtime"                       string => "/etc/localtime";
+  "gmt"                             string => "/usr/share/zoneinfo/${timezone}";
+
+  "pkg[ntp]"                        string => "*";
+  "pkg[ntpdate]"                    string => "*";
+
+  "nopkg[hobbit-plugins]"           string => "*";
+  "nopkg[openntpd]"                 string => "*";
+
+files:
+
+  "${localtime}"
+    comment             => "Set the right localtime (GMT), for once and forever.",
+    action              => immediate,
+    move_obstructions   => "true",
+    link_from           => ln_s("${gmt}");
+
+  "/etc/timezone"
+    comment             => "Set the right timezone (GMT), for once and forever.",
+    create              => "true",
+    perms               => mo("644","root"),
+    action              => u_immediate,
+    edit_line           => edit_timezone(${timezone});
 
 methods:
-      "" usebundle => package_present("fake-hwclock");
-      "" usebundle => package_present("ntp");
-      "" usebundle => package_present("ntpdate");
 
-      "" usebundle => package_absent("hobbit-plugins");
-      "" usebundle => package_absent("openntpd");
+  "Time packages we need"        usebundle => packages("time_conf.pkg");
+  "Time packages we do not need" usebundle => nopackages("time_conf.nopkg");
 
-      "" usebundle => file_link(${gmt}, ${localtime});
-      "" usebundle => file_make("/etc/timezone", $(timezone));
+ !kvmo::
 
-      "" usebundle => file_make_mog($(ntp_default), '# maintained by CFEngine, do not edit
-NTPDATE_USE_NTP_CONF=yes
-NTPSERVERS="${${do_roadshow.class_domain}.ntp_server}"
-NTPOPTIONS=""
-', 644, "root", "root"),
-      classes => if_repaired("restart_ntp");
+  "A VM is an ntp client"        usebundle => ntp_client;
 
-      "" usebundle => file_make_mog($(ntp_conf), "# maintained by CFEngine, do not edit
-    driftfile /var/lib/ntp/ntp.drift
-    statsdir /var/log/ntpstats/
+ kvmo::
 
-    statistics loopstats peerstats clockstats
-    filegen loopstats file loopstats type day enable
-    filegen peerstats file peerstats type day enable
-    filegen clockstats file clockstats type day enable
-    server ${${do_roadshow.class_domain}.ntp_server}
-
-    restrict -4 default kod nomodify notrap nopeer noquery
-    restrict -6 default kod nomodify notrap nopeer noquery
-
-    restrict ${${do_roadshow.class_domain}.restrict}
-
-    restrict ${${do_roadshow.class_domain}.network} mask ${${do_roadshow.class_domain}.mask} nomodify notrap
-", 644, "root", "root"),
-      classes => if_repaired("restart_ntp");
-
-  commands:
-
-  "/etc/init.d/ntp stop";
-  "/usr/sbin/ntpdate ${${do_roadshow.class_domain}.ntp_server}";
-  "/sbin/hwclock -w";
+  "The host is a timeserver"     usebundle => ntp_server,
+                                 comment   => "physical hosts serve time, for the time being;
 
 reports:
 
