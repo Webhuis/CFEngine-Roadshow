@@ -41,7 +41,7 @@ methods:
  kvmo::
 
   "The host is a timeserver"     usebundle => ntp_server,
-                                 comment   => "physical hosts serve time, for the time being;
+                                 comment   => "physical hosts serve time, for the time being";
 
 reports:
 
