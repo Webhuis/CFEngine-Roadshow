@@ -49,7 +49,7 @@ commands:
    comment => "restarting sshd";
 
 }
-xbundle edit_line edit_yum_conf(proxy) {
+bundle edit_line edit_yum_conf(proxy) {
 
  delete_lines:
 
