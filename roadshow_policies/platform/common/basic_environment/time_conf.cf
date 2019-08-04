@@ -26,7 +26,7 @@ files:
     comment             => "Set the right timezone (GMT), for once and forever.",
     create              => "true",
     perms               => mo("644","root"),
-    action              => u_immediate,
+    action              => r_immediate,
     edit_line           => edit_timezone(${timezone});
 
 methods:
