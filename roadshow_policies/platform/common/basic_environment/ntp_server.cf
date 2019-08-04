@@ -18,7 +18,7 @@ commands:
 
  restart_ntp::
 
-  "service ntpd restart"
+  "/usr/sbin/service ntpd restart"
    handle => "restart_ntpd",
    comment => "restarting ntpd"; 
 

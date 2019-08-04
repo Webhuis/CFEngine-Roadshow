@@ -3,7 +3,7 @@ bundle agent apt_cacher {
 vars:
 
   "apt_proxy"          string => "/etc/apt/apt.conf.d/01proxy";
-  "mirror"             string => "http://$($(classify.domain).apt_cacher):3142/";
+  "mirror"             string => "http://$($(classify.domain).apt_cacher)";
 
 files:
 

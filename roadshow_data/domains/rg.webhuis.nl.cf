@@ -24,6 +24,7 @@ vars:
       "resolvers"       slist => { "10.94.112.17", "8.8.8.8" };
       "searchlist"     string => "rg.webhuis.nl";
  
+      "apt_cacher"     string => "aptgwhpdcrg1.rg.webhuis.nl:3142/";
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
       "nfs_webapps"    string => "/var/local/webapps";
       "export_network" string => "10.0.0.0/8";

@@ -9,22 +9,13 @@ vars:
   "pkg[ldap-utils]"            string => "*";
   "pkg[smbclient]"             string => "*";
 
-  "desired"                    string => "addupdate";
-  "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
-  "package_cache"              string => "/var/cache/apt/archives";
-
-  "cpkg[cfengine_community][package]"   string => "${package_cache}/${cfengine_package}";
-  "cpkg[cfengine_community][desired]"   string => "${desired}";
-  "cpkg[cfengine_community][version]"   string => "${cfengine_version}";
-  "cpkg[cfengine_community][arch]"      string => "${sys.arch}";
 
 files:
 
  "/etc/yum.conf"
           perms  => mo("644","root"),
          create  => "true",
-      edit_line  => edit_yum_conf("${centos_7.yum_proxy}"),
+      edit_line  => edit_yum_conf("$($(classify.domain).apt_cacher)"),
          action  => r_immediate;
 
  "/etc/yum/pluginconf.d/fastestmirror.conf"
@@ -33,24 +24,18 @@ files:
       edit_line  => edit_yum_fastest_mirror_conf,
          action  => r_immediate;
 
- "/etc/yum.repos.d/CentOS-Base.repo"
-          perms  => mo("644","root"),
-         create  => "true",
-      edit_line  => edit_yum_base_repo,
-         action  => r_immediate;
-
 methods:
 
   "Provide the template for yum.conf" usebundle => get_template("yum.conf.tmpl");
   "Manage generic OS stuff"           usebundle => "os_common";
-  "Manage generic Red Hat stuff"      usebundle => "redhat_common";
+  "Manage generic Red Hat stuff"      usebundle => "centos_common";
 #"Configure yum mirror"      usebundle => apt_cacher;
   "Install common packages"   usebundle => packages("centos_common.pkg");
   "Automate Security Upgras"  usebundle => unattended_upgrades;
 
 reports:
 
- "${this.bundle}: CFEngine package string = ${package_cache}/${cfengine_package}";
+ "$(this.bundle): CFEngine package string = $(package_cache)/$(cfengine_package)";
 
 }
 
@@ -64,61 +49,7 @@ commands:
    comment => "restarting sshd";
 
 }
-
-bundle edit_line edit_yum_base_repo {
-
- delete_lines:
-
-   ".*";
-
- insert_lines:
-"[base]
-name=CentOS-$releasever - Base
-baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
-http://ftp.nluug.nl/ftp/pub/os/Linux/distr/CentOS/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-#released updates
-[updates]
-name=CentOS-$releasever - Updates
-baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-#additional packages that may be useful
-[extras]
-name=CentOS-$releasever - Extras
-baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-#additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus
-baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7";
-
-}
-
-bundle agent packages (pkgs_array) {
-
-vars:
- any::
-        "package_name"            slist  => getindices("$(pkgs_array)");
-
-packages:
-
-      "$(package_name)"
-            package_policy  => "addupdate",
-            package_method  => yum_rpm;
-#            package_version => "$($(pkgs_array)[$(package_name)])";
-
-}
-
-bundle edit_line edit_yum_conf(proxy) {
+xbundle edit_line edit_yum_conf(proxy) {
 
  delete_lines:
 

@@ -6,84 +6,26 @@ vars:
 
 packages:
 
-  "$(package_name)"
-    package_policy             => "addupdate",
-    package_method             => apt,
-    package_version            => "$($(pkgs_array)[$(package_name)])";
-
-reports:
- "${this.bundle}:  ${package_name}";
+      "$(package_name)"
+            package_policy  => "addupdate",
+            package_method  => yum_rpm;
+#            package_version => "$($(pkgs_array)[$(package_name)])";
 
 }
 
-bundle agent custom_packages (cpkgs_array) {
+bundle agent nopackages (pkgs_array) {
 
 vars:
 
-  "custom_package_index" slist => getindices(${cpkgs_array});
-
-  "package"             string => "$($(cpkgs_array)[$(custom_package_index)][package])";
-  "desired"             string => "$($(cpkgs_array)[$(custom_package_index)][desired])";
-  "version"             string => "$($(cpkgs_array)[$(custom_package_index)][version])";
-  "arch"                string => "$($(cpkgs_array)[$(custom_package_index)][arch])";
-
-methods:
-
-  "Addupdate custom package" usebundle => custom_package_specific( "$(package)", "$(desired)", "$(version)", "$(arch)" );
-
-packages:
- !any::
-  "$(custom_package_index)"
-    package_policy  => "addupdate",
-    package_method  => dpkg_version("/var/cache/apt/archives"),
-    package_select  => "==",
-    package_version => "$($(cpkgs_array)[$(custom_package_index)])";
-
-reports:
-
- "${this.bundle}: $(custom_package_index), $(package), $(desired), $(version), $(arch)";
-
-}
-
-bundle agent custom_package_specific(package, desired, version, arch) {
-
-methods:
-
-  "Custom package" usebundle => package_specific( "${package}", "${desired}", "${version}", "${arch}" );
-
-reports:
-
-  "${this.bundle}: $(package) $(desired), ${version}, ${arch}";
-
-}
-
-bundle agent get_custom_package(custom_package) {
-
-files:
-
- "/var/cache/apt/archives/${custom_package}"
-            comment => "Copy package",
-             handle => "update_files_inputs_packages",
-          copy_from => r_rcp("${do_roadshow.master_dynamic}/packages/${custom_package}","${sys.policy_hub}"),
-             action => r_immediate;
-
-reports:
- "${this.bundle}: ${custom_package}";
-
-}
-
-bundle agent nopackages (nopkgs_array) {
-
-vars:
- any::
-        "nopackage_name"            slist  => getindices("$(nopkgs_array)");
+  "package_name"         slist => getindices(${pkgs_array});
 
 packages:
 
-    any::
-
-      "$(nopackage_name)"
+      "$(package_name)"
             package_policy  => "delete",
-            package_method  => apt,
-            package_version => "$($(nopkgs_array)[$(nopackage_name)])";
+            package_method  => yum_rpm;
+#            package_version => "$($(pkgs_array)[$(package_name)])";
+
 }
+
+

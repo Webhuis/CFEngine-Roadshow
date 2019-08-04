@@ -20,7 +20,7 @@ vars:
 
   "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
   "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
-  "domain"               string => "canonify($(sys.domain))";
+  "domain"               string => canonify($(sys.domain));
   "vendor"               string => $(inventory_linux.id_array[1]);
 
   "ipv4_index"            slist => getindices("sys.ipv4");

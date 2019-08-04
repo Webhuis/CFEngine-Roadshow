@@ -23,18 +23,6 @@ vars:
 
 files:
 
- "/etc/yum.conf"
-          perms  => mo("644","root"),
-         create  => "true",
-      edit_line  => edit_yum_conf("${centos_7.yum_proxy}"),
-         action  => r_immediate;
-
- "/etc/yum/pluginconf.d/fastestmirror.conf"
-          perms  => mo("644","root"),
-         create  => "true",
-      edit_line  => edit_yum_fastest_mirror_conf,
-         action  => r_immediate;
-
  "/etc/yum.repos.d/CentOS-Base.repo"
           perms  => mo("644","root"),
          create  => "true",
@@ -83,59 +71,5 @@ baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
 gpgcheck=1
 enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7";
-
-}
-
-bundle agent packages (pkgs_array) {
-
-vars:
- any::
-        "package_name"            slist  => getindices("$(pkgs_array)");
-
-packages:
-
-      "$(package_name)"
-            package_policy  => "addupdate",
-            package_method  => yum_rpm;
-#            package_version => "$($(pkgs_array)[$(package_name)])";
-
-}
-
-bundle edit_line edit_yum_conf(proxy) {
-
- delete_lines:
-
-   ".*";
-
- insert_lines:
-"# Webhuis template voor yum.conf
-#
-# Do not edit
-#
-[main]
-cachedir=/var/cache/yum/$basearch/$releasever
-keepcache=0
-debuglevel=2
-logfile=/var/log/yum.log
-exactarch=1
-obsoletes=1
-gpgcheck=1
-plugins=1
-installonly_limit=5
-bugtracker_url=http://bugs.centos.org/set_project.php?project_id=19&ref=http://bugs.centos.org/bug_report_page.php?category=yum
-distroverpkg=centos-release
-proxy=${proxy}";
-
-}
-
-bundle edit_line edit_yum_fastest_mirror_conf {
-
- delete_lines:
-
-   ".*";
-
- insert_lines:
-"[main]
-enabled=0";
 
 }
