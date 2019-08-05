@@ -9,8 +9,8 @@ files:
   "/etc/apt/sources.list"
            create => "true",
     edit_defaults => no_backup,
-    edit_template => "$(sys.workdir)/roadshow_inputs/templates/sources_list.tmpl";
-          classes => if_repaired("new_sources_list");
+    edit_template => "$(sys.workdir)/roadshow_inputs/templates/sources_list.tmpl",
+          classes => r_if_repaired("new_sources_list");
 
 methods:
 

@@ -10,7 +10,7 @@ files:
  "/etc/yum.conf"
           perms  => mo("644","root"),
          create  => "true",
-  edit_template  => edit_yum_conf("$($(classify.domain).apt_cacher)"),
+  edit_template  => edit_yum_conf("$($(classify.domain).yum_proxy)"),
          action  => r_immediate;
 
  "/etc/yum/pluginconf.d/fastestmirror.conf"
