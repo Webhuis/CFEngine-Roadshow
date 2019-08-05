@@ -15,5 +15,5 @@ plugins=1
 installonly_limit=5
 bugtracker_url=http://bugs.centos.org/set_project.php?project_id=19&ref=http://bugs.centos.org/bug_report_page.php?category=yum
 distroverpkg=centos-release
-proxy=$($(classify.domain).yum_proxy)
+proxy=http://$($(classify.domain).yum_proxy)
 ip_resolve=4
