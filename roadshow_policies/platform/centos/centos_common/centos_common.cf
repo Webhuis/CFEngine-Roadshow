@@ -10,7 +10,7 @@ files:
  "/etc/yum.conf"
           perms  => mo("644","root"),
          create  => "true",
-      edit_line  => edit_yum_conf("$($(classify.domain).apt_cacher)"),
+  edit_template  => edit_yum_conf("$($(classify.domain).apt_cacher)"),
          action  => r_immediate;
 
  "/etc/yum/pluginconf.d/fastestmirror.conf"
@@ -21,10 +21,10 @@ files:
 
 methods:
 
-  "Provide the template for yum.conf" usebundle => get_template("yum.conf.tmpl");
-#"Configure yum mirror"      usebundle => apt_cacher;
-  "Install common packages"   usebundle => packages("centos_common.pkg");
-  "Automate Security Upgras"  usebundle => unattended_upgrades;
+  "Provide the template for yum.conf" usebundle => get_template("yum_conf.tmpl");
+  "Configure yum, no match to apt"    usebundle => yum_conf;
+  "Install common packages"           usebundle => packages("centos_common.pkg");
+  "Automate Security Upgras"          usebundle => unattended_upgrades;
 
 reports:
 

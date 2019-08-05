@@ -6,11 +6,15 @@ vars:
 
 files:
 
-  "/etc/apt/sources.list"
-           create => "true",
-    edit_defaults => no_backup,
-        edit_line => edit_sources_list($(sources_list)),
-          classes => if_repaired("new_sources_list");
+
+files:
+
+ "/etc/yum.conf"
+          perms  => mo("644","root"),
+         create  => "true",
+  edit_template  => "$(sys.workdir)/roadshow_inputs/templates/yum_conf.tmpl",
+         action  => r_immediate,
+         classes => if_repaired("new_yum_conf");
 
 methods:
 
@@ -18,22 +22,10 @@ methods:
 
  new_sources_list::
 
-  "Update package repo list"   usebundle => update_apt_repo;
+  "Update package repo list"   usebundle => update_yum_repo;
 
 reports:
 
   "${this.bundle}:";
-
-}
-
-bundle edit_line edit_sources_list(sources_list) {
-
-delete_lines:
-
-".*";
-
-insert_lines:
-
-"$(sources_list)";
 
 }

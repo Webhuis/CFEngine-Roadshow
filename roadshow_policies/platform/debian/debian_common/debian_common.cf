@@ -35,7 +35,7 @@ methods:
   "We desire the flavour sources_list"   usebundle => sources_list;
   "Configure apt mirror"                 usebundle => apt_cacher;
   "Install common packages"              usebundle => packages("debian_common.pkg");
-  "Automate Security Upgras"             usebundle => unattended_upgrades;
+  "Automate Security Upgrades"           usebundle => unattended_upgrades;
 # "CFEngine custom package"              usebundle => get_custom_package("${cfengine_package}");
 # "Update CFEngine"                      usebundle => custom_packages("debian_common.cpkg");
 
