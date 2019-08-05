@@ -20,11 +20,12 @@ vars:
       "mldap"           slist => {"ldapm1"};
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
-      "ldap_admin"     string => "cn=admin,${ldap_base}";
+      "ldap_admin"     string => "cn=admin,$(ldap_base)";
       "resolvers"       slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
       "searchlist"     string => "rs.webhuis.nl";
  
       "apt_cacher"     string => "aptgwhpdcrg1.rg.webhuis.nl:3142/";
+      "yum_proxy"      string => $(apt_cacher);
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
       "nfs_webapps"    string => "/var/local/webapps";
       "export_network" string => "10.0.0.0/8";

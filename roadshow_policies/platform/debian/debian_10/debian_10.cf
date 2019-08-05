@@ -7,14 +7,7 @@ vars:
   "pkg[libzmq3]"                            string => "*";
   "pkg[python-zmq]"                         string => "*";
 
-  "sources_list"      string => "deb http://ftp.nl.debian.org/debian/ buster main contrib non-free
-deb-src http://ftp.nl.debian.org/debian/ buster main contrib non-free
-
-deb http://security.debian.org/debian-security buster/updates main contrib non-free
-deb-src http://security.debian.org/debian-security buster/updates main contrib non-free
-# buster-updates, previously known as 'volatile'
-deb http://ftp.debian.org/debian/ buster-updates main contrib non-free
-deb-src http://ftp.debian.org/debian/ buster-updates main contrib non-free";
+  "name"                                    string => "buster";
 
   "vnic[service]"                           string => "ens3";
   "vnic[support]"                           string => "ens7";
@@ -28,9 +21,9 @@ deb-src http://ftp.debian.org/debian/ buster-updates main contrib non-free";
 
 methods:
 
-  "We desire buster  packages"           usebundle => packages("debian_8.pkg");
+  "We desire buster  packages"           usebundle => packages("debian_10.pkg");
 
-  "We desire the Stretch sources_list"   usebundle => sources_list("$(sources_list)");
+  "We desire the Stretch sources_list"   usebundle => sources_list;
 
 reports:
 
