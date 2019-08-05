@@ -23,8 +23,6 @@ methods:
 
   "We desire cwstretchjessie packages"   usebundle => packages("debian_9.pkg");
 
-  "We desire the Stretch sources_list"   usebundle => sources_list;
-
 reports:
 
   "$(this.bundle):";

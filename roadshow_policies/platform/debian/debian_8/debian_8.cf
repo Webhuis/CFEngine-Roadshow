@@ -23,8 +23,6 @@ methods:
 
   "We desire jessie packages"         usebundle => packages("debian_8.pkg");
 
-  "We desire the jessie sources_list" usebundle => sources_list;
-
 reports:
 
   "$(this.bundle):";
