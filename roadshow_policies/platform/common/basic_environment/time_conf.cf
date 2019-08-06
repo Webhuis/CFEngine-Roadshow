@@ -46,6 +46,9 @@ methods:
 
   "The host is a timeserver"     usebundle => ntp_server,
                                  comment   => "physical hosts service time, for the time being";
+services:
+
+  "ntp"                     service_policy => "start";
 
 reports:
 

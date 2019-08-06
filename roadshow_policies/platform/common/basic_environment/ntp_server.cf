@@ -8,10 +8,6 @@ files:
     edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ntp_server.conf.tmpl",
     classes        => if_repaired("restart_ntp");
 
-services:
-
-  "ntp"                     service_policy => "start";
-
 commands:
 
   "/sbin/hwclock -w";
