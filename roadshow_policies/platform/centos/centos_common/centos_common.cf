@@ -2,8 +2,13 @@ bundle agent centos_common {
 
 vars:
 
-  "pkg[openssh-server]"        string => "*";
-  "pkg[vim-enhanced]"          string => "*";
+  "pkg[openssh-server]"                  string => "*";
+  "pkg[vim-enhanced]"                    string => "*";
+
+  "nopkg[NetworkManager-libnm]"          string => "*";
+  "nopkg[NetworkManager-team]"           string => "*";
+  "nopkg[NetworkManager-tui]"            string => "*";
+  "nopkg[NetworkManager-wifi]"           string => "*";
 
 files:
 
@@ -18,6 +23,7 @@ methods:
   "Provide the template for yum.conf" usebundle => get_template("yum_conf.tmpl");
   "Configure yum, no match to apt"    usebundle => yum_conf;
   "Install common packages"           usebundle => packages("centos_common.pkg");
+  "remove undesired packages"         usebundle => nopackages("centos_common.pkg");
   "Automate Security Upgras"          usebundle => unattended_upgrades;
 
 reports:
