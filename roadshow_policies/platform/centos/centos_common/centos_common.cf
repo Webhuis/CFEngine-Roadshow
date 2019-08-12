@@ -97,3 +97,5 @@ bundle edit_line edit_sysconfig_network {
  insert_lines:
 "# Webhuis suppress apipa addresses
 NOZEROCONF=yes";
+
+}
