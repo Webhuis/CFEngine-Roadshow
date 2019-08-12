@@ -2,7 +2,6 @@ bundle agent openssh_server {
 
 vars:
 
-  "pkg[openssh-server]"        string => "*";
   "sshd_config"                string => "/etc/ssh/sshd_config";
 
 files:
