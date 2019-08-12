@@ -48,7 +48,7 @@ methods:
                                  comment   => "physical hosts service time, for the time being";
 services:
 
-  "ntp"                     service_policy => "start";
+  "ntpd"                    service_policy => "start";
 
 reports:
 
