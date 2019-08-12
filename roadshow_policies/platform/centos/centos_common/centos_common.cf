@@ -23,7 +23,7 @@ methods:
   "Provide the template for yum.conf" usebundle => get_template("yum_conf.tmpl");
   "Configure yum, no match to apt"    usebundle => yum_conf;
   "Install common packages"           usebundle => packages("centos_common.pkg");
-  "remove undesired packages"         usebundle => nopackages("centos_common.pkg");
+  "remove undesired packages"         usebundle => nopackages("centos_common.nopkg");
   "Automate Security Upgras"          usebundle => unattended_upgrades;
 
 reports:
