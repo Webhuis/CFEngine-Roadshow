@@ -12,8 +12,8 @@ vars:
   "vnic[service]"                           string => "ens3";
   "vnic[support]"                           string => "ens7";
   "vnic[admin]"                             string => "ens8";
-  "vnic[wan]"                               string => "ens9";
-  "vnic[gw]"                                string => "ensa";
+  "vnic[gw]"                                string => "ens9";
+  "vnic[wan]"                               string => "ens10";
   "vnic[life]"                              string => "ensb";
   "vnic[roadshow]"                          string => "ensc";
 
