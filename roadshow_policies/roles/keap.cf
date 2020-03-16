@@ -1,10 +1,10 @@
-bundle agent ivpn {
+bundle agent keap {
 
 vars:
 
-  "role_name"                         string => "IPSec VPN server";
+  "role_name"                         string => "The Kea DHCP DDNS server";
 
-  "bundles[stepping_stone]"           string => "ivpn_server.cf";
+  "bundles[stepping_stone]"           string => "debian_9/kea_server.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -14,7 +14,7 @@ vars:
 
 methods:
 
-  "We are an ssh stepping stone"   usebundle => "ivpn_server";
+  "We are an ssh stepping stone"   usebundle => "kea_server";
 
 reports:
 
@@ -26,15 +26,15 @@ bundle agent sssh_data {
   
 vars:
 
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
-  "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
 
   "vnic_index"                         slist => getindices("vnic");
 
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[service])])", $(sys.ipv4[$(vnic[admin])])" };
 
 methods:
 

@@ -14,7 +14,7 @@ vars:
 
 methods:
 
-  "We are an ssh stepping stone"   usebundle => "IPSec VPN server";
+  "We are an ssh stepping stone"   usebundle => "t_proxy";
 
 reports:
 
@@ -34,7 +34,7 @@ vars:
 
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { ""$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
 
 methods:
 
