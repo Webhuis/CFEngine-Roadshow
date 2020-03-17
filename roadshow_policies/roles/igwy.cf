@@ -11,7 +11,7 @@ vars:
 
 methods:
 
-  "We are an ssh stepping stone"   usebundle => "internal_gateway";
+  "We are an internal gateway"     usebundle => "internal_gateway";
 
 reports:
 
@@ -38,7 +38,6 @@ methods:
 
   "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
                                    comment   => "This is a layer I and II check on the virtual switch";
-
 
 reports:
 
