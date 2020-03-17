@@ -23,9 +23,9 @@ bundle agent igwy_data {
   
 vars:
 
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
-  "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
   "vnic[gw]"                          string => "$($(sys.flavour).vnic[gw])";
 
   "vnic_index"                         slist => getindices("vnic");
