@@ -4,13 +4,10 @@ vars:
 
   "role_name"                         string => "Transparant Proxy";
 
-  "bundles[stepping_stone]"           string => "t_proxy.cf";
+  "bundles[t_proxy]"                  string => "t_proxy.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
-
-  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[one])" };
-  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
 
 methods:
 
@@ -34,7 +31,7 @@ vars:
 
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])" };
 
 methods:
 

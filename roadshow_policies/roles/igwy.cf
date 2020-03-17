@@ -4,13 +4,10 @@ vars:
 
   "role_name"                         string => "Internal gateway";
 
-  "bundles[stepping_stone]"           string => "internal_gateway.cf";
+  "bundles[internal_gateway]"         string => "internal_gateway.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
-
-  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[one])" };
-  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
 
 methods:
 
@@ -29,7 +26,7 @@ vars:
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
   "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
-  "vlan[gw]"                          string => "$($(sys.flavour).vnic[gw])";
+  "vnic[gw]"                          string => "$($(sys.flavour).vnic[gw])";
 
   "vnic_index"                         slist => getindices("vnic");
 
