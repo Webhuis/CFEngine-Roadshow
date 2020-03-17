@@ -22,7 +22,7 @@ reports:
 
 }
 
-bundle agent sssh_data {
+bundle agent ivpn_data {
   
 vars:
 

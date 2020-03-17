@@ -1,0 +1,11 @@
+bundle agent internal_gateway {
+
+vars:
+
+  "internal_gateway.cf"         string => "I am an Internal Gateway"; 
+
+reports:
+
+  "${this.bundle}: ";
+
+}

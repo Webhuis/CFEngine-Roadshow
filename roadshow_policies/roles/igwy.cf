@@ -1,10 +1,10 @@
-bundle agent tpxy {
+bundle agent igwy {
 
 vars:
 
-  "role_name"                         string => "Transparant Proxy";
+  "role_name"                         string => "Internal gateway";
 
-  "bundles[stepping_stone]"           string => "t_proxy.cf";
+  "bundles[stepping_stone]"           string => "internal_gateway.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -14,7 +14,7 @@ vars:
 
 methods:
 
-  "We are an ssh stepping stone"   usebundle => "t_proxy";
+  "We are an ssh stepping stone"   usebundle => "internal_gateway";
 
 reports:
 
@@ -22,19 +22,20 @@ reports:
 
 }
 
-bundle agent tpxy_data {
+bundle agent igwy_data {
   
 vars:
 
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
   "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
+  "vlan[gw]"                          string => "$($(sys.flavour).vnic[gw])";
 
   "vnic_index"                         slist => getindices("vnic");
 
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[support])])" };
 
 methods:
 
