@@ -1,0 +1,11 @@
+bundle agent t_proxy {
+
+vars:
+
+  "t_proxy.cf"         string => "I am an Internal Gateway"; 
+
+reports:
+
+  "${this.bundle}: ";
+
+}
