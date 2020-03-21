@@ -1,0 +1,17 @@
+bundle agent t_proxy {
+
+vars:
+
+  "t_proxy.cf"         string => "I am a Transparent Proxy"; 
+
+  "pkg[netdiag]"       string => "*";
+
+methods:
+
+  "any" usebundle => packages("t_proxy.pkg");
+
+reports:
+
+  "${this.bundle}: ";
+
+}

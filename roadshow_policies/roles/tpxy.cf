@@ -4,7 +4,7 @@ vars:
 
   "role_name"                         string => "Transparant Proxy";
 
-  "bundles[t_proxy]"                  string => "t_proxy.cf";
+  "bundles[t_proxy]"                  string => "${sys.flavor}/t_proxy.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
