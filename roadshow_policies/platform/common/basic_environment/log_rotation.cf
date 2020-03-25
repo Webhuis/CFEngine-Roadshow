@@ -1,5 +1,24 @@
 bundle agent log_rotation {
 
+files:
+
+  "/etc/logrotate.d/rsyslog"
+    comment                   => "log rotation of standard and specific logs",
+    perms                     => mo("644","root"),
+    action                    => r_immediate,
+    classes                   => if_repaired("restart_logrotate"),
+    edit_template             => "$(sys.workdir)/roadshow_inputs/templates/logrotate.d.rsyslog.tmpl";
+
+services:
+
+ restart_logrotate::
+  "logrotate"
+   service_policy => "restart";
+
+ any::
+  "logrotate"
+   service_policy => "start";
+
 reports:
 
   "${this.bundle}: log rotation of standard and specific logs" ;
