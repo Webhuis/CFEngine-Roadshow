@@ -4,7 +4,8 @@ vars:
 
   "role_name"                         string => "The Kea DHCP DDNS server";
 
-  "bundles[stepping_stone]"           string => "debian_9/kea_server.cf";
+  "bundles[kea_server]"               string => "$(sys.flavor)/kea_server.cf";
+  "bundles[postgressql]"              string => "$(sys.flavor)/postgresql.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -33,8 +34,9 @@ vars:
   "vnic_index"                         slist => getindices("vnic");
 
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[service])])", $(sys.ipv4[$(vnic[admin])])" };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])" };
+
 
 methods:
 
