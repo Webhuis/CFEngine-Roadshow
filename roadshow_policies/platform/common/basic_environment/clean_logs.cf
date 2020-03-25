@@ -12,11 +12,11 @@ files:
 services:
 
  restart_rsyslogd::
-  "rsyslogd"
+  "rsyslog"
    service_policy => "restart";
 
  any::
-  "rsyslogd"
+  "rsyslog"
    service_policy => "start";
 
 reports:
