@@ -1,0 +1,7 @@
+bundle agent log_rotation {
+
+reports:
+
+  "${this.bundle}: log rotation of standard and specific logs" ;
+
+}
