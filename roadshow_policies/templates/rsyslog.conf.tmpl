@@ -3,6 +3,7 @@
 # Do not edit
 #
 [%CFEngine any:: %]
+# We desire clean log files and want to avoid duplicate entries is different logs
 #### MODULES ####
 module(load="imuxsock") # provides support for local system logging
 module(load="imklog")   # provides kernel logging support
@@ -17,19 +18,23 @@ $WorkDirectory /var/spool/rsyslog
 $IncludeConfig /etc/rsyslog.d/*.conf
 #### RULES ####
 auth,authpriv.*			/var/log/auth.log
-*.*;auth,authpriv.none		-/var/log/syslog
-#cron.*				/var/log/cron.log
+:programname, isequal, "cf-agent"  -/var/log/CFEngine.log
+:programname, isequal, "cf-agent"  stop
+*.*;auth,authpriv.none;         -/var/log/syslog
+cron.*				/var/log/cron.log
 daemon.*			-/var/log/daemon.log
 kern.*				-/var/log/kern.log
+kern.*				stop
 lpr.*				-/var/log/lpr.log
 mail.*				-/var/log/mail.log
 user.*				-/var/log/user.log
 mail.info			-/var/log/mail.info
 mail.warn			-/var/log/mail.warn
 mail.err			/var/log/mail.err
+# Whatever is left for .debug and .info
 *.=debug;\
 	auth,authpriv.none;\
-	news.none;mail.none	-/var/log/debug
+	news.none;mail.none 	-/var/log/debug
 *.=info;*.=notice;*.=warn;\
 	auth,authpriv.none;\
 	cron,daemon.none;\
