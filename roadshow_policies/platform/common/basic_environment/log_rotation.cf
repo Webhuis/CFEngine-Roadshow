@@ -2,6 +2,12 @@ bundle agent log_rotation {
 
 files:
 
+  "/etc/logrotate.conf"
+    comment                   => "log rotation of standard logs",
+    perms                     => mo("644","root"),
+    action                    => r_immediate,
+    edit_template             => "$(sys.workdir)/roadshow_inputs/templates/logrotate.conf.tmpl";
+
   "/etc/logrotate.d/rsyslog"
     comment                   => "log rotation of standard and specific logs",
     perms                     => mo("644","root"),
