@@ -20,8 +20,8 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 :msg,contains,"Dropped by firewall:" -/var/log/iptables.log
 :msg,contains,"Dropped by firewall:" stop
 auth,authpriv.*			/var/log/auth.log
-:programname, isequal, "cf-agent"  -/var/log/CFEngine.log
-:programname, isequal, "cf-agent"  stop
+:programname, startswith, "cf-"  -/var/log/CFEngine.log
+:programname, startswith, "cf-"  stop
 *.*;auth,authpriv,kern.none;    -/var/log/syslog
 cron.*				/var/log/cron.log
 daemon.*			-/var/log/daemon.log

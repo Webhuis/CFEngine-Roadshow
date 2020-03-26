@@ -24,7 +24,7 @@ vars:
       "resolvers"       slist => { "10.68.171.17", "8.8.8.8" };
       "searchlist"     string => "sw.webhuis.nl";
  
-      "apt_cacher"     string => "aptgwhpdcrg1.rg.webhuis.nl:3142/";
+      "apt_cacher"     string => "aptgwhpdcsw1.sw.webhuis.nl:3142/";
 #     "ntp_server"     string => "inuc-01.webhuis.nl";
       "ntp_server"     string => "pool.ntp.org";
       "nfs_host"       string => "nfsutl0001.webhuis.nl";
