@@ -15,7 +15,8 @@ vars:
 
 methods:
 
-  "We are an ssh stepping stone"   usebundle => "kea_server";
+  "We are a DHCP / DDNS server"    usebundle => "kea_server";
+  "We desire PostgreSQL"           usebundle => "postgresql";
 
 reports:
 
