@@ -3,6 +3,19 @@ bundle agent apt_cacher_ng {
 vars:
 
   "pkg[apt-cacher-ng]"           string => "*";
+  "apt_backends_file"            string => "/etc/apt-cacher-ng/backends_";
+
+  "https_repo[isc-kea]"          string => "https://dl.cloudsmith.io/public/isc/kea-1-6/deb/debian";
+  "https_repo[opennebula]"       string => "https://downloads.opennebula.org/repo/5.10/Debian/10/";
+
+files:
+
+ "$(apt_backends_file)$(https_repo[$(repo)])"
+  comment       => "Create backends file for https apt repos",
+  create        => "true",
+  action        => r_immediate,
+  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/apt_cacher_backends.tmpl",
+  classes       => r_if_repaired("restart_apt_cacher");
 
 methods:
 

@@ -1,0 +1,6 @@
+# Webhuis template voor apt_cacher_backends
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+Remap-$(https_repo[S(repo)]): http://$(host)-rmap.$(domain) $(do_roadshow.punt_komma) file: backends_$(https_repo[S(repo)])

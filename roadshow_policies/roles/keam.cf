@@ -1,0 +1,55 @@
+bundle agent keam {
+
+vars:
+
+  "role_name"                         string => "The Kea DHCP DDNS server";
+
+  "bundles[kea_server]"               string => "$(sys.flavor)/kea_server.cf";
+  "bundles[mysql_server]"             string => "$(sys.flavor)/mysql_server.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[one])" };
+  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
+
+methods:
+
+  "We are a DHCP / DDNS server"    usebundle => "kea_server";
+  "We desire PostgreSQL"           usebundle => "postgresql";
+
+reports:
+
+ "${this.bundle}: $($(sys.flavor).nics)";
+
+}
+
+bundle agent keam_data {
+  
+vars:
+
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+
+  "vnic_index"                         slist => getindices("vnic");
+
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])" };
+
+
+methods:
+
+  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
+                                   comment   => "This is a layer I and II check on the virtual switch";
+
+
+reports:
+
+  "${this.bundle} nics: $(vnic)";
+  "${this.bundle} service_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

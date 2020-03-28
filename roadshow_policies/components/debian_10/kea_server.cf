@@ -1,0 +1,35 @@
+bundle agent kea_server {
+
+vars:
+
+  "pkg[kea-admin]"	       string => "*";
+  "pkg[kea-common]"	       string => "*";
+  "pkg[kea-dhcp-ddns-server]"  string => "*";
+  "pkg[kea-dhcp4-server]"      string => "*";
+
+  "apt_repo[isc-kea]"          string => "deb http://downloads.opennebula.org/repo/5.4/Debian/9 stable opennebula";
+  "apt_key"                    string => "opennebula.pubkey.gpg";
+
+files:
+
+  "/var/cache/apt/downloads.opennebula.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
+methods:
+
+  "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need the opennebula repo"       usebundle => apt_repo("opennebula_server.apt_repo", "$(apt_key)");
+
+  "We desire the Kea server"    usebundle => packages("kea_server.pkg");
+
+reports:
+
+  "${this.bundle}: component";
+
+}

@@ -39,7 +39,3 @@ insert_lines:
   "Acquire::http::Proxy \"${string}\"${do_roadshow.punt_komma}";
 
 }
-# The following allows Squeeze Security updates to continue
-# despite Squeeze no longer LTS. Remove after last squeeze box removeal.
-#Acquire::Check-Valid-Until false${do_roadshow.semi_colon}
-
