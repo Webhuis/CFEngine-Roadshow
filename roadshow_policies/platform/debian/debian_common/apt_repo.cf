@@ -1,5 +1,5 @@
 bundle agent apt_repo (apt_repo, apt_key) {
-
+# https://binfalse.de/2019/05/13/apt-cacher-ng-vs-apt-transport-https/
 vars:
 
   "repo_index"          slist => getindices("$(apt_repo)");
