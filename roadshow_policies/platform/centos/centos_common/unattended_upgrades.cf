@@ -3,7 +3,26 @@ bundle agent unattended_upgrades {
 vars:
   
   "pkg[yum-cron]"                string => "*";
+  "pkg[yum-security]"            string => "*";
 
+  "periodic"                     string => "/etc/yum/yum.conf.d/02periodic";
+  "yum_unattended_upgrades"      string => "/etc/yum/yum.conf.d/50unattended-upgrades";
+  "yum_listchanges"              string => "/etc/yum/yum_listchanges.conf";
+
+files:
+
+  "$(periodic)"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_defaults  => no_backup,
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/yum_periodic.tmpl";
+
+  "$(yum_unattended_upgrades)"
+    create         => "true",
+    perms          => mo("644","root"),
+    edit_defaults  => no_backup,
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/yum_unattended_upgrades.tmpl";
+ 
 methods:
 
   "We desire the policy packages installed" usebundle => packages("unattended_upgrades.pkg");
@@ -11,5 +30,22 @@ methods:
 reports:
 
   "$(this.bundle):";
+
+}
+
+bundle edit_line  yum_listchanges {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"[yum]
+frontend=pager
+email_address=martin@webhuis.nl
+confirm=0
+save_seen=/var/lib/yum/listchanges.db
+which=both";
 
 }
