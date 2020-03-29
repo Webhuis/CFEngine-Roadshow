@@ -18,7 +18,7 @@ Remap-epel:   file:epel_mirrors # Fedora EPEL
 Remap-slrep:  file:sl_mirrors # Scientific Linux
 Remap-gentoo: file:gentoo_mirrors.gz /gentoo ; file:backends_gentoo # Gentoo Archives
 Remap-secdeb: security.debian.org  ; security.debian.org deb.debian.org/debian-security
-Remap-$(https_repo[$(repo)]): http://$(uqhost)-remap.$(domain) file:$(https_repo[$(repo)])
+Remap-$(repo_index): http://$($(class_domain).apt_cacher)-$(repo_index).$(domain)  ; file:backends_$(repo_index)
 ReportPage: acng-report.html
 ExThreshold: 4
 LocalDirs: acng-doc /usr/share/doc/apt-cacher-ng
