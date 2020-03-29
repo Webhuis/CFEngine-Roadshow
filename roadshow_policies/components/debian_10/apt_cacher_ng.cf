@@ -27,8 +27,12 @@ reports:
 
 }
 
-bundle agent apt_cacher_remaps (repo) {
+bundle agent apt_cacher_remaps (repo_index) {
 
+vars:
+
+  "repo"	string => $(repo_index);
+ 
 files:
 
  "$(acng_conf)"
