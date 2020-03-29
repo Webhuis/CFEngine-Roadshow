@@ -3,12 +3,13 @@ bundle agent apt_cacher_ng {
 vars:
 
   "pkg[apt-cacher-ng]"           string => "*";
-
+  "templates"                     slist => { "acng.conf.tmpl", "apt_cacher_backends.tmpl" };
   "repo_index"                    slist => getindices("$($(class_domain).https_repo)");
 
 methods:
 
   "We desire apt-cacher-ng"   usebundle => packages("apt_cacher_ng.pkg");
+  "Get apt_cacher templates"  usebundle => get_template("$(templates)");
   "We desire https remap's"   usebundle => apt_cacher_remaps($(repo_index));
   "We desire https repo's"    usebundle => apt_cacher_backends($(repo_index));
 
