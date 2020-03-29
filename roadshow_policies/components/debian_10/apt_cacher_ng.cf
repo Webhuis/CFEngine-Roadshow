@@ -16,6 +16,7 @@ methods:
 reports:
 
   "${this.bundle}: $(repo_index)";
+  "${this.bundle}: $($(class_domain).https_repo[$(repo_index)])";
 
 }
 
