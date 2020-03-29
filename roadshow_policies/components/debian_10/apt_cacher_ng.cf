@@ -13,6 +13,10 @@ methods:
   "We desire https remap's"   usebundle => apt_cacher_remaps($(repo_index));
   "We desire https repo's"    usebundle => apt_cacher_backends($(repo_index));
 
+reports:
+
+  "${this.bundle}: $(repo_index)";
+
 }
 
 bundle agent apt_cacher_remaps (repo_index) {
