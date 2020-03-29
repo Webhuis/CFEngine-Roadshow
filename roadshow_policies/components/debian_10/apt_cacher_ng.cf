@@ -7,20 +7,11 @@ vars:
   "templates"                     slist => { "acng.conf.tmpl", "apt_cacher_backends.tmpl" };
   "repo_index"                    slist => getindices("$($(do_roadshow.class_domain).https_repo)");
 
-files:
-
- "$(acng_conf)"
-  comment       => "Edit acng.conf for https backends, Remap-repo: http://repo.nick ; file:backends_repo",
-  create        => "true",
-  action        => r_immediate,
-  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/acng.conf.tmpl",
-  classes       => r_if_repaired("restart_apt_cacher");
-
 methods:
 
   "We desire apt-cacher-ng"   usebundle => packages("apt_cacher_ng.pkg");
   "Get apt_cacher templates"  usebundle => get_template("$(templates)");
-# "We desire https remap's"   usebundle => apt_cacher_remaps($(repo_index));
+  "We desire https remap's"   usebundle => apt_cacher_remaps($(repo_index));
   "We desire https repo's"    usebundle => apt_cacher_backends($(repo_index));
 
 commands:
@@ -36,12 +27,20 @@ reports:
 
 }
 
-bundle agent apt_cacher_remaps (repo_index) {
+bundle agent apt_cacher_remaps (repo) {
 
+files:
+
+ "$(acng_conf)"
+  comment       => "Edit acng.conf for https backends, Remap-repo: http://repo.nick ; file:backends_repo",
+  create        => "true",
+  action        => r_immediate,
+  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/acng.conf.tmpl",
+  classes       => r_if_repaired("restart_apt_cacher");
 
 reports:
 
-  "${this.bundle}: $(repo_index)";
+  "${this.bundle}: one repo $(repo)";
 
 }
 
