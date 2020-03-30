@@ -50,18 +50,6 @@ reports:
 
 bundle agent apt_cacher_backends (repo) {
 
-methods:
-
-  "we desire backends files"  usebundle => apt_backend_file($(repo));
-
-reports:
-
-  "${this.bundle}: $(repo)";
-
-}
-
-bundle agent apt_backend_file(repo) {
-
 vars:
 
   "apt_backends_file"            string => "/etc/apt-cacher-ng/backends_";
