@@ -48,19 +48,19 @@ reports:
 
 }
 
-bundle agent apt_cacher_backends (repo_index) {
+bundle agent apt_cacher_backends (repo) {
 
 methods:
 
-  "we desire backends files"  usebundle => apt_backend_file($(repo_index));
+  "we desire backends files"  usebundle => apt_backend_file($(repo));
 
 reports:
 
-  "${this.bundle}: $(repo_index)";
+  "${this.bundle}: $(repo)";
 
 }
 
-bundle agent apt_backend_file(repo_index) {
+bundle agent apt_backend_file(repo) {
 
 vars:
 
@@ -68,7 +68,7 @@ vars:
 
 files:
 
- "$(apt_backends_file)$(repo_index)"
+ "$(apt_backends_file)$(repo)"
   comment       => "Create backends file containing the https repo names",
   create        => "true",
   action        => r_immediate,
@@ -78,6 +78,6 @@ files:
 
 reports:
 
-  "${this.bundle}: $(repo_index)";
+  "${this.bundle}: $(repo)";
 
 }
