@@ -3,7 +3,6 @@ bundle agent apt_cacher_ng {
 vars:
 
   "pkg[apt-cacher-ng]"           string => "*";
-  "acng_conf"                    string => "/etc/apt-cacher-ng/acng.conf";
   "templates"                     slist => { "acng.conf.tmpl", "apt_cacher_backends.tmpl" };
   "repo_index"                    slist => getindices("$($(do_roadshow.class_domain).https_repo)");
 
@@ -31,6 +30,7 @@ bundle agent apt_cacher_remaps (repo) {
 
 vars:
 
+  "acng_conf"                    string => "/etc/apt-cacher-ng/acng.conf";
   "repo"	string => $(repo);
  
 files:
