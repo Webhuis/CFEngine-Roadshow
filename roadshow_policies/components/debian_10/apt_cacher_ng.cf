@@ -27,11 +27,11 @@ reports:
 
 }
 
-bundle agent apt_cacher_remaps (repo_index) {
+bundle agent apt_cacher_remaps (repo) {
 
 vars:
 
-  "repo"	string => $(repo_index);
+  "repo"	string => $(repo);
  
 files:
 
