@@ -5,7 +5,6 @@ vars:
   "pkg[apt-cacher-ng]"           string => "*";
 
   "acng_conf"                    string => "/etc/apt-cacher-ng/acng.conf";
-  "apt_backends_file"            string => "/etc/apt-cacher-ng/backends_";
   "templates"                     slist => { "acng.conf.tmpl", "apt_cacher_backends.tmpl" };
   "repo"                          slist => getindices("$(do_roadshow.class_domain).https_repo");
  
@@ -18,19 +17,12 @@ files:
   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/acng.conf.tmpl",
   classes       => r_if_repaired("restart_apt_cacher");
 
- "$(apt_backends_file)$(repo)"
-  comment       => "Create backends file containing the https repo names",
-  create        => "true",
-  action        => r_immediate,
-  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/apt_cacher_backends.tmpl",
-  classes       => r_if_repaired("restart_apt_cacher");
-
 methods:
 
   "We desire apt-cacher-ng"   usebundle => packages("apt_cacher_ng.pkg");
   "Get apt_cacher templates"  usebundle => get_template("$(templates)");
-# "We desire https remap's"   usebundle => apt_cacher_remaps($(repo_index));
-# "We desire https repo's"    usebundle => apt_cacher_backends($(repo_index));
+  "We desire https remap's"   usebundle => apt_cacher_backends($(repo));
+# "We desire https repo's"    usebundle => apt_cacher_backends($(do_roadshow.class_domain).https_repo[$(repo)]);
 
 commands:
 
@@ -40,32 +32,32 @@ commands:
 
 reports:
 
-  "${this.bundle}: $(repo_index)";
-  "${this.bundle}: $($(do_roadshow.class_domain).https_repo[$(repo_index)])";
+  "${this.bundle}: $(repo)";
+  "${this.bundle}: $($(do_roadshow.class_domain).https_repo[$(repo)])";
 
 }
 
-bundle agent apt_cacher_remaps (repo) {
+bundle agent apt_cacher_backends(repo) {
 
 vars:
 
-# "repo"	string => $(repo);
-
-reports:
-
-  "${this.bundle}: one repo $(repo)";
-
-}
-
-bundle agent apt_cacher_backends (repo) {
-
-vars:
+  "repo_nick"                    string => $(repo);
+  "https_repo"                   string => "$($(do_roadshow.class_domain).https_repo[$(repo_nick)])";
 
   "apt_backends_file"            string => "/etc/apt-cacher-ng/backends_";
 
+files:
+
+ "$(apt_backends_file)$(repo_nick)"
+  comment       => "Create backends file containing the https repo names",
+  create        => "true",
+  action        => r_immediate,
+  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/apt_cacher_backends.tmpl",
+  classes       => r_if_repaired("restart_apt_cacher");
 
 reports:
 
-  "${this.bundle}: $(repo)";
+  "${this.bundle}: repo_nick $(repo_nick)";
+  "${this.bundle}: https repo $(https_repo)";
 
 }
