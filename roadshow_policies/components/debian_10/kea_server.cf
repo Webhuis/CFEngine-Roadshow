@@ -7,8 +7,10 @@ vars:
   "pkg[kea-dhcp-ddns-server]"  string => "*";
   "pkg[kea-dhcp4-server]"      string => "*";
 
-  "apt_repo[isc-kea]"          string => "deb http://downloads.opennebula.org/repo/5.4/Debian/9 stable opennebula";
+  "cache_repo[kea]"            string => "deb http://$(do_roadshow.class_domain.apt_cacher)-kea.$(sys.domain) buster main";
   "apt_key"                    string => "opennebula.pubkey.gpg";
+
+  "repo_index"                  slist => getindices("kea_server.cache_repo")
 
 files:
 
@@ -22,14 +24,28 @@ files:
 
 methods:
 
-  "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
 
-  "We need the opennebula repo"       usebundle => apt_repo("opennebula_server.apt_repo", "$(apt_key)");
+  "We need all isc-kea cache repos"   usebundle => apt_repo_list("$(repo_index), kea_server.cache_repo");
 
-  "We desire the Kea server"    usebundle => packages("kea_server.pkg");
+  "We desire the Kea server"          usebundle => packages("kea_server.pkg");
 
 reports:
 
   "${this.bundle}: component";
+
+}
+
+bundle agent kea_repo(repo) {
+
+methods:
+
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need a isc-kea cache repo"      usebundle => apt_repo_list("$(repo), $($(kea_server.cache_repo[$(repo)])");
+
+reports:
+
+  "${this.bundle}: kea_repo source list";
 
 }
