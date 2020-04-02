@@ -26,14 +26,14 @@ methods:
 
 # "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
 
-  "We need all isc-kea cache repos"   usebundle => apt_repo_list("$(repo_index)", "$(S(cache_repo)[$(repo_index)])");
+  "We need all isc-kea cache repos"   usebundle => apt_repo_list("$(repo_index)", "$($(cache_repo)[$(repo_index)])");
 
   "We desire the Kea server"          usebundle => packages("kea_server.pkg");
 
 reports:
 
   "${this.bundle}: $(repo_index)";
-  "${this.bundle}: $(kea_server.cache_repo)";
+  "${this.bundle}: $(S(cache_repo)[$(repo_index)])");
 
 }
 
