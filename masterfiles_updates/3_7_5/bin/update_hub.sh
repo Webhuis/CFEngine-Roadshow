@@ -30,3 +30,5 @@ find /var/cfengine/roadshow_policies -type f -exec chmod -R 600 {} \;
 chmod +x /var/cfengine/roadshow_policies/bin/*.py
 
 cf-agent -B ${policy_hub}
+
+date
