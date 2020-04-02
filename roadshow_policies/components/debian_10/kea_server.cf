@@ -32,8 +32,8 @@ methods:
 
 reports:
 
-  "${this.bundle}: $(repo_index)";
-  "${this.bundle}: $(S(cache_repo)[$(repo_index)])");
+  "$(this.bundle): $(repo_index)";
+  "$(this.bundle): $($(cache_repo)[$(repo_index)])");
 
 }
 
