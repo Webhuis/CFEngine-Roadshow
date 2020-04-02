@@ -7,7 +7,7 @@ vars:
   "pkg[kea-dhcp-ddns-server]"  string => "*";
   "pkg[kea-dhcp4-server]"      string => "*";
 
-  "cache_repo[kea]"            string => "deb http://$(do_roadshow.class_domain.apt_cacher)-kea.$(sys.domain) buster main";
+  "cache_repo[kea]"            string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-kea.$(sys.domain) buster main";
   "apt_key"                    string => "opennebula.pubkey.gpg";
 
   "repo_index"                  slist => getindices("kea_server.cache_repo");
@@ -33,7 +33,7 @@ methods:
 reports:
 
   "$(this.bundle): $(repo_index)";
-  "$(this.bundle): $(cache_repo[$(repo_index)])");
+  "$(this.bundle): $(cache_repo[$(repo_index)])";
 
 }
 
@@ -43,7 +43,7 @@ methods:
 
 # "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
 
-# "We need a isc-kea cache repo"      usebundle => apt_repo_list("$(repo), $($(kea_server.cache_repo[$(repo)])");
+  "We need a isc-kea cache repo"      usebundle => apt_repo_list("$(repo), $($(kea_server.cache_repo[$(repo)])");
 
 reports:
 
