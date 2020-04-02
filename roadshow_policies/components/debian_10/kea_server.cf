@@ -2,15 +2,15 @@ bundle agent kea_server {
 
 vars:
 
-  "pkg[kea-admin]"	       string => "*";
-  "pkg[kea-common]"	       string => "*";
-  "pkg[kea-dhcp-ddns-server]"  string => "*";
-  "pkg[kea-dhcp4-server]"      string => "*";
+  "pkg[isc-kea-admin]"	           string => "*";
+  "pkg[isc-kea-common]"	           string => "*";
+  "pkg[isc-kea-dhcp-ddns-server]"  string => "*";
+  "pkg[isc-kea-dhcp4-server]"      string => "*";
 
-  "cache_repo[kea]"            string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-kea.$(sys.domain) buster main";
-  "apt_key"                    string => "opennebula.pubkey.gpg";
+  "cache_repo[kea]"                string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-kea.$(sys.domain) buster main";
+  "apt_key"                        string => "opennebula.pubkey.gpg";
 
-  "repo_index"                  slist => getindices("kea_server.cache_repo");
+  "repo_index"                     slist => getindices("kea_server.cache_repo");
 
 files:
 
