@@ -52,6 +52,7 @@ files:
  "$(apt_backends_file)$(repo_nick)"
   comment       => "Create backends file containing the https repo names",
   create        => "true",
+  perms         => mo("644","root"),
   action        => r_immediate,
   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/apt_cacher_backends.tmpl",
   classes       => r_if_repaired("restart_apt_cacher");
