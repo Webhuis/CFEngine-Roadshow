@@ -31,4 +31,4 @@ chmod +x /var/cfengine/roadshow_policies/bin/*.py
 
 cf-agent -B ${policy_hub}
 
-date
+echo `date`
