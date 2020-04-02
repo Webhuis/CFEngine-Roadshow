@@ -10,7 +10,7 @@ vars:
   "cache_repo[kea]"            string => "deb http://$(do_roadshow.class_domain.apt_cacher)-kea.$(sys.domain) buster main";
   "apt_key"                    string => "opennebula.pubkey.gpg";
 
-  "repo_index"                  slist => getindices("kea_server.cache_repo")
+  "repo_index"                  slist => getindices("kea_server.cache_repo");
 
 files:
 
