@@ -13,6 +13,7 @@ files:
  "$(acng_conf)"
   comment       => "Edit acng.conf for https backends, Remap-repo: http://repo.nick ; file:backends_repo",
   create        => "true",
+  perms         => mo("644","root"),
   action        => r_immediate,
   edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/acng.conf.tmpl",
   classes       => r_if_repaired("restart_apt_cacher");
