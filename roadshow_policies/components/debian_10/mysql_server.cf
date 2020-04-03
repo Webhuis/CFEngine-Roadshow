@@ -2,7 +2,7 @@ bundle agent mysql_server {
 
 vars:
 
-  "pkg[mysql-server]"		string => "*";
+  "pkg[default-mysql-server]"          string => "*";
 
 methods:
 
