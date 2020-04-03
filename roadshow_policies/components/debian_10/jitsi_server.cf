@@ -40,7 +40,7 @@ methods:
 
 # "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
 
-  "We need a Jitsi cache repo"        usebundle => apt_repo_list("$(repo)", "$($(jitsi_server.cache_repo[$(repo)])");
+  "We need a Jitsi cache repo"        usebundle => apt_repo_list("$(repo)", "$(jitsi_server.cache_repo[$(repo)])");
 
 reports:
 
