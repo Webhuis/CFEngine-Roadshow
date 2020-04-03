@@ -1,0 +1,49 @@
+bundle agent jitsi_server {
+
+vars:
+
+  "pkg[isc-kea-admin]"	           string => "*";
+
+  "cache_repo[jts]"                string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-jts.$(sys.domain) stable";
+  "apt_key"                        string => "jitsi.pubkey.gpg";
+
+  "repo_index"                     slist => getindices("jitsi_server.cache_repo");
+
+files:
+
+  "/var/cache/apt/downloads.jitsi.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.jitsi.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
+methods:
+
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need all jitsi cache repos"     usebundle => apt_repo_list("$(repo_index)", "$(cache_repo[$(repo_index)])");
+
+  "We desire the Jitsi server"        usebundle => packages("jitsi_server.pkg");
+
+reports:
+
+  "$(this.bundle): $(repo_index)";
+  "$(this.bundle): $(cache_repo[$(repo_index)])";
+
+}
+
+bundle agent jitsi_repo(repo) {
+
+methods:
+
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need a Jitsi cache repo"        usebundle => apt_repo_list("$(repo)", "$($(jitsi_server.cache_repo[$(repo)])");
+
+reports:
+
+  "${this.bundle}: jitsi_repo source list";
+
+}
