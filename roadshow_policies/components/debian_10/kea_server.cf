@@ -4,6 +4,7 @@ vars:
 
   "pkg[isc-kea-admin]"	           string => "*";
   "pkg[isc-kea-common]"	           string => "*";
+  "pkg[isc-kea-ctrl-agent]"        string => "*";
   "pkg[isc-kea-dhcp-ddns-server]"  string => "*";
   "pkg[isc-kea-dhcp4-server]"      string => "*";
 

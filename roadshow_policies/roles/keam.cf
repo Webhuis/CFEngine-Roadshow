@@ -16,7 +16,7 @@ vars:
 methods:
 
   "We are a DHCP / DDNS server"    usebundle => "kea_server";
-  "We desire PostgreSQL"           usebundle => "postgresql";
+  "We desire mySQL /MariaDB"       usebundle => "mysql_server";
 
 reports:
 
