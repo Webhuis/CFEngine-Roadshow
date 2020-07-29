@@ -4,7 +4,7 @@ vars:
 
   "role_name"                         string => "The Kea DHCP DDNS server";
 
-  "bundles[kea_server]"               string => "$(sys.flavor)/kea_server.cf";
+  #"bundles[kea_server]"               string => "$(sys.flavor)/kea_server.cf";
   "bundles[mysql_server]"             string => "$(sys.flavor)/mysql_server.cf";
 
   "sequence"                           slist => getindices("bundles");
