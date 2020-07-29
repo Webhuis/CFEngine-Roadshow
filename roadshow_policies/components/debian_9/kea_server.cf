@@ -7,16 +7,6 @@ vars:
   "pkg[kea-dhcp-ddns-server]"  string => "*";
   "pkg[kea-dhcp4-server]"      string => "*";
 
-files:
-
-  "/var/cache/apt/downloads.opennebula.org.gpg"
-    comment      => "Prepare grml debootstrap environment",
-    perms        => mo("644","root"),
-    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
-    create       => "true",
-    action       => r_immediate,
-    classes      => r_if_repaired("new_repo_key");
-
 methods:
 
   "We desire the Kea server"    usebundle => packages("kea_server.pkg");
