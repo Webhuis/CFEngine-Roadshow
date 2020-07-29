@@ -13,8 +13,10 @@ methods:
 }
 
 bundle agent nginx_port_443 {
+
 reports:
-  linux::
-    "nginx port 443";
+
+ linux::
+  "nginx port 443";
 
 }
