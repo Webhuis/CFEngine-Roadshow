@@ -3,6 +3,10 @@ bundle agent mihr_server {
 vars:
 
   "pkg[isc-dhcp-server-ldap]"	       string => "*";
+  "pkg[ldaputils]"                     string => "*";
+  "pkg[python3-ldap]"                  string => "*";
+  "pkg[slapd]"          	       string => "*";
+  "pkg[slapd-contrib]"                 string => "*";
 
 methods:
 
