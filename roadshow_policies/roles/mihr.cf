@@ -1,0 +1,49 @@
+bundle agent mihr {
+
+vars:
+
+  "role_name"                         string => "The Mac address IP address Hostname Reverse lookup server";
+
+  "bundles[mihr_server]"               string => "$(sys.flavor)/mihr_server.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+methods:
+
+  "We are a DHCP / DDNS server"    usebundle => "mihr_server";
+
+reports:
+
+ "${this.bundle}: $($(sys.flavor).nics)";
+
+}
+
+bundle agent mihr_data {
+  
+vars:
+
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+
+  "vnic_index"                         slist => getindices("vnic");
+
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])" };
+
+
+methods:
+
+  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
+                                   comment   => "This is a layer I and II check on the virtual switch";
+
+
+reports:
+
+  "${this.bundle} nics: $(vnic)";
+  "${this.bundle} etc_hosts_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

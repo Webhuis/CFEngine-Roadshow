@@ -1,0 +1,15 @@
+bundle agent mihr_server {
+
+vars:
+
+  "pkg[isc-dhcp-server-ldap]"	       string => "*";
+
+methods:
+
+  "We desire the mihr server"          usebundle => packages("mihr_server.pkg");
+
+reports:
+
+  "$(this.bundle): ";
+
+}
