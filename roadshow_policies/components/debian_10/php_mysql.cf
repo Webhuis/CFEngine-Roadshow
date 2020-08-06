@@ -8,7 +8,6 @@ vars:
     "pkg[php-mysql]"	        	string => "*";
     "pkg[php-db-dataobject]"        	string => "*";
     "pkg[php-dev]"	        	string => "*";
-    "pkg[php-mdb2]"	        	string => "*";
     "pkg[php-mdb2-driver-mysql]"       	string => "*";
     "pkg[php-pear]"	        	string => "*";
 
