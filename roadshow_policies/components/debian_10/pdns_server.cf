@@ -1,4 +1,4 @@
-bundle agent pdns_server_comp {
+bundle agent pdns_server {
 
 vars:
 
