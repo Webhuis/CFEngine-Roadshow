@@ -1,0 +1,59 @@
+bundle agent pdns_server_comp {
+
+vars:
+
+    "pkg[pdns-server]"           string => "*";
+    "pkg[pdns-recursor]"         string => "*";
+    "pkg[pdns-backend-mysql]"    string => "*";
+
+    "pdns_package_name"          slist  => getindices("pkg");
+
+methods:
+
+ "We desire powerdns"            usebundle => packages("pdns_server_comp.pkg");
+ "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql.conf.tmpl");
+ "Configure powerdns server"     usebundle => pdns_conf;
+ "The recursor needs templates"  usebundle => get_template("recursor.conf.tmpl");
+ "Configure the recursos"        usebundle => recursor_conf;
+
+}
+
+bundle agent pdns_conf {
+
+files:
+
+ "/etc/powerdns/pdns.conf"
+  comment                   => "pdns.conf door class_domain nameserver",
+  perms                     => mo("600","root"),
+  create                    => "true",
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql.conf.tmpl",
+  classes                   => r_if_repaired("restart_pdns");
+
+commands:
+
+  restart_pdns::
+   "/etc/init.d/pdns restart";
+   "/etc/init.d/pdns-recursor restart";
+
+}
+
+bundle agent recursor_conf {
+
+files:
+
+ "/etc/powerdns/recursor.conf"
+  comment                   => "recursor.conf door class_domain nameserver",
+  create                    => "true",
+  perms                     => mog("640","root","pdns"),
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.conf.tmpl",
+  classes                   => r_if_repaired("restart_recursor");
+
+commands:
+
+  restart_pdns::
+   "/etc/init.d/pdns-recursor restart";
+
+}
+
