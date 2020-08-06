@@ -2,9 +2,8 @@ bundle agent debian_10 {
 
 vars:
 
-  "pkg[autofs5]"                            string => "*";
-  "pkg[autofs5-ldap]"                       string => "*";
-  "pkg[libzmq3]"                            string => "*";
+  "pkg[autofs]"                            string => "*";
+  "pkg[autofs-ldap]"                       string => "*";
   "pkg[python-zmq]"                         string => "*";
 
   "name"                                    string => "buster";
