@@ -1,0 +1,18 @@
+bundle agent apache_php {
+
+vars:
+
+    "pkg[libapache2-mod-php7.0]"          string => "*";
+    "pkg[php7.0]"                         string => "*";
+
+
+methods:
+
+    "PHP5 for Apache2"                 usebundle => packages("apache_php.pkg");
+
+reports:
+
+  "${this.bundle}: apache_php5";
+
+}
+
