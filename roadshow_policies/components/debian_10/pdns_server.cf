@@ -10,7 +10,7 @@ vars:
 
 methods:
 
- "We desire powerdns"            usebundle => packages("pdns_server_comp.pkg");
+ "We desire powerdns"            usebundle => packages("pdns_server.pkg");
  "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql.conf.tmpl");
  "Configure powerdns server"     usebundle => pdns_conf;
  "The recursor needs templates"  usebundle => get_template("recursor.conf.tmpl");
