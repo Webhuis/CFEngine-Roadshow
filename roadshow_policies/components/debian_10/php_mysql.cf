@@ -6,7 +6,7 @@ vars:
     "pkg[php-dev]"                      string => "*";
     "pkg[php-mcrypt]"	        	string => "*";
     "pkg[php-mysql]"	        	string => "*";
-    "pkg[php-db]"	        	string => "*";
+    "pkg[php-db-dataobject]"        	string => "*";
     "pkg[php-dev]"	        	string => "*";
     "pkg[php-mdb2]"	        	string => "*";
     "pkg[php-mdb2-driver-mysql]"       	string => "*";

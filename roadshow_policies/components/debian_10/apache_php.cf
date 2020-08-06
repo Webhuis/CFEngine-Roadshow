@@ -12,7 +12,7 @@ methods:
 
 reports:
 
-  "${this.bundle}: apache_php5";
+  "${this.bundle}: apache_php";
 
 }
 
