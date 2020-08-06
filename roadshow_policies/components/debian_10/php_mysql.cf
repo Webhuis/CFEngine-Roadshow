@@ -4,7 +4,7 @@ vars:
 
     "pkg[gettext]"	        	string => "*";
     "pkg[php-dev]"                      string => "*";
-    "pkg[php-mcrypt]"	        	string => "*";
+    "pkg[php-horde-crypt]"	       	string => "*";
     "pkg[php-mysql]"	        	string => "*";
     "pkg[php-db-dataobject]"        	string => "*";
     "pkg[php-dev]"	        	string => "*";
