@@ -1,13 +1,13 @@
-bundle agent php5_mysql {
+bundle agent php_mysql {
 
 vars:
 
     "pkg[gettext]"	        	string => "*";
-    "pkg[php5-dev]"                     string => "*";
-    "pkg[php5-mcrypt]"	        	string => "*";
-    "pkg[php5-mysql]"	        	string => "*";
+    "pkg[php-dev]"                      string => "*";
+    "pkg[php-mcrypt]"	        	string => "*";
+    "pkg[php-mysql]"	        	string => "*";
     "pkg[php-db]"	        	string => "*";
-    "pkg[php5-dev]"	        	string => "*";
+    "pkg[php-dev]"	        	string => "*";
     "pkg[php-mdb2]"	        	string => "*";
     "pkg[php-mdb2-driver-mysql]"       	string => "*";
     "pkg[php-pear]"	        	string => "*";
@@ -16,7 +16,7 @@ vars:
 
 methods:
 
-    "PHP module for Apache2"         usebundle => packages("php5_mysql.pkg");
+    "PHP module for Apache2"         usebundle => packages("php_mysql.pkg");
 
 reports:
 
