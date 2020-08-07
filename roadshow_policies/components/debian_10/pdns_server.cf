@@ -27,7 +27,7 @@ files:
   perms                     => mo("600","root"),
   create                    => "true",
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql.ddns.conf.tmpl",
   classes                   => r_if_repaired("restart_pdns");
 
 commands:
