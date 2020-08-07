@@ -1,0 +1,19 @@
+# Webhuis template voor pdns.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+allow-dnsupdate-from=10.168.171.2
+config-dir=/etc/powerdns
+default-soa-name=${sys.fqhost}
+disable-axfr=no
+launch=gmysql
+dnsupdate=yes
+forward-dnsupdate=yes
+do-ipv6-additional-processing=no
+loglevel=9
+master=yes
+slave=yes
+webserver=yes
+webserver-address=${sys.ipv4}
+include-dir=/etc/powerdns/pdns.d
