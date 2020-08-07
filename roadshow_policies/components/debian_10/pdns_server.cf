@@ -11,7 +11,7 @@ vars:
 methods:
 
  "We desire powerdns"            usebundle => packages("pdns_server.pkg");
- "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql.ddns.conf.tmpl");
+ "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql-ddns.conf.tmpl");
  "Configure powerdns server"     usebundle => pdns_conf;
  "The recursor needs templates"  usebundle => get_template("recursor.conf.tmpl");
  "Configure the recursos"        usebundle => recursor_conf;
@@ -27,7 +27,7 @@ files:
   perms                     => mo("600","root"),
   create                    => "true",
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql.ddns.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql-ddns.conf.tmpl",
   classes                   => r_if_repaired("restart_pdns");
 
 commands:
