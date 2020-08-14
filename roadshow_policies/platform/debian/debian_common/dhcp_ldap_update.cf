@@ -2,7 +2,7 @@ bundle agent dhcp_ldap_update {
 
 vars:
 
-  "interfaces"                                    slist => getvalues($($(classify.role).vnic));
+  "interfaces"                                    slist => getvalues("$($(classify.role).vnic)");
 
 #files:
 
