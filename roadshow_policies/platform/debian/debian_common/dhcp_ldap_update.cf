@@ -1,8 +1,8 @@
-bundle agent dhcp_ldap_update {
+bundle agent dhcp_ldap_update (ddns_name, mac_address, ip_address, ldap_dn) {
 
 vars:
 
-  "interfaces"                                    slist => getvalues("$($(classify.role).vnic)");
+  "ldap"                                           slist => $(ldap_dn);
 
 #files:
 
@@ -15,7 +15,7 @@ vars:
 
 reports:
 
-  "$(this.bundle): $(interfaces)";
+  "$(this.bundle) ldap dn: $(ldap)";
 
 }
 

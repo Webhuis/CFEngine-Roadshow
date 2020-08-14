@@ -1,8 +1,8 @@
-bundle agent ddns_update {
+bundle agent ddns_update (ddns_name, mac_address, ip_address) {
 
 vars:
 
-  "interfaces"                                    slist => getvalues("$($(classify.role).vnic)");
+  "naam"                                         string => $(ddns_name);
 
 #files:
 
@@ -14,7 +14,7 @@ vars:
 
 reports:
 
-  "$(this.bundle): $(interfaces)";
+  "$(this.bundle): $(naam)";
 
 }
 

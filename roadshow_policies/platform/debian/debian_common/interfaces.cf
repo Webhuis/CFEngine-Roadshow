@@ -2,19 +2,21 @@ bundle agent interfaces {
 
 vars:
 
-  "interfaces"                                    slist => getvalues("$($(classify.role).vnic)");
+  "interfaces"                                    slist => getvalues("$(classify.role)_data.vnic");
+  "names"                                         slist => getindices("$(classify.role)_data.vnic");
 
 #files:
 
 methods:
 
-  "We update the isc-dhcp-server-ldap lda"    usebundle => dhcp_ldap_update;
+  "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update;
   "We dynamically update the name server"     usebundle => ddns_update,
                                                 comment => "We make ourselves known";
 
 reports:
 
   "$(this.bundle): $(interfaces)";
+  "$(this.bundle) names: $(names)";
 
 }
 
