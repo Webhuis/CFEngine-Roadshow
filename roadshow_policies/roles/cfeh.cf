@@ -29,6 +29,11 @@ vars:
 
   "vnic_index"                         slist => getindices("vnic");
 
+  "ddns[support]"                     string => "";
+  "ddnc[admin]"                       string => "-ssh";
+
+  "ddns_index"                         slist => getindices("ddns");
+
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };

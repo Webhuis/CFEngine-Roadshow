@@ -1,0 +1,21 @@
+bundle agent dhcp_ldap_update {
+
+vars:
+
+  "interfaces"                                    slist => getvalues($($(classify.role).vnic));
+
+#files:
+
+#methods:
+
+  #"We update the isc-dhcp-server-ldap lda"    usebundle => dhcp_ldap_update;
+  
+  #"We dynamically update the name server"     usebundle => ddns_update,
+  #                                              comment => "We make ourselves known";
+
+reports:
+
+  "$(this.bundle): $(interfaces)";
+
+}
+

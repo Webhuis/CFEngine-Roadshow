@@ -7,6 +7,7 @@ vars:
 #    "nginx_package_name"     slist  => getindices("pkg");
 
 methods:
+
     "any" usebundle => packages("nginx.pkg");
     "any" usebundle => nginx_port_443;
 
