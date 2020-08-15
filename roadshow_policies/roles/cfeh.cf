@@ -40,7 +40,7 @@ methods:
 
   "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
                                    comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns"                 usebundle => interfaces("cfeh_data.ddns");
+  "We update ddns"                 usebundle => interface_ddns("cfeh_data.ddns");
  #"We update ddns and dhcp"        usebundle => interfaces(vnic, dns_suffix);
 
 reports:
