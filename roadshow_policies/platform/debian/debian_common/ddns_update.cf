@@ -12,7 +12,7 @@ vars:
 
 commands:
 
-  "nsupdate -v -k $(key) server $(mdns) zone $(sys.domain) \
+  "/usr/bin/nsupdate -v -k $(key) server $(mdns) zone $(sys.domain) \
             update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address) \
             update add $(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa. $(ttl) ptr $(ddns_name).$(sys.domain). \
             send";
