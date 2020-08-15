@@ -30,7 +30,7 @@ vars:
   "ldap_admin"                         string => "cn=admin,$(ldap_base)";
   "resolvers"                           slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
   "searchlist"                         string => "rs.webhuis.nl";
-  "apt_cacher"                         string => "aptgwhpdcrg1";
+  "apt_cacher"                         string => "aptgwhpdcrs1";
   "yum_proxy"                          string => $(apt_cacher);
   "nfs_host"                           string => "time.nl";
   "nfs_webapps"                        string => "/var/local/webapps";
