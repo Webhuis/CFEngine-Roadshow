@@ -9,7 +9,7 @@ files:
   "/etc/dhcp/webhuis.nl.update"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_template  => edit_ddns_key;
+    edit_line      => edit_ddns_key;
 
 vars:
 
@@ -19,10 +19,12 @@ vars:
 
 commands:
 
-  "/usr/bin/nsupdate -v -k $(key) server $(mdns) zone $(sys.domain) \
-            update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address) \
-            update add $(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa. $(ttl) ptr $(ddns_name).$(sys.domain). \
-            send";
+  "/usr/bin/nsupdate -v -k $(key) <<EOF
+            server $(mdns) zone $(sys.domain)
+            update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address)
+            update add $(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa. $(ttl) ptr $(ddns_name).$(sys.domain).
+            send
+            EOF";
 
 reports:
 
@@ -38,10 +40,10 @@ delete_lines:
 
 insert_lines:
 
-key "webhuis.nl.update" \{  
+"key \"webhuis.nl.update\" \{  
      algorithm hmac-md5\;  
-     secret "nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U="\;
-\}\; 
+     secret \"nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U=\"\;
+\}\;"; 
 
 }
 

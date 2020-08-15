@@ -11,7 +11,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) dhcp ddns: $(nics)";
+  "$(this.bundle) dhcp ddns: $(ip_addresses)";
+  "$(this.bundle) dhcp ddns: $(nic_names)";
 
 }
 
