@@ -2,7 +2,7 @@ bundle agent dhcp_ldap_update (ddns_name, mac_address, ip_address, ldap_dn) {
 
 vars:
 
-  "ldap"                                           slist => $(ldap_dn);
+  "ldap"                                          string => "$(ldap_dn)";
 
 #files:
 

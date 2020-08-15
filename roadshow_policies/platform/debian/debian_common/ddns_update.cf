@@ -1,4 +1,4 @@
-bundle agent ddns_update (ddns_name, mac_address, ip_address) {
+bundle agent ddns_update (ddns_name, ip_address) {
 
 classes:
 
@@ -6,9 +6,9 @@ classes:
 
 vars:
 
-  "mdns"                                         string => $($(classify.domain).mdns)
-  "key"                                          string => $($(classify.domain).mdns_key);
-  "ttl"                                          string => $($(classify.domain).ttl);
+  "mdns"                                         string => "$($(classify.domain).mdns)";
+  "key"                                          string => "$($(classify.domain).mdns_key)";
+  "ttl"                                          string => "$($(classify.domain).ttl)";
 
 commands:
 
