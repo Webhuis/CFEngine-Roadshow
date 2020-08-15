@@ -1,20 +1,25 @@
 bundle agent ddns_update (ddns_name, mac_address, ip_address) {
 
+classes:
+
+  "parsed_ip"                                expression => regextract("([1-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[1-9][0-9]*)", $(ip_address), "part");
+
 vars:
 
-  "naam"                                         string => $(ddns_name);
+  "mdns"                                         string => $($(classify.domain).mdns)
+  "key"                                          string => $($(classify.domain).mdns_key);
+  "ttl"                                          string => $($(classify.domain).ttl);
 
-#files:
+commands:
 
-#methods:
-
-  #"We update the isc-dhcp-server-ldap lda"    usebundle => dhcp_ldap_update;
-  #"We dynamically update the name server"     usebundle => ddns_update,
-  #                                              comment => "We make ourselves known";
+  "nsupdate -v -k $(key) server $(mdns) zone $(sys.domain) \
+            update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address) \
+            update add $(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa. $(ttl) ptr $(ddns_name).$(sys.domain). \
+            send";
 
 reports:
 
-  "$(this.bundle): $(naam)";
+  "$(this.bundle): $(ddns_name), $(ip_address)";
 
 }
 

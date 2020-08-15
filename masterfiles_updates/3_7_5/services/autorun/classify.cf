@@ -11,36 +11,44 @@ classes:
 
 vars:
     
-  "role"                 string => "$(part[1])";
-  "organisation"         string => "$(part[2])";
-  "environment"          string => "$(part[3])";
-  "department"           string => "$(part[4])";
-  "location"             string => "$(part[5])";
-  "instance"             string => "$(part[6])";
+  "role"                               string => "$(part[1])";
+  "organisation"                       string => "$(part[2])";
+  "environment"                        string => "$(part[3])";
+  "department"                         string => "$(part[4])";
+  "location"                           string => "$(part[5])";
+  "instance"                           string => "$(part[6])";
 
-  "role_input"           string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
-  "eco_vars"             string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
-  "domain"               string => canonify($(sys.domain));
-  "vendor"               string => $(inventory_linux.id_array[1]);
+  "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
+  "eco_vars"                           string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
+  "domain"                             string => canonify($(sys.domain));
+  "vendor"                             string => $(inventory_linux.id_array[1]);
 
-  "ipv4_index"            slist => getindices("sys.ipv4");
+  "ipv4_index"                          slist => getindices("sys.ipv4");
 
  eno::
-  "interface"            string => "eno";
+  "interface"                          string => "eno";
 
  ens::
-  "interface"            string => "ens";
+  "interface"                          string => "ens";
 
  eth::
-  "interface"            string => "eth";
+  "interface"                          string => "eth";
 
  breno1::
-  "interface"            string => "eno1";
-  "bridge"               string => "breno1";
+  "interface"                          string => "eno1";
+  "bridge"                             string => "breno1";
 
  breth0::
-  "interface"            string => "eth0";
-  "bridge"               string => "breth0";
+  "interface"                          string => "eth0";
+  "bridge"                             string => "breth0";
+
+  "vlan[service]"                      string => "10.10.17.0";
+  "vlan[support]"                      string => "10.10.117.0";
+  "vlan[admin]"                        string => "10.110.17.0";
+  "vlan[gw]"                           string => "10.254.0.0";
+  "vlan[wan]"                          string => "";
+  "vlan[life]"                         string => "10.110.117.0";
+  "vlan[roadshow]"                     string => "10.111.111.0";
 
 reports:
 

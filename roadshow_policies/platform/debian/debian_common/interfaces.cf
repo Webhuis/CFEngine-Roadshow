@@ -1,22 +1,37 @@
-bundle agent interfaces {
-
-vars:
-
-  "interfaces"                                    slist => getvalues("$(classify.role)_data.vnic");
-  "names"                                         slist => getindices("$(classify.role)_data.vnic");
-
-#files:
+bundle agent interfaces(nics)
 
 methods:
 
-  "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update;
-  "We dynamically update the name server"     usebundle => ddns_update,
+  "We do one interface at a time"             usebundle => do_interface($(nics));
+
+reports:
+
+  "$(this.bundle) dhcp ddns: $(nics)";
+
+}
+
+bundle agent do_interface(nic)
+
+vars:
+
+  "name"                                          slist => getindices("$(classify.role)_data.ddns");
+
+  "ddns_name"                                    string => "$(sys.uqhost)$(classify.role)_data.ddns[$(nic)];"
+  "mac_address"                                  string => "$(classify.role)_data.ddns";
+  "ip_address"                                   string => "$(sys.ipv4[$(nic)])";
+  "ldap_dn"                                      string => $(classify.domain);
+
+methods:
+
+ #"We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(mac_address), $(ip_address), $(ldap_dn));
+  "We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address));
                                                 comment => "We make ourselves known";
 
 reports:
 
-  "$(this.bundle): $(interfaces)";
-  "$(this.bundle) names: $(names)";
+  "$(this.bundle) ddns name: $(ddns_name)";
+  "$(this.bundle) MAC Address: $(mac_address)";
+  "$(this.bundle) ldap dn: $(ldap_dn)";
 
 }
 

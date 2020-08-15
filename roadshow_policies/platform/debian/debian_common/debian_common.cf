@@ -32,7 +32,6 @@ vars:
 
 methods:
  
-  "We do interfaces first"               usebundle => interfaces;
   "We desire the flavour sources_list"   usebundle => sources_list;
   "Configure apt mirror"                 usebundle => apt_cacher;
   "Install common packages"              usebundle => packages("debian_common.pkg");

@@ -1,0 +1,11 @@
+# Webhuis template for resolv.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+dn: cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl
+cn: $(ddns_name)
+dhcphwaddress: ethernet $(mac_address)
+dhcpstatements: fixed-address $(ip_address)
+objectclass: top
+objectclass: dhcpHost
