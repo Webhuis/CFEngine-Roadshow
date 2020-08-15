@@ -2,8 +2,8 @@ bundle agent interfaces(nics, ddns) {
 
 vars:
 
-  "ip_addresses"                                  slist => getvalues($(nics);
-  "nic_names"                                     slist => getindices($(nics);
+  "ip_addresses"                                  slist => getvalues($(nics));
+  "nic_names"                                     slist => getindices($(nics));
 
 methods:
 
