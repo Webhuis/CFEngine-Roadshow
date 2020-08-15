@@ -16,19 +16,21 @@ vars:
   "mdns"                                         string => "$($(classify.domain).mdns)";
   "key"                                          string => "$($(classify.domain).mdns_key)";
   "ttl"                                          string => "$($(classify.domain).ttl)";
+  "arpa_address"                                 string => "$(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
 
 commands:
 
   "/usr/bin/nsupdate -v -k $(key) <<EOF
             server $(mdns) zone $(sys.domain)
             update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address)
-            update add $(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa. $(ttl) ptr $(ddns_name).$(sys.domain).
+            update add $(arpa_address) $(ttl) ptr $(ddns_name).$(sys.domain).
             send
             EOF";
 
 reports:
 
   "$(this.bundle): $(ddns_name), $(ip_address)";
+  "$(this.bundle): $(arpa_address)";
 
 }
 
