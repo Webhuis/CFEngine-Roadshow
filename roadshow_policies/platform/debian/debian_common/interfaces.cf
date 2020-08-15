@@ -23,7 +23,7 @@ vars:
 
   "ddns_name"                                    string => "$(sys.uqhost)$(nic_name)";
   "mac_address"                                  string => "$(classify.role)_data.ddns";
-  "ip_address"                                   string => "$(ip_address)";
+ #"ip_address"                                   string => "$(ip_address)";
   "ldap_dn"                                      string => "$(classify.domain)";
 
 methods:
