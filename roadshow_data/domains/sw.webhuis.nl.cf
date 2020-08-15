@@ -8,8 +8,8 @@ bundle agent sw_webhuis_nl {
 
 vars:
 
-  "mdns"              string => "nsid2.webhuis.nl";
-  "mdns_key"          string => "nsid2.webhuis.nl.:neQQPaGetzFWcCK5ajF4Vw==";
+  "mdns"              string => "pdnmwhpdcsw1.sw.webhuis.nl";
+  "mdns_key"          string => "/etc/dhcp/webhuis.nl.update";
   "dns"                slist => {"ns1", "ns2"};
   "idns"               slist => {"nsid1", "nsid2"};
   "ttl"               string => "300"; 
