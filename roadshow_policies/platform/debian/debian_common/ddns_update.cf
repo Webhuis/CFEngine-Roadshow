@@ -2,7 +2,7 @@ bundle agent ddns_update (ddns_name, ip_address) {
 
 classes:
 
-  "parsed_ip"                                expression => regextract("([1-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[1-9][0-9]*)", $(ip_address), "part");
+ "parsed_ip"                                expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", $(ip_address), "part");
 
 files:
 
@@ -10,6 +10,11 @@ files:
     create         => "true",
     perms          => mog("644","root","root"),
     edit_line      => edit_ddns_key;
+
+  "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_line      => edit_nsupdate_command($(mdns), $(ddns_name), $(ttl), $(ip_address), $(arpa_address));
 
 vars:
 
@@ -20,17 +25,12 @@ vars:
 
 commands:
 
-  "/usr/bin/nsupdate -v -k $(key) <<EOF
-            server $(mdns) zone $(sys.domain)
-            update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address)
-            update add $(arpa_address) $(ttl) ptr $(ddns_name).$(sys.domain).
-            send
-            EOF";
+  "/usr/bin/nsupdate -v -k $(key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
 
   "$(this.bundle): $(ddns_name), $(ip_address)";
-  "$(this.bundle): $(arpa_address)";
+  "$(this.bundle) arpa address: $(arpa_address)";
 
 }
 
@@ -42,10 +42,28 @@ delete_lines:
 
 insert_lines:
 
-"key \"webhuis.nl.update\" \{  
-     algorithm hmac-md5\;  
-     secret \"nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U=\"\;
-\}\;"; 
+"key \"webhuis.nl.update\" {  
+     algorithm hmac-md5;  
+     secret \"nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U=\";
+};"; 
+
+}
+
+
+bundle edit_line  edit_nsupdate_command (mdns, ddns_name, ttl, ip_address, arpa_address) {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+ "server $(mdns)
+  zone $(sys.domain)
+  update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address)
+  update add $(arpa_address) $(ttl) ptr $(ddns_name).$(sys.domain).
+  send";
+
 
 }
 
