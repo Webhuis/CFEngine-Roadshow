@@ -4,6 +4,13 @@ classes:
 
   "parsed_ip"                                expression => regextract("([1-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[1-9][0-9]*)", $(ip_address), "part");
 
+files:
+
+  "/etc/dhcp/webhuis.nl.update"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => edit_ddns_key;
+
 vars:
 
   "mdns"                                         string => "$($(classify.domain).mdns)";
@@ -20,6 +27,21 @@ commands:
 reports:
 
   "$(this.bundle): $(ddns_name), $(ip_address)";
+
+}
+
+bundle edit_line  edit_ddns_key {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+key "webhuis.nl.update" \{  
+     algorithm hmac-md5\;  
+     secret "nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U="\;
+\}\; 
 
 }
 

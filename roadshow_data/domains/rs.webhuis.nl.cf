@@ -12,7 +12,7 @@ vars:
   "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
   "dns"                                slist => {"ns1", "ns2"};
   "idns"                               slist => {"nsid1", "nsid2"};
-  "ttl"                                string => "300"; 
+  "ttl"                                string => "600"; 
   "name"                               string => "buster";
 
   "subnet[service]"                    string => "10.10.17.0";

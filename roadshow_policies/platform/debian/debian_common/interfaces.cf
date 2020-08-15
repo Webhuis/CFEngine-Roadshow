@@ -1,4 +1,4 @@
-bundle agent interfaces(nics, ddns) {
+bundle agent interfaces(nics, name_suffix) {
 
 vars:
 
@@ -7,7 +7,7 @@ vars:
 
 methods:
 
-  "We do one interface at a time"             usebundle => do_interface($(ip_addresses), $(ddns[nic_names]));
+  "We do one interface at a time"             usebundle => do_interface($(ip_addresses), $(nic_names));
 
 reports:
 
@@ -22,9 +22,9 @@ vars:
  #"name"                                          slist => "$(classify.role)_data.[nic_name]");
 
   "ddns_name"                                    string => "$(sys.uqhost)$(nic_name)";
-  "mac_address"                                  string => "$(classify.role)_data.ddns";
+ #"mac_address"                                  string => "$(classify.role)_data.ddns";
  #"ip_address"                                   string => "$(ip_address)";
-  "ldap_dn"                                      string => "$(classify.domain)";
+ #"ldap_dn"                                      string => "$(classify.domain)";
 
 methods:
 

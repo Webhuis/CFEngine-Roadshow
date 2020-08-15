@@ -29,8 +29,8 @@ vars:
 
   "vnic_index"                         slist => getindices("vnic");
 
-  "ddns[support]"                     string => "";
-  "ddns[admin]"                       string => "-ssh";
+  "dns_suffix[support]"               string => "";
+  "dns_suffix[admin]"                 string => "-ssh";
 
   "ddns_index"                         slist => getindices("ddns");
 
@@ -42,7 +42,7 @@ methods:
 
   "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
                                    comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns and dhcp"        usebundle => interfaces($(vnic), $(ddns));
+  "We update ddns and dhcp"        usebundle => interfaces($(vnic), $(dns_suffix));
 
 reports:
 
