@@ -1,13 +1,13 @@
-bundle agent interfaces(nics, name_suffix) {
+bundle agent interface_ddns(ip_suffix) {
 
 vars:
 
-  "ip_addresses"                                  slist => getvalues($(nics));
+  "ddns_index"                                    slist => getindices($(ip_suffix));
   "nic_names"                                     slist => getindices($(nics));
 
 methods:
 
-  "We do one interface at a time"             usebundle => do_interface($(ip_addresses), $(nic_names));
+  "We do one interface at a time"             usebundle => do_interface("$($(ip_suffix)[$(ddns_index)][ip])", "$($(ip_suffix)[$(ddns_index)][suffix])");
 
 reports:
 

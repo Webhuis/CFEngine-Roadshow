@@ -27,12 +27,10 @@ vars:
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
 
-  "vnic_index"                         slist => getindices("vnic");
-
-  "dns_suffix[support]"               string => "";
-  "dns_suffix[admin]"                 string => "-ssh";
-
-  "ddns_index"                         slist => getindices("ddns");
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(vnic[support])])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(vnic[admin])])";
+  "ddns[admin][suffix]"               string => "-ssh";
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
@@ -42,7 +40,8 @@ methods:
 
   "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
                                    comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns and dhcp"        usebundle => interfaces(vnic, dns_suffix);
+  "We update ddns"                 usebundle => interfaces(cfeh_data.ddns);
+ r#We update ddns and dhcp"        usebundle => interfaces(vnic, dns_suffix);
 
 reports:
 
