@@ -16,7 +16,7 @@ reports:
 
 }
 
-bundle agent do_interface(ip_address, nic_name) {
+bundle agent do_dhcp(ip_address, nic_name) {
 
 vars:
 
