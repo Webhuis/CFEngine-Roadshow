@@ -1,4 +1,4 @@
-bundle agent interface_ddns(nics, name_suffix) {
+bundle agent interface_dhcp(nics, name_suffix) {
 
 vars:
 
