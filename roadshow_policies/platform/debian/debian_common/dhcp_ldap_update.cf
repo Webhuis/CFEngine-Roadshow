@@ -7,7 +7,7 @@ classes:
 vars:
 
   "subnet"                             string => "$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
-  "mac_address"                        string => "$(get_mac_address.mac_address[1])"
+  "mac_address"                        string => "$(get_mac_address.mac_address[1])";
 
 files:
 
