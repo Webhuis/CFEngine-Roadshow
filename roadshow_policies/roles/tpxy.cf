@@ -28,9 +28,13 @@ vars:
   "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(vnic[support])])";
+  "ddns[support][nic]"                string => "$(vnic[support])";
   "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
   "ddns[admin][ip]"                   string => "$(sys.ipv4[$(vnic[admin])])";
+  "ddns[admin][nic]"                  string => "$(vnic[admin])";
   "ddns[admin][suffix]"               string => "-ssh";
+  "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[support])])" };

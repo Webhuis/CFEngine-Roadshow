@@ -34,8 +34,14 @@ vars:
   "vlan[life]"                        string => "$($(classify.eco_vars).network[life][vlan])";
   "vlan[roadshow]"                    string => "$($(classify.eco_vars).network[roadshow][vlan])";
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" }; 
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(vnic[support])])";
   "ddns[support][suffix]"             string => "";
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" }; 
+  "ddns[support][nic]"                string => "$(classify.bridge)_$(vlan[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
