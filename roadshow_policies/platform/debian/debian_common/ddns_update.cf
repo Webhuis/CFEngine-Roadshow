@@ -62,7 +62,9 @@ insert_lines:
  "server $(mdns)
   zone $(sys.domain)
   update add $(ddns_name).$(sys.domain). $(ttl) A $(ip_address)
+  send
 
+  server $(mdns)
   zone $(arpa_zone)
   update add $(arpa_address) $(ttl) PTR $(ddns_name).$(sys.domain).
   send";
