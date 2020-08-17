@@ -5,9 +5,9 @@ vars:
   "ip_addresses"                                  slist => getvalues($(nics));
   "nic_names"                                     slist => getindices($(nics));
 
-methods:
+#methods:
 
-  "We do one interface at a time"             usebundle => do_dhcp($(ip_addresses), $(nic_names));
+#  "We do one interface at a time"             usebundle => do_dhcp($(ip_addresses), $(nic_names));
 
 reports:
 
