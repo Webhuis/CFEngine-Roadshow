@@ -63,7 +63,7 @@ insert_lines:
   zone $(sys.domain)
   update add $(ddns_name).$(sys.domain). $(ttl) a $(ip_address)
 
-  zone a$(arpa_zone)
+  zone $(arpa_zone)
   update add $(arpa_address) $(ttl) ptr $(ddns_name).$(sys.domain).
   send";
 
