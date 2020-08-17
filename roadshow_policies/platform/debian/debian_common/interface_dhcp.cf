@@ -27,11 +27,11 @@ vars:
  #"ip_address"                                   string => "$(ip_address)";
  #"ldap_dn"                                      string => "$(classify.domain)";
 
-methods:
+#methods:
 
-  "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(subnet), $(vlan), $(mac_address), $(ip_address));
-  "We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address)),
-                                                comment => "We make ourselves known";
+ #"We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(subnet), $(vlan), $(mac_address), $(ip_address));
+ #"We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address)),
+ #                                              comment => "We make ourselves known";
 
 reports:
 
