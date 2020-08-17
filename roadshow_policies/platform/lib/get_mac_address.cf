@@ -2,8 +2,8 @@ bundle agent get_mac_address(interface) {
   
 classes:
 
- #"ok"                             expression => regextract( ".*ether[ ] ([^\s]+).*(' '.*)*", $(interface), "mac");
-  "ok"                             expression => regextract( ".*ether ([\s+].*(' '.*)*", $(interface), "mac");
+  "ok"                             expression => regextract( ".*ether[ ] ([^\s]+).*(' '.*)*", $(interface_info), "mac");
+ #"ok"                             expression => regextract( ".*ether ([\s+].*(' '.*)*", $(interface), "mac");
 
 vars:
 
