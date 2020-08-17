@@ -42,14 +42,6 @@ vars:
   "interface"                          string => "eth0";
   "bridge"                             string => "breth0";
 
-  "vlan[service]"                      string => "10.10.17.0";
-  "vlan[support]"                      string => "10.10.117.0";
-  "vlan[admin]"                        string => "10.110.17.0";
-  "vlan[gw]"                           string => "10.254.0.0";
-  "vlan[wan]"                          string => "";
-  "vlan[life]"                         string => "10.110.117.0";
-  "vlan[roadshow]"                     string => "10.111.111.0";
-
 reports:
 
   "$(this.bundle) role: $(role) $(role_input)";
