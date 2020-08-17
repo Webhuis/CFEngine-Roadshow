@@ -14,7 +14,7 @@ files:
   "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_line      => edit_nsupdate_command($(mdns), $(ddns_name), $(ttl), $(ip_address), $(arpa_address));
+    edit_line      => edit_nsupdate_command($(mdns), $(ddns_name), $(ttl), $(ip_address), $(arpa_domain), $(arpa_address));
 
 vars:
 
