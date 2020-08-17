@@ -7,7 +7,7 @@ classes:
 vars:
 
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
-  "mac_address"                        string => "$(get_mac_address.mac_address[1])";
+  "mac_address"                        string => "$(get_mac_address.mac_address)";
   "vlan"                               string => "Vlan-$(vlan_number)";
 
 files:
@@ -24,6 +24,7 @@ commands:
 reports:
 
   "$(this.bundle) ldap: $(ddns_name)";
+  "$(this.bundle) ldap: $(vlan_number)";
   "$(this.bundle) ldap: $(subnet)";
   "$(this.bundle) ldap: $(mac_address)";
 
