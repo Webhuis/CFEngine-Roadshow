@@ -34,6 +34,8 @@ vars:
   "vlan[life]"                        string => "$($(classify.eco_vars).network[life][vlan])";
   "vlan[roadshow]"                    string => "$($(classify.eco_vars).network[roadshow][vlan])";
 
+  "vlan_index"                         slist => getindices("vlan");
+
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])";
   "ddns[support][nic]"                string => "$(classify.bridge)_$(vlan[support])";
   "ddns[support][suffix]"             string => "";
