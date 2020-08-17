@@ -19,6 +19,8 @@ vars:
 
   "vnic_index"                            slist => getindices("vnic");
 
+  "ip_cmd"                               string => "/sbin/ip/";
+
 methods:
 
   "We desire jessie packages"         usebundle => packages("debian_8.pkg");

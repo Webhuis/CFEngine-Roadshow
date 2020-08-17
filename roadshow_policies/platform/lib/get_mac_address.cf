@@ -2,11 +2,12 @@ bundle agent get_mac_address(interface) {
   
 classes:
 
-  "ok"                             expression => regextract( ".*ether ([^\s]+).*(' '.*)*", $(interface), "mac");
+ #"ok"                             expression => regextract( ".*ether[ ] ([^\s]+).*(' '.*)*", $(interface), "mac");
+  "ok"                             expression => regextract( ".*ether ([\s+].*(' '.*)*", $(interface), "mac");
 
 vars:
 
-  "interface_info"                     string => execresult("/usr/sbin/ip link show $(interface)","noshell");
+  "interface_info"                     string => execresult("$($(sys.flavor).ip_cmd) link show $(interface)","noshell");
 
  ok::
   "mac_address"                        string => "$(mac[1])";
