@@ -1,4 +1,4 @@
-bundle agent get_mac_address(vlan) {
+bundle agent kvm_get_mac_address(vlan) {
   
 classes:
 

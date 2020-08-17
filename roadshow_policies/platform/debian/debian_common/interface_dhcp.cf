@@ -7,7 +7,7 @@ vars:
 
 methods:
 
-  "We do one interface at a time"             usebundle => do_interface($(ip_addresses), $(nic_names));
+  "We do one interface at a time"             usebundle => do_dhcp($(ip_addresses), $(nic_names));
 
 reports:
 

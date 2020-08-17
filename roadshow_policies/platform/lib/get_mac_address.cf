@@ -3,9 +3,9 @@ bundle agent get_mac_address(interface) {
 classes:
 
   "ok" expression => regextract(
-                                ".*HWaddr ([^\s]+).*(\n.*)*",  # pattern to match
-                                "$(interface)",  # string to scan for pattern
-                                "mac_address" 
+                                ".*HWaddr ([^\s]+).*(\n.*)*",
+                                "$(interface)",
+                                "mac_address");
 reports:
 
  "$(this.bundle): $(interface), $(mac_address[1])";
