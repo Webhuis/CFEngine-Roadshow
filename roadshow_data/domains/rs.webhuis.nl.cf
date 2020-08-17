@@ -10,6 +10,8 @@ vars:
 
   "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
   "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
+  "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
+
   "dns"                                slist => {"ns1", "ns2"};
   "idns"                               slist => {"nsid1", "nsid2"};
   "ttl"                                string => "600"; 

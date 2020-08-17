@@ -1,20 +1,14 @@
-bundle agent get_mac_address(vlan) {
+bundle agent get_mac_address(interface) {
   
 classes:
 
-  "$(kvm_host.interface_prefix)_$(vlan)" expression => regextract(
-                                     ".*HWaddr ([^\s]+).*(\n.*)*",
-                                     "$(interface_$(vlan))",
-                                     "mac_interface_$(vlan)");
-
-  "$(kvm_host.bridge_prefix)_$(vlan)" expression => regextract(
-                                     ".*HWaddr ([^\s]+).*(\n.*)*",
-                                     "$(bridge_$(vlan))",
-                                     "mac_bridge_$(vlan)");
-
+  "ok" expression => regextract(
+                                ".*HWaddr ([^\s]+).*(\n.*)*",  # pattern to match
+                                "$(interface)",  # string to scan for pattern
+                                "mac_address" 
 reports:
 
- "$(this.bundle): $(kvm_host.interface_prefix)_$(vlan), $(mac_interface[1])";
+ "$(this.bundle): $(interface), $(mac_address[1])";
 
 }
 

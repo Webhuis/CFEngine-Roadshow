@@ -29,7 +29,7 @@ vars:
 
 methods:
 
- #"We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(mac_address), $(ip_address), $(ldap_dn));
+  "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(subnet), $(vlan), $(mac_address), $(ip_address));
   "We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address)),
                                                 comment => "We make ourselves known";
 

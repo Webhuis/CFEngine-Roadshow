@@ -26,20 +26,16 @@ bundle agent kvmo_data {
   
 vars:
 
-  "vlan[service]"                     string => "1001";
-  "vlan[support]"                     string => "123";
-  "vlan[admin]"                       string => "22";
-  "vlan[wan]"                         string => "213";
-  "vlan[gw]"                          string => "254";
-  "vlan[life]"                        string => "42";
-  "vlan[roadshow]"                    string => "1111";
+  "vlan[service]"                     string => "$($(classify.eco_vars).network[service][vlan])";
+  "vlan[support]"                     string => "$($(classify.eco_vars).network[support][vlan])";
+  "vlan[admin]"                       string => "$($(classify.eco_vars).network[admin][vlan])";
+  "vlan[wan]"                         string => "$($(classify.eco_vars).network[wan][vlan])";
+  "vlan[gw]"                          string => "$($(classify.eco_vars).network[gw][vlan])";
+  "vlan[life]"                        string => "$($(classify.eco_vars).network[life][vlan])";
+  "vlan[roadshow]"                    string => "$($(classify.eco_vars).network[roadshow][vlan])";
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(vnic[support])])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" }; 
   "ddns[support][suffix]"             string => "";
-  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(vnic[admin])])";
-  "ddns[admin][suffix]"               string => "-ssh";
-
-# "bridge"                            string => "br$(classify.interface)0";
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
@@ -49,7 +45,7 @@ methods:
 
   "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
                                            comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns"                 usebundle => interface_ddns("kvmo_data.ddns");
+  "We update ddns"                  usebundle => interface_ddns("kvmo_data.ddns");
 
 reports:
 
