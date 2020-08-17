@@ -18,7 +18,7 @@ vars:
 
   "vnic_index"                               slist => getindices("vnic");
 
-  "ip_cmd"                               string => "/usr/bin/ip/";
+  "ip_cmd"                               string => "/usr/bin/ip";
 
 methods:
 
