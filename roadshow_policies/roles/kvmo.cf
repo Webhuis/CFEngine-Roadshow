@@ -40,6 +40,7 @@ vars:
   "ddns[support][nic]"                string => "$(classify.bridge)_$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
+  "ddns_index"                         slist => getindices("ddns");
 
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
@@ -53,6 +54,7 @@ methods:
 
 reports:
 
+ "$(this.bundle) vlans: $(ddns_index), $(vlan[$(ddns_index)])";
  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
  "$(this.bundle) admin_nics: $(admin_nics)";
