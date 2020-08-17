@@ -3,7 +3,7 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-dn: cn=$(dhcp_ldap_update.ddns_name),cn=fixed,cn=$(dhcp_ldap_update.subnet),cn=Vlan-$(dhcp_ldap_update.vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl
+dn: cn=$(dhcp_ldap_update.ddns_name),cn=fixed,cn=$(dhcp_ldap_update.subnet),cn=$(dhcp_ldap_update.vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl
 cn: $(dhcp_ldap_update.ddns_name)
 dhcphwaddress: ethernet $(dhcp_ldap_update.mac_address)
 dhcpstatements: fixed-address $(dhcp_ldap_update.ip_address)

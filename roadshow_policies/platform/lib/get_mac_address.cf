@@ -5,10 +5,14 @@ classes:
   "ok" expression => regextract(
                                 ".*HWaddr ([^\s]+).*(\n.*)*",
                                 "$(interface)",
-                                "mac_address");
+                                "mac");
+vars:
+
+  "mac_address"                        string => "$(mac[1])";
+
 reports:
 
- "$(this.bundle): $(interface), $(mac_address[1])";
+ "$(this.bundle): $(interface), $(mac_address)";
 
 }
 
