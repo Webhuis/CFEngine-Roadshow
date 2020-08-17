@@ -13,7 +13,12 @@ vars:
 
 reports:
 
- "$(this.bundle): $(interface), $(mac_address)";
+ ok::
+  "$(this.bundle): $(interface), $(mac_address)";
+ !ok:
+  "$(this.bundle): $(interface), mac_addressi nok, $(interface_info)";
+
+
 
 }
 
