@@ -9,7 +9,7 @@ vars:
 
   "interface_info"                     string => execresult("$($(sys.flavor).ip_cmd) link show $(interface)","noshell");
 
- ok::
+ mac_ok::
   "mac_address"                        string => "$(mac[1])";
 
 reports:
