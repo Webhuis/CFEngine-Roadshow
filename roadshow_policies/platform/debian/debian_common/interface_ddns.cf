@@ -36,7 +36,7 @@ methods:
 reports:
 
   "$(this.bundle) ddns name: $(ddns_name)";
-  "$(this.bundle) MAC Address: $(mac_address)";
+  "$(this.bundle) MAC Address: $(get_mac_address.mac_address)";
 
 }
 
