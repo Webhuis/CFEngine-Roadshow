@@ -5,8 +5,8 @@ vars:
 # "interface"                         string => $(classify.interface);
 # "bridge"                            string => $(classify.bridge);
 
-  "var_interface_$(vlan)"             string => execresult("/sbin/ip link show dev $(classify.interface).$(vlan)","noshell");
-  "var_bridge_$(vlan)"                string => execresult("/sbin/ip link show dev $(classify.bridge).$(vlan)","noshell");
+  "var_interface_$(vlan)"             string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.interface).$(vlan)","noshell");
+  "var_bridge_$(vlan)"                string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.bridge).$(vlan)","noshell");
 
 methods:
 

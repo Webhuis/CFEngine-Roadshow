@@ -1,0 +1,27 @@
+bundle agent check_mac_address(nic) {
+
+classes:
+
+  "mac_ok"                         expression => regextract( ".*ether ([^\s]+).*(' '.*)*", $(interface_info), "mac");
+
+vars:
+
+  "interface_info"                     string => execresult("$($(sys.flavor).ip_cmd) link show $(nic)","noshell");
+
+ mac_ok::
+  "mac_address"                        string => "$(mac[1])";
+
+methods:
+
+ !mac_ok::
+  "Set status bad"                 usebundle => status_mac("bad");
+# "Bell!!"            usebundle => bad_ip;
+
+reports:
+
+ mac_ok::
+  "$(this.bundle): $(interface), $(mac_address)";
+ !mac_ok::
+  "$(this.bundle): $(interface), oh dear! mac_address nok, $(interface_info)";
+
+}

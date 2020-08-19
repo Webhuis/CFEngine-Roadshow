@@ -2,7 +2,7 @@ bundle agent check_vnic(vnic) {
 
 vars:
 
-  "var_vnic_$(vnic)"                  string => execresult("/sbin/ip link show dev $(vnic)","noshell");
+  "var_vnic_$(vnic)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(vnic)","noshell");
 
 methods:
 

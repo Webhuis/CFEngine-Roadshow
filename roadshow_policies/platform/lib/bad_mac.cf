@@ -1,0 +1,19 @@
+bundle common bad_mac {
+
+vars:
+
+  "bad_mac"           string => "$(status_mac.mac_status)";
+
+classes:
+
+  "bad_mac"       expression => regcmp( "bad_mac", $(bad_mac) );
+
+reports:
+
+  "$(this.bundle) bad mac: $(bad_mac)";
+
+ stop_mac:: 
+  "$(this.bundle): prevent configuring bad mac addresses";
+
+}
+

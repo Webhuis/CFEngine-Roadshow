@@ -50,7 +50,6 @@ methods:
 
   "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
                                            comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns"                  usebundle => interface_ddns("kvmo_data.ddns");
 
 reports:
 

@@ -43,8 +43,6 @@ methods:
 
   "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
                                    comment   => "This is a layer I and II check on the virtual switch";
-  "We update ddns and dhcp_ldap"   usebundle => interface_ddns("aptg_data.ddns");
-
 
 reports:
 
