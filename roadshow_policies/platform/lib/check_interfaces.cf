@@ -2,7 +2,7 @@ bundle agent check_interfaces {
  
 vars:
 
-  interfaces"                                  slist => getindices("$(classify.role)_data.ddns");
+  "interfaces"                                 slist => getindices("$(classify.role)_data.ddns");
 
 methods:
 
