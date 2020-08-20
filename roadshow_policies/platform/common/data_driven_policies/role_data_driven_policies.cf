@@ -22,6 +22,9 @@ reports:
 
   "$(this.bundle): I am doing data driven policies and my verdict is as folows";  
 
+ !bad_ip::
+  "$(this.bundle): Valid IP Address! $(classify.role)_data.ddns[$(interface)])";
+
  bad_ip::
   "$(this.bundle): Invalid IP Address! $(classify.role)_data.ddns[$(interface)])";
 
@@ -30,5 +33,8 @@ reports:
 
  !bad_mac::
   "$(this.bundle): $(classify.role)_data.ddns[$(interface)]) Valid IP Address!";
+
+  bad_ip|bad_mac::
+  "$(this.bundle): $(classify.role)_data.ddns nic data problem!";
 
 }

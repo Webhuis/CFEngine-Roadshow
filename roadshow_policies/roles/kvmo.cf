@@ -36,7 +36,15 @@ vars:
 
   "vlan_index"                         slist => getindices("vlan");
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])";
+  "vnic[service]"                     string => "$(classify.interface).vlan[service]";
+  "vnic[support]"                     string => "$(classify.interface).vlan[support]";
+  "vnic[admin]"                       string => "$(classify.interface).vlan[admin]";
+  "vnic[wan]"                         string => "$(classify.interface).vlan[wan]";
+  "vnic[gw]"                          string => "$(classify.interface).vlan[gw]";
+  "vnic[life]"                        string => "$(classify.interface).vlan[life]";
+  "vnic[roadshow]"                    string => "$(classify.interface).vlan[roadshow]";
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge).$(vlan[support])])";
   "ddns[support][nic]"                string => "$(classify.bridge).$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";

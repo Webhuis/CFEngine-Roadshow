@@ -4,23 +4,22 @@
 #
 ###############################################################################
 
-body file control
-{
-      inputs => { @(do_roadshow.inputs) };
+body file control {
+  inputs => { @(do_roadshow.inputs) };
 }
 
-bundle agent roadshow
-{
-  meta:
-      "tags" slist => { "autorun" };
+bundle agent roadshow {
 
-  methods:
-      "Collect values and policies"                   usebundle => do_roadshow;
-      "Determine the role organisation and geograph"  usebundle => classify;
-      "Request Data for machine information"          usebundle => request_role_information;
-      "We require the domain information"             usebundle => ${do_roadshow.class_domain};
-      "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
-      "What purpose do we have in life"               usebundle => $(classify.role);
+meta:
+  "tags" slist => { "autorun" };
+
+methods:
+  "Collect values and policies"                   usebundle => do_roadshow;
+  "Determine the role organisation and geograph"  usebundle => classify;
+  "Request Data for machine information"          usebundle => request_role_information;
+  "We require the domain information"             usebundle => $(do_roadshow.class_domain);
+  "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
+  "What purpose do we have in life"               usebundle => $(classify.role);
 
 reports:
 

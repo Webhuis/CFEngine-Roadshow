@@ -38,9 +38,6 @@ reports:
 # "${this.bundle} response: ${response}";
 # "${this.bundle} response_role_information: ${response_role_information}";
 
- stop_ip::
-  "${this.bundle}: bad device or down";
- !stop_ip::
-  "${this.bundle}: good devices and bridges.";
+  "${this.bundle}: We collect role data";
 
 }

@@ -47,11 +47,6 @@ vars:
   "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
   "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
 
-methods:
-
-  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
-                                   comment   => "This is a layer I and II check on the virtual switch";
-
 reports:
 
   "${this.bundle} nics: $(vnic)";

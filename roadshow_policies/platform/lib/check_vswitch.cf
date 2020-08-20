@@ -5,18 +5,18 @@ vars:
 # "interface"                         string => $(classify.interface);
 # "bridge"                            string => $(classify.bridge);
 
-  "var_interface_$(vlan)"             string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.interface).$(vlan)","noshell");
+# "var_interface_$(vlan)"             string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.interface).$(vlan)","noshell");
   "var_bridge_$(vlan)"                string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.bridge).$(vlan)","noshell");
 
 methods:
 
-  "Set interface class"            usebundle => set_interface_class( "$(vlan)", "$(var_interface_$(vlan))" );
+# "Set interface class"            usebundle => set_interface_class( "$(vlan)", "$(var_interface_$(vlan))" );
   "Set bridge class"               usebundle => set_bridge_class( "$(vlan)", "$(var_bridge_$(vlan))" );
 
 reports:
 
-  "$(this.bundle): $(var_interface_$(vlan))";
+# "$(this.bundle): $(var_interface_$(vlan))";
   "$(this.bundle): $(var_bridge_$(vlan))";
-  "$(this.bundle): $(interface) $(bridge)";
+# "$(this.bundle): $(interface) $(bridge)";
 
 }

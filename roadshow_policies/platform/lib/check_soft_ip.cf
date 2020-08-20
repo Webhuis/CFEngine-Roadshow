@@ -1,0 +1,14 @@
+bundle agent check_soft_ip {
+  
+methods:
+
+  "Check list of admin IP Addresses"        usebundle => check_ip("$(classify.role)_data.admin_nics");
+  "We want a valid host IP Address"         usebundle => check_ip("$(classify.role)_data.etc_hosts_nic");
+  "Check list of resolvers"                 usebundle => check_ip("$(classify.eco_vars).resolvers");
+
+reports:
+
+ "$(this.bundle): I am checking provided data on IP Addresses, they are tricky and easily disrupt operation.";
+
+}
+
