@@ -8,7 +8,7 @@ classes:
   "if_down $(nic)"               expression => regcmp( ".*DOWN.*",
                                                         "$(show_nic)");
 
-  "mac_ok"                       expression => regextract( ".*ether ([^\s]+).*(' '.*)*", $(var_nic_$(nic)), "mac");
+  "mac_ok"                       expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(var_nic_$(nic))", "mac");
 
 vars:
 
@@ -36,7 +36,7 @@ reports:
  "!no_device_$(nic).!if_down_$(nic)"::
   "$(this.bundle) $(nic): up";
  mac_ok::
-  "$(this.bundle): $(nic), mac_address ok, $(mac_address)";
+ #"$(this.bundle): $(nic), mac_address ok, $(mac_address)";
   "$(this.bundle): $(nic), mac_address ok, $(nic_hw[$(nic)])";
 
  "no_device_$(nic)"::

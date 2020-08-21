@@ -1,16 +1,51 @@
 bundle agent check_interfaces(nic) {
 
+classes:
+
+  "no_device_$(nic)"             expression => regcmp( ".*does not exist.*",
+                                                        "$(show_nic)");
+
+  "if_down $(nic)"               expression => regcmp( ".*DOWN.*",
+                                                        "$(show_nic)");
+
+  "mac_ok"                       expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(var_nic_$(nic))", "mac");
+
+vars:
+
+  "var_nic_$(nic)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
+ mac_ok::
+  "nic_hw[$(nic)]"                     string => "$(mac[1])";
+
 methods:
 
- #"Check interfaces are up"                 usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
- #                                            comment => "This is a layer I and II check on the virtual switch";
-  "Check list of all IP addresses"          usebundle => check_nic("$(nic)");
-  "Check list of all mac addresses"         usebundle => check_mac_address("$($(classify.role)_data.nic[$(interfaces)])");
+ "no_device_$(nic)"::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Add device $(nic)"              usebundle => add_nic( "$(nic)" );
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer one";
+
+ "if_down_$(nic)"::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer two";
 
 reports:
 
- "$(this.bundle): I am checking nics: $(nic).";
- "$(this.bundle): I am checking macs: $(nic).";
+ "$(this.bundle): I am checking nics and mac: $(nic).";
+
+ "!no_device_$(nic).!if_down_$(nic)"::
+  "$(this.bundle): $(nic): up";
+ mac_ok::
+  "$(this.bundle): $(nic), mac_address ok, $(nic_hw[$(nic)])";
+
+ "no_device_$(nic)"::
+  "$(this.bundle): $(nic) Bingo, no device!";
+
+ "if_down_$(nic)"::
+  "$(this.bundle): $(nic) Bingo, interface down!";
+
+ !mac_ok::
+  "$(this.bundle): $(nic), oh dear! mac_address nok, $(var_nic_$(nic))"; 
 
 }
-
