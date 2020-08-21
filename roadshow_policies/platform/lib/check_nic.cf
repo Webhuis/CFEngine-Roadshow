@@ -1,0 +1,76 @@
+bundle agent check_nic(nic) {
+
+vars:
+
+  "var_nic_$(nic)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
+methods:
+
+  "Set nic class"                 usebundle => set_nic_class( "$(nic)", "$(var_nic_$(nic))" );
+
+reports:
+
+  "$(this.bundle): $(nic) $(var_nic_$(nic))";
+
+}
+
+bundle agent set_nic_class(nic, show_nic) {
+
+classes:
+
+  "no_device_$(nic)"             expression => regcmp( ".*does not exist.*",
+                                                        "$(show_nic)");
+
+  "if_down $(nic)"               expression => regcmp( ".*DOWN.*",
+                                                        "$(show_nic)");
+
+methods:
+
+ "no_device_$(nic)"::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Add device $(nic)"              usebundle => add_nic( "$(nic)" );
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer one";
+
+ "if_down_$(nic)"::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer one";
+
+reports:
+
+ "!no_device_$(nic)"."!if_down_$(nic)"::
+  "$(this.bundle) $(nic): up";
+
+ "no_device_$(nic)"::
+  "$(this.bundle): $(show_nic) Bingo!";
+
+ "if_down_$(nic)"::
+  "$(this.bundle): $(show_nic) Bingo!";
+
+}
+
+bundle agent add_nic(nic) {
+
+commands:
+ 
+  "/sbin/ip link add link $(nic)";
+
+reports:
+
+ "$(this.bundle): nic $(nic) added!";
+
+}
+
+bundle agent bring_nic_up(nic) {
+
+commands:
+ 
+  "/sbin/ip link set dev $(nic) up";
+  "/sbin/ifup $(nic)";
+
+reports:
+
+ "$(this.bundle): nic $(nic) up!";
+
+}
