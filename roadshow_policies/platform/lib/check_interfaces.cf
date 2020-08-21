@@ -2,7 +2,7 @@ bundle agent check_interfaces(nic) {
  
 vars:
 
-  "interfaces"                                 slist => getindices("nic");
+  "interfaces"                                 slist => getindices("$(nic)");
 
 methods:
 
