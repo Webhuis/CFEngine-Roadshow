@@ -2,7 +2,7 @@ bundle agent check_interfaces(nics) {
  
 vars:
 
-  "interfaces"                                 slist => getindices("$(nics)");
+  "interfaces"                                 slist => getindices("nics");
 
 methods:
 
@@ -14,6 +14,7 @@ methods:
 reports:
 
  "$(this.bundle): I am checking nics: $(nics[interfaces]).";
+ "$(this.bundle): I am checking macs: $(interfaces).";
 
 }
 
