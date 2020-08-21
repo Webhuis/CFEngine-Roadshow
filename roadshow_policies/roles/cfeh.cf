@@ -44,7 +44,7 @@ vars:
 
 reports:
 
-  "${this.bundle} nics: $(nic)";
+  "${this.bundle} nics: $(nic), $(nic_index)";
   "${this.bundle} support_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
