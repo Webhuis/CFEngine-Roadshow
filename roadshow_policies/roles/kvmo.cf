@@ -50,11 +50,12 @@ vars:
   "ddns[support][nic]"                string => "$(classify.bridge).$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
+
   "ddns_index"                         slist => getindices("ddns");
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
-  "support_ip"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])", "$(sys.ipv4[$(classify.bridge)_$(vlan[life])])" };
+  "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
+  "support_ip"                        slist  => { "$(ddns[support][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[support][ip])" };
 
 methods:
 
