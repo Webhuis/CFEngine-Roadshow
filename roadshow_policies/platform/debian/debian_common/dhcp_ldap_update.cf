@@ -24,10 +24,10 @@ commands:
 
 reports:
 
-  "$(this.bundle) ldap: $(ddns_name)";
-  "$(this.bundle) ldap: $(vlan_number)";
-  "$(this.bundle) ldap: $(subnet)";
-  "$(this.bundle) ldap: $(mac_address)";
+  "$(this.bundle) ldap  : $(ddns_name)";
+  "$(this.bundle) vlan  : $(vlan_number)";
+  "$(this.bundle) subnet: $(subnet)";
+  "$(this.bundle) mac   : $(mac_address)";
 
 }
 
