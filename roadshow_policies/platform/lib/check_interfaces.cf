@@ -1,4 +1,4 @@
-bundle agent check_interfaces(nic) {
+bundle agent check_interfaces {
  
 vars:
 
