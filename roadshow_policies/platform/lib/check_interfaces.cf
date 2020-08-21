@@ -1,14 +1,14 @@
-bundle agent check_interfaces(nic) {
+bundle agent check_interfaces {
  
 vars:
 
-  "interfaces"                                 slist => getindices("$(nic)");
+  "interfaces"                                 slist => getindices("$($(classify.role)_data.nic))");
 
 methods:
 
  #"Check interfaces are up"                 usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
  #                                            comment => "This is a layer I and II check on the virtual switch";
-  "Check list of all IP addresses"          usebundle => check_ip("$(nic[$(interfaces)])");
+  "Check list of all IP addresses"          usebundle => check_ip("$($(classify.role)_data.nic[$(interfaces)])");
   "Check list of all mac addresses"         usebundle => check_mac_address("$(interfaces)");
 
 reports:
