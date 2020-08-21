@@ -1,19 +1,19 @@
-bundle agent check_interfaces(nics) {
+bundle agent check_interfaces(nic) {
  
 vars:
 
-  "interfaces"                                 slist => getindices("nics");
+  "interfaces"                                 slist => getindices("niccs");
 
 methods:
 
  #"Check interfaces are up"                 usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
  #                                            comment => "This is a layer I and II check on the virtual switch";
-  "Check list of all IP addresses"          usebundle => check_ip("$(nics[interfaces])");
+  "Check list of all IP addresses"          usebundle => check_ip("$(nic[interfaces])");
   "Check list of all mac addresses"         usebundle => check_mac_address("$(interfaces)");
 
 reports:
 
- "$(this.bundle): I am checking nics: $(nics[interfaces]).";
+ "$(this.bundle): I am checking nics: $(nic[$(interfaces)]).";
  "$(this.bundle): I am checking macs: $(interfaces).";
 
 }
