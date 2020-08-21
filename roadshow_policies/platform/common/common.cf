@@ -18,10 +18,10 @@ methods:
   "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][suffix])",
                                                                           "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][nic])",
                                                                           "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][ip])",
-                                                                          "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][vlan])"),
+                                                                          "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][vlan])");
 
   "We update ddns"                          usebundle => ddns_update("$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][suffix])",
-                                                                     "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][ip])"),
+                                                                     "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][ip])");
 
  '!stop_ip'::
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
