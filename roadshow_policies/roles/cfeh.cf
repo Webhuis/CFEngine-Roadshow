@@ -38,6 +38,8 @@ vars:
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
 
+  "ddns_index"                         slist => getindices("ddns");
+
   "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(nic[support])])" };
   "support_ip"                        slist  => { "$(sys.ipv4[$(nic[support])])" };
   "admin_nics"                        slist  => { "$(sys.ipv4[$(nic[support])])", "$(sys.ipv4[$(nic[admin])])", };

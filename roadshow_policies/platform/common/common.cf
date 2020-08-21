@@ -9,8 +9,8 @@ methods:
   "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
   "Check the interfaces"                    usebundle => check_interfaces("$($(classify.role)_data.nic[$($(classify.role)_data.nic_index)])"),
-                                              comment => "OSI Layers one, two and three";
-  "Check the soft IP Addresses given"       usebundle => check_soft_ip;
+                                              comment => "OSI Layers one and two";
+  "Check the soft IP Addresses given"       usebundle => check_ip("$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][ip])");
 
  !bad_ip::
   "openssh server and client"               usebundle => ssh_all_config;
