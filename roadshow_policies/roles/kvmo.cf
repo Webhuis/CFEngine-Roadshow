@@ -44,6 +44,8 @@ vars:
   "nic[life]"                         string => "$(classify.interface).vlan[life]";
   "nic[roadshow]"                     string => "$(classify.interface).vlan[roadshow]";
 
+  "nic_index"                          slist => getindices("nic");
+
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge).$(vlan[support])])";
   "ddns[support][nic]"                string => "$(classify.bridge).$(vlan[support])";
   "ddns[support][suffix]"             string => "";

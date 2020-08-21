@@ -28,7 +28,7 @@ vars:
   "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
   "nic[gw]"                           string => "$($(sys.flavour).nic[gw])";
 
-  "nic_index"                          slist => "nic";
+  "nic_index"                          slist => getindices("nic");
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
