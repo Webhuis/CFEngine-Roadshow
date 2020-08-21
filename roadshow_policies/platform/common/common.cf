@@ -8,7 +8,7 @@ methods:
 # "Feed Hard Classes to Data"               usebundle => feed_hard_classes;
   "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
-  "Check the interfaces"                    usebundle => check_interfaces,
+  "Check the interfaces"                    usebundle => check_interfaces("$(classify.role)_data.nic"),
                                               comment => "OSI Layers one, two and three";
   "Check the soft IP Addresses given"       usebundle => check_soft_ip;
 
