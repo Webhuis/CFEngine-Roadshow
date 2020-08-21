@@ -39,7 +39,7 @@ methods:
 
 reports:
 
- "!no_device_$(nic)"."!if_down_$(nic)"::
+ "!no_device_$(nic).!if_down_$(nic)"::
   "$(this.bundle) $(nic): up";
 
  "no_device_$(nic)"::
