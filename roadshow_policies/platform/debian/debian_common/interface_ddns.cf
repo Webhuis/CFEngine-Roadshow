@@ -22,13 +22,9 @@ bundle agent do_interface(ip_address, nic, suffix, vlan) {
 vars:
 
   "ddns_name"                                    string => "$(sys.uqhost)$(suffix)";
- #"mac_address"                                  string => "$(classify.role)_data.ddns";
- #"ip_address"                                   string => "$(ip_address)";
- #"ldap_dn"                                      string => "$(classify.domain)";
 
 methods:
 
-  "We need the MAC-Address now"               usebundle => get_mac_address($(nic)); 
   "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(get_mac_address.mac_address), $(ip_address), $(vlan));
   "We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address)),
                                                 comment => "We make ourselves known";

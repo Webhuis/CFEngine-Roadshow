@@ -1,4 +1,4 @@
-bundle agent ddns_update (ddns_name, ip_address) {
+bundle agent ddns_update (suffix, ip_address) {
 
 classes:
 
@@ -18,6 +18,7 @@ files:
 
 vars:
 
+  "ddns_name"                                    string => "$(sys.uqhost)$(suffix)";
   "mdns"                                         string => "$($(classify.domain).mdns)";
   "key"                                          string => "$($(classify.domain).mdns_key)";
   "ttl"                                          string => "$($(classify.domain).ttl)";
