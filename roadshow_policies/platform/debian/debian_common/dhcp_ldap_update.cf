@@ -1,4 +1,4 @@
-bundle agent dhcp_ldap_update (ddns_name, nic, ip_address, vlan_number) {
+bundle agent dhcp_ldap_update (suffix, nic, ip_address, vlan_number) {
 
 classes:
 
@@ -6,6 +6,7 @@ classes:
 
 vars:
 
+  "ddns_name"                          string => "$(sys.uqhost)$(suffix)";
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "mac_address"                        string => "$(check_interfaces.nic_hw[$(nic)])";
   "vlan"                               string => "Vlan-$(vlan_number)";
@@ -19,8 +20,7 @@ files:
 
 commands:
 
- mac_ok::
-  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.domain).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w 'M@rkBurge55' -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+ #"/usr/bin/ldapadd -v -x -H ldap://$($(classify.domain).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w 'M@rkBurge55' -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
 reports:
 
