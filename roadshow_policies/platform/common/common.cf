@@ -23,6 +23,7 @@ methods:
 
 reports:
 
+ "$(this.bundle): I ami checking basic interface stuff first, $(classify.role)_data.nic.";
  "$(this.bundle): I am doing common and data driven policies.";
 
 }

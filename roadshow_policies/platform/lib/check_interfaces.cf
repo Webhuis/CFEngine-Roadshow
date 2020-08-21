@@ -13,7 +13,7 @@ methods:
 
 reports:
 
- "$(this.bundle): I am checking nics: $(interfaces).";
+ "$(this.bundle): I am checking nics: $(nics[interfaces]).";
 
 }
 
