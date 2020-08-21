@@ -8,13 +8,13 @@ vars:
 
   "name"                                    string => "buster";
 
-  "vnic[service]"                           string => "ens3";
-  "vnic[support]"                           string => "ens7";
-  "vnic[admin]"                             string => "ens8";
-  "vnic[gw]"                                string => "ens9";
-  "vnic[wan]"                               string => "ens10";
-  "vnic[life]"                              string => "ensb";
-  "vnic[roadshow]"                          string => "ensc";
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[gw]"                                 string => "ens9";
+  "nic[wan]"                                string => "ens10";
+  "nic[life]"                               string => "ensb";
+  "nic[roadshow]"                           string => "ensc";
 
   "vnic_index"                               slist => getindices("vnic");
 
