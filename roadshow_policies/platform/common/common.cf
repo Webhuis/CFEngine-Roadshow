@@ -8,18 +8,18 @@ methods:
 # "Feed Hard Classes to Data"               usebundle => feed_hard_classes;
   "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
-  "Check the interfaces"                    usebundle => check_interfaces;
+  "Check the interfaces"                    usebundle => check_interfaces("$($(classify.role)_data.nic)"),
                                               comment => "OSI Layers one, two and three";
   "Check the soft IP Addresses given"       usebundle => check_soft_ip;
 
  !bad_ip::
   "openssh server and client"               usebundle => ssh_all_config;
  !bad_ip.!bad_mac::
-  "We update ddns"                          usebundle => interface_ddns("$(classify.role)_data.ddns");
+  "We update ddns"                          usebundle => interface_ddns("$($(classify.role)_data.ddns)");
 
  '!stop_ip'::
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
-  "We do role date driven policies here"    usebundle => role_data_driven_policies("$(classify.role)_data.ddns");
+  "We do role date driven policies here"    usebundle => role_data_driven_policies("$($(classify.role)_data.ddns)");
 
 reports:
 
