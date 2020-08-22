@@ -12,8 +12,8 @@ methods:
                                               comment => "OSI Layers one and two";
   "Check the soft IP Addresses given"       usebundle => check_ip("$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][ip])");
 
- !bad_ip::
-  "openssh server and client"               usebundle => ssh_all_config;
+#!bad_ip::
+ #"openssh server and client"               usebundle => ssh_all_config;
  !bad_ip.!bad_mac::
   "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][suffix])",
                                                                           "$($(classify.role)_data.ddns[$($(classify.role)_data.ddns_index)][nic])",
