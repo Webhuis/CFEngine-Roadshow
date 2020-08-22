@@ -46,10 +46,10 @@ vars:
 
   "nic_index"                          slist => getindices("nic");
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge).$(vlan[support])])";
-  "ddns[support][nic]"                string => "$(classify.bridge).$(vlan[support])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])";
+  "ddns[support][nic]"                string => "$(classify.bridge)_$(vlan[support])";
   "ddns[support][suffix]"             string => "";
-  "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
+  "ddns[support][vlan]"               string => "$($(classify.eco_vars)_network[support][vlan])";
 
   "ddns_index"                         slist => getindices("ddns");
 
