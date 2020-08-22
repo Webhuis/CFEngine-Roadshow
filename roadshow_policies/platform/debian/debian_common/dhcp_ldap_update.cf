@@ -1,4 +1,4 @@
-bundle agent dhcp_ldap_update (suffix, nic, ip_address, vlan_number) {
+bundle agent dhcp_ldap_update (suffix, mac, ip_address, vlan_number) {
 
 classes:
 
@@ -8,7 +8,7 @@ vars:
 
   "ddns_name"                          string => "$(sys.uqhost)$(suffix)";
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
-  "mac_address"                        string => "$(check_interfaces.nic_hw[$(nic)])";
+  "mac_address"                        string => "$(mac)";
   "vlan"                               string => "Vlan-$(vlan_number)";
 
 files:
