@@ -47,7 +47,7 @@ vars:
   "nic_index"                          slist => getindices("nic");
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])";
-  "ddns[support][nic]"                string => "$(classify.bridge)_$(vlan[support])";
+  "ddns[support][nic]"                string => "$(classify.interface).$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
 
@@ -67,6 +67,7 @@ reports:
  "$(this.bundle) classify.eco_vars.network[support][vlan]: $($(classify.eco_vars).network[support][vlan])";
  "$(this.bundle) classify.interface.vlan[service]: $(classify.interface).$(vlan[service])";
  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+ "$(this.bundle) ddns nic: $(ddns[$(ddns_index)][nic])";
  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
