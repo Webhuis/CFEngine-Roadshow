@@ -1,15 +1,20 @@
-bundle agent dhcp_ldap_update (suffix, mac, ip_address, vlan_number) {
+bundle agent dhcp_ldap_update (suffix, nic, ip_address, vlan_number) {
 
 classes:
 
- "parsed_ip"                       expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", $(ip_address), "part");
+  "parsed_ip"                      expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", $(dev_nic), "part");
+  "mac_ok"                         expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(dev_nic)", "mac");
 
 vars:
 
+  "dev_nic"                           string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
   "ddns_name"                          string => "$(sys.uqhost)$(suffix)";
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
-  "mac_address"                        string => "$(mac)";
   "vlan"                               string => "Vlan-$(vlan_number)";
+
+ mac_ok::
+  "mac_address"                        string => "$(mac[1])";
 
 files:
 
