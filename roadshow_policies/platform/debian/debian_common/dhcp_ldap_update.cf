@@ -25,7 +25,7 @@ files:
 
 commands:
 
- #"/usr/bin/ldapadd -v -x -H ldap://$($(classify.domain).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w 'M@rkBurge55' -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.domain).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w 'M@rkBurge55' -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
 reports:
 
