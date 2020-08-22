@@ -66,6 +66,7 @@ reports:
 
  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
+ "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
  "$(this.bundle) admin_nics: $(admin_nics)";
 
