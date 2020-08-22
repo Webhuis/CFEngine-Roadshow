@@ -26,13 +26,13 @@ bundle agent kvmo_data {
   
 vars:
 
-  "vlan[service]"                     string => "$($(classify.eco_vars).network[service][vlan])";
-  "vlan[support]"                     string => "$($(classify.eco_vars).network[support][vlan])";
-  "vlan[admin]"                       string => "$($(classify.eco_vars).network[admin][vlan])";
-  "vlan[wan]"                         string => "$($(classify.eco_vars).network[wan][vlan])";
-  "vlan[gw]"                          string => "$($(classify.eco_vars).network[gw][vlan])";
-  "vlan[life]"                        string => "$($(classify.eco_vars).network[life][vlan])";
-  "vlan[roadshow]"                    string => "$($(classify.eco_vars).network[roadshow][vlan])";
+  "vlan[service]"                     string => "$(classify.eco_vars).network[service][vlan]";
+  "vlan[support]"                     string => "$(classify.eco_vars).network[support][vlan]";
+  "vlan[admin]"                       string => "$(classify.eco_vars).network[admin][vlan]";
+  "vlan[wan]"                         string => "$(classify.eco_vars).network[wan][vlan]";
+  "vlan[gw]"                          string => "$(classify.eco_vars).network[gw][vlan]";
+  "vlan[life]"                        string => "$(classify.eco_vars).network[life][vlan]";
+  "vlan[roadshow]"                    string => "$(classify.eco_vars).network[roadshow][vlan]";
 
   "vlan_index"                         slist => getindices("vlan");
 
