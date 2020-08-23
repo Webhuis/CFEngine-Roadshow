@@ -31,14 +31,10 @@ bundle agent pdwm_data {
 
 vars:
 
-  "nic[service]"                      string => "$($(sys.flavour).nic[service])";
   "nic[support]"                      string => "$($(sys.flavour).nic[support])";
   "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
+  "nic[wan]"                          string => "$($(sys.flavour).nic[wan])";
 
-  "ddns[service][ip]"                 string => "$(sys.ipv4[$(nic[service])])";
-  "ddns[service][nic]"                string => "$(nic[service])";
-  "ddns[service][suffix]"             string => "";
-  "ddns[service][vlan]"               string => "$($(classify.eco_vars).network[service][vlan])";
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -47,6 +43,10 @@ vars:
   "ddns[admin][nic]"                  string => "$(nic[admin])";
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
+  "ddns[wan][ip]"                     string => "$(sys.ipv4[$(nic[wan])])";
+  "ddns[wan][nic]"                    string => "$(nic[wan])";
+  "ddns[wan][suffix]"                 string => "";
+  "ddns[wan][vlan]"                   string => "$($(classify.eco_vars).network[wan][vlan])";
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
