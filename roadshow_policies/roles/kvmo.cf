@@ -64,14 +64,14 @@ methods:
 
 reports:
 
- "$(this.bundle) classify.eco_vars.network[support][vlan]: $($(classify.eco_vars).network[support][vlan])";
- "$(this.bundle) classify.interface.vlan[service]: $(classify.interface).$(vlan[service])";
- "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
- "$(this.bundle) ddns nic: $(ddns[$(ddns_index)][nic])";
- "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
- "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
- "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
- "$(this.bundle) admin_nics: $(admin_nics)";
+  "$(this.bundle) classify.eco_vars.network[support][vlan]: $($(classify.eco_vars).network[support][vlan])";
+  "$(this.bundle) classify.interface.vlan[service]: $(classify.interface).$(vlan[service])";
+  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+  "$(this.bundle) ddns nic: $(ddns[$(ddns_index)][nic])";
+  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
+  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
+  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
+  "$(this.bundle) admin_nics: $(admin_nics)";
 
 }
 

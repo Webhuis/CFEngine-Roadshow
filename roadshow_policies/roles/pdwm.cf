@@ -35,6 +35,8 @@ vars:
   "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
   "nic[wan]"                          string => "$($(sys.flavour).nic[wan])";
 
+  "nic_index"                          slist => getindices("nic");
+
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -48,13 +50,18 @@ vars:
   "ddns[wan][suffix]"                 string => "";
   "ddns[wan][vlan]"                   string => "$($(classify.eco_vars).network[wan][vlan])";
 
+  "ddns_index"                         slist => getindices("ddns");
+
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
   "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[admin][ip])" };
 
 reports:
 
-  "${this.bundle} nics: $(nic)";
+  "${this.bundle} nics: $(nic[$(nic_index)])";
+  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+  "$(this.bundle) ddns nic: $(ddns[$(ddns_index)][nic])";
+  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
   "${this.bundle} support_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
