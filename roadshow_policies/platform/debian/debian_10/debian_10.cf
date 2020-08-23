@@ -2,8 +2,8 @@ bundle agent debian_10 {
 
 vars:
 
-  "pkg[autofs]"                            string => "*";
-  "pkg[autofs-ldap]"                       string => "*";
+  "pkg[autofs]"                             string => "*";
+  "pkg[autofs-ldap]"                        string => "*";
   "pkg[python-zmq]"                         string => "*";
 
   "name"                                    string => "buster";
@@ -18,11 +18,11 @@ vars:
 
   "vnic_index"                               slist => getindices("vnic");
 
-  "ip_cmd"                               string => "/usr/bin/ip";
+  "ip_cmd"                                  string => "/usr/bin/ip";
 
 methods:
 
-  "We desire buster  packages"           usebundle => packages("debian_10.pkg");
+  "We desire buster packages"            usebundle => packages("debian_10.pkg");
 
 reports:
 

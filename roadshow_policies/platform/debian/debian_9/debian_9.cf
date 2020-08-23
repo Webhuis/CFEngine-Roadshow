@@ -9,21 +9,21 @@ vars:
 
   "name"                                    string => "stretch";
 
-  "vnic[service]"                           string => "ens3";
-  "vnic[support]"                           string => "ens7";
-  "vnic[admin]"                             string => "ens8";
-  "vnic[wan]"                               string => "ens9";
-  "vnic[gw]"                                string => "ensa";
-  "vnic[life]"                              string => "ensb";
-  "vnic[roadshow]"                          string => "ensc";
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[wan]"                                string => "ens9";
+  "nic[gw]"                                 string => "ensa";
+  "nic[life]"                               string => "ensb";
+  "nic[roadshow]"                           string => "ensc";
 
-  "vnic_index"                               slist => getindices("vnic");
+  "nic_index"                                slist => getindices("nic");
 
-  "ip_cmd"                               string => "/sbin/ip";
+  "ip_cmd"                                  string => "/sbin/ip";
 
 methods:
 
-  "We desire cwstretchjessie packages"   usebundle => packages("debian_9.pkg");
+  "We desire stretchpackages"            usebundle => packages("debian_9.pkg");
 
 reports:
 
