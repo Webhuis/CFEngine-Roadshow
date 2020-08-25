@@ -3,28 +3,29 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-<VirtualHost *:80>
-        ServerAdmin webmaster@localhost
+<VirtualHost _default_:80>
 
-        DocumentRoot /var/www
-        <Directory />
-                Options FollowSymLinks
-                AllowOverride None
-                RedirectMatch ^/$ http://webhuis.nl
-        </Directory>
-        <Directory /var/www/>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride None
-                Order allow,deny
-                allow from all
-                RedirectMatch ^/$ http://webhuis.nl
-        </Directory>
+  ServerAdmin webmaster@localhost
 
-        ErrorLog ${apache2.apache_log_dir}/error.log
+  DocumentRoot /var/www
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+    RedirectMatch ^/$ http://webhuis.nl
+  </Directory>
+  <Directory /var/www/>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    allow from all
+    RedirectMatch ^/$ http://webhuis.nl
+  </Directory>
 
-        LogLevel warn
+  ErrorLog ${apache2.apache_log_dir}/error.log
 
-        CustomLog ${apache2.apache_log_dir}/access.log combined
+  LogLevel warn
+
+  CustomLog ${apache2.apache_log_dir}/access.log combined
 
 </VirtualHost>
 
