@@ -54,7 +54,7 @@ vars:
       "ntp_server"      slist => { "kvmowhpdcrg1.rg.webhuis.nl", "kvmowhpdcrs1.rs.webhuis.nl", "kvmowhpdcsw1.sw.webhuis.nl", "kvmowhpdcsw5.sw.webhuis.nl" };
 #     "nameserver"      slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
 #     "nameserver"      slist => { "10.68.71.103", "8.8.8.8" };
-      "nameserver"      slist => { "10.94.112.17", "8.8.8.8" };
+      "nameserver"      slist => { "10.68.171.17", "8.8.8.8" };
 
       "domain_exports"  slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
 
