@@ -2,7 +2,7 @@ bundle agent check_ip(ips) {
 
 classes:
 
-  "empty_variable"
+  "empty_variable_$(ips)"
    expression => strcmp("", "$(ips)"),
    comment    => "Deal with empty IP Address as a result of a faulty variable";
 
@@ -11,6 +11,13 @@ classes:
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
             $(can_ips)
+            );
+
+  "bad_$(ips)"
+   comment    => "Oh, the horror! Bad string IP Addresses.",
+   expression => regcmp(
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
+            $(ips)
             );
 
 vars:
@@ -23,7 +30,7 @@ methods:
   "Set status bad"                 usebundle => status_ip("bad");
 # "Bell!!"            usebundle => bad_ip;
 
- empty_variable::
+ empty_variable_$(ips)::
   "Set status bad"                 usebundle => status_ip("bad");
 
 reports:
@@ -36,7 +43,10 @@ reports:
   'match_$(can_ips)'::
    "$(this.bundle) good ip: $(can_ips)";
 
-  empty_variable::
+  bad_$(ips)::
+   "$(this.bundle) bad variable for: $(ips)";
+
+  empty_variable_$(ips)::
    "$(this.bundle) bad ip: $(ips)";
 
   '!match_$(can_ips)'::
