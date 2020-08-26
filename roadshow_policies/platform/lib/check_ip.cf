@@ -4,7 +4,8 @@ classes:
 
   "empty_variable"
    comment    => "Deal with empty IP Address as a result of a faulty variable",
-   expression => cmp("", $(ips));
+   expression => cmp("", "$(ips)"
+            );
 
   "match_$(can_ips)"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
