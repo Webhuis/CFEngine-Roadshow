@@ -29,6 +29,8 @@ methods:
 
 reports:
 
+  "$(this.bundle) ip list: $(role_data.ddns[$(role_data.ddns_index)][ip])";
+
  "$(this.bundle): I am checking basic interface stuff first, $(role_data.nic[$(role_data.nic_index)]).";
  "$(this.bundle): I am doing common and data driven policies.";
 
