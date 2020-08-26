@@ -21,7 +21,7 @@ reports:
 
 }
 
-bundle agent x2go_data {
+bundle agent role_data {
   
 vars:
 

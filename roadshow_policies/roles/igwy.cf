@@ -19,7 +19,7 @@ reports:
 
 }
 
-bundle agent igwy_data {
+bundle agent role_data {
   
 vars:
 

@@ -24,7 +24,7 @@ reports:
 
 }
 
-bundle agent keap_data {
+bundle agent role_data {
   
 vars:
 

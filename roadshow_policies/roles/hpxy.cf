@@ -21,7 +21,7 @@ reports:
 
 }
 
-bundle agent hpxy_data {
+bundle agent role_data {
   
 vars:
 

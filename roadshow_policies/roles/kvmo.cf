@@ -22,7 +22,7 @@ reports:
 
 }
 
-bundle agent kvmo_data {
+bundle agent role_data {
   
 vars:
 

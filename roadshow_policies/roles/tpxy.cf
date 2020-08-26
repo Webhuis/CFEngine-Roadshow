@@ -19,7 +19,7 @@ reports:
 
 }
 
-bundle agent tpxy_data {
+bundle agent role_data {
   
 vars:
 

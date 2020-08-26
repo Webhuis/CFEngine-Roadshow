@@ -19,7 +19,7 @@ reports:
 
 }
 
-bundle agent mihr_data {
+bundle agent role_data {
   
 vars:
 

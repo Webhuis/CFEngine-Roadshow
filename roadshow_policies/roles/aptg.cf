@@ -19,7 +19,7 @@ reports:
 
 }
 
-bundle agent aptg_data {
+bundle agent role_data {
   
 vars:
 
