@@ -30,7 +30,7 @@ methods:
   "Set status bad"                 usebundle => status_ip("bad");
 # "Bell!!"            usebundle => bad_ip;
 
- empty_variable_$(ips)::
+ 'empty_variable_$(ips)'::
   "Set status bad"                 usebundle => status_ip("bad");
 
 reports:
@@ -43,10 +43,10 @@ reports:
   'match_$(can_ips)'::
    "$(this.bundle) good ip: $(can_ips)";
 
-  bad_$(ips)::
+  'bad_$(ips)'::
    "$(this.bundle) bad variable for: $(ips)";
 
-  empty_variable_$(ips)::
+  'empty_variable_$(ips)'::
    "$(this.bundle) bad ip: $(ips)";
 
   '!match_$(can_ips)'::
