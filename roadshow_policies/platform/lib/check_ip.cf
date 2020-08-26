@@ -9,6 +9,11 @@ classes:
             $(can_ips)
             );
 
+  "empty_variable"
+   comment    => "Deal with empty IP Address as a result of a faulty variable",
+   expression => cmp("", $(can_ips)
+            );
+
 vars:
 
   "can_ips"              string => canonify( $(ips) );
@@ -19,6 +24,9 @@ methods:
   "Set status bad"                 usebundle => status_ip("bad");
 # "Bell!!"            usebundle => bad_ip;
 
+ empty_variable::
+  "Set status bad"                 usebundle => status_ip("bad");
+
 reports:
 
 # "$(this.bundle) ip's: $(ips)";
@@ -26,6 +34,9 @@ reports:
 
   'match_$(can_ips)'::
    "$(this.bundle) good ip: $(can_ips)";
+
+  empty_variable::
+   "$(this.bundle) bad ip: $(ips)";
 
   '!match_$(can_ips)'::
    "$(this.bundle) bad ip: $(can_ips)";
