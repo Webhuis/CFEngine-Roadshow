@@ -32,4 +32,10 @@ reports:
  "$(this.bundle): I am checking basic interface stuff first, $($(classify.role)_data.nic[$($(classify.role)_data.nic_index)]).";
  "$(this.bundle): I am doing common and data driven policies.";
 
+ match_ip::
+  "$(this.bundle) ip Ok!:";
+
+ !match_ip::
+  "$(this.bundle) ip problem!";
+
 }
