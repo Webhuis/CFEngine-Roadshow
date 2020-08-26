@@ -3,9 +3,8 @@ bundle agent check_ip(ips) {
 classes:
 
   "empty_variable"
-   comment    => "Deal with empty IP Address as a result of a faulty variable",
-   expression => cmp("", "$(ips)"
-            );
+   expression => strcmp("", "$(ips)"),
+   comment    => "Deal with empty IP Address as a result of a faulty variable";
 
   "match_$(can_ips)"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
@@ -32,7 +31,7 @@ reports:
 # "$(this.bundle) ip's: $(ips)";
 # "$(this.bundle) ip list: $(ip_list)";
 
-   "$(this.bundle) ipi input: $(ips)";
+   "$(this.bundle) ip input: $(ips)";
 
   'match_$(can_ips)'::
    "$(this.bundle) good ip: $(can_ips)";
