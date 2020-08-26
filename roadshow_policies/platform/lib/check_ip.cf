@@ -1,43 +1,31 @@
-bundle agent check_ip(ips) {
+bundle agent check_ip(ip) {
 
 classes:
 
-  "match_$(can_ips)"
+  "match_ip"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(can_ips)
+            $(can_ip)
             );
 
 vars:
 
-  "can_ips"              string => canonify( $(ips) );
+  "can_ip"               string => canonify( $(ip) );
 
 methods:
 
- '!match_$(can_ips)'::
+ !match_ip::
   "Set status bad"                 usebundle => status_ip("bad");
-# "Bell!!"            usebundle => bad_ip;
-
- 'empty_variable_$(ips)'::
-  "Set status bad"                 usebundle => status_ip("bad");
+  "Bell!!"            usebundle => bad_ip;
 
 reports:
 
-# "$(this.bundle) ip's: $(ips)";
-# "$(this.bundle) ip list: $(ip_list)";
+   "$(this.bundle) ip input: $(ip)";
 
-   "$(this.bundle) ip input: $(ips)";
+  match_ip::
+   "$(this.bundle) good ip: $(can_ip)";
 
-  'match_$(can_ips)'::
-   "$(this.bundle) good ip: $(can_ips)";
-
-  'bad_$(ips)'::
-   "$(this.bundle) bad variable for: $(ips)";
-
-  'empty_variable_$(ips)'::
-   "$(this.bundle) bad ip: $(ips)";
-
-  '!match_$(can_ips)'::
-   "$(this.bundle) bad ip: $(can_ips)";
+  !match_ip::
+   "$(this.bundle) bad ip: $(can_ip)";
 }
