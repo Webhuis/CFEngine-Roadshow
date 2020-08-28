@@ -31,10 +31,6 @@ files:
 
 methods:
 
-  "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(sys.domain).ntp_server)");
-
- !bad_fqdn::
-
   "Time packages we need"                   usebundle => packages("time_conf.pkg");
   "Time packages we do not need"            usebundle => nopackages("time_conf.nopkg");
 

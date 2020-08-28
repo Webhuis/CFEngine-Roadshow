@@ -18,7 +18,12 @@ methods:
 
  !bad_ip::
   "Standardize resolv.conf setup"           usebundle => resolv_conf;
-                                                                                                                                                                                       
+
+ any::
+  "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(classify.domain).ntp_server)");
+
+ !bad_fqdn::
+  "Configure all time settings"             usebundle => time_conf;                                                                                                                                                                                       
 reports:
                                                                                                                                                                                        
   "$(this.bundle): I am doing data driven policies and my verdict is as folows";  

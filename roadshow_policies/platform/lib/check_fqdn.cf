@@ -3,7 +3,7 @@ bundle common check_fqdn(fqdn) {
 classes:
 
   "match_$(can_fqdn)"
-   comment    => "Oh, the horror! Process the list of IP Addresses.",
+   comment    => "Oh, the fqdn's.",
    expression => regcmp( "([a-z0-9]_[a-z0-9_]*)",
             $(can_fqdn)
             );

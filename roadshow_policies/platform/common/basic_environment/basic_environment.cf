@@ -5,7 +5,6 @@ methods:
   "Install common packages"              usebundle => pkg_base_common;
   "Set locales to UTF 8"                 usebundle => locales;
   "Standardize issue setup"              usebundle => login_messages;
-  "Configure all time settings"          usebundle => time_conf;
   "We desire clean and dedicated logs"   usebundle => clean_logs;
   "We desire log rotation"               usebundle => log_rotation;
 
