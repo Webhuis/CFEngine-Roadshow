@@ -33,9 +33,9 @@ reports:
   "$(this.bundle): I am doing common and data driven policies.";
 
  !bad_ip::
-  "$(this.bundle) The soft ip addresses supplied are Ok!:";
+  "$(this.bundle) The soft ip addresses supplied are Ok.";
 
  bad_ip::
-  "$(this.bundle) The is a problem with soft ip address supplied, no processing of soft ip address policies!";
+  "$(this.bundle) Invalid soft ip addresses are being supplied, no processing of soft ip address policies is going to take place.";
 
 }
