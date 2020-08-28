@@ -2,19 +2,22 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$(role_data.etc_hosts_nic)");
+  "We want valid ssh server IP Addressies"  usebundle => check_ip("$(role_data.admin_nics)");
 
-  !bad_ip::
+ !bad_ip::
+  "openssh server and client"               usebundle => ssh_all_config;
 
-    "Standardize hosts setup"           usebundle => etc_hosts;
+ any::
+  "We want a valid host IP Address"         usebundle => check_ip("$(role_data.etc_hosts_nic)");
 
-  any::
+ !bad_ip::
+  "Standardize hosts setup"                 usebundle => etc_hosts;
 
-    "Check list of resolvers"           usebundle => check_ip("$($(classify.eco_vars).resolvers)");
+ any::
+  "Check list of resolvers"                 usebundle => check_ip("$($(classify.eco_vars).resolvers)");
 
-  !bad_ip::
-
-    "Standardize resolv.conf setup"     usebundle => resolv_conf;
+ !bad_ip::
+  "Standardize resolv.conf setup"           usebundle => resolv_conf;
                                                                                                                                                                                        
 reports:
                                                                                                                                                                                        
@@ -23,6 +26,7 @@ reports:
  bad_ip::
   "$(this.bundle): Invalid IP Address!";
 
+  "$(this.bundle) etc_hosts_nic: $(role_data.admin_nics)";  
   "$(this.bundle) etc_hosts_nic: $(role_data.etc_hosts_nic)";  
   "$(this.bundle) resolvers: $($(classify.eco_vars).resolvers)";  
 
