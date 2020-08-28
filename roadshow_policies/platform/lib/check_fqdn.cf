@@ -1,0 +1,30 @@
+bundle common check_fqdn(fqdn) {
+
+classes:
+
+  "match_$(can_fqdn)"
+   comment    => "Oh, the horror! Process the list of IP Addresses.",
+   expression => regcmp( "([a-z0-9]_[a-z0-9_]*)",
+            $(can_fqdn)
+            );
+ "!match_$(can_fqdn)"::
+  "bad_fqdn"                                 expression => "any";
+
+defaults:
+
+  "fqdn"                                string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
+
+vars:
+
+  "can_fqdn"                            string => canonify( $(fqdn) );
+
+reports:
+
+   "$(this.bundle) fqdn input: $(fqdn)";
+
+  !bad_fqdn::
+   "$(this.bundle) good fqdn: $(can_fqdn)";
+
+  bad_fqdn::
+   "$(this.bundle) bad fqdn: $(can_fqdn)";
+}
