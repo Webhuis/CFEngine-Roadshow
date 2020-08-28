@@ -1,9 +1,5 @@
 bundle agent time_conf {
 
-classes:
-
-  "kvmo"                        expression => regcmp( "kvmo", $(classify.role) );
-
 vars:
 
   "ntp_conf"                        string => "/etc/ntp.conf";
@@ -34,6 +30,10 @@ files:
     edit_line           => edit_timezone($(timezone));
 
 methods:
+
+  "We want valid ntp server IP Addressies"  usebundle => check_ip("$($(sys.domain).ntp_server)");
+
+ !bad_ip::
 
   "Time packages we need"        usebundle => packages("time_conf.pkg");
   "Time packages we do not need" usebundle => nopackages("time_conf.nopkg");

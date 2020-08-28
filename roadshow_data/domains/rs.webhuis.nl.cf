@@ -45,7 +45,7 @@ vars:
   "nfs_ro"                             string => "ro,hard,intr,noatime,nodiratime 0 0";
   "nfs_rw"                             string => "rw,hard,intr,noatime,nodiratime 0 0";
 
-  "ntp_server"                         string => "time.nl";
+  "ntp_server"                          slist => { "time.nl" };
   "domain_exports"                      slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
   "ntp_pool"                           string => "nl.pool.ntp.org";
   "ntp_master"                          slist => { "1", "2", "3" };
