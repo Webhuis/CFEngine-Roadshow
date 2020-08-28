@@ -31,23 +31,33 @@ files:
 
 methods:
 
-  "We want valid ntp server IP Addressies"  usebundle => check_ip("$($(sys.domain).ntp_server)");
+  "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(sys.domain).ntp_server)");
 
- !bad_ip::
+ !bad_fqdn::
 
-  "Time packages we need"        usebundle => packages("time_conf.pkg");
-  "Time packages we do not need" usebundle => nopackages("time_conf.nopkg");
+  "Time packages we need"                   usebundle => packages("time_conf.pkg");
+  "Time packages we do not need"            usebundle => nopackages("time_conf.nopkg");
 
-  "A VM is an ntp client"        usebundle => ntp_client;
+  "A VM is an ntp client"                   usebundle => ntp_client;
 
 services:
 
-  "ntpd"                    service_policy => "start";
+  "ntp"                                service_policy => "start";
 
 reports:
 
  "$(this.bundle): I am doing time configuration common to all platforms";
 
-  
+}
+
+bundle edit_line  edit_timezone(string) {
+
+delete_lines:
+
+    ".*";
+
+ insert_lines:
+
+"${string}";
 
 }
