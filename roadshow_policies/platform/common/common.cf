@@ -12,15 +12,16 @@ methods:
                                               comment => "OSI Layers one and two";
   "Check the soft IP Addresses given"       usebundle => check_ip("$(role_data.ddns[$(role_data.ddns_index)][ip])");
 
- match_ip::
+ !bad_ip::
   "openssh server and client"               usebundle => ssh_all_config;
- match_ip.mac_ok::
+
+ !bad_ip.mac_ok::
   "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_data.ddns[$(role_data.ddns_index)][suffix])",
                                                                           "$(role_data.ddns[$(role_data.ddns_index)][nic])",
                                                                           "$(role_data.ddns[$(role_data.ddns_index)][ip])",
                                                                           "$(role_data.ddns[$(role_data.ddns_index)][vlan])");
 
- match_ip::
+ !bad_ip::
   "We update ddns"                          usebundle => ddns_update("$(role_data.ddns[$(role_data.ddns_index)][suffix])",
                                                                      "$(role_data.ddns[$(role_data.ddns_index)][ip])");
 
@@ -31,13 +32,13 @@ reports:
 
   "$(this.bundle) ip list: $(role_data.ddns[$(role_data.ddns_index)][ip])";
 
- "$(this.bundle): I am checking basic interface stuff first, $(role_data.nic[$(role_data.nic_index)]).";
- "$(this.bundle): I am doing common and data driven policies.";
+  "$(this.bundle): I am checking basic interface stuff first, $(role_data.nic[$(role_data.nic_index)]).";
+  "$(this.bundle): I am doing common and data driven policies.";
 
- match_ip::
-  "$(this.bundle) ip Ok!:";
+ !bad_ip::
+  "$(this.bundle) The soft ip addresses supplied are Ok!:";
 
- !match_ip::
-  "$(this.bundle) ip problem!";
+ bad_ip::
+  "$(this.bundle) The is a problem with soft ip address supplied, no processing of soft ip address policies!";
 
 }

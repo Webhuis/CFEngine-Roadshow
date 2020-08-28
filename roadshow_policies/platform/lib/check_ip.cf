@@ -1,4 +1,4 @@
-bundle agent check_ip(ip) {
+bundle common check_ip(ip) {
 
 classes:
 
@@ -8,24 +8,24 @@ classes:
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
             $(can_ip)
             );
+ "!match_ip_$(can_ip)"::
+  "bad_ip"                                 expression => "any";
+
+defaults:
+
+  "ip"                                string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
 
 vars:
 
-  "can_ip"               string => canonify( $(ip) );
-
-methods:
-
- !match_ip::
-  "Set status bad"                 usebundle => status_ip("bad");
-  "Bell!!"            usebundle => bad_ip;
+  "can_ip"                            string => canonify( $(ip) );
 
 reports:
 
    "$(this.bundle) ip input: $(ip)";
 
-  match_ip::
+  !bad_ip::
    "$(this.bundle) good ip: $(can_ip)";
 
-  !match_ip::
+  bad_ip::
    "$(this.bundle) bad ip: $(can_ip)";
 }
