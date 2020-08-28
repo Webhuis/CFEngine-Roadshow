@@ -2,13 +2,13 @@ bundle common check_ip(ip) {
 
 classes:
 
-  "match_ip"
+  "match_$(can_ip)"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
             $(can_ip)
             );
- "!match_ip_$(can_ip)"::
+ "!match_$(can_ip)"::
   "bad_ip"                                 expression => "any";
 
 defaults:

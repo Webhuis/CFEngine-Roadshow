@@ -15,7 +15,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
+  "$(this.bundle): $(role_name)";
 
 }
 
@@ -46,6 +46,7 @@ vars:
 reports:
 
   "${this.bundle} nics: $(nic), nic_index $(nic_index), nic_index $(nic[$(nic_index)])";
+  "${this.bundle} ddns: $(ddns[$(ddns_index)][ip])";
   "${this.bundle} support_nic: $(etc_hosts_nic)";
   "${this.bundle} admin_nics: ${admin_nics}";
 
