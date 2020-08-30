@@ -2,16 +2,16 @@ bundle agent pdns_slave_server {
 
 vars:
 
-    "pkg[pdns-server]"           string => "*";
-    "pkg[pdns-recursor]"         string => "*";
-    "pkg[pdns-backend-mysql]"    string => "*";
+  "pkg[pdns-server]"                string => "*";
+  "pkg[pdns-recursor]"              string => "*";
+  "pkg[pdns-backend-mysql]"         string => "*";
 
-    "pdns_package_name"          slist  => getindices("pkg");
+  "pdns_package_name"               slist  => getindices("pkg");
 
 methods:
 
- "We desire powerdns"            usebundle => packages("pdns_server.pkg");
- "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql-ddns.conf.tmpl");
+ "We desire powerdns"            usebundle => packages("pdns_slave_server.pkg");
+ "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql-slave.conf.tmpl");
  "Configure powerdns server"     usebundle => pdns_conf;
  "The recursor needs templates"  usebundle => get_template("recursor.conf.tmpl");
  "Configure the recursor"        usebundle => recursor_conf;
@@ -27,7 +27,7 @@ files:
   perms                     => mo("600","root"),
   create                    => "true",
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql-ddns.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql-slave.conf.tmpl",
   classes                   => r_if_repaired("restart_pdns");
 
 commands:

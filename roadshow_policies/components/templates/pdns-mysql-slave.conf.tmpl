@@ -3,17 +3,26 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-#allow-axfr-ips=
 allow-recursion=0.0.0.0/0
 #allow-2136-from=10.0.0.0/8
 config-dir=/etc/powerdns
-default-soa-name=$(sys.fqhost)
+daemon=yes
 disable-axfr=yes
-launch=gmysql
-loglevel=9
-master=yes
-recursor=127.0.0.1:5300
+guardian=yes
+local-address=0.0.0.0
+local-port=53
+log-dns-details=on
+log-failed-updates=on
+loglevel=3
+module-dir=/usr/lib/powerdns
+master=no
 slave=yes
+slave-cycle-interval=60
+setgid=pdns
+setuid=pdns
+socket-dir=/var/run
+version-string=powerdns
 webserver=yes
 webserver-address=$(ddns[support][ip])
 include-dir=/etc/powerdns/pdns.d
+
