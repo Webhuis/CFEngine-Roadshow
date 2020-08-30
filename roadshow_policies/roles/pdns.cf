@@ -48,7 +48,7 @@ vars:
 
   "ddns_index"                         slist => getindices("ddns");
 
-  "resolvers"                          slist => "$($(classify.eco_vars).remote_resolvers)";
+  "resolvers"                         string => "$($(classify.eco_vars).remote_resolvers)";
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
