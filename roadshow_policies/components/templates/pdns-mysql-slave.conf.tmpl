@@ -23,6 +23,6 @@ setuid=pdns
 socket-dir=/var/run
 version-string=powerdns
 webserver=yes
-webserver-address=$(ddns[support][ip])
+webserver-address=$(role_data.ddns[support][ip])
 include-dir=/etc/powerdns/pdns.d
 
