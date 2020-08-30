@@ -23,5 +23,7 @@ socket-dir=/var/run
 version-string=powerdns
 webserver=yes
 webserver-address=$(role_data.ddns[support][ip])
+webserver-allow-from=0.0.0.0/0
+webserver-port=8081
 include-dir=/etc/powerdns/pdns.d
 
