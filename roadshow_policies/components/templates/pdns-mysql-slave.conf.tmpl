@@ -4,16 +4,16 @@
 #
 [%CFEngine any:: %]
 #allow-axfr-ips=
-allow-recursion=127.0.0.1,10.0.0.0/8
+allow-recursion=0.0.0.0/0
 #allow-2136-from=10.0.0.0/8
 config-dir=/etc/powerdns
-default-soa-name=${sys.fqhost}
-disable-axfr=no
+default-soa-name=$(sys.fqhost)
+disable-axfr=yes
 launch=gmysql
 loglevel=9
 master=yes
 recursor=127.0.0.1:5300
 slave=yes
 webserver=yes
-webserver-address=${sys.ipv4}
+webserver-address=$(ddns[support][ip])
 include-dir=/etc/powerdns/pdns.d

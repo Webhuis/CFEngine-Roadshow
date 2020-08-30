@@ -3,9 +3,10 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-allow-dnsupdate-from=10.168.171.2
+allow-dnsupdate-from=10.0.0.0/8
+allow-axfr-ips=$(role_data.local_resolvers)
 config-dir=/etc/powerdns
-default-soa-name=${sys.fqhost}
+default-soa-name=$(sys.fqhost)
 disable-axfr=no
 launch=gmysql
 dnsupdate=yes
@@ -17,7 +18,7 @@ slave=yes
 api=yes
 api-key=789456123741852963
 webserver=yes
-webserver-address=0.0.0.0
+webserver-address=$(ddns[support][ip])
 webserver-allow-from=0.0.0.0/0,::/0
 webserver-port=8081
 include-dir=/etc/powerdns/pdns.d
