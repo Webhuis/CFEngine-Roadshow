@@ -5,6 +5,7 @@
 [%CFEngine any:: %]
 local-address=$(role_data.ddns[support][ip])
 local-port=53
+allow-from=0.0.0.0/0
 forward-zones=rg.webhuis.nl=127.0.0.1:5300
 forward-zones=rs.webhuis.nl=127.0.0.1:5300
 forward-zones=sw.webhuis.nl=127.0.0.1:5300
