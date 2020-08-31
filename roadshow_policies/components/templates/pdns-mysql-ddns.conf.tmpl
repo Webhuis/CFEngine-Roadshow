@@ -6,6 +6,8 @@
 allow-dnsupdate-from=10.0.0.0/8
 allow-axfr-ips=$(role_data.local_resolvers)
 config-dir=/etc/powerdns
+local-address=127.0.0.1
+local-port=5300
 default-soa-name=$(sys.fqhost)
 disable-axfr=no
 launch=gmysql

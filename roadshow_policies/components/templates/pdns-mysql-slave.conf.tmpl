@@ -4,6 +4,9 @@
 #
 [%CFEngine any:: %]
 #allow-2136-from=10.0.0.0/8
+allow-from=0.0.0.0/0
+local-address=$(role_data.ddns[support][ip])
+local-port=53
 config-dir=/etc/powerdns
 module-dir=/usr/lib/x86_64-linux-gnu/pdns
 daemon=yes
@@ -25,5 +28,14 @@ webserver=yes
 webserver-address=$(role_data.ddns[support][ip])
 webserver-allow-from=0.0.0.0/0
 webserver-port=8081
+forward-zones=rg.webhuis.nl=127.0.0.1:5300
+forward-zones=rs.webhuis.nl=127.0.0.1:5300
+forward-zones=sw.webhuis.nl=127.0.0.1:5300
+forward-zones=12.194.10.in-addr.arpa.=127.0.0.1:5300
+forward-zones=112.94.10.in-addr.arpa.=127.0.0.1:5300
+forward-zones=17.110.10.in-addr.arpa.=127.0.0.1:5300
+forward-zones=110.17.10.in-addr.arpa.=127.0.0.1:5300
+forward-zones=71.168.10.in-addr.arpa.=127.0.0.1:5300
+forward-zones=171.68.10.in-addr.arpa.=127.0.0.1:5300
 include-dir=/etc/powerdns/pdns.d
 
