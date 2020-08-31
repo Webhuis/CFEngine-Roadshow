@@ -36,7 +36,7 @@ vars:
   "ldap"                                  slist => {"ldap1", "ldap2"};
   "ldap_base"                            string => "dc=webhuis,dc=nl";
   "ldap_admin"                           string => "cn=admin,${ldap_base}";
-  "local_resolvers"                       slist => { "10.10.117.23", "10.94.112.17","10.68.171.23" };
+  "local_resolvers"                       slist => { "10.10.117.23", "10.68.171.21","10.68.171.23" };
   "remote_resolvers"                      slist => { "208.67.222.123","208.67.220.123" };
   "searchlist"                           string => "rs.webhuis.nl";
 
