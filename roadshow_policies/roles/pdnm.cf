@@ -2,7 +2,7 @@ bundle agent pdnm {
 
 vars:
 
-  "role_name"                         string => "Powerdns Mysql name server";
+  "role_name"                         string => "Powerdns Mysql Master name server";
 
   "bundles[mysql_server]"             string => "${sys.flavor}/mysql_server.cf";
   "bundles[php_mysql]"                string => "${sys.flavor}/php_mysql.cf";
@@ -47,8 +47,6 @@ vars:
   "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
 
   "ddns_index"                         slist => getindices("ddns");
-
-  "resolvers"                          slist => "$($(classify.eco_vars).local_resolvers)";
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
