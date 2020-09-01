@@ -41,7 +41,7 @@ vars:
   "local_resolvers"                       slist => { "10.10.117.23", "10.68.171.21","10.68.171.23" };
   "remote_resolvers"                      slist => { "208.67.222.123","208.67.220.123" };
   "searchlist"                           string => "rs.webhuis.nl";
-  "domains_we_serve"                     string => { "rg.webhuis.nl", "rs.webhuis.nl", "sw.webhuis.nl", "10.in-addr.arpa" };
+  "domains_we_serve"                      slist => { "rg.webhuis.nl", "rs.webhuis.nl", "sw.webhuis.nl", "10.in-addr.arpa" };
  
   "nfs_host"                             string => "nfsutl0001.webhuis.nl";
   "nfs_webapps"                          string => "/var/local/webapps";
