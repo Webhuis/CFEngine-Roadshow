@@ -14,7 +14,7 @@ methods:
   "Standardize hosts setup"                 usebundle => etc_hosts;
 
  any::
-  "Check list of resolvers"                 usebundle => check_ip("$($(classify.eco_vars).resolvers)");
+  "Check list of resolvers"                 usebundle => check_ip("$($(classify.eco_vars).local_resolvers)");
 
  !bad_ip::
   "Standardize resolv.conf setup"           usebundle => resolv_conf;
@@ -33,7 +33,7 @@ reports:
 
   "$(this.bundle) etc_hosts_nic: $(role_data.admin_nics)";  
   "$(this.bundle) etc_hosts_nic: $(role_data.etc_hosts_nic)";  
-  "$(this.bundle) resolvers: $($(classify.eco_vars).resolvers)";  
+  "$(this.bundle) resolvers: $($(classify.eco_vars).local_resolvers)";  
 
  !bad_ip::
    "$(this.bundle): Valid IP Addresses!";
