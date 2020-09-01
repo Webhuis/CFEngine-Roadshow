@@ -12,7 +12,6 @@ methods:
 
   "Check Ip Addresses first"     usebundle => check_ip("$(role_data.ddns[support][ip])");
 
-
   "We desire powerdns"           usebundle => packages("pdns_slave_server.pkg");
   "Configure powerdns for mysql" usebundle => get_template("pdns-mysql-slave.conf.tmpl");
   "Configure powerdns server"    usebundle => pdns_conf;
@@ -26,7 +25,7 @@ bundle agent pdns_conf {
 files:
 
  "/etc/powerdns/pdns.conf"
-  comment                   => "pdns.conf door class_domain nameserver",
+  comment                   => "pdns.conf door class_domain nameserver, slave listens on localhost",
   perms                     => mo("600","root"),
   create                    => "true",
   action                    => r_immediate,
@@ -46,16 +45,24 @@ bundle agent recursor_conf {
 files:
 
  "/etc/powerdns/recursor.conf"
-  comment                   => "recursor.conf door class_domain nameserver",
+  comment                   => "recursor.conf door class_domain nameserver listens on support IP",
   create                    => "true",
   perms                     => mog("640","root","pdns"),
   action                    => r_immediate,
   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.conf.tmpl",
   classes                   => r_if_repaired("restart_recursor");
 
+ "/etc/powerdns/recursor.forward-zones"
+  comment                   => "recursor.forward-zones door class_domain nameserver",
+  create                    => "true",
+  perms                     => mog("640","root","pdns"),
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.forward-zones.tmpl",
+  classes                   => r_if_repaired("restart_recursor");
+
 commands:
 
-  restart_pdns::
+  restart_recursor::
    "/etc/init.d/pdns-recursor restart";
 
 }

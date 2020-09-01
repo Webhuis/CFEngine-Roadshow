@@ -40,7 +40,7 @@ vars:
 
 # "ntp_server"                         string => "inuc-01.webhuis.nl";
   "ntp_server"                          slist => { "time.nl" };
-  "nfs_host"                           string => "nfsutl0001.webhuis.nl";
+  "nfs_host"                           string => "time.nl";
   "nfs_webapps"                        string => "/var/local/webapps";
   "export_network"                     string => "10.0.0.0/8";
   "nfs_backup"                         string => "/bur-san";

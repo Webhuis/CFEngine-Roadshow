@@ -5,16 +5,11 @@
 [%CFEngine any:: %]
 local-address=$(role_data.ddns[support][ip])
 local-port=53
-allow-from=0.0.0.0/0
-forward-zones=rg.webhuis.nl=127.0.0.1:5300
-forward-zones=rs.webhuis.nl=127.0.0.1:5300
-forward-zones=sw.webhuis.nl=127.0.0.1:5300
-forward-zones=12.194.10.in-addr.arpa.=127.0.0.1:5300
-forward-zones=112.94.10.in-addr.arpa.=127.0.0.1:5300
-forward-zones=17.110.10.in-addr.arpa.=127.0.0.1:5300
-forward-zones=110.17.10.in-addr.arpa.=127.0.0.1:5300
-forward-zones=71.168.10.in-addr.arpa.=127.0.0.1:5300
-forward-zones=171.68.10.in-addr.arpa.=127.0.0.1:5300
-quiet=yes
+dnssec=process-no-validate
+daemon=yes
+serve-rfc1918=yes
+#allow-from=10.0.0.0/8,192.168.0.0/16
+forward-zones-file=/etc/powerdns/recursor.forward-zones
+quiet=no
 setgid=pdns
 setuid=pdns
