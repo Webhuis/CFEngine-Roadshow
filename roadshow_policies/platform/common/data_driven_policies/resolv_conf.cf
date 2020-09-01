@@ -4,6 +4,7 @@ bundle agent resolv_conf {
 
   "/etc/resolv.conf"
   comment                   => "Domain resolv.conf door class_domain",
+  create              => "true",
   perms                     => mo("644","root"),
   action                    => r_immediate,
   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/resolv.conf.tmpl";
