@@ -2,18 +2,20 @@ bundle agent pdns_server {
 
 vars:
 
-    "pkg[pdns-server]"           string => "*";
-    "pkg[pdns-backend-mysql]"    string => "*";
+    "pkg[pdns-server]"              string => "*";
+    "pkg[pdns-backend-mysql]"       string => "*";
 
-    "pdns_package_name"          slist  => getindices("pkg");
+    "pdns_package_name"             slist  => getindices("pkg");
 
 methods:
 
- "We desire powerdns"            usebundle => packages("pdns_server.pkg");
- "Configure powerdns for mysql"  usebundle => get_template("pdns-mysql-ddns.conf.tmpl");
- "Configure powerdns server"     usebundle => pdns_conf;
- "The recursor needs templates"  usebundle => get_template("recursor.conf.tmpl");
- "Configure the recursos"        usebundle => recursor_conf;
+  "Check Ip Addresses first"     usebundle => check_ip("$(role_data.ddns[support][ip])");
+
+  "We desire powerdns"           usebundle => packages("pdns_server.pkg");
+  "Configure powerdns for mysql" usebundle => get_template("pdns-mysql-ddns.conf.tmpl");
+  "Configure powerdns server"    usebundle => pdns_conf;
+  "The recursor needs templates" usebundle => get_template("recursor.conf.tmpl");
+  "Configure the recursos"       usebundle => recursor_conf;
 
 }
 

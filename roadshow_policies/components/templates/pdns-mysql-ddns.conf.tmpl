@@ -5,7 +5,8 @@
 [%CFEngine any:: %]
 master=yes
 allow-dnsupdate-from=10.0.0.0/8
-allow-axfr-ips=$(role_data.local_resolvers)
+#allow-axfr-ips=$(role_data.local_resolvers)
+allow-axfr-ips=10.68.171.23, 10.10.117.23, 10.94.112.17
 config-dir=/etc/powerdns
 local-address=$(role_data.ddns[support][ip])
 local-port=53
