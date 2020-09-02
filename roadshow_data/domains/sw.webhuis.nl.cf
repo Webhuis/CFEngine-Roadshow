@@ -30,8 +30,6 @@ vars:
   "ldap"                                slist => {"ldap1", "ldap2"};
   "ldap_base"                          string => "dc=webhuis,dc=nl";
   "ldap_admin"                         string => "cn=admin,${ldap_base}";
-  "resolvers"                           slist => { "10.68.171.21", "10.68.171.17", "8.8.8.8" };
-  "searchlist"                         string => "sw.webhuis.nl";
  
   "apt_cacher"                         string => "aptgwhpdcsw1";
   "https_repo[jts]"                    string => "https://download.jitsi.org";

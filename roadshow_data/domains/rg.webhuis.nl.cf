@@ -30,8 +30,6 @@ vars:
   "ldap"                                slist => {"ldap1", "ldap2"};
   "ldap_base"                          string => "dc=webhuis,dc=nl";
   "ldap_admin"                         string => "cn=admin,${ldap_base}";
-  "resolvers"                           slist => { "10.94.112.17", "8.8.8.8" };
-  "searchlist"                         string => "rg.webhuis.nl";
 
   "apt_cacher"                         string => "aptgwhpdcrg1";
   "nfs_host"                           string => "time.nl";
