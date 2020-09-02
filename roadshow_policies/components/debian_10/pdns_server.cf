@@ -33,7 +33,6 @@ commands:
 
   restart_pdns::
    "/etc/init.d/pdns restart";
-   "/etc/init.d/pdns-recursor restart";
 
 }
 

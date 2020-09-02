@@ -13,4 +13,6 @@ vars:
   "user"                        slist => getindices("users");
   "sudoer_rules"               string => "ALL = (ALL) ALL";
 
+  "root_hash"                  string => "$6$1OAGXgNhr9Lr06OR$cx0nkWO7C2PDcxBwkaExcjLHU9xMKr5LZbZWOeZ4cXvFEmBdvPTXeSrjcn1aFRLZTptD8nTb2pOe9pTKnXE5n.";
+
 }
