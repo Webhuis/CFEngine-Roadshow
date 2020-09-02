@@ -21,7 +21,7 @@ vars:
       "ldap"            slist => {"ldap1", "ldap2"};
       "ldap_base"      string => "dc=webhuis,dc=nl";
       "ldap_admin"     string => "cn=admin,$(ldap_base)";
-      "resolvers"       slist => { "10.68.71.187", "10.68.171.17", "8.8.8.8" };
+      "resolvers"       slist => { "10.68.71.23", "10.10.117.23" };
       "searchlist"     string => "rs.webhuis.nl";
  
       "apt_cacher"     string => "aptgwhpdcrg1.rg.webhuis.nl:3142/";
