@@ -85,7 +85,7 @@ users:
 
   "root"
     policy         => "present",
-    password       => hashed_password("common_users.root_hash");
+    password       => hashed_password("$(common_users.root_hash)");
 
 files:
 
