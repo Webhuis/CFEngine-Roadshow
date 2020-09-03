@@ -5,7 +5,7 @@ vars:
   "pkg[pdns-recursor]"              string => "*";
 
   "pdns_package_name"               slist  => getindices("pkg");
-  "pdns_slave_template"             slist  => { "pdns-recursor.conf.tmpl", "recursor.forward-zones.tmpl" };
+  "pdns_recursor_templates"         slist  => { "pdns-recursor.conf.tmpl", "recursor.forward-zones.tmpl" };
 
 methods:
 
@@ -13,7 +13,7 @@ methods:
 
  !bad_ip::
   "We desire powerdns"           usebundle => packages("pdns_recursor.pkg");
-  "The recursor needs templates" usebundle => get_template("recursor.conf.tmpl");
+  "The recursor needs templates" usebundle => get_template("$(pdns_recursor.templates");
   "Configure the recursor"       usebundle => recursor_conf;
 
 }
