@@ -13,15 +13,3 @@ reports:
  "$(this.bundle): $(template_config)";
 
 }
-
-bundle agent get_template_list(template_list) {
-
-methods:
-
-  "We desire every templates in the list" usebundle => get_template("$(template_list)");
-
-reports:
-
- "$(this.bundle): $(template_list)";
-
-}

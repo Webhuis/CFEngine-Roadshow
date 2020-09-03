@@ -27,7 +27,7 @@ files:
   create                    => "true",
   perms                     => mog("640","root","pdns"),
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-recursor.conf.tmpl",
   classes                   => r_if_repaired("restart_recursor");
 
  "/etc/powerdns/recursor.forward-zones"
