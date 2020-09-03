@@ -3,4 +3,4 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-$($(classify.eco_vars).domains_we_serve)=127.0.0.1:5300
+$($(classify.eco_vars).zone_index)=$($(classify.eco_vars).zone[$(list_to_string.zone_index)]):53

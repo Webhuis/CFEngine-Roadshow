@@ -3,11 +3,10 @@ bundle agent pdns_slave_server {
 vars:
 
   "pkg[pdns-server]"                string => "*";
-  "pkg[pdns-recursor]"              string => "*";
   "pkg[pdns-backend-mysql]"         string => "*";
 
   "pdns_package_name"               slist  => getindices("pkg");
-  "pdns_slave_template"             slist  => { "pdns-mysql-slave.conf.tmpl", "recursor.forward-zones.tmpl" };
+  "pdns_slave_template"             slist  => { "pdns-mysql-slave.conf.tmpl" };
 
 methods:
 
@@ -15,11 +14,8 @@ methods:
 
  !bad_ip::
   "We desire powerdns"           usebundle => packages("pdns_slave_server.pkg");
- #"Configure powerdns for mysql" usebundle => get_template("pdns-mysql-slave.conf.tmpl");
   "Configure powerdns for mysql" usebundle => get_template("$(pdns_slave_template)");
   "Configure powerdns server"    usebundle => pdns_conf;
-  "The recursor needs templates" usebundle => get_template("recursor.conf.tmpl");
-  "Configure the recursor"       usebundle => recursor_conf;
 
 }
 
@@ -39,34 +35,5 @@ commands:
 
   restart_pdns::
    "/etc/init.d/pdns restart";
-   "/etc/init.d/pdns-recursor restart";
 
 }
-
-bundle agent recursor_conf {
-
-files:
-
- "/etc/powerdns/recursor.conf"
-  comment                   => "recursor.conf door class_domain nameserver listens on support IP",
-  create                    => "true",
-  perms                     => mog("640","root","pdns"),
-  action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.conf.tmpl",
-  classes                   => r_if_repaired("restart_recursor");
-
- "/etc/powerdns/recursor.forward-zones"
-  comment                   => "recursor.forward-zones door class_domain nameserver",
-  create                    => "true",
-  perms                     => mog("640","root","pdns"),
-  action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.forward-zones.tmpl",
-  classes                   => r_if_repaired("restart_recursor");
-
-commands:
-
-  restart_recursor::
-   "/etc/init.d/pdns-recursor restart";
-
-}
-

@@ -41,6 +41,15 @@ vars:
   "searchlist"                           string => "rs.webhuis.nl";
   "domains_we_serve"                      slist => { "rg.webhuis.nl", "rs.webhuis.nl", "sw.webhuis.nl", "10.in-addr.arpa" };
 
+  "forward_zones"                              string => join(", ", local_resolvers);
+
+  "zone[rg.webhuis.nl]"                        string => "$(forward_zones)";
+  "zone[rs.webhuis.nl]"                        string => "$(forward_zones)";
+  "zone[sw.webhuis.nl]"                        string => "$(forward_zones)";
+  "zone[10.in-addr.arpa]"                      string => "$(forward_zones)";
+
+  "zone_index"                                  slist => getindices("zone");
+
   "nfs_host"                             string => "nfsutl0001.webhuis.nl";
   "nfs_webapps"                          string => "/var/local/webapps";
   "export_network"                       string => "10.0.0.0/8";
