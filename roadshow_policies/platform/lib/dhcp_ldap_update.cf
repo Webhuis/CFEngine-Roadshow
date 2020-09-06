@@ -49,7 +49,7 @@ classes:
   "in_ldap"                                  expression => regcmp(".*ethernet.*fixed-address.*", "$(result).");
 
  "!in_ldap"::
-  "update_ldap"                              expression => any;
+  "update_ldap"                              expression => "any";
 
 vars:
 
