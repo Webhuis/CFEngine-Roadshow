@@ -54,7 +54,7 @@ methods:
 
 }
 
-bundle common set_class_interfaces {
+bundle common set_class_interface {
 
 classes:
 
