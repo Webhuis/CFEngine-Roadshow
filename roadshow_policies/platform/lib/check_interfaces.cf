@@ -1,23 +1,15 @@
 bundle agent check_interfaces(nic) {
 
-classes:
-
-  "no_device_$(nic)"              expression => regcmp( ".*does not exist.*",
-                                                        "$(var_nic_$(nic))");
-
-  "if_down_$(nic)"                expression => regcmp( ".*DOWN.*",
-                                                        "$(var_nic_$(nic))");
-
-  "mac_ok"                        expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(var_nic_$(nic))", "mac");
-
 vars:
 
   "var_nic_$(nic)"                    string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
 
  mac_ok::
-  "nic_hw[$(nic)]"                    string => "$(mac[1])";
+  "nic_hw[$(nic)]"                    string => "$(set_class_interface.nic_hw[$(nic)])";
 
 methods:
+
+  "Check one nic"                  usebundel => one_interface("$(var_nic_$(nic))");
 
  "no_device_$(nic)"::
   "Set status bad"                 usebundle => status_device("bad");
@@ -47,5 +39,39 @@ reports:
 
  !mac_ok::
   "$(this.bundle): $(nic), oh dear! mac_address nok, $(var_nic_$(nic))"; 
+
+}
+
+bundle agent one_interface(interface) {
+
+vars:
+
+  "nic"                               string => "$(interface)";
+
+methods:
+
+  "Set classes for interface"      usebundle => set_class_interface;
+
+}
+
+bundle common set_class_interfaces {
+
+classes:
+
+  "no_device_$(nic)"              expression => regcmp( ".*does not exist.*",
+                                                        "$(nic))");
+
+  "if_down_$(nic)"                expression => regcmp( ".*DOWN.*",
+                                                        "$(nic)");
+
+  "mac_ok"                        expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(nic)", "mac");
+
+vars:
+
+  "nic"                               string => "$(one_interface.nic)";
+  "var_nic_$(nic)"                    string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
+ mac_ok::
+  "nic_hw[$(nic)]"                    string => "$(mac[1])";
 
 }
