@@ -9,7 +9,7 @@ vars:
 
 methods:
 
-  "Check one nic"                  usebundel => one_interface("$(var_nic_$(nic))");
+  "Check one nic"                  usebundle => one_interface("$(var_nic_$(nic))");
 
  "no_device_$(nic)"::
   "Set status bad"                 usebundle => status_device("bad");
