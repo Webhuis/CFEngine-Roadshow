@@ -15,7 +15,7 @@ vars:
   "ldap_passwd"                        string => "M@rkBurge55";
 
  mac_ok::
-  "mac_address"                    expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(dev_nic)", "mac");
+  "mac_address"                        string => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(dev_nic)", "mac");
 
 files:
 
