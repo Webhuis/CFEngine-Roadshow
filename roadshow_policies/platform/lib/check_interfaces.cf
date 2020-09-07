@@ -52,6 +52,10 @@ methods:
 
   "Set classes for interface"      usebundle => set_class_interface;
 
+reports:
+
+ "$(this.bundle): I am checking one nic and mac: $(nic).";
+
 }
 
 bundle common set_class_interface {
