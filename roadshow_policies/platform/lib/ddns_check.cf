@@ -14,6 +14,9 @@ reports:
  "!ptr_record"::
   "$(this.bundle): Update PTR Record for $(ip_address)!";
 
+ ddns_update::
+  "$(this.bundle): DNS needs Dynamic Dns update!";
+
  ddns_exist::
   "$(this.bundle): DNS Ok!";
 
@@ -25,6 +28,9 @@ classes:
 
   "a_record"                                 expression => strcmp("$(dns_host)", "$(ddns_check.host).");
   "ptr_record"                               expression => strcmp("$(dns_ip)", "$(ddns_check.ip_address)");
+
+ !a_recordi|!ptr_record::
+  "ddns_update"                              expression => "any";
 
  a_record.ptr_record::
   "ddns_exist"                               expression => "any";
