@@ -31,7 +31,7 @@ methods:
 
 commands:
 
- update_ldap::
+ "!in_ldap"::
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.domain).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w $(dhcp_ldap_update.ldap_passwd) -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
 reports:
@@ -50,9 +50,6 @@ classes:
 
   "in_ldap"                                  expression => regcmp(".*ethernet.*fixed-address.*", "$(result).");
 
- "!in_ldap"::
-  "update_ldap"                              expression => "any";
-
 vars:
 
   "ddns_name"                                    string => "$(dhcp_ldap_update.ddns_name)";
@@ -66,9 +63,6 @@ vars:
 reports:
 
  in_ldap::
-  "$(this.bundle): $(ddns_check.host) in LDAP: $(result)";
-
- "update_ldap"::
-  "$(this.bundle): $(ldap_command) update LDAP: $(result)";
+  "$(this.bundle): $(dhcp_ldap_update.ddns_name) in LDAP: $(result)";
 
 }
