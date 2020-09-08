@@ -36,6 +36,8 @@ vars:
 
 reports:
 
+  "$(this.bundle): dig result: $(dns_host) $(dns_ip)";
+
  "!a_record"::
   "$(this.bundle): $(ddns_check.host) DNS A record: $(dns_host)";
 
