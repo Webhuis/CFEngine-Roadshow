@@ -27,7 +27,7 @@ vars:
 
 methods:
 
-  "Check host entry in DNS"                   usebundle => ddns_check("$(ddns_name)", "$(ip_address)");
+  "Check host entry in DNS"                   usebundle => ddns_check("$(ddns_name).$(sys.domain)", "$(ip_address)");
 
 commands:
 
