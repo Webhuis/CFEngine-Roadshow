@@ -29,7 +29,7 @@ classes:
   "a_record"                                 expression => strcmp("$(dns_host)", "$(ddns_check.host).");
   "ptr_record"                               expression => strcmp("$(dns_ip)", "$(ddns_check.ip_address)");
 
- !a_recordi|!ptr_record::
+ !a_record|!ptr_record::
   "ddns_update"                              expression => "any";
 
  a_record.ptr_record::
