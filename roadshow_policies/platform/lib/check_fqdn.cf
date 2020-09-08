@@ -1,4 +1,25 @@
-bundle common check_fqdn(fqdn) {
+bundle agent check_fqdn(fqdn) {
+
+vars:
+
+  "can_fqdn"                            string => canonify( $(fqdn) );
+
+methods:
+
+  "Do we have a valid FQDN"          usebundle => set_class_fqdn;
+
+reports:
+
+   "$(this.bundle) fqdn input: $(fqdn)";
+
+  !bad_fqdn::
+   "$(this.bundle) good fqdn: $(can_fqdn)";
+
+  bad_fqdn::
+   "$(this.bundle) bad fqdn: $(can_fqdn)";
+}
+
+bundle common set_class_fqdn {
 
 classes:
 
@@ -14,17 +35,9 @@ defaults:
 
   "fqdn"                                string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
 
-vars:
-
-  "can_fqdn"                            string => canonify( $(fqdn) );
-
 reports:
 
-   "$(this.bundle) fqdn input: $(fqdn)";
-
-  !bad_fqdn::
-   "$(this.bundle) good fqdn: $(can_fqdn)";
-
   bad_fqdn::
-   "$(this.bundle) bad fqdn: $(can_fqdn)";
+   "$(this.bundle) bad fqdn: $(fqdn)";
+
 }
