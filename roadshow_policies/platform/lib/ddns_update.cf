@@ -25,8 +25,13 @@ vars:
   "arpa_zone"                                    string => "$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
   "arpa_address"                                 string => "$(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
 
+methods:
+
+  "Check host entry in DNS"                   usebundle => ddns_check("$(ddns_name)", "$(ip_address)");
+
 commands:
 
+ ddns_update::
   "/usr/bin/nsupdate -v -k $(key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
