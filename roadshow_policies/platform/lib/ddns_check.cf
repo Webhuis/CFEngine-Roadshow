@@ -14,12 +14,6 @@ reports:
  "!ptr_record"::
   "$(this.bundle): Update PTR Record for $(ip_address)!";
 
- ddns_update::
-  "$(this.bundle): DNS needs Dynamic Dns update!";
-
- ddns_exist::
-  "$(this.bundle): DNS Ok!";
-
 }
 
 bundle common set_ddns_class {
@@ -49,9 +43,6 @@ reports:
 
  "!ptr_record"::
   "$(this.bundle): $(ddns_check.ip_address) DNS PTR rec0rd: $(dns_ip)";
-
- ddns_exist::
-  "$(this.bundle): DNS Ok!";
 
 }
 

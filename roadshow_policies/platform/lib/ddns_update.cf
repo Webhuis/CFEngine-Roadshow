@@ -31,13 +31,16 @@ methods:
 
 commands:
 
- ddns_update::
+ !a_record|!ptr_record::
   "/usr/bin/nsupdate -v -k $(key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
 
   "$(this.bundle): $(ddns_name), $(ip_address)";
-  "$(this.bundle) arpa address: $(arpa_address)";
+ a_record&ptr_record::
+  "$(this.bundle) DNS is Ok!";
+ !a_record|!ptr_record::
+  "$(this.bundle) update DNS!";
 
 }
 
