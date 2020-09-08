@@ -59,7 +59,7 @@ vars:
   "subnet"                                       string => "$(dhcp_ldap_update.subnet)";
   "vlan"                                         string => "$(dhcp_ldap_update.vlan)";
 
-  "ldap_command"                                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.domain).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet)=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
+  "ldap_command"                                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.domain).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
   "result"                                       string => execresult("$(ldap_command) -w $(dhcp_ldap_update.ldap_passwd)", "noshell");
 
