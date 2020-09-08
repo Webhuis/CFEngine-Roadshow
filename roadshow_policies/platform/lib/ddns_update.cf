@@ -39,7 +39,7 @@ reports:
   "$(this.bundle): $(ddns_name), $(ip_address)";
  a_record&ptr_record::
   "$(this.bundle) DNS is Ok!";
- !a_record|!ptr_record::
+ !(a_record&!ptr_record)::
   "$(this.bundle) update DNS!";
 
 }
