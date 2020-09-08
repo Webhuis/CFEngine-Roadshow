@@ -1,5 +1,9 @@
 bundle agent check_ip(ip) {
 
+defaults:
+
+  "ip"                                 string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
+
 methods:
 
   "Do we have a valid ip"           usebundle => set_class_ip;
@@ -22,10 +26,6 @@ classes:
             );
  "!match_$(can_ip)"::
   "bad_ip"                         expression => "any";
-
-defaults:
-
-  "ip"                                 string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
 
 vars:
 
