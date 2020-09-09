@@ -1,0 +1,205 @@
+body perms r_m(p)
+{
+      mode  => "$(p)";
+}
+
+#########################################################
+
+body perms r_mo(p,o)
+{
+      mode   => "$(p)";
+      owners => {"$(o)"};
+}
+
+#########################################################
+
+body perms r_shared_lib_perms
+{
+    !hpux::
+      mode => "0644";
+    hpux::
+      mode => "0755"; # Mantis 1114, Redmine 1179
+}
+
+#########################################################
+
+body file_select r_cf3_files
+{
+      leaf_name => { "cf-.*" };
+      file_result => "leaf_name";
+}
+
+#########################################################
+
+body file_select r_input_files
+{
+      leaf_name => { @(update_def.input_name_patterns) };
+      file_result => "leaf_name";
+}
+
+#########################################################
+
+body copy_from r_rcp(from,server)
+{
+      source      => "$(from)";
+      compare     => "digest";
+      trustkey    => "false";
+      encrypt     => "true";
+      purge       => "true";
+      preserve    => "true";
+
+    !am_policy_hub::
+
+      servers => { "$(server)" };
+
+}
+
+#########################################################
+
+body copy_from r_cp(from)
+{
+      source  => "$(from)";
+      compare => "digest";
+}
+
+#########################################################
+
+body copy_from r_cp_nobck(from)
+{
+      source      => "$(from)";
+      compare     => "digest";
+      copy_backup => "false";
+}
+
+#########################################################
+
+body action r_immediate
+{
+      ifelapsed => "0";
+}
+
+#########################################################
+
+body depth_search r_recurse(d)
+{
+      depth => "$(d)";
+      exclude_dirs => { "\.svn", "\.git", "git-core" };
+}
+
+#########################################################
+
+body depth_search r_recurse_basedir(d)
+{
+      include_basedir => "true";
+      depth => "$(d)";
+      exclude_dirs => { "\.svn", "\.git", "git-core" };
+}
+
+#########################################################
+
+body classes r_if_repaired(x)
+{
+      promise_repaired => { "$(x)" };
+}
+
+#########################################################
+
+body classes r_if_repaired_then_cancel(y)
+{
+      cancel_repaired => { "$(y)" };
+}
+
+#########################################################
+
+body classes r_if_else(yes,no)
+{
+#      promise_kept     => { "$(yes)" };
+      promise_repaired => { "$(yes)" };
+      repair_failed    => { "$(no)" };
+      repair_denied    => { "$(no)" };
+      repair_timeout   => { "$(no)" };
+}
+
+#########################################################
+
+body contain r_in_shell
+{
+      useshell => "true";
+}
+
+#########################################################
+
+body contain r_in_shell_and_silent
+{
+      useshell => "true";
+      no_output => "true";
+}
+
+########################################################""
+
+body contain r_postgres
+{
+  useshell   => "useshell";
+  exec_owner => "cfpostgres";
+  chdir      => "/tmp";
+  no_output  => "true";
+}
+
+#########################################################
+
+body action r_ifwin_bg
+{
+    windows::
+      background => "true";
+}
+
+#########################################################
+
+body service_method r_bootstart
+{
+      service_autostart_policy => "boot_time";
+}
+
+#########################################################
+
+body contain r_silent_in_dir(s)
+{
+      chdir => "$(s)";
+      no_output => "true";
+}
+
+#########################################################
+
+body link_from r_ln_s(x)
+{
+      link_type => "symlink";
+      source => "$(x)";
+      when_no_source => "force";
+}
+
+#########################################################
+
+body delete r_tidy
+{
+      dirlinks => "delete";
+      rmdirs   => "true";
+}
+
+#########################################################
+
+body file_select r_policies {
+
+      leaf_name => { ".*.cf" };
+      file_result => "leaf_name";
+
+}
+
+#########################################################
+
+body file_select r_templates {
+
+      leaf_name => { ".*.tmpl" };
+      file_result => "leaf_name";
+
+}
+

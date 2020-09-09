@@ -1,0 +1,50 @@
+bundle agent classify {
+
+classes:
+
+  "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
+
+  "eno"              expression => regcmp("^eno.*", "$(ipv4_index)");
+  "eth"              expression => regcmp("^eth.*", "$(ipv4_index)");
+  "breno1"           expression => regcmp("^breno1.*", "$(ipv4_index)");
+  "breth0"           expression => regcmp("^breth0.*", "$(ipv4_index)");
+
+vars:
+    
+  "role"                               string => "$(part[1])";
+  "organisation"                       string => "$(part[2])";
+  "environment"                        string => "$(part[3])";
+  "department"                         string => "$(part[4])";
+  "location"                           string => "$(part[5])";
+  "instance"                           string => "$(part[6])";
+
+  "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
+  "eco_vars"                           string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
+  "domain"                             string => canonify($(sys.domain));
+  "vendor"                             string => $(inventory_linux.id_array[1]);
+
+  "ipv4_index"                          slist => getindices("sys.ipv4");
+
+ eno::
+  "interface"                          string => "eno";
+
+ ens::
+  "interface"                          string => "ens";
+
+ eth::
+  "interface"                          string => "eth";
+
+ breno1::
+  "interface"                          string => "eno1";
+  "bridge"                             string => "breno1";
+
+ breth0::
+  "interface"                          string => "eth0";
+  "bridge"                             string => "breth0";
+
+reports:
+
+  "$(this.bundle) role: $(role) $(role_input)";
+  "$(this.bundle) eco_vars: $(eco_vars)";
+
+}

@@ -1,0 +1,179 @@
+#########################################################
+#
+# update_roadshow
+# - Cfengine roadshow policy update (masterfiles -> inputs)
+#
+#########################################################
+
+bundle agent roadshow_update {
+
+vars:
+
+  "master_standard" string => "$(sys.workdir)/masterfiles";
+  "master_roadshow" string => "$(sys.workdir)/roadshow_policies";
+  "master_data"     string => "$(sys.workdir)/roadshow_data";
+  "roadshow_inputs" string => "$(sys.workdir)/roadshow_inputs";
+  "organisation"    string => "$(classify.organisation)";
+  "environment"     string => "$(classify.environment)";
+  "department"      string => "$(classify.department)";
+  "location"        string => "$(classify.location)";
+  "role"            string => "$(classify.role)";
+  "eco_vars"        string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
+  "vendor"          string => "$(vendor.vendor)";
+
+files:
+
+  "$(sys.workdir)/bin/cf-message.py"
+     handle       => "update_bin_roadshow",
+     copy_from    => r_rcp("$(master_roadshow)/bin/cf-message.py", $(sys.policy_hub)),
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(sys.workdir)/inputs/services/autorun"
+     handle       => "update_files_inputs_roadshow_services_autorun",
+     copy_from    => r_rcp("$(master_standard)/services/autorun", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/domain/$(sys.domain).cf"
+     handle       => "update_files_inputs_roadshow_domain",
+     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(sys.workdir)/roadshow_inputs/platform/common"
+     handle       => "update_files_inputs_roadshow_platform_common",
+     depth_search => r_recurse("inf"),
+     copy_from    => r_rcp("$(master_roadshow)/platform/common", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/platform/lib"
+     handle       => "update_files_inputs_roadshow_platform_lib",
+     depth_search => r_recurse("inf"),
+     copy_from    => r_rcp("$(master_roadshow)/platform/lib", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/platform/$(sys.flavor)"
+     handle       => "update_files_inputs_roadshow_platform_flavor_components",
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(sys.flavor)/", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/common_data"
+     comment      => "Copy data bundles that are common",
+     copy_from    => r_rcp("$(master_data)/common", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("validated_updates_ready");
+
+  "$(roadshow_inputs)/platform/$(vendor)_common"
+     handle       => "update_files_inputs_roadshow_platform_components",
+     copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/templates"
+     handle       => "update_files_inputs_roadshow_templates",
+     depth_search => r_recurse("inf"),
+     copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
+     file_select  => r_templates,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/organisation/$(organisation).cf"
+     handle       => "update_files_inputs_roadshow_organisation",
+     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(organisation).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/eco_vars/$(eco_vars).cf"
+     handle       => "update_files_inputs_roadshow_eco_vars",
+     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(eco_vars).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/department/$(department).cf"
+     handle       => "update_files_inputs_roadshow_department",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/departments/$(department).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/location/$(location).cf"
+     handle       => "update_files_inputs_roadshow_location",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/locations/$(location).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/environment/$(environment).cf"
+     handle       => "update_files_inputs_roadshow_environment",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/environments/$(environment).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/role/$(role).cf"
+     handle       => "update_files_inputs_roadshow_role",
+     copy_from    => r_rcp("$(master_roadshow)/roles/$(role).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+methods:
+
+  "Determine the vendor"                     usebundle => vendor;
+  "Determine role and organisation"          usebundle => classify;
+
+reports:
+
+  "$(this.bundle) vendor: $(vendor)";
+  "$(this.bundle) ecosystem variables: $(eco_vars)";
+
+}
+
+bundle agent vendor {
+
+classes:
+
+  "os_release_has_id" expression => regextract('^ID="?([^"\s]+)"?$',
+                                                $(os_release_info),
+                                                "id_array"),
+                         comment => "Extract ID= line from os-release to id_array";
+
+vars:
+
+  "os_release_info"    string => readfile("/etc/os-release", "512"),
+                      comment => "Read /etc/os-release" ;
+
+  "vendor"             string => canonify("$(id_array[1])");
+
+}
