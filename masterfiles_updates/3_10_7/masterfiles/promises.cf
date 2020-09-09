@@ -60,7 +60,7 @@ body common control
 
                   "services/main.cf",
       };
-o
+
       # Roadshow tweak for dynamic policies
       # Relying on convergence we accept policies not yet to be there
 
