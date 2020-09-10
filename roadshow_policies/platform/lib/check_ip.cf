@@ -4,6 +4,10 @@ defaults:
 
   "ip"                                 string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
 
+vars:
+
+  "can_ip"                             string => canonify( $(ip) );
+
 methods:
 
   "Do we have a valid ip"           usebundle => set_class_ip;
@@ -18,26 +22,26 @@ bundle common set_class_ip {
 
 classes:
 
-  "match_$(can_ip)"
+  "match_$(ip)"
    comment    => "Oh, the horror! Process the list of IP Addresses.",
    expression => regcmp(
 "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[_](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(can_ip)
+            $(ip)
             );
- "!match_$(can_ip)"::
+ "!match_$(ip)"::
   "bad_ip"                         expression => "any";
 
 vars:
 
-  "can_ip"                             string => canonify( $(check_ip.ip) );
+  "ip"                                 string => "$(check_ip.can_ip)";
 
 reports:
 
-   "$(this.bundle) ip input: $(check_ip.ip)";
+   "$(this.bundle) ip input: $(check_ip)";
 
   !bad_ip::
-   "$(this.bundle) good ip: $(can_ip)";
+   "$(this.bundle) good ip: $(ip)";
 
   bad_ip::
-   "$(this.bundle) bad ip: $(can_ip)";
+   "$(this.bundle) bad ip: $(ip)";
 }
