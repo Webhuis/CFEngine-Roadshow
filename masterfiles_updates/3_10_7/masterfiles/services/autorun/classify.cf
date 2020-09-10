@@ -5,6 +5,7 @@ classes:
   "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
 
   "eno"              expression => regcmp("^eno.*", "$(ipv4_index)");
+  "ens"              expression => regcmp("^ens.*", "$(ipv4_index)");
   "eth"              expression => regcmp("^eth.*", "$(ipv4_index)");
   "breno1"           expression => regcmp("^breno1.*", "$(ipv4_index)");
   "breth0"           expression => regcmp("^breth0.*", "$(ipv4_index)");
