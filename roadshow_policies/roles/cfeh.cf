@@ -15,8 +15,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) etc_hosts_nic: $(role_name)";
-
+  "$(this.bundle) role name: $(role_name)";
+  "$(this.bundle) role inputs: $($(classify_role).inputs)";
 }
 
 bundle agent role_data {
@@ -38,6 +38,8 @@ vars:
   "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
 
   "ddns_index"                         slist => getindices("ddns");
+
+  "resolvers"                         string => "$($(classify.eco_vars).local_resolvers)";
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
