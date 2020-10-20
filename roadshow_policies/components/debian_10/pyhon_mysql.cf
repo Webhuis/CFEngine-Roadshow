@@ -1,0 +1,17 @@
+bundle agent python_pymysql {
+
+vars:
+
+  "pkg[python3-pymysql]"                 string => "*";
+
+
+methods:
+
+  "MySQL for Python"                  usebundle => packages("python_pymysql.pkg");
+
+reports:
+
+  "${this.bundle}: Database access for Python";
+
+}
+

@@ -2,7 +2,7 @@ bundle agent python_pyodbc {
 
 vars:
 
-  "pkg[python3_pyodbc]"                 string => "*";
+  "pkg[python3-pyodbc]"                 string => "*";
 
 
 methods:
