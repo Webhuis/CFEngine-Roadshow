@@ -15,7 +15,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) etc_hosts_nic: $(role_name)";
+  "$(this.bundle) role name: $(role_name)";
+  "$(this.bundle) role inputs: $($(classify_role).inputs)";
 
 }
 
