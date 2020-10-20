@@ -2,12 +2,12 @@ bundle agent python_pyodbc {
 
 vars:
 
-  "pkg[python_pyodbc]"                  string => "*";
+  "pkg[python3_pyodbc]"                 string => "*";
 
 
 methods:
 
-  "odbc for Python"                  usebundle => packages("apache_php.pkg");
+  "odbc for Python"                  usebundle => packages("python_pyodbc.pkg");
 
 reports:
 
