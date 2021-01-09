@@ -2,7 +2,8 @@ bundle agent classify {
 
 classes:
 
-  "parsed_all"       expression => regextract("^(....)(..)(.)(..)(..)(.).*", $(sys.uqhost), "part");
+  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
+  "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
   "eno"              expression => regcmp("^eno.*", "$(ipv4_index)");
   "eth"              expression => regcmp("^eth.*", "$(ipv4_index)");
@@ -12,14 +13,15 @@ classes:
 vars:
     
   "role"                               string => "$(part[1])";
-  "organisation"                       string => "$(part[2])";
-  "environment"                        string => "$(part[3])";
-  "department"                         string => "$(part[4])";
-  "location"                           string => "$(part[5])";
-  "instance"                           string => "$(part[6])";
+  "environment"                        string => "$(part[2])";
+  "department"                         string => "$(part[3])";
+  "location"                           string => "$(part[4])";
+  "instance"                           string => "$(part[5])";
+
+  "organisation"                       string => "$(org_part[2])";
 
   "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
-  "eco_vars"                           string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
+  "eco_vars"                           string => "$(classify.environment)$(classify.department)$(classify.location)";
   "domain"                             string => canonify($(sys.domain));
   "vendor"                             string => $(inventory_linux.id_array[1]);
 
@@ -27,6 +29,9 @@ vars:
 
  eno::
   "interface"                          string => "eno";
+
+ enp::
+  "interface"                          string => "enp";
 
  ens::
   "interface"                          string => "ens";
@@ -45,6 +50,7 @@ vars:
 reports:
 
   "$(this.bundle) role: $(role) $(role_input)";
+  "$(this.bundle) organisation: $(organisation)";
   "$(this.bundle) eco_vars: $(eco_vars)";
 
 }
