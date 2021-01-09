@@ -7,6 +7,14 @@ vars:
   "ttl"                             string => "300";
   "ntp_server"                      string => "ntp.time.nl";
 
+  "network[service][vlan]"               string => "1001";
+  "network[support][vlan]"               string => "123";
+  "network[admin][vlan]"                 string => "22";
+  "network[wan][vlan]"                   string => "213";
+  "network[gw][vlan]"                    string => "254";
+  "network[life][vlan]"                  string => "42";
+  "network[roadshow][vlan]"              string => "1111";
+
 reports:
 
   "$(this.bundle):";
