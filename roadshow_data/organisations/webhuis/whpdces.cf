@@ -34,7 +34,6 @@ vars:
       "nfs_ro"         string => "ro,hard,intr,noatime,nodiratime 0 0";
       "nfs_rw"         string => "rw,hard,intr,noatime,nodiratime 0 0";
 
-      "ntp_server"     string => "inuc-01.webhuis.nl";
 #     "nameserver"      slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
       "nameserver"      slist => { "10.68.71.103", "8.8.8.8" };
 

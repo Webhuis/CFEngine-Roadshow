@@ -5,6 +5,7 @@ vars:
   "organisation"                    string => "Webhuis";
 
   "ttl"                             string => "300";
+  "ntp_server"                      string => "ntp.time.nl";
 
 reports:
 
