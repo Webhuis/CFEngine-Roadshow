@@ -4,6 +4,8 @@ vars:
 
   "organisation"                    string => "Webhuis";
 
+  "ttl"                             string => "300";
+
 reports:
 
   "$(this.bundle):";

@@ -12,7 +12,6 @@ vars:
       "mdns_key"       string => "nsid2.webhuis.nl.:neQQPaGetzFWcCK5ajF4Vw==";
       "dns"             slist => {"ns1", "ns2"};
       "idns"            slist => {"nsid1", "nsid2"};
-      "ttl"            string => "300"; 
       "network"        string => "10.68.71.0";
       "mask"           string => "255.255.255.0";
 
