@@ -8,21 +8,6 @@ bundle agent whpdcrs {
 
 vars:
 
-  "network[service][vlan]"               string => "1001";
-  "network[service][subnet]"             string => "10.10.17.0";
-  "network[support][vlan]"               string => "123";
-  "network[support][subnet]"             string => "10.10.117.0";
-  "network[admin][vlan]"                 string => "22";
-  "network[admin][subnet]"               string => "10.110.17.0";
-  "network[wan][vlan]"                   string => "213";
-  "network[wan][subnet]"                 string => "213.127.130.120";
-  "network[gw][vlan]"                    string => "254";
-  "network[gw][subnet]"                  string => "10.254.0.0";
-  "network[life][vlan]"                  string => "42";
-  "network[life][subnet]"                string => "10.110.117.0";
-  "network[roadshow][vlan]"              string => "1111";
-  "network[roadshow][subnet]"            string => "10.111.111.0";
-
   "mdns"                                 string => "nsid2.webhuis.nl";
   "mdns_key"                             string => "nsid2.webhuis.nl.:neQQPaGetzFWcCK5ajF4Vw==";
   "dns"                                   slist => {"ns1", "ns2"};
