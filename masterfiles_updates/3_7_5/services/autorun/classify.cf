@@ -48,6 +48,6 @@ reports:
 
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) organisation: $(organisation)";
-  "$(this.bundle) location: $(location) $($(location).location_name";
+  "$(this.bundle) location: $(location) $($(location).location_name)";
 
 }
