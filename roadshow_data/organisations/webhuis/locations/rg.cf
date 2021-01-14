@@ -2,7 +2,7 @@ bundle agent rg {
 
 vars:
 
-  "location"                      string => "ronge";
+  "location_name"                 string => "ronge";
   "apt_cacher"                    string => "aptgwhpdcrg1.rg.webhuis.nl";
   "resolvers"                     slist  => { "10.94.112.24", "10.68.171.24", "10.10.117.24" };
 

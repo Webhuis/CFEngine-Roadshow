@@ -2,7 +2,7 @@ bundle agent sw {
 
 vars:
 
-  "location"                      string => "Schoolweg";
+  "location_name"                 string => "Schoolweg";
   "apt_cacher"                    string => "aptgwhpdcsw1.sw.webhuis.nl";
   "resolvers"                     slist  => { "10.68.171.24", "10.10.117.24","10.94.112.24" };
 
