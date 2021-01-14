@@ -3,8 +3,8 @@ bundle agent sw {
 vars:
 
   "location"                        string => "Schoolweg";
-# "apt_cacher"                      string => "aptgwhpdcsw1.sw.webhuis.nl";
-  "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
+  "apt_cacher"                      string => "aptgwhpdcsw1.sw.webhuis.nl";
+  "resolvers"                       slist  => { "10.68.171.24", "10.10.117.24","10.94.112.24" };
 
   "network[service][subnet]"             string => "10.68.71.0";
   "network[support][subnet]"             string => "10.68.171.0";

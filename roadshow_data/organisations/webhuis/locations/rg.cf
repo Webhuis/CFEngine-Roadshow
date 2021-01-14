@@ -4,6 +4,7 @@ vars:
 
   "location"                        string => "ronge";
   "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
+  "resolvers"                       slist  => { "10.94.112.24", "10.68.171.24", "10.10.117.24" };
 
   "network[service][subnet]"             string => "10.94.12.0";
   "network[support][subnet]"             string => "10.94.112.0";

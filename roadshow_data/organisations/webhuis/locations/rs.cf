@@ -3,8 +3,8 @@ bundle agent rs {
 vars:
 
   "location"                        string => "Roadshow";
-# "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
-  "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
+  "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
+  "resolvers"                       slist  => { "10.10.117.24", "10.68.171.24","10.94.112.24" };
 
   "network[service][subnet]"             string => "10.10.17.0";
   "network[support][subnet]"             string => "10.10.117.0";
