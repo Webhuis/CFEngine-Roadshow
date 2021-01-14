@@ -26,13 +26,13 @@ bundle agent role_data {
   
 vars:
 
-  "vlan[service]"                     string => "$($(classify.eco_vars).network[service][vlan])";
-  "vlan[support]"                     string => "$($(classify.eco_vars).network[support][vlan])";
-  "vlan[admin]"                       string => "$($(classify.eco_vars).network[admin][vlan])";
-  "vlan[wan]"                         string => "$($(classify.eco_vars).network[wan][vlan])";
-  "vlan[gw]"                          string => "$($(classify.eco_vars).network[gw][vlan])";
-  "vlan[life]"                        string => "$($(classify.eco_vars).network[life][vlan])";
-  "vlan[roadshow]"                    string => "$($(classify.eco_vars).network[roadshow][vlan])";
+  "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
+  "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
+  "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";
+  "vlan[wan]"                         string => "$($(classify.organisation).vlan[wan])";
+  "vlan[gw]"                          string => "$($(classify.organisation).vlan[gw])";
+  "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
+  "vlan[roadshow]"                    string => "$($(classify.organisation).vlan[roadshow])";
 
   "vlan_index"                         slist => getindices("vlan");
 
@@ -49,7 +49,7 @@ vars:
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(classify.bridge)_$(vlan[support])])";
   "ddns[support][nic]"                string => "$(classify.interface).$(vlan[support])";
   "ddns[support][suffix]"             string => "";
-  "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
+  "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[admin])"; 
 
   "ddns_index"                         slist => getindices("ddns");
 
