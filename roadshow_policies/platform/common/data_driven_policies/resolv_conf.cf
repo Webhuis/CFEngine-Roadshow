@@ -11,6 +11,6 @@ bundle agent resolv_conf {
 
 reports:
 
-  "${this.bundle}: I am doing standardized resolv.conf setup with: $($(classify.eco_vars).local_resolvers)";
+  "${this.bundle}: I am doing standardized resolv.conf setup with: $($(classify.location).resolvers)";
 
 }

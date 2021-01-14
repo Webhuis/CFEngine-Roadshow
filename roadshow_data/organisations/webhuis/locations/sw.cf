@@ -2,17 +2,17 @@ bundle agent sw {
 
 vars:
 
-  "location"                        string => "Schoolweg";
-  "apt_cacher"                      string => "aptgwhpdcsw1.sw.webhuis.nl";
-  "resolvers"                       slist  => { "10.68.171.24", "10.10.117.24","10.94.112.24" };
+  "location"                      string => "Schoolweg";
+  "apt_cacher"                    string => "aptgwhpdcsw1.sw.webhuis.nl";
+  "resolvers"                     slist  => { "10.68.171.24", "10.10.117.24","10.94.112.24" };
 
-  "network[service][subnet]"             string => "10.68.71.0";
-  "network[support][subnet]"             string => "10.68.171.0";
-  "network[admin][subnet]"               string => "10.168.71.0";
-  "network[wan][subnet]"                 string => "213.127.130.120";
-  "network[gw][subnet]"                  string => "10.254.0.0";
-  "network[life][subnet]"                string => "10.168.171.0";
-  "network[roadshow][subnet]"            string => "10.111.111.0";
+  "vlan[service]"                 string => "10.68.71.0";
+  "vlan[support]"                 string => "10.68.171.0";
+  "vlan[admin]"                   string => "10.168.71.0";
+  "vlan[wan]"                     string => "213.127.130.120";
+  "vlan[gw]"                      string => "10.254.0.0";
+  "vlan[life]"                    string => "10.168.171.0";
+  "vlan[roadshow]"                string => "10.111.111.0";
 
 reports:
 

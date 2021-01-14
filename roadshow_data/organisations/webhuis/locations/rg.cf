@@ -2,17 +2,17 @@ bundle agent rg {
 
 vars:
 
-  "location"                        string => "ronge";
-  "apt_cacher"                      string => "aptgwhpdcrg1.rg.webhuis.nl";
-  "resolvers"                       slist  => { "10.94.112.24", "10.68.171.24", "10.10.117.24" };
+  "location"                      string => "ronge";
+  "apt_cacher"                    string => "aptgwhpdcrg1.rg.webhuis.nl";
+  "resolvers"                     slist  => { "10.94.112.24", "10.68.171.24", "10.10.117.24" };
 
-  "network[service][subnet]"             string => "10.94.12.0";
-  "network[support][subnet]"             string => "10.94.112.0";
-  "network[admin][subnet]"               string => "10.194.12.0";
-  "network[wan][subnet]"                 string => "213.127.130.120";
-  "network[gw][subnet]"                  string => "10.254.0.0";
-  "network[life][subnet]"                string => "10.194.112.0";
-  "network[roadshow][subnet]"            string => "10.111.111.0";
+  "subnet[service]"               string => "10.94.12.0";
+  "subnet[support]"               string => "10.94.112.0";
+  "subnet[admin]"                 string => "10.194.12.0";
+  "subnet[wan]"                   string => "213.127.130.120";
+  "subnet[gw]"                    string => "10.254.0.0";
+  "subnet[life]"                  string => "10.194.112.0";
+  "subnet[roadshow]"              string => "10.111.111.0";
 
 reports:
 
