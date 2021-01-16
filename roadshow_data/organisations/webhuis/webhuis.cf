@@ -4,6 +4,9 @@ vars:
 
   "organisation"                    string => "Webhuis";
 
+  "mdns"                            string => "pdnmwhpdcsw1.sw.webhuis.nl";
+  "mdns_key"                        string => "/etc/dhcp/webhuis.nl.update";
+
   "ttl"                             string => "300";
   "ntp_server"                      string => "ntp.time.nl";
 
