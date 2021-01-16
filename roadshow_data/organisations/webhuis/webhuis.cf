@@ -4,6 +4,7 @@ vars:
 
   "organisation"                    string => "Webhuis";
 
+  "dhcp_ldap"                       string => "mihrwhpdcsw1.sw.webhuis.nl";
   "mdns"                            string => "pdnmwhpdcsw1.sw.webhuis.nl";
   "mdns_key"                        string => "/etc/dhcp/webhuis.nl.update";
 

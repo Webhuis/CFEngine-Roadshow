@@ -41,7 +41,7 @@ files:
 
   "$(roadshow_inputs)/domain/$(sys.domain).cf"
      handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/domains/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
