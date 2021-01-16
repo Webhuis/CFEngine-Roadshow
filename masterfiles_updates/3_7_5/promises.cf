@@ -317,9 +317,6 @@ bundle common do_roadshow {
       "class_domain"            string => canonify("$(sys.domain)");
       "class_host"              string => canonify("$(sys.uqhost)");
 
-      "policyhost"              string => "cfeutl01.webhuis.nl";
-      "ntp_server"              string => "inuc-01.webhuis.nl";
-      "nameserver"               slist => { "10.168.0.17", "8.8.8.8"};
       "punt_komma"              string => ";";
 
 
