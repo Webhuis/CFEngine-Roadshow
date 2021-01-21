@@ -36,17 +36,17 @@ vars:
 
   "vlan_index"                         slist => getindices("vlan");
 
-  "nic[service]"                      string => "$(classify.bridge)_$(vlan[service])";
-  "nic[support]"                      string => "$(classify.bridge)_$(vlan[support])";
-  "nic[admin]"                        string => "$(classify.bridge)_$(vlan[admin])";
-  "nic[wan]"                          string => "$(classify.bridge)_$(vlan[wan])";
-  "nic[gw]"                           string => "$(classify.bridge)_$(vlan[gw])";
-  "nic[life]"                         string => "$(classify.bridge)_$(vlan[life])";
-  "nic[roadshow]"                     string => "$(classify.bridge)_$(vlan[roadshow])";
+  "nic[service]"                      string => "$(classify.bridge).$(vlan[service])";
+  "nic[support]"                      string => "$(classify.bridge).$(vlan[support])";
+  "nic[admin]"                        string => "$(classify.bridge).$(vlan[admin])";
+  "nic[wan]"                          string => "$(classify.bridge).$(vlan[wan])";
+  "nic[gw]"                           string => "$(classify.bridge).$(vlan[gw])";
+  "nic[life]"                         string => "$(classify.bridge).$(vlan[life])";
+  "nic[roadshow]"                     string => "$(classify.bridge).$(vlan[roadshow])";
 
   "nic_index"                          slist => getindices("nic");
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[canonify($(nic[support]))])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$(vlan[support])"; 
