@@ -3,11 +3,12 @@ bundle agent opennebula_server {
 vars:
 
   "pkg[opennebula]"	                 string => "*";
-  "pkg[opennebula-sunstone]"	         string => "*";
-  "pkg[opennebula-gate]"	         string => "*";
   "pkg[opennebula-flow]"	         string => "*";
+  "pkg[opennebula-gate]"	         string => "*";
+  "pkg[opennebula-sunstone]"	         string => "*";
+  "pkg[opennebula-tools]"	         string => "*";
 
-  "apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.8/Debian/9 stable opennebula";
+  "apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.12.0.3/Debian/10 stable opennebula";
   "apt_key"                              string => "opennebula.pubkey.gpg";
  
 methods:
