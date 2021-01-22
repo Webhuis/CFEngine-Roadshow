@@ -19,6 +19,7 @@ vars:
   "pkg[locales-all]"                    string => "*";
   "pkg[smbclient]"                      string => "*";
   "pkg[vim]"                            string => "*";
+  "pkg[wget]"                           string => "*";
 
   "desired"                             string => "addupdate";
   "cfengine_version"                    string => "3.6.6-1";

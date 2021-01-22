@@ -8,15 +8,6 @@ bundle agent sw_webhuis_nl {
 
 vars:
 
-  "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
-  "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
-  "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
-
-  "dns"                                 slist => {"ns1", "ns2"};
-  "idns"                                slist => {"nsid1", "nsid2"};
-  "ttl"                                string => "600"; 
-  "name"                               string => "buster";
-
   "subnet[service]"                    string => "10.10.17.0";
   "subnet[support]"                    string => "10.10.117.0";
   "subnet[admin]"                      string => "10.110.17.0";
@@ -31,10 +22,9 @@ vars:
   "ldap_base"                          string => "dc=webhuis,dc=nl";
   "ldap_admin"                         string => "cn=admin,${ldap_base}";
  
-# "apt_cacher"                         string => "aptgwhpdcsw1";
   "https_repo[jts]"                    string => "https://download.jitsi.org";
   "https_repo[kea]"                    string => "https://dl.cloudsmith.io/public/isc/kea-1-6/deb/debian";
-  "https_repo[one]"                    string => "https://downloads.opennebula.org/repo/5.10/Debian/10/";
+  "https_repo[one]"                    string => "https://downloads.opennebula.org/repo/5.12.0.3/Debian/10/";
 
 # "ntp_server"                         string => "inuc-01.webhuis.nl";
   "ntp_server"                          slist => { "time.nl" };

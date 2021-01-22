@@ -19,9 +19,9 @@ files:
 vars:
 
   "ddns_name"                                    string => "$(sys.uqhost)$(suffix)";
-  "mdns"                                         string => "$($(classify.domain).mdns)";
-  "key"                                          string => "$($(classify.domain).mdns_key)";
-  "ttl"                                          string => "$($(classify.domain).ttl)";
+  "mdns"                                         string => "$($(classify.organisation).mdns)";
+  "key"                                          string => "$($(classify.organisation).mdns_key)";
+  "ttl"                                          string => "$($(classify.organisation).ttl)";
   "arpa_zone"                                    string => "$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
   "arpa_address"                                 string => "$(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
 
