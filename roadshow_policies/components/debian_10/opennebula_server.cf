@@ -9,7 +9,7 @@ vars:
   "pkg[opennebula-tools]"	         string => "*";
 
   "apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.12.0.3/Debian/10 stable opennebula";
-  "apt_key"                              string => "opennebula.pubkey.gpg";
+  "apt_key"                              string => "downloads.opennebula.org.gpg";
  
 methods:
 
