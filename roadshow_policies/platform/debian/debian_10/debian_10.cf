@@ -13,8 +13,8 @@ vars:
   "nic[admin]"                              string => "ens8";
   "nic[gw]"                                 string => "ens9";
   "nic[wan]"                                string => "ens10";
-  "nic[life]"                               string => "ensb";
-  "nic[roadshow]"                           string => "ensc";
+  "nic[life]"                               string => "ens11";
+  "nic[roadshow]"                           string => "ens12";
 
   "vnic_index"                               slist => getindices("vnic");
 
