@@ -53,7 +53,7 @@ vars:
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
-  "admin_nics"                        slist  => { "$(ddns[admin][ip]), "$(ddns[life][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[admin][ip])", "$(ddns[life][ip])" };
 
 methods:
 
