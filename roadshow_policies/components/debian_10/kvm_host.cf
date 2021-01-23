@@ -32,8 +32,6 @@ vars:
   "pkg[vlan]"                   string => "*";
   "pkg[xvnc4viewer]"            string => "*";
 
-#   "kvm_host_package_name"     slist  => getindices("pkg");
-
 files:
 
   "/etc/debootstrap/config.sdx"
@@ -50,6 +48,10 @@ files:
           action => r_immediate,
    edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/modules.tmpl";
 
+  "/var/lib/one/.one/authorized_keys"
+              create  => "true",
+            edit_line => authorized_keys($(role_data.authorized_key)) ;
+
 methods:
 
   "Provide desired packages"               usebundle => packages("kvm_host.pkg");
@@ -58,7 +60,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): ";
+  "$(this.bundle): Keys";
 
 }
 
@@ -79,6 +81,14 @@ insert_tree:
   </network>"
 
    select_xpath => " /var/lib/libvirt/qemu/networks";
+
+}
+
+bundle edit_line  authorized_keys(pub_key) {
+
+insert_lines:
+
+  "$(pubkey)";
 
 }
 
