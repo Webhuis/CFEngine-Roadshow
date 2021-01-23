@@ -88,7 +88,7 @@ bundle edit_line  authorized_keys(pub_key) {
 
 insert_lines:
 
-  "$(pubkey)";
+  "$(pub_key)";
 
 }
 
