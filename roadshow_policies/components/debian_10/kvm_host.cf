@@ -50,6 +50,7 @@ files:
 
   "/var/lib/one/.ssh/authorized_keys"
               create  => "true",
+               perms  => mog("600","oneadmin","oneadmin"),
             edit_line => authorized_keys($(role_data.authorized_key)) ;
 
 methods:
