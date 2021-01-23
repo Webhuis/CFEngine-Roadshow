@@ -50,7 +50,7 @@ vars:
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$(vlan[support])"; 
-  "ddns[life][ip]"                    string => "$(sys.ipv4[canonify($(nic[admin]))])";
+  "ddns[life][ip]"                    string => "$(sys.ipv4[canonify($(nic[life]))])";
   "ddns[life][nic]"                   string => "$(nic[life])";
   "ddns[life][suffix]"                string => "-life";
   "ddns[life][vlan]"                  string => "$(vlan[life])";
