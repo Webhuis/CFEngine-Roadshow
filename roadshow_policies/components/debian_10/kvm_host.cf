@@ -48,7 +48,7 @@ files:
           action => r_immediate,
    edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/modules.tmpl";
 
-  "/var/lib/one/.one/authorized_keys"
+  "/var/lib/one/.ssh/authorized_keys"
               create  => "true",
             edit_line => authorized_keys($(role_data.authorized_key)) ;
 
