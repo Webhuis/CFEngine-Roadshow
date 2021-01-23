@@ -18,7 +18,7 @@ methods:
 reports:
 
  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
- "$(this.bundle): $(admin_nics)";
+ "$(this.bundle): admin nics: $(admin_nics)";
 
 }
 
@@ -50,12 +50,16 @@ vars:
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$(vlan[support])"; 
+  "ddns[life][ip]"                    string => "$(sys.ipv4[canonify($(nic[admin]))])";
+  "ddns[life][nic]"                   string => "$(nic[life])";
+  "ddns[life][suffix]"                string => "-life";
+  "ddns[life][vlan]"                  string => "$(vlan[life])";
 
   "ddns_index"                         slist => getindices("ddns");
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
-  "admin_nics"                        slist  => { "$(ddns[support][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[life][ip])" };
 
 methods:
 
