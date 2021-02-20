@@ -5,6 +5,7 @@ vars:
   "role_name"                                 string => "opennebula cloud management server";
 
   "bundles[opennebula_server]"                 string => "$(sys.flavor)/opennebula_server.cf";
+  "bundles[postgres]"                          string => "$(sys.flavor)/postgres.cf";
 
   "sequence"                                    slist => getindices("bundles");
   "inputs"                                      slist => getvalues("bundles");
