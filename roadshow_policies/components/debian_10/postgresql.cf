@@ -4,6 +4,7 @@ vars:
 
   "pkg[phppgadmin]"	   	   	string => "*";
   "pkg[postgresql-11]"	   	   	string => "*";
+  "pkg[postgresql-client-11]"	   	string => "*";
   "pkg[python-psycopg2]"   	   	string => "*";
   "pkg[python-pygresql]"   	   	string => "*";
 
