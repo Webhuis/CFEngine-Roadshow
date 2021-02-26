@@ -6,6 +6,7 @@ vars:
 
   "bundles[kvm_host]"                         string => "${sys.flavor}/kvm_host.cf";
   "bundles[opennebula_node]"                  string => "${sys.flavor}/opennebula_node.cf";
+  "bundles[nfs_kernel_server]"                string => "${sys.flavor}/nfs_kerner_server.cf";
 
   "sequence"                                  slist  => getindices("bundles");
   "inputs"                                    slist  => getvalues("bundles");
@@ -13,6 +14,7 @@ vars:
 methods:
 
   "KVM host ready for VM"                  usebundle => "kvm_host";
+  "We share our images with OpenNebula"    usebundle => "nfs_kernel_server";
   "We desire Opennebula"                   usebundle => "opennebula_node"; 
 
 reports:
