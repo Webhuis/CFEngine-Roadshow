@@ -6,6 +6,7 @@ vars:
 
   "apt_key"                            string => "downloads.opennebula.org.gpg";
 
+  "pkg[nfs-common]"                    string => "*";
   "pkg[opennebula-node]"               string => "*";
 
 files:
