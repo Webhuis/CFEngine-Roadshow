@@ -15,6 +15,7 @@ vars:
 
 methods:
 
+  "We desire the nfs-kernel server"         usebundle => nfs_kernel_server;
   "We desire the opennebula server"         usebundle => opennebula_server;
   "We desire the postgresql server"         usebundle => postgresql;
 

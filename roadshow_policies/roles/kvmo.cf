@@ -13,7 +13,6 @@ vars:
 methods:
 
   "KVM host ready for VM"                  usebundle => "kvm_host";
-  "We share our images with OpenNebula"    usebundle => "nfs_kernel_server";
   "We desire Opennebula"                   usebundle => "opennebula_node"; 
 
 reports:
