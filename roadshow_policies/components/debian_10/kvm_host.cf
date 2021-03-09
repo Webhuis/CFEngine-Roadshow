@@ -18,6 +18,7 @@ vars:
   "pkg[lvm2]"                   string => "*";
   "pkg[mdadm]"                  string => "*";
   "pkg[minicom]"                string => "*";
+  "pkg[nfs-common]"             string => "*";
   "pkg[openvswitch-common]"     string => "*";
   "pkg[openvswitch-switch]"     string => "*";
   "pkg[parted]"                 string => "*";

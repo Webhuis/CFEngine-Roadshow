@@ -6,7 +6,6 @@ vars:
 
   "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
   "bundles[opennebula_node]"                  string => "$(sys.flavor)/opennebula_node.cf";
-  "bundles[nfs_kernel_server]"                string => "$(sys.flavor)/nfs_kernel_server.cf";
 
   "sequence"                                  slist  => getindices("bundles");
   "inputs"                                    slist  => getvalues("bundles");

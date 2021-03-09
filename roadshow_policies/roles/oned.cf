@@ -2,10 +2,11 @@ bundle agent oned {
 
 vars:
 
-  "role_name"                                 string => "opennebula cloud management server";
+  "role_name"                                  string => "opennebula cloud management server";
 
   "bundles[opennebula_server]"                 string => "$(sys.flavor)/opennebula_server.cf";
   "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
+  "bundles[nfs_kernel_server]"                 string => "$(sys.flavor)/nfs_kernel_server.cf";
 
   "sequence"                                    slist => getindices("bundles");
   "inputs"                                      slist => getvalues("bundles");
