@@ -19,6 +19,24 @@ vars:
   "vlan[life]"                      string => "42";
   "vlan[roadshow]"                  string => "1111";
 
+ (classify.eth)::
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[gw]"                                 string => "ens9";
+  "nic[wan]"                                string => "ens10";
+  "nic[life]"                               string => "ens11";
+  "nic[roadshow]"                           string => "ens12";
+
+ (classify.eth)::
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[gw]"                                 string => "ens9";
+  "nic[wan]"                                string => "ens10";
+  "nic[life]"                               string => "ens11";
+  "nic[roadshow]"                           string => "ens12";
+
 reports:
 
   "$(this.bundle):";
