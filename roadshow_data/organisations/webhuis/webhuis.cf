@@ -28,7 +28,7 @@ vars:
   "nic[life]"                               string => "ens11";
   "nic[roadshow]"                           string => "ens12";
 
- (classify.eth)::
+ (classify.eno)|(classify.ens)::
   "nic[service]"                            string => "ens3";
   "nic[support]"                            string => "ens7";
   "nic[admin]"                              string => "ens8";

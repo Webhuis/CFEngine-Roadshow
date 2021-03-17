@@ -24,9 +24,14 @@ bundle agent role_data {
   
 vars:
 
+ (classify.eth)::
+  "nic[support]"                      string => "eth0";
+  "nic[admin]"                        string => "eth1";
+ (classify.eno)|(classify.ens)::
   "nic[support]"                      string => "$($(sys.flavour).nic[support])";
   "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
 
+ any::
   "nic_index"                          slist => getindices("nic");
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
