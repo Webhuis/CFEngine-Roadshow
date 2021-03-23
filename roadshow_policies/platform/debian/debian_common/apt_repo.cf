@@ -31,7 +31,8 @@ commands:
 
  new_repo_key::
 
-  "/usr/bin/apt-key add /var/cache/apt/$(apt_key)";
+  "/usr/bin/apt-key add /var/cache/apt/$(apt_key)"
+        useshell => "noshell";
 
 reports:
 
