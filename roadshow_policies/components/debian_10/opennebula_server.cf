@@ -9,7 +9,9 @@ vars:
   "pkg[opennebula-tools]"	         string => "*";
 
  #"apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.13/Debian/10 stable opennebula";
-  "cache_repo[one]"                      string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-one.$(sys.domain) buster main";
+ #"cache_repo[one]"                      string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-one.$(sys.domain) buster main";
+  "apt_repo[opennebula]"                 string => "deb http://aptgwhpdcsw1-remap.sw.webhuis.nl stable opennebula";
+
 
   "apt_key"                              string => "downloads.opennebula.org.gpg";
 
@@ -19,7 +21,7 @@ methods:
 
   "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
 
-  "We need the opennebula cache repo" usebundle => apt_repo_list("$(repo_index)", "$(cache_repo[$(repo_index)])");
+  "We need the opennebula cache repo" usebundle => apt_repo_list("$(repo_index)", "$(apt_repo[$(repo_index)])");
 
   "We desire opennebula"              usebundle => packages("opennebula_server.pkg");
 
