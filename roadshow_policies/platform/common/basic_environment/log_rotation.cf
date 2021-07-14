@@ -18,7 +18,7 @@ files:
   "/etc/apt/logrotate.d/.*cf-before-edit"
 
     comment      => "Clean up invalid logrotate entries",
-    delete       => tidy
+    delete       => tidy;
 
 reports:
 
