@@ -12,7 +12,13 @@ files:
     comment                   => "log rotation of standard and specific logs",
     perms                     => mo("644","root"),
     action                    => r_immediate,
+    edit_defaults             => no_backup,
     edit_template             => "$(sys.workdir)/roadshow_inputs/templates/logrotate.d.rsyslog.tmpl";
+
+  "/etc/apt/logrotate.d/.*cf-before-edit"
+
+    comment      => "Clean up invalid logrotate entries",
+    delete       => tidy
 
 reports:
 
