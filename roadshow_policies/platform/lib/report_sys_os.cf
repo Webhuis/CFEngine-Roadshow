@@ -2,7 +2,7 @@ bundle agent report_sys_os {
 
 vars:
 
-  "nics"                   slist => $(sys.ipv4);
+  "nic_index"             slist => getindices("sys.ipv4");
 
 reports:
 
@@ -19,6 +19,6 @@ reports:
   "sys.local_libdir:       $(sys.local_libdir)";
   "sys.policy_hub:         $(sys.policy_hub)";
 
-  "nic                     $(nics)";
+  "nics                    $(sys.ipv4[$nic_index)]) $(sys.ipv4)";
 
 }
