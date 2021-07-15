@@ -19,6 +19,6 @@ reports:
   "sys.local_libdir:       $(sys.local_libdir)";
   "sys.policy_hub:         $(sys.policy_hub)";
 
-  "nic"                    $(nics)";
+  "nic                     $(nics)";
 
 }
