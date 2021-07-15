@@ -2,27 +2,23 @@ bundle agent report_sys_os {
 
 vars:
 
-  "nics[service]"                        string => $(sys.ipv4[eth0]);
-  "nics[support]"                        string => $(sys.ipv4[eth1]);
-  "nics[admin]"                          string => $(sys.ipv4[eth2]);
-  "nics[hosts]"                          string => $(sys.ipv4[eth3]);
-  "nics[gateway]"                        string => $(sys.ipv4[eth4]);
+  "nics"                   slist => $(sys.ipv4);
 
 reports:
 
-  "Hard class os:          ${sys.os}";
-  "Hard class os_type:     ${sys.ostype}";
-  "Hard class os_platform: ${inventory_linux.id_array[1]}";
-  "Hard class os_flavor:   ${sys.flavor}";
-  "Hard class os_arch:     ${sys.arch}";
-  "Hard class uqhost:      ${sys.uqhost}";
-  "Hard class fqhost:      ${sys.fqhost}";
+  "Hard class os:          $(sys.os)";
+  "Hard class os_type:     $(sys.ostype)";
+  "Hard class os_platform: $(inventory_linux.id_array[1])";
+  "Hard class os_flavor:   $(sys.flavor)";
+  "Hard class os_arch:     $(sys.arch)";
+  "Hard class uqhost:      $(sys.uqhost)";
+  "Hard class fqhost:      $(sys.fqhost)";
 
-  "sys.domain:             ${sys.domain}";
-  "sys.fqdn:               ${sys.fqhost}";
-  "sys.local_libdir:       ${sys.local_libdir}";
-  "sys.policy_hub:         ${sys.policy_hub}";
+  "sys.domain:             $(sys.domain)";
+  "sys.fqdn:               $(sys.fqhost)";
+  "sys.local_libdir:       $(sys.local_libdir)";
+  "sys.policy_hub:         $(sys.policy_hub)";
 
-  "nic service             $(nics[service])";
+  "nic"                    $(nics)";
 
 }
