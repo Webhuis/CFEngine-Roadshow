@@ -20,7 +20,7 @@ reports:
   "sys.local_libdir:       $(sys.local_libdir)";
   "sys.policy_hub:         $(sys.policy_hub)";
 
-  "nics                    $(sys.ipv4[$(nic_values)]), $(sys.ipv4[$(nic_index)])";
+  "nics                    $(nic_index), $(sys.ipv4[$(nic_index)])";
   "ipv4_index              $(ipv4_index)";
   "ipv4_values             $(ipv4_values)";
 
