@@ -2,7 +2,7 @@ bundle agent report_sys_os {
 
 vars:
 
-  "ipv4_index"             slist => getindices("sys.ipv4");
+  "ipv4_index"             slist => sort(getindices("sys.ipv4"), int);
   "ipv4_values"            slist => getvalues("sys.ipv4");
 
 reports:
