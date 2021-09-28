@@ -7,6 +7,7 @@ vars:
   "pkg[python-zmq]"                         string => "*";
 
   "name"                                    string => "buster";
+  "updates"                                 string => "buster/updates";
 
   "nic[service]"                            string => "ens3";
   "nic[support]"                            string => "ens7";

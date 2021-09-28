@@ -8,6 +8,7 @@ vars:
   "pkg[python-zmq]"                         string => "*";
 
   "name"                                    string => "stretch";
+  "updates"                                 string => "stretch/updates";
 
   "nic[service]"                            string => "ens3";
   "nic[support]"                            string => "ens7";

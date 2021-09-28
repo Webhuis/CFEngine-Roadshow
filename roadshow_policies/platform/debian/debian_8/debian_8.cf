@@ -8,6 +8,7 @@ vars:
   "pkg[python-zmq]"                      string => "*";
 
   "name"                                 string => "jessie";
+  "updates"                              string => "jessie/updates";
 
   "vnic[service]"                        string => "eth0";
   "vnic[support]"                        string => "eth1";

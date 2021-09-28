@@ -7,6 +7,7 @@ vars:
   "pkg[python-zmq]"                         string => "*";
 
   "name"                                    string => "bullseye";
+  "updates"                                 string => " bullseye-security"; # The space is intentional
 
   "nic[service]"                            string => "ens3";
   "nic[support]"                            string => "ens7";
