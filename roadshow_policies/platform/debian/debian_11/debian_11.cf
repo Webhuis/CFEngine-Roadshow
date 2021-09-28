@@ -6,7 +6,7 @@ vars:
   "pkg[autofs-ldap]"                        string => "*";
   "pkg[python-zmq]"                         string => "*";
 
-  "name"                                    string => "buster";
+  "name"                                    string => "bullseye";
 
   "nic[service]"                            string => "ens3";
   "nic[support]"                            string => "ens7";
