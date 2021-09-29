@@ -24,8 +24,8 @@ bundle agent role_data {
   
 vars:
 
-  "nic[support]"                      string => "ens7";
-  "nic[admin]"                        string => "ens8";
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
 
   "nic_index"                          slist => getindices("nic");
 

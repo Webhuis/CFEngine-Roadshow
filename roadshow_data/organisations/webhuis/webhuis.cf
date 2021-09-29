@@ -19,26 +19,16 @@ vars:
   "vlan[life]"                      string => "42";
   "vlan[roadshow]"                  string => "1111";
 
- (classify.eth)::
-  "nic[service]"                            string => "ens3";
-  "nic[support]"                            string => "ens7";
-  "nic[admin]"                              string => "ens8";
-  "nic[gw]"                                 string => "ens9";
-  "nic[wan]"                                string => "ens10";
-  "nic[life]"                               string => "ens11";
-  "nic[roadshow]"                           string => "ens12";
-
- (classify.eno)|(classify.ens)::
-  "nic[service]"                            string => "ens3";
-  "nic[support]"                            string => "ens7";
-  "nic[admin]"                              string => "ens8";
-  "nic[gw]"                                 string => "ens9";
-  "nic[wan]"                                string => "ens10";
-  "nic[life]"                               string => "ens11";
-  "nic[roadshow]"                           string => "ens12";
+  "nic[service]"                    string => "eth0";
+  "nic[support]"                    string => "eth1";
+  "nic[admin]"                      string => "eth2";
+  "nic[gw]"                         string => "eth3";
+  "nic[wan]"                        string => "eth4";
+  "nic[life]"                       string => "eth5";
+  "nic[roadshow]"                   string => "eth6";
 
 reports:
 
-  "$(this.bundle):";
+  "$(this.bundle): Infrastructure data";
 
 }
