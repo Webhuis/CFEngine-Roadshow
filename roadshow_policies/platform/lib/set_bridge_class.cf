@@ -10,7 +10,7 @@ classes:
 
 vars:
 
-  "bridge"                            string => "br$(classify.interface)0";
+  "bridge"                            string => "breth0";
 
 methods:
 
@@ -22,7 +22,7 @@ methods:
 
  "bridge_down_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(classify.bridge)", "$(vlan)" ),
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
 
 reports:
