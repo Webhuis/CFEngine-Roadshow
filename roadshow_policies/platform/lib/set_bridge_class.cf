@@ -16,8 +16,8 @@ methods:
 
  "no_bridge_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Add bridge $(vlan)"             usebundle => add_bridge( "$(classify.bridge)", "$(vlan)" );
-  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(classify.bridge)", "$(vlan)" ),
+  "Add bridge $(vlan)"             usebundle => add_bridge( "$(bridge)", "$(vlan)" );
+  "Bring up bridge $(vlan)"        usebundle => bring_bridge_up( "$(bridge)", "$(vlan)" ),
                                      comment => "layer two";
 
  "bridge_down_$(vlan)"::
