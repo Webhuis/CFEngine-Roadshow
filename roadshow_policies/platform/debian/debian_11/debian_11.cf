@@ -23,7 +23,7 @@ vars:
 
 methods:
 
-  "We desire buster packages"            usebundle => packages("debian_11.pkg");
+  "We desire bullseye packages"          usebundle => packages("debian_11.pkg");
 
 reports:
 

@@ -9,7 +9,6 @@ vars:
 
   "pkg[arp-scan]"               string => "*";
   "pkg[array-info]"             string => "*";
-  "pkg[bridge-utils]"           string => "*";
   "pkg[gdisk]"                  string => "*";
   "pkg[libguestfs-tools]"       string => "*";
   "pkg[libosinfo-bin]"          string => "*";
