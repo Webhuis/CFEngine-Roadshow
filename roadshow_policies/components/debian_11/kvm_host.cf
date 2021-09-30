@@ -21,16 +21,14 @@ vars:
   "pkg[openvswitch-common]"     string => "*";
   "pkg[openvswitch-switch]"     string => "*";
   "pkg[parted]"                 string => "*";
-  "pkg[qemu-kvm]"               string => "*";
-  "pkg[qemu-system]"            string => "*";
+  "pkg[qemu-system-x86]"        string => "*";
   "pkg[raidutils]"              string => "*";
   "pkg[smartmontools]"          string => "*";
-  "pkg[virt-goodies]"           string => "*";
+  "pkg[tigervnc-viewer]"        string => "*";
   "pkg[virtinst]"               string => "*";
   "pkg[virt-manager]"           string => "*";
   "pkg[virt-top]"               string => "*";
   "pkg[vlan]"                   string => "*";
-  "pkg[xvnc4viewer]"            string => "*";
 
 files:
 
