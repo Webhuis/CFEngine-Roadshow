@@ -4,7 +4,7 @@ vars:
 
   "pkg[autofs]"                             string => "*";
   "pkg[autofs-ldap]"                        string => "*";
-  "pkg[python-zmq]"                         string => "*";
+  "pkg[python3-zmq]"                        string => "*";
 
   "name"                                    string => "bullseye";
   "updates"                                 string => " bullseye-security"; # The space is intentional
