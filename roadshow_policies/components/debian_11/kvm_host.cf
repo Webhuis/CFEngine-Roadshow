@@ -27,7 +27,6 @@ vars:
   "pkg[tigervnc-viewer]"        string => "*";
   "pkg[virtinst]"               string => "*";
   "pkg[virt-manager]"           string => "*";
-  "pkg[virt-top]"               string => "*";
   "pkg[vlan]"                   string => "*";
 
 files:
