@@ -3,10 +3,10 @@ bundle agent check_vswitch(vlan) {
 vars:
 
 # "interface"                         string => $(classify.interface);
-# "bridge"                            string => $(classify.bridge);
+  "bridge"                            string => "breth0";
 
 # "var_interface_$(vlan)"             string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.interface).$(vlan)","noshell");
-  "var_bridge_$(vlan)"                string => execresult("$($(sys.flavor).ip_cmd) link show dev $(classify.bridge).$(vlan)","noshell");
+  "var_bridge_$(vlan)"                string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge).$(vlan)","noshell");
 
 methods:
 
