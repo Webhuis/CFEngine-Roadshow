@@ -10,7 +10,7 @@ classes:
 
 vars:
 
-  "interface"                         string => "$(classify.interface)0";
+  "interface"                         string => "eth0";
 
 methods:
 
