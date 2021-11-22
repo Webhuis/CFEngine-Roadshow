@@ -29,7 +29,7 @@ files:
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "/root/interfaces.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl";
 
   "/root/interfaces.d/$(nic)_interface"
     comment                                => "one file per nic",
@@ -37,7 +37,7 @@ files:
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "/root/interfaces_eth.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl";
 
   "/root/network/$(nic)_persistent.link"
     comment                                => "one file per nic",
@@ -45,7 +45,7 @@ files:
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "/root/eth_persistent.link.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl";
 
 reports:
 
