@@ -23,29 +23,37 @@ vars:
 
 files:
 
-  "/root/interfaces"
+  "/etc/network/interfaces"
     comment                                => "loopback interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl",
+    classes                                => if_repaired("restart_network");
 
-  "/root/interfaces.d/$(nic)_interface"
+  "/etc/network/interfaces.d/$(nic)_interface"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl",
+    classes                                => if_repaired("restart_network");
 
-  "/root/network/$(nic)_persistent.link"
+  "/etc/systemd/network/$(nic)_persistent.link"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl";
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl",
+    classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network:: 
+  "/etc/init.d/networking restart";
 
 reports:
 
