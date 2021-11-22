@@ -45,7 +45,7 @@ vars:
 
 methods:
 
-  "We need predictable names"      usebundle => nic_mac_map("role_data.nic");
+  "We need predictable names"      usebundle => nic_mac_map;
 
 reports:
 
