@@ -1,4 +1,4 @@
-bundle agent nic_mac_map {
+bundle agent nic_mac_map (nic) {
   
 vars:
 
@@ -11,7 +11,7 @@ vars:
   "ips_all"                          string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
   "ips"                               slist => string_split($(ips_all), "\n", 99);
 
-  "nics"                              slist => getvalues("role_data.nic");
+  "nics"                              slist => getvalues("nic");
   "nics_sort"                         slist => sort("nics", lex);
   "nics_number"                         int => length("role_data.nic_trick");
 
