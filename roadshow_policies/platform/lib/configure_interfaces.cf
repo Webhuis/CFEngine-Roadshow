@@ -30,7 +30,7 @@ files:
     action                                 => immediate,
     edit_defaults                          => no_backup,
     edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl",
-    classes                                => if_repaired("restart_network");
+    classes                                => if_repaired("reboot");
 
   "/etc/network/interfaces.d/$(nic)_interface"
     comment                                => "one file per nic",
@@ -39,7 +39,7 @@ files:
     action                                 => immediate,
     edit_defaults                          => no_backup,
     edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl",
-    classes                                => if_repaired("restart_network");
+    classes                                => if_repaired("reboot");
 
   "/etc/systemd/network/$(nic)_persistent.link"
     comment                                => "one file per nic",
@@ -48,12 +48,12 @@ files:
     action                                 => immediate,
     edit_defaults                          => no_backup,
     edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl",
-    classes                                => if_repaired("restart_network");
+    classes                                => if_repaired("reboot");
 
 commands:
 
- restart_network:: 
-  "/etc/init.d/networking restart";
+ reboot:: 
+  "/usr/sbin/shutdown -r 120";
 
 reports:
 
