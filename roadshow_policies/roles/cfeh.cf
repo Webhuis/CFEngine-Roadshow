@@ -26,8 +26,7 @@ vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
-
-  "nic_index"                          slist => getindices("nic");
+  "nic_trick"                          slist => { "0", "1" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
@@ -40,9 +39,13 @@ vars:
 
   "ddns_index"                         slist => getindices("ddns");
 
-  "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
-  "support_ip"                        slist  => { "$(ddns[support][ip])" };
-  "admin_nics"                        slist  => { "$(ddns[admin][ip])" };
+  "etc_hosts_nic"                      slist => { "$(ddns[support][ip])" };
+  "support_ip"                         slist => { "$(ddns[support][ip])" };
+  "admin_nics"                         slist => { "$(ddns[admin][ip])" };
+
+methods:
+
+  "We need predictable names"      usebundle => nic_mac_map(role_data_nic");
 
 reports:
 

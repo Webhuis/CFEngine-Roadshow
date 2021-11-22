@@ -1,0 +1,60 @@
+bundle agent configure_interfaces (pos) {
+ 
+classes:
+
+  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("nic_mac_map.macs", "$(pos)"), "part"); 
+  "gateway"                     expression => strcmp($(default_device), $(current_device));
+
+vars:
+
+  "nic"                             string => nth("nic_mac_map.nics_sort", "$(pos)");
+  "default_route"                   string => nth("nic_mac_map.ipr", 0);
+  "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
+  "default_device"                  string => nth("default_device_list", "4");
+  "gateway_ip"                      string => nth("default_device_list", "2"); 
+
+  "current_device_line"             string => nth("nic_mac_map.ips", "$(pos)");
+  "current_device_list"              slist => splitstring( $(current_device_line), " ", "20"); 
+  "current_ip"                      string => nth("current_device_list", "5"); 
+  "current_device"                  string => nth("current_device_list", "10"); 
+
+ mac_ok::
+  "mac_address"                     string => "$(part[1])";
+
+files:
+
+  "/root/interfaces"
+    comment                                => "loopback interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "/root/interfaces.tmpl";
+
+  "/root/interfaces.d/$(nic)_interface"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "/root/interfaces_eth.tmpl";
+
+  "/root/network/$(nic)_persistent.link"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "/root/eth_persistent.link.tmpl";
+
+reports:
+
+ #"$(this.bundle) default_device: $(default_device)";
+  "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
+ #"$(this.bundle) current_dev : $(current_device), $(pos)";
+ #"$(this.bundle) current_ip : $(current_ip)";
+
+ gateway::
+  "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
+ 
+}
