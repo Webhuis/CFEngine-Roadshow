@@ -59,7 +59,7 @@ methods:
 commands:
 
  reboot:: 
-  "/usr/sbin/shutdown -r 120";
+  "/usr/sbin/shutdown -r 3";
 
 reports:
 

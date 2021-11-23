@@ -34,7 +34,7 @@ vars:
   "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
   "nic[life]"                         string => "$($(sys.flavour).nic[life])";
 
-  "nic_index"                          slist => getindices("nic");
+  "nic_trick"                          slist => { "0", "1", "2" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
@@ -57,8 +57,7 @@ vars:
 
 methods:
 
-  "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
-                                           comment   => "This is a layer I and II check on the virtual switch";
+  "We need predictable names"      usebundle => nic_mac_map;
 
 reports:
 
