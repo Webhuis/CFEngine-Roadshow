@@ -17,6 +17,9 @@ vars:
 
 methods:
 
+  "Are the IP's valid"            usebundle => check_ip($(ips));
+ 
+ !bad_ip::
   "map nics and macs"             usebundle => configure_interfaces($(role_data.nic_trick));
 
 reports:

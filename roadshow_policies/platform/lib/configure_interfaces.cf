@@ -41,7 +41,7 @@ files:
     edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl",
     classes                                => if_repaired("reboot");
 
-  "/etc/systemd/network/$(nic)_persistent.link"
+  "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
