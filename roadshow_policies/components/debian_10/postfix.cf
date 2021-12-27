@@ -9,7 +9,7 @@ vars:
   "postfix_package_name"          slist  => getindices("pkg");
 
 methods:
- "any" usebundle => packages("postfix_server.pkg");
+ "any" usebundle => packages("postfix.pkg");
 # "any" usebundle => get_template("postfix-mysql.conf.tmpl");
 # "any" usebundle => postfix_conf;
 
