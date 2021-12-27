@@ -2,19 +2,19 @@ bundle agent fovr {
 
 vars:
 
+  "role_name"                         string => "Failover node temporary mail and name server";
+
   "bundles[apt_cacher_ng]"     string => "${sys.flavor}/apt_cacher_ng.cf";
   "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
   "bundles[pdns_server]"       string => "${sys.flavor}/pdns_server.cf";
   "bundles[postfix_server]"    string => "${sys.flavor}/postfix_server.cf";
   "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
   "bundles[courier]"           string => "${sys.flavor}/courier.cf";
-  "bundles[roundcube]"i        string => "${sys.flavor}/roundcube.cf";
+  "bundles[roundcube]"         string => "${sys.flavor}/roundcube.cf";
   "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
 
   "sequence"                    slist => getindices("bundles");
   "inputs"                      slist => getvalues("bundles");
-
-  "admin_nics"                  slist => { "$($(sys.flavor).nics[admin])" };
 
 methods:
 
@@ -23,34 +23,12 @@ methods:
   "any"                     usebundle => "postfix_server";
   "any"                     usebundle => "postfix_mysql";
   "any"                     usebundle => "courier";
-  "any"                     usebundle => "squirrelmail";
+  "any"                     usebundle => "roundcube";
   "any"                     usebundle => "apache2";
 
 reports:
 
  "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
-
-}
-
-bundle agent cfeh {
-
-vars:
-
-  "role_name"                         string => "CFEngine policy hub";
-
-  "bundles[cfe_hub]"                  string => "cfe_hub.cf";
-
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
-
-methods:
-
-  "We are the CFEngine policy Hub" usebundle => "cfe_hub";
-
-reports:
-
-  "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role inputs: $($(classify_role).inputs)";
 
 }
 
@@ -60,7 +38,7 @@ vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
-  "nic[wan]"                          string => "$($(classify.organisation).nic[admin])";
+  "nic[wan]"                          string => "$($(classify.organisation).nic[wan])";
   "nic_trick"                          slist => { "0", "1", "2" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
