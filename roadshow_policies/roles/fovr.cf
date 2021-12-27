@@ -20,7 +20,7 @@ methods:
 
   "any"                     usebundle => "mysql_server";
   "any"                     usebundle => "pdns_server";
-  "any"                     usebundle => "postfix_server";
+  "any"                     usebundle => "postfix";
   "any"                     usebundle => "postfix_mysql";
   "any"                     usebundle => "courier";
   "any"                     usebundle => "roundcube";
