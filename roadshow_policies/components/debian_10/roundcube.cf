@@ -2,7 +2,7 @@ bundle agent roundcube {
 
 vars:
 
-  "pkg[squirrelmail]"          string => "*";
+  "pkg[roundcub]"              string => "*";
   "pkg[php-pear]"              string => "*";
   "pkg[php-ldap]"              string => "*";
 
