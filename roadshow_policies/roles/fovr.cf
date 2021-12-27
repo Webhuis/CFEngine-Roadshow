@@ -39,7 +39,7 @@ vars:
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[wan]"                          string => "$($(classify.organisation).nic[wan])";
-  "nic_trick"                          slist => { "0", "1", "2" };
+  "nic_trick"                          slist => { "0", "1", "3" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
