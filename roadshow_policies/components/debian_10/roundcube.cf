@@ -1,0 +1,15 @@
+bundle agent roundcube {
+
+vars:
+
+  "pkg[squirrelmail]"          string => "*";
+  "pkg[php-pear]"              string => "*";
+  "pkg[php-ldap]"              string => "*";
+
+  "roundcube_package_name"      slist => getindices("pkg");
+
+methods:
+
+  "any"                     usebundle => packages("roundcube.pkg");
+
+}
