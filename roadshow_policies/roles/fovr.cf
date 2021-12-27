@@ -1,4 +1,4 @@
-bundle agent pdsmys {
+bundle agent fovr {
 
 vars:
 
@@ -8,7 +8,7 @@ vars:
   "bundles[postfix_server]"    string => "${sys.flavor}/postfix_server.cf";
   "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
   "bundles[courier]"           string => "${sys.flavor}/courier.cf";
-  "bundles[squirrelmail]"      string => "${sys.flavor}/roundcube.cf";
+  "bundles[roundcube]"i        string => "${sys.flavor}/roundcube.cf";
   "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
 
   "sequence"                    slist => getindices("bundles");
