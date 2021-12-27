@@ -62,7 +62,7 @@ vars:
 
 methods:
 
-  "We need predictable names"      usebundle => nic_mac_map;
+  "We need predictable names"      usebundle => "nic_mac_map";
 
 reports:
 
