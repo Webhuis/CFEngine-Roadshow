@@ -5,7 +5,6 @@ vars:
   "pkg[courier-authdaemon]"     string => "*";
   "pkg[courier-authlib-mysql]"  string => "*";
   "pkg[courier-imap]"           string => "*";
-  "pkg[courier-imap-ssl]"       string => "*";
   "pkg[libsasl2-2]"             string => "*";
   "pkg[libsasl2-modules]"       string => "*";
   "pkg[libsasl2-modules-sql]"   string => "*";
