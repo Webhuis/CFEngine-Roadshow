@@ -6,7 +6,7 @@ vars:
 
   "bundles[apt_cacher_ng]"     string => "${sys.flavor}/apt_cacher_ng.cf";
   "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
-  "bundles[pdns_server]"       string => "${sys.flavor}/pdns_slave_server.cf";
+  "bundles[pdns_slave_server]" string => "${sys.flavor}/pdns_slave_server.cf";
   "bundles[postfix]"           string => "${sys.flavor}/postfix.cf";
   "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
   "bundles[courier]"           string => "${sys.flavor}/courier.cf";
@@ -19,7 +19,7 @@ vars:
 methods:
 
   "any"                     usebundle => "mysql_server";
-  "any"                     usebundle => "pdns_server";
+  "any"                     usebundle => "pdns_slave_server";
   "any"                     usebundle => "postfix";
   "any"                     usebundle => "postfix_mysql";
   "any"                     usebundle => "courier";
