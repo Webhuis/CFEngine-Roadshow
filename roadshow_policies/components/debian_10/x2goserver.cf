@@ -9,31 +9,22 @@ vars:
   "pkg[x2goserver-printing]"	       string => "*";
   "pkg[x2goserver-xsession]"	       string => "*";
 
-  "apt_repo[x2goserver]"               string => "deb     http://packages.x2go.org/debian stretch main$(const.n)deb-src http://packages.x2go.org/debian stretch main";
+ #"apt_repo[x2goserver]"               string => "deb     http://packages.x2go.org/debian buster main$(const.n)deb-src http://packages.x2go.org/debian stretch main";
 
-  "apt_key"                            string => "packages.x2go.org.gpg";
+ #"apt_key"                            string => "packages.x2go.org.gpg";
 
-files:
-
-  "/var/cache/apt/downloads.opennebula.org.gpg"
-    comment      => "Prepare grml debootstrap environment",
-    perms        => mo("644","root"),
-    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
-    create       => "true",
-    action       => r_immediate,
-    classes      => r_if_repaired("new_repo_key");
 
 methods:
 
-  "We desire the x2goserver key"    usebundle => get_apt_repo_key( "$(apt_key)");
+ #"We desire the x2goserver key"    usebundle => get_apt_repo_key( "$(apt_key)");
 
-  "We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo", "$(apt_key)");
+ #"We desire repo x2goserver"       usebundle => apt_repo("x2goserver.apt_repo", "$(apt_key)");
 
   "We desire x2goserver"            usebundle => packages("x2goserver.pkg");
 
 commands:
 
   "/usr/sbin/locale-gen en_US en_US.UTF-8";
-  "/usr/bin/apt-get install x2go-keyring";
+ #"/usr/bin/apt-get install x2go-keyring";
 
 }
