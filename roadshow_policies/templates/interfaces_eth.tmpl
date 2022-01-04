@@ -12,4 +12,4 @@ iface $(configure_interfaces.nic) inet static
   address $(configure_interfaces.current_ip)
 [%CFEngine gateway:: %]
   gateway $(configure_interfaces.gateway_ip)
-
+  post-up /usr/local/bin/local-rules.sh

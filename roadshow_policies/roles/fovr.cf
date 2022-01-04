@@ -4,7 +4,6 @@ vars:
 
   "role_name"                         string => "Failover node temporary mail and name server";
 
-  "bundles[apt_cacher_ng]"     string => "${sys.flavor}/apt_cacher_ng.cf";
   "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
   "bundles[pdns_slave_server]" string => "${sys.flavor}/pdns_slave_server.cf";
   "bundles[postfix]"           string => "${sys.flavor}/postfix.cf";
@@ -28,7 +27,7 @@ methods:
 
 reports:
 
- "${this.bundle}: ${classify.role} ${${classify.role}.inputs}";
+ "$(this.bundle): $(role_name)";
 
 }
 
