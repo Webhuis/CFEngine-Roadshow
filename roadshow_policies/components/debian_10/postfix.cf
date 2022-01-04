@@ -6,6 +6,7 @@ vars:
   "pkg[postfix]"                  string => "*";
   "pkg[postfixadmin]"             string => "*";
   "pkg[postgrey]"                 string => "*";
+  "pkg[php-mysql]"                string => "*";
 
   "postfix_package_name"          slist  => getindices("pkg");
 
