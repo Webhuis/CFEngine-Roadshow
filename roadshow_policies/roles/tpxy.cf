@@ -5,6 +5,7 @@ vars:
   "role_name"                         string => "Transparant Proxy";
 
   "bundles[t_proxy]"                  string => "${sys.flavor}/t_proxy.cf";
+  "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -12,6 +13,7 @@ vars:
 methods:
 
   "We are an ssh stepping stone"   usebundle => "t_proxy";
+  "We desire gateway tooling"      usebundle => "gateway_tools";
 
 reports:
 

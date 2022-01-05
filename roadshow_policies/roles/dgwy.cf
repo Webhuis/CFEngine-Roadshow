@@ -5,6 +5,7 @@ vars:
   "role_name"                         string => "DMZ gateway";
 
   "bundles[dmz_gateway]"              string => "${sys.flavor}/dmz_gateway.cf";
+  "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
@@ -12,6 +13,8 @@ vars:
 methods:
 
   "We are a dmz gateway"           usebundle => "dmz_gateway";
+  "We desire gateway tooling"      usebundle => "gateway_tools";
+
 
 reports:
 

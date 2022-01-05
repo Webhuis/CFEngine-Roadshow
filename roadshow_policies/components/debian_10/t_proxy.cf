@@ -4,12 +4,6 @@ vars:
 
   "t_proxy.cf"         string => "I am a Transparent Proxy"; 
 
-  "pkg[netdiag]"       string => "*";
-
-methods:
-
-  "We desire tools" usebundle => packages("t_proxy.pkg");
-
 reports:
 
   "${this.bundle}: ";

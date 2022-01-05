@@ -4,12 +4,6 @@ vars:
 
   "internal_gateway.cf"     string => "I am an Internal Gateway"; 
 
-  "pkg[netdiag]"            string => "*";
-
-methods:
-
-  "We desire tools"      usebundle => packages("internal_gateway.pkg");
-
 reports:
 
   "${this.bundle}: ";
