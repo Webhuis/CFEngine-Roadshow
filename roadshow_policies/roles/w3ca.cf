@@ -33,7 +33,7 @@ vars:
 
   "ddns[service][ip]"                 string => "$(sys.ipv4[$(nic[service])])";
   "ddns[service][nic]"                string => "$(nic[service])";
-  "ddns[service][suffix]"             string => "fe";
+  "ddns[service][suffix]"             string => "-fe";
   "ddns[service][vlan]"               string => "$($(classify.organisation).vlan[service])";
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
