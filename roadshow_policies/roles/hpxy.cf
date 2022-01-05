@@ -27,7 +27,7 @@ bundle agent role_data {
   
 vars:
 
-  "nic[service]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[service]"                      string => "$($(classify.organisation).nic[service])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[wan]"                          string => "$($(classify.organisation).nic[wan])";
