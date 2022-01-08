@@ -28,6 +28,8 @@ vars:
 
   "forward_zones"                        string => join(", ", local_slaves);
 
+  "zone[yoga-renkum.nl]"                 string => "$(forward_zones)";
+  "zone[webhuis.nl]"                     string => "$(forward_zones)";
   "zone[rg.webhuis.nl]"                  string => "$(forward_zones)";
   "zone[rs.webhuis.nl]"                  string => "$(forward_zones)";
   "zone[sw.webhuis.nl]"                  string => "$(forward_zones)";
