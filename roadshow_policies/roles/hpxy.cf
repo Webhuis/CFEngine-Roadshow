@@ -4,8 +4,9 @@ vars:
 
   "role_name"                         string => "HTTP / HTTPS reverse Proxy";
 
-  "bundles[h_proxy]"                  string => "${sys.flavor}/h_proxy.cf";
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
+  "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
+  "bundles[h_proxy]"                  string => "${sys.flavor}/h_proxy.cf";
   "bundles[nginx]"                    string => "${sys.flavor}/nginx.cf";
 
   "sequence"                           slist => getindices("bundles");
