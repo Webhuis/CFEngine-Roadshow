@@ -2,22 +2,12 @@ bundle agent nginx {
 
 vars:
 
-    "pkg[nginx]"              string => "*";
-
-#    "nginx_package_name"     slist  => getindices("pkg");
+    "pkg[certbot]"                         string => "*";
+    "pkg[nginx]"                           string => "*";
+    "pkg[python-certbot-nginx]"            string => "*";
 
 methods:
 
-    "any" usebundle => packages("nginx.pkg");
-    "any" usebundle => nginx_port_443;
-
-}
-
-bundle agent nginx_port_443 {
-
-reports:
-
- linux::
-  "nginx port 443";
+    "We require nginx for multiple ssl" usebundle => packages("nginx.pkg");
 
 }
