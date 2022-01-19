@@ -21,7 +21,7 @@ vars:
   "pkg[openvswitch-common]"     string => "*";
   "pkg[openvswitch-switch]"     string => "*";
   "pkg[parted]"                 string => "*";
-  "pkg[qemu-system-x86]"        string => "*";
+ #"pkg[qemu-system-x86]"        string => "*";
   "pkg[raidutils]"              string => "*";
   "pkg[smartmontools]"          string => "*";
   "pkg[tigervnc-viewer]"        string => "*";
