@@ -4,13 +4,10 @@ vars:
 
   "role_name"                         string => "Failover node temporary mail and name server";
 
-  "bundles[mysql_server]"      string => "${sys.flavor}/mysql_server.cf";
+  "bundles[mysql_server]"      string => "${sys.flavor}/mysql__slave_server.cf";
   "bundles[pdns_slave_server]" string => "${sys.flavor}/pdns_slave_server.cf";
   "bundles[postfix]"           string => "${sys.flavor}/postfix.cf";
   "bundles[postfix_mysql]"     string => "${sys.flavor}/postfix_mysql.cf";
-  "bundles[courier]"           string => "${sys.flavor}/courier.cf";
-  "bundles[roundcube]"         string => "${sys.flavor}/roundcube.cf";
-  "bundles[apache2]"           string => "${sys.flavor}/apache2.cf";
 
   "sequence"                    slist => getindices("bundles");
   "inputs"                      slist => getvalues("bundles");

@@ -1,0 +1,40 @@
+bundle agent proxmox_node {
+
+vars:
+
+  "apt_repo[proxmox]"                  string => "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription";
+  "apt_repo[proxmox_ceph]"             string => "deb http://download.proxmox.com/debian/ceph-pacific bullseye main";
+
+  "apt_key"                            string => "proxmox-release-bullseye.gpg";
+
+  "pkg[proxmox-node]"                  string => "*";
+
+files:
+
+  "/var/cache/apt/downloads.opennebula.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
+services:
+
+ opennebula_restart::
+
+  "libvirtd"     service_policy => "start";
+
+methods:
+
+  "We desire the Proxmox key"       usebundle => get_apt_repo_key( "$(apt_key)");
+
+  "We desire Proxmox repo"          usebundle => apt_repo("proxmox_node.apt_repo", "$(apt_key)");
+
+  "We are a Proxmox client"         usebundle => packages("proxmox_node.pkg");
+
+reports:
+
+  "$(this.bundle): Repo and software install";
+
+}
