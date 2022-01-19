@@ -4,7 +4,7 @@ vars:
 
   "role_name"                                 string => "kvm hypervisor proxmox";
 
-  "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
+ #"bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
   "bundles[proxmox_node]"                     string => "$(sys.flavor)/proxmox_node.cf";
 
   "sequence"                                  slist  => getindices("bundles");
