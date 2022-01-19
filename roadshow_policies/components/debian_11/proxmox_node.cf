@@ -8,7 +8,7 @@ vars:
   "apt_key"                            string => "proxmox-release-bullseye.gpg";
 
   "pkg[open-iscsi]"                    string => "*";
-  "pkg[proxmox_ve]"                    string => "*";
+  "pkg[proxmox-ve]"                    string => "*";
   "pkg[postfix]"                       string => "*";
 
 files:
