@@ -7,16 +7,30 @@ vars:
 
   "apt_key"                            string => "proxmox-release-bullseye.gpg";
 
+  "pkg[arp-scan]"                      string => "*";
+  "pkg[array-info]"                    string => "*";
+  "pkg[gdisk]"                         string => "*";
+  "pkg[lvm2]"                          string => "*";
+  "pkg[mdadm]"                         string => "*";
+  "pkg[minicom]"                       string => "*";
+  "pkg[nfs-common]"                    string => "*";
   "pkg[open-iscsi]"                    string => "*";
-  "pkg[proxmox-ve]"                    string => "*";
+  "pkg[openvswitch-common]"            string => "*";
+  "pkg[openvswitch-switch]"            string => "*";
+  "pkg[parted]"                        string => "*";
   "pkg[postfix]"                       string => "*";
+  "pkg[proxmox-ve]"                    string => "*";
+  "pkg[raidutils]"                     string => "*";
+  "pkg[smartmontools]"                 string => "*";
+  "pkg[tigervnc-viewer]"               string => "*";
+  "pkg[vlan]"                          string => "*";
 
 files:
 
-  "/var/cache/apt/downloads.opennebula.org.gpg"
+  "/var/cache/apt/proxmox-release-bullseye.gpg";
     comment      => "Prepare grml debootstrap environment",
     perms        => mo("644","root"),
-    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    copy_from    => local_cp("/tmp/proxmox-release-bullseye.gpg"),
     create       => "true",
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
