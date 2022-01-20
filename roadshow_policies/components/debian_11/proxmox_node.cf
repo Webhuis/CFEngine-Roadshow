@@ -9,7 +9,6 @@ vars:
 
   "pkg[arp-scan]"                      string => "*";
   "pkg[array-info]"                    string => "*";
-  "pkg[gdisk]"                         string => "*";
   "pkg[lvm2]"                          string => "*";
   "pkg[mdadm]"                         string => "*";
   "pkg[minicom]"                       string => "*";
@@ -23,7 +22,6 @@ vars:
   "pkg[raidutils]"                     string => "*";
   "pkg[smartmontools]"                 string => "*";
   "pkg[tigervnc-viewer]"               string => "*";
-  "pkg[vlan]"                          string => "*";
 
 files:
 
