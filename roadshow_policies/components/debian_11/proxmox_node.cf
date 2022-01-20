@@ -27,7 +27,7 @@ vars:
 
 files:
 
-  "/var/cache/apt/proxmox-release-bullseye.gpg";
+  "/var/cache/apt/proxmox-release-bullseye.gpg"
     comment      => "Prepare grml debootstrap environment",
     perms        => mo("644","root"),
     copy_from    => local_cp("/tmp/proxmox-release-bullseye.gpg"),
