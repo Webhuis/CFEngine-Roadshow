@@ -41,8 +41,7 @@ vars:
   "nic[gw]"                           string => "$(classify.bridge).$(vlan[gw])";
   "nic[life]"                         string => "$(classify.bridge).$(vlan[life])";
   "nic[roadshow]"                     string => "$(classify.bridge).$(vlan[roadshow])";
-
-  "nic_index"                          slist => getindices("nic");
+  "nic_trick"                          slist => { "0", "1", "2" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[canonify($(nic[support]))])";
   "ddns[support][nic]"                string => "$(nic[support])";
