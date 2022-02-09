@@ -1,0 +1,35 @@
+bundle agent postfix {
+
+vars:
+
+  "data_directory"                string => "/var/lib/postfix/";
+  "pkg[postfix]"                  string => "*";
+  "pkg[postfixadmin]"             string => "*";
+  "pkg[postgrey]"                 string => "*";
+  "pkg[php-mysql]"                string => "*";
+
+  "postfix_package_name"          slist  => getindices("pkg");
+
+methods:
+ "any" usebundle => packages("postfix.pkg");
+# "any" usebundle => get_template("postfix-mysql.conf.tmpl");
+# "any" usebundle => postfix_conf;
+
+}
+
+bundle agent postfix_conf {
+
+files:
+ "/etc/powerdns/postfix.conf"
+  comment                   => "postfix.conf door class_domain nameserver",
+  perms                     => mo("600","root"),
+  create                    => "true",
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postfix-mysql.conf.tmpl",
+  classes                   => r_if_repaired("restart_postfix");
+
+commands:
+  restart_postfix::
+   "/etc/init.d/postfix restart";
+
+}

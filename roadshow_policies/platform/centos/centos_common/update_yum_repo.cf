@@ -1,0 +1,11 @@
+bundle agent update_yum_repo {
+
+commands:
+
+  "/bin/yum updateinfo";
+
+reports:
+
+  "${this.bundle}:";
+
+}

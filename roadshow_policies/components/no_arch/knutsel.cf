@@ -1,0 +1,11 @@
+bundle agent knutsel {
+
+vars:
+
+  "knutsel"                     string => "I am a sandbox"; 
+
+reports:
+
+  "${this.bundle}: $(knutsel)";
+
+}

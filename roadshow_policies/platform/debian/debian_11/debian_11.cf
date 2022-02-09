@@ -1,0 +1,33 @@
+bundle agent debian_11 {
+
+vars:
+
+  "pkg[autofs]"                             string => "*";
+  "pkg[autofs-ldap]"                        string => "*";
+  "pkg[python3-zmq]"                        string => "*";
+
+  "name"                                    string => "bullseye";
+  "updates"                                 string => " bullseye-security"; # The space is intentional
+
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[gw]"                                 string => "ens9";
+  "nic[wan]"                                string => "ens10";
+  "nic[life]"                               string => "ens11";
+  "nic[roadshow]"                           string => "ens12";
+
+  "vnic_index"                               slist => getindices("vnic");
+
+  "ip_cmd"                                  string => "/usr/bin/ip";
+
+methods:
+
+  "We desire bullseye packages"          usebundle => packages("debian_11.pkg");
+
+reports:
+
+  "$(this.bundle):";
+
+}
+

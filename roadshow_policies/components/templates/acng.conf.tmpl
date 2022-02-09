@@ -1,0 +1,21 @@
+# Webhuis template voor apt-cacher-ng acng.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+CacheDir: /var/cache/apt-cacher-ng
+LogDir: /var/log/apt-cacher-ng
+SupportDir: /usr/lib/apt-cacher-ng
+Remap-debrep: file:deb_mirror*.gz /debian ; file:backends_debian # Debian Archives
+Remap-uburep: file:ubuntu_mirrors /ubuntu ; file:backends_ubuntu # Ubuntu Archives
+#Remap-sfnet:  file:sfnet_mirrors # ; file:backends_sfnet # incomplete, please create this file or specify preferred mirrors here
+Remap-alxrep: file:archlx_mirrors /archlinux # ; file:backend_archlx # Arch Linux
+Remap-fedora: file:fedora_mirrors # Fedora Linux
+Remap-epel:   file:epel_mirrors # Fedora EPEL
+Remap-slrep:  file:sl_mirrors # Scientific Linux
+Remap-gentoo: file:gentoo_mirrors.gz /gentoo ; file:backends_gentoo # Gentoo Archives
+Remap-secdeb: security.debian.org  ; security.debian.org deb.debian.org/debian-security
+Remap-$(apt_cacher_ng.repo): http://$($(do_roadshow.class_domain).apt_cacher)-remap.$(sys.domain)  ; file:backends_$(apt_cacher_ng.repo)
+ReportPage: acng-report.html
+ExThreshold: 4
+LocalDirs: acng-doc /usr/share/doc/apt-cacher-ng

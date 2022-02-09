@@ -1,0 +1,69 @@
+bundle agent configure_interfaces (pos) {
+ 
+classes:
+
+  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("nic_mac_map.macs", "$(pos)"), "part"); 
+  "gateway"                     expression => strcmp($(default_device), $(current_device));
+
+vars:
+
+  "nic"                             string => nth("nic_mac_map.nics_sort", "$(pos)");
+  "default_route"                   string => nth("nic_mac_map.ipr", 0);
+  "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
+  "default_device"                  string => nth("default_device_list", "4");
+  "gateway_ip"                      string => nth("default_device_list", "2"); 
+
+  "current_device_line"             string => nth("nic_mac_map.ips", "$(pos)");
+  "current_device_list"              slist => splitstring( $(current_device_line), " ", "20"); 
+  "current_device"                  string => nth("current_device_list", "10");
+  "current_ip_sub"                  string => nth("current_device_list", "5"); 
+  "current_ip_list"                  slist => splitstring( $(current_ip_sub), "/", "3"); 
+  "current_ip"                      string => nth("current_ip_list", "0"); 
+
+ mac_ok::
+  "mac_address"                     string => "$(part[1])";
+
+files:
+
+ !bad_ip::
+  "/etc/network/interfaces.d/$(nic)_interface"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl",
+    classes                                => if_repaired("reboot");
+
+ mac_ok::
+  "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl",
+    classes                                => if_repaired("reboot");
+
+methods:
+
+  "Are the IP's valid"            usebundle => check_ip($(current_ip));
+
+commands:
+
+ reboot:: 
+  "/usr/sbin/shutdown -r 3";
+
+reports:
+
+ #"$(this.bundle) default_device: $(default_device)";
+  "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
+ #"$(this.bundle) nic_mac_map.ipr : $(nic_mac_map.ipr)";
+ #"$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
+ #"$(this.bundle) current_dev : $(current_device), $(pos)";
+  "$(this.bundle) current_ip : $(current_ip)";
+
+ gateway::
+  "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
+ 
+}

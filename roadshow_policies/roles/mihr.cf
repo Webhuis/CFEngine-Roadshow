@@ -1,0 +1,48 @@
+bundle agent mihr {
+
+vars:
+
+  "role_name"                         string => "The Mac address IP address Hostname Reverse lookup server";
+
+  "bundles[mihr_server]"               string => "$(sys.flavor)/mihr_server.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+methods:
+
+  "We are a DHCP / DDNS server"    usebundle => "mihr_server";
+
+reports:
+
+ "${this.bundle}: $($(sys.flavor).nics)";
+
+}
+
+bundle agent role_data {
+  
+vars:
+
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(vnic[support])])";
+  "ddns[support][nic]"                string => "$(vnic[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$($(classify.eco_vars).network[support][vlan])";
+  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(vnic[admin])])";
+  "ddns[admin][nic]"                  string => "$(vnic[admin])";
+  "ddns[admin][suffix]"               string => "-ssh";
+  "ddns[admin][vlan]"                 string => "$($(classify.eco_vars).network[admin][vlan])";
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[support])])" };
+
+reports:
+
+  "${this.bundle} nics: $(vnic)";
+  "${this.bundle} etc_hosts_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

@@ -1,0 +1,39 @@
+bundle agent pdns_slave_server {
+
+vars:
+
+  "pkg[pdns-server]"                string => "*";
+  "pkg[pdns-backend-mysql]"         string => "*";
+
+  "pdns_package_name"               slist  => getindices("pkg");
+  "pdns_slave_template"             slist  => { "pdns-mysql-slave.conf.tmpl" };
+
+methods:
+
+  "Check Ip Addresses first"     usebundle => check_ip("$(role_data.ddns[support][ip])");
+
+ !bad_ip::
+  "We desire powerdns"           usebundle => packages("pdns_slave_server.pkg");
+  "Configure powerdns for mysql" usebundle => get_template("$(pdns_slave_template)");
+  "Configure powerdns server"    usebundle => pdns_conf;
+
+}
+
+bundle agent pdns_conf {
+
+files:
+
+ "/etc/powerdns/pdns.conf"
+  comment                   => "pdns.conf door class_domain nameserver, slave listens on localhost",
+  perms                     => mo("600","root"),
+  create                    => "true",
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql-slave.conf.tmpl",
+  classes                   => r_if_repaired("restart_pdns");
+
+commands:
+
+  restart_pdns::
+   "/etc/init.d/pdns restart";
+
+}

@@ -1,0 +1,28 @@
+# Webhuis template voor pdns.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+#allow-2136-from=10.0.0.0/8
+local-address=$(role_data.ddns[support][ip])
+local-port=53
+config-dir=/etc/powerdns
+module-dir=/usr/lib/x86_64-linux-gnu/pdns
+daemon=yes
+disable-axfr=no
+log-dns-details=on
+loglevel=3
+module-dir=/usr/lib/powerdns
+master=no
+slave=yes
+slave-cycle-interval=60
+setgid=pdns
+setuid=pdns
+socket-dir=/var/run
+version-string=powerdns
+webserver=yes
+webserver-address=$(role_data.ddns[support][ip])
+webserver-allow-from=0.0.0.0/0
+webserver-port=8081
+include-dir=/etc/powerdns/pdns.d
+

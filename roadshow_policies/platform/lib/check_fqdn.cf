@@ -1,0 +1,43 @@
+bundle agent check_fqdn(fqdn) {
+
+defaults:
+
+  "fqdn"                                string => "bar", if_match_regex => ".*\([\$\[\]\(\)a-zA-Z0-9_.]+\)";
+
+vars:
+
+  "can_fqdn"                            string => canonify( $(fqdn) );
+
+methods:
+
+  "Do we have a valid FQDN"          usebundle => set_class_fqdn;
+
+reports:
+
+   "$(this.bundle) fqdn input: $(fqdn)";
+
+  !bad_fqdn::
+   "$(this.bundle) good fqdn: $(can_fqdn)";
+
+  bad_fqdn::
+   "$(this.bundle) bad fqdn: $(can_fqdn)";
+}
+
+bundle common set_class_fqdn {
+
+classes:
+
+  "match_$(can_fqdn)"
+   comment    => "Oh, the fqdn's.",
+   expression => regcmp( "([a-z0-9][a-z0-9_]*)",
+            $(can_fqdn)
+            );
+ "!match_$(can_fqdn)"::
+  "bad_fqdn"                                 expression => "any";
+
+reports:
+
+  bad_fqdn::
+   "$(this.bundle) bad fqdn: $(fqdn)";
+
+}

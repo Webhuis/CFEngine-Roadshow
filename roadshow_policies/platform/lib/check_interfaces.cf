@@ -1,0 +1,79 @@
+bundle agent check_interfaces(nic) {
+
+vars:
+
+  "var_nic_$(nic)"                    string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
+methods:
+
+  "Check one nic"                  usebundle => one_interface("$(var_nic_$(nic))");
+
+reports:
+
+ "$(this.bundle): I am checking nics and mac: $(nic).";
+
+ "!no_device_$(nic).!if_down_$(nic)"::
+  "$(this.bundle): $(nic): up";
+ mac_ok::
+  "$(this.bundle): $(nic), mac_address ok, $(nic_hw[$(nic)])";
+
+ "no_device_$(nic)"::
+  "$(this.bundle): $(nic) Bingo, no device!";
+
+ "if_down_$(nic)"::
+  "$(this.bundle): $(nic) Bingo, interface down!";
+
+ !mac_ok::
+  "$(this.bundle): $(nic), oh dear! mac_address nok, $(var_nic_$(nic))"; 
+
+}
+
+bundle agent one_interface(interface) {
+
+vars:
+
+  "nic"                               string => "$(interface)";
+
+methods:
+
+  "Set classes for interface"      usebundle => set_class_interface;
+
+ no_device::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Add device $(nic)"              usebundle => add_nic( "$(nic)" );
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer one";
+
+ if_down::
+  "Set status bad"                 usebundle => status_device("bad");
+  "Bring up nic $(nic)"            usebundle => bring_nic_up( "$(nic)" ),
+                                     comment => "layer two";
+
+reports:
+
+ "$(this.bundle): I am checking one nic and mac: $(nic).";
+
+}
+
+bundle common set_class_interface {
+
+classes:
+
+  "no_device"                     expression => regcmp( ".*does not exist.*",
+                                                        "$(nic))");
+
+  "if_down"                       expression => regcmp( ".*DOWN.*",
+                                                        "$(nic)");
+
+  "mac_ok"                        expression => regextract( ".*ether ([^\s]+).*(' '.*)*", "$(nic)", "mac");
+
+vars:
+
+  "nic"                               string => "$(one_interface.nic)";
+  "var_nic"                           string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
+
+reports:
+
+ "$(this.bundle): I am setting class nic and mac: $(nic).";
+
+}

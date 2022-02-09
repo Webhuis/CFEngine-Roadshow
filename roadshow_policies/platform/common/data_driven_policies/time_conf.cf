@@ -1,0 +1,59 @@
+bundle agent time_conf {
+
+vars:
+
+  "ntp_conf"                        string => "/etc/ntp.conf";
+  "ntp_default"                     string => "/etc/default/ntpdate";
+  "timezone"                        string => "GMT";
+  "localtime"                       string => "/etc/localtime";
+  "gmt"                             string => "/usr/share/zoneinfo/$(timezone)";
+
+  "pkg[ntp]"                        string => "*";
+  "pkg[ntpdate]"                    string => "*";
+
+  "nopkg[hobbit-plugins]"           string => "*";
+  "nopkg[openntpd]"                 string => "*";
+
+files:
+
+  "$(localtime)"
+    comment             => "Set the right localtime (GMT), for once and forever.",
+    action              => immediate,
+    move_obstructions   => "true",
+    link_from           => ln_s("$(gmt)");
+
+  "/etc/timezone"
+    comment             => "Set the right timezone (GMT), for once and forever.",
+    create              => "true",
+    perms               => mo("644","root"),
+    action              => r_immediate,
+    edit_line           => edit_timezone($(timezone));
+
+methods:
+
+  "Time packages we need"                   usebundle => packages("time_conf.pkg");
+  "Time packages we do not need"            usebundle => nopackages("time_conf.nopkg");
+
+  "A VM is an ntp client"                   usebundle => ntp_client;
+
+services:
+
+  "ntp"                                service_policy => "start";
+
+reports:
+
+ "$(this.bundle): I am doing time configuration common to all platforms";
+
+}
+
+bundle edit_line  edit_timezone(string) {
+
+delete_lines:
+
+    ".*";
+
+ insert_lines:
+
+"${string}";
+
+}

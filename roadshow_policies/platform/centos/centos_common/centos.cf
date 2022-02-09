@@ -1,0 +1,13 @@
+bundle agent centos {
+
+methods:
+
+  "We desire centos_common policies in place" usebundle => centos_common;
+  "We desire sys.flavour policies in place"   usebundle => $(sys.flavour);
+
+reports:
+
+  "$(this.bundle): $(sys.flavour)";
+
+}
+

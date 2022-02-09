@@ -1,0 +1,24 @@
+bundle agent ntp_client {
+
+files:
+
+  "/etc/ntp.conf"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ntp_client.conf.tmpl",
+    classes        => if_repaired("restart_ntp");
+
+commands:
+
+  "/sbin/hwclock -w";
+
+ restart_ntp::
+
+  "service ntpd restart"
+   comment => "restarting ntpd"; 
+
+reports:
+
+ "${this.bundle}: I am doing time client configuration common to all platforms";
+
+}

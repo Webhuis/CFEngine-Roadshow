@@ -1,0 +1,19 @@
+bundle agent mihr_server {
+
+vars:
+
+  "pkg[isc-dhcp-server-ldap]"	       string => "*";
+  "pkg[ldap-utils]"                    string => "*";
+  "pkg[python3-ldap]"                  string => "*";
+  "pkg[slapd]"          	       string => "*";
+  "pkg[slapd-contrib]"                 string => "*";
+
+methods:
+
+  "We desire the mihr server"          usebundle => packages("mihr_server.pkg");
+
+reports:
+
+  "$(this.bundle): ";
+
+}

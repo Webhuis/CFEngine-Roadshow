@@ -1,0 +1,11 @@
+bundle agent dmz_gateway {
+
+vars:
+
+  "DMZl_gateway.cf"         string => "I am a DMZ Gateway"; 
+
+reports:
+
+  "${this.bundle}: ";
+
+}

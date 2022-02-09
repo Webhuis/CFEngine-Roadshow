@@ -1,0 +1,13 @@
+# Webhuis template for persistent links in /etc/systemd/network
+# Overcomes the issues of the very unpredictable predictable interface names.
+# Interface names are hard linked to mac addresses on vlans
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+source /etc/network/interfaces.d/*

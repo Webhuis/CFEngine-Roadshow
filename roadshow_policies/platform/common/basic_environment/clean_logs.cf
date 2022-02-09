@@ -1,0 +1,26 @@
+bundle agent clean_logs {
+
+files:
+
+  "/etc/rsyslog.conf"
+    comment                   => "Clean, targeted and dedicated logs files",
+    perms                     => mo("644","root"),
+    action                    => r_immediate,
+    classes                   => if_repaired("restart_rsyslogd"),
+    edit_template             => "$(sys.workdir)/roadshow_inputs/templates/rsyslog.conf.tmpl";
+
+services:
+
+ restart_rsyslogd::
+  "rsyslog"
+   service_policy => "restart";
+
+ any::
+  "rsyslog"
+   service_policy => "start";
+
+reports:
+
+  "${this.bundle}: Clean and dedicated logs, avoiding duplicates" ;
+
+}

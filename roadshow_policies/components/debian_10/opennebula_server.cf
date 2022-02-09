@@ -1,0 +1,37 @@
+bundle agent opennebula_server {
+
+vars:
+
+  "pkg[opennebula]"	                 string => "*";
+  "pkg[opennebula-flow]"	         string => "*";
+  "pkg[opennebula-gate]"	         string => "*";
+  "pkg[opennebula-sunstone]"	         string => "*";
+  "pkg[opennebula-tools]"	         string => "*";
+
+ #"apt_repo[opennebula]"                 string => "deb http://downloads.opennebula.org/repo/5.13/Debian/10 stable opennebula";
+ #"cache_repo[one]"                      string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-one.$(sys.domain) buster main";
+  "apt_repo[opennebula]"                 string => "deb http://aptgwhpdcsw1-remap.sw.webhuis.nl stable opennebula";
+
+
+  "apt_key"                              string => "downloads.opennebula.org.gpg";
+
+  "repo_index"                            slist => getindices("opennebula_server.cache_repo");
+ 
+methods:
+
+  "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need the opennebula cache repo" usebundle => apt_repo_list("$(repo_index)", "$(apt_repo[$(repo_index)])");
+
+  "We desire opennebula"              usebundle => packages("opennebula_server.pkg");
+
+services:
+
+  "opennebula"                   service_policy => "start";
+  "opennebula-sunstone"          service_policy => "start";
+
+reports:
+
+ "${this.bundle}: The OpenNebula Server";
+
+}

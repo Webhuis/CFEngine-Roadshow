@@ -1,0 +1,49 @@
+bundle agent gitb {
+
+vars:
+
+  "role_name"      string => "gitblit tomcat frontend git server";
+
+  "app"            string => "gitblit";
+  "tomcat_app"     string => "no_arch/tomcat_app.cf";
+
+  "inputs"          slist => { "${tomcat_app}", getvalues("tomcat_app.bundles") };
+
+methods:
+
+  "any"         usebundle => tomcat_app(${app});
+
+reports:
+
+  "${this.bundle} : ${inputs}";
+
+}
+
+bundle agent role_data {
+  
+vars:
+
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+
+  "vnic_index"                         slist => getindices("vnic");
+
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
+  "support_ip"                        slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[support])])", "$(sys.ipv4[$(vnic[admin])])", };
+
+methods:
+
+  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
+                                   comment   => "This is a layer I and II check on the virtual switch";
+
+reports:
+
+  "${this.bundle} nics: $(vnic)";
+  "${this.bundle} support_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

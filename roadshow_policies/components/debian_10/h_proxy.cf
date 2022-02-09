@@ -1,0 +1,11 @@
+bundle agent h_proxy {
+
+vars:
+
+  "h_proxy.cf"         string => "I am a Reverse http and https Proxy";
+
+reports:
+
+  "${this.bundle}: ";
+
+}

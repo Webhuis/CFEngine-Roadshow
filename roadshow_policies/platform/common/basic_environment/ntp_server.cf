@@ -1,0 +1,25 @@
+bundle agent ntp_server {
+
+files:
+
+  "/etc/ntp.conf"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ntp_server.conf.tmpl",
+    classes        => if_repaired("restart_ntp");
+
+commands:
+
+  "/sbin/hwclock -w";
+
+ restart_ntp::
+
+  "/usr/sbin/service ntp restart"
+   handle => "restart_ntpd",
+   comment => "restarting ntpd"; 
+
+reports:
+
+ "$(this.bundle): I am doing time server configuration";
+
+}

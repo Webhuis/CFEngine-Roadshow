@@ -1,0 +1,14 @@
+# Webhuis template voor client ntp.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+driftfile /var/lib/ntp/ntp.drift
+statsdir /var/log/ntpstats/
+
+server $($(classify.domain).ntp_server)
+
+restrict default kod limited nomodify notrap nopeer noquery
+restrict -6 default kodi limited nomodify notrap nopeer noquery
+restrict 127.0.0.1
+restrict -6 ::1

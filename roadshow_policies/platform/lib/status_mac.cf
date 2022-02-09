@@ -1,0 +1,19 @@
+bundle agent status_mac(mac_status) {
+
+classes:
+
+  "stop_mac_editing"         expression => regcmp( "bad", $(mac_status) );
+
+defaults:
+
+  "mac_status"                   string => "good", if_match_regex => "";
+
+methods:
+
+  "Stop mac processing"        usebundle => "bad_mac";
+
+reports:
+
+  "$(this.bundle) mac status: $(mac_status)";
+
+}

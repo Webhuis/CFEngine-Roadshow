@@ -1,0 +1,33 @@
+bundle agent debian_10 {
+
+vars:
+
+  "pkg[autofs]"                             string => "*";
+  "pkg[autofs-ldap]"                        string => "*";
+  "pkg[python-zmq]"                         string => "*";
+
+  "name"                                    string => "buster";
+  "updates"                                 string => "buster/updates";
+
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[gw]"                                 string => "ens9";
+  "nic[wan]"                                string => "ens10";
+  "nic[life]"                               string => "ens11";
+  "nic[roadshow]"                           string => "ens12";
+
+  "vnic_index"                               slist => getindices("vnic");
+
+  "ip_cmd"                                  string => "/usr/bin/ip";
+
+methods:
+
+  "We desire buster packages"            usebundle => packages("debian_10.pkg");
+
+reports:
+
+  "$(this.bundle):";
+
+}
+

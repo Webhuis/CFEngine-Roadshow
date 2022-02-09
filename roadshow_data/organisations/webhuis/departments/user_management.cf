@@ -1,0 +1,91 @@
+bundle agent user_management {
+
+vars:
+
+ "user[cfetest]"           string => "cfetest:x:1001:1100:cfetest:/home/cfetest:/bin/bash";
+ "user[hans]"              string => "hans:x:1002:1100:hans:/home/hans:/bin/bash";
+ "user[martin]"            string => "martin:x:1000:1100:martin:/home/martin:/bin/bash";
+
+ "user_pw[cfetest]" string => "cfetest:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+ "user_pw[hans]" string => "hans:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+ "user_pw[martin]" string => "martin:$6$3TaToqBd$PXjo0UAq7drVQryLS1MAyQM59eNelvdwG0gMfEoPLdTHDFaYV9BttNfcKRTjnozIPBHN5HkrWSssIzPbiG9yy/:16337:0:99999:7:::";
+
+ "user_key[cfetest]"       string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150";
+ "user_key[hans]"          string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZq9IUNE0cQj6Zy+VPrBn9+W8bqIZyo9r5NL0ssX1eCa1NeRpm/As2DSsrIfYXPsHIqHV1VsD7bo+WoTkDBjmUHRGt0EhgwJHfAZX5eihAu3HuPqqobDPHfCqIzEWPiKe6CdsKcvajNueJXcaXZqqjKyDUBGrDtY5THKfxEvGuuyFaFJmCO9j11s2EQerzYX3tnRX4yOGuP+pAf28OwFYcV5wLqEpNOaFfoZFFZiWdnTHbvxfiXV6wuIOobmNsA1ugkSz7FUN7W6NaB3a+HxyzeqAkc3Ns1q/qauvxGS0kXLK8UXbJMFfm2DICJHpQM4pglx0PewPcqEiCT2VD+J0TzUoCW5GYfj6L1umTSAr7rNuJlKHFjLtCHHNUX9Xiy1W7k/x9QEh+M4MUkMzgiNpq1w2SE/k/BhEIWXSUOm6JtSf0eqSfV5m1Dy2O2F+kPscghI6KkzX9ZNWW1Xa1BtV+KF/RCdKnEklfB8v0JFtM5QwZPwBA3/Jo8mm3xGSJlLkJcyA8DljQzlYQ3hkuwGRfSSH5ZIWsrCJbbE5Bt/EgwSbINrnDnIJzzYGZYZkBja+1MFXmuKMkyI3tksx2g8zVLWRvDiT6S4wExKphp83h2137I0j2i1sj/jDR1pgnoXtVMLb64Ye7XD2WuQ9l9n1jDcaxACMh4Ku6QxIF7NWLJw== hspaans@voyager";
+ "user_key[martin]"        string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3nzck2vKkU9u23eiDrzmHJ39GfVWuchDzIjmogJ5ma+lk8exRG3IsK/geph4e2n98LAhcHMkpQLe8kmur94DGvqphcXPxaLrdgkb+t0BIeBfh7I23jpAZU/ZTlJJaK0lE7J1YjRCDScs8OVCxSbKCyqvEaSTCgosfHfp/f/tSEVKztgpiNYggvouTdVLe6HUuBWneWyq7bCvSAseTFAgj16ivVETQgW3dowW/njcvjdzd/4cez4fWz1A3yvbreQzDQS/FJmkJ5RWW8dq+0aHUrBQIQe7GzJoNREhE6ancWOvWaoF85v1ZYnHoFSB0WEd7LSxqhgaLFEaPDrVBeqxmEgo0RMviXWcRJc6Owr3b2dSu2XPVxE1ndgUETBByaHvlWwj/x4KoRS3LNrfn/7auh16l9sihj8b8zHGb4lcVHUHLIBC2e4m5B2wYrtlXMm+6UyOGBcEsf7Npo+Ih8NhZ/n7YdE2ozJvtb7oaIQTV7G4omcMTconAIpSfQIfVsd9Wn6GR+RgsilSeG0WJlitW9IG6UKqJQCe50eLPSioX5zo+qfwrJNAigs4W0Bd+PhPvFHjn+Ksvn/BGACyHt3BKLiGSFAKsJBmmmHsntN2Q2LssfAqEUyVFTUM1wdDRC42IuCAWGVOHCia9dP4pW/o5EnsTaWVCKywK2rWg5ccBtw== martin@dom0-150
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCqBG7gtIFRR3fLRnKraGeF01xw0bT7KIy2ZjH8fkrl+A4Q8sE3pahic/FLg8mtGp1rflanl8hBWsZqyrA0UX35jytJ0XJU52fSMN7Ap4+SXLmK1/cT/zvomPrwUJ1gITBd+LiLxtBtncqjgLszp8iJHaylTTqeJ82Ko49a8Xoo9Thf1BHiyIgkNkERruFmeWgRQtPO/w7RgA92lPjjpdvUTnc5/B8oI4rJXVZBNLmAet/fq0cmI+XvZ/hLbgcNDsGYOZpLMQzq6/9uVWT9YlXrnlTMNSEyGPBKmfZdS8uADxLB/QG4a8/9oCPoLuopvpivhe21wnILZ8I20s3Sw+2141PU0WCj97pATo0IVpic97bqSNdefeDiJ+zDCqOLlROeiON5SeQQdse87gcGQlJiAKbd66OU29j77aaY1OybiHNfALIp11PtsszhWw+JtrVcFDHv1IvzzIGgnCqPnp+4HvnZU2xkyEl2RgTENIGv0LCYnTk/ADxldYj4bjwOeCCzckytovSgSwKxoZ7ON82/9tS+Ne+ms3rzVrYZDmoa4EYRZTZX6RqAwYJ3mq57NechM/cdM34up7dfgUlMwtqSaSNsTBdthGzbUORZXQW/Vz1l9LT/zASVJeayBnRaw/AXR/N7Qq7bNASXsXos4/yO302UeGtsPl133jMWvjvoGQ== martin@NewVMHost1";
+
+ "group_id[cfegroup]"      string => "cfegroup:x:1100:";
+ "group_id[cfemanager]"    string => "cfemanager:x:1101:";
+ "group_id[cfetest]"       string => "cfetest:x:1001:";
+ "group_id[hans]"          string => "hans:x:1002:";
+ "group_id[martin]"        string => "martin:x:1000:";
+ "group_users[cfegroup]"    slist => { "cfetest", "hans", "martin" };
+
+ "users"                    slist => getindices(user);
+ "user_group"               slist => getindices(group_users);
+ "user_list"                slist => getvalues(group_users);
+ "user_pw_index"            slist => getindices(user_pw);
+ "user_pw_value"            slist => getvalues(user_pw);
+ "user_key_index"           slist => getindices(user_key);
+ "user_key_value"           slist => getvalues(user_key);
+
+files:
+
+  "/etc/group"
+    edit_line => append_groups_starting("user_management.group_id");
+
+  "/etc/passwd"
+    edit_line => append_users_starting("user_management.user");
+
+  "/etc/shadow"
+    edit_line => append_users_shadow("@(user_pw_value)");
+
+  "/etc/group"
+    edit_line => append_user_field("${user_group}","4","@(users)");
+
+  "/home/$(users)/."
+    create => "true",
+     perms => mog("2750","${users}","cfegroup");
+
+  "/home/$(users)/.ssh/."
+    create => "true",
+     perms => mog("0700","${users}","${users}");
+
+methods:
+ "any" usebundle => user_ssh_key("user_management.user_key");
+
+}
+
+bundle agent user_ssh_key(user_key) {
+
+vars:
+ "user"                     slist => getindices("$(user_key)");
+ "authorized_keys"          slist => getvalues("$(user_key)");
+
+files:
+
+  "/home/${user}/.ssh/authorized_keys"
+    create => "true",
+    handle => "set_ssh_public_key",
+   comment => "Set desired ssh_config parameters",
+     perms => mog("0600", "${user}", "${user}"),
+ edit_line => ssh_users("$($(user_key)[$(user)])");
+
+}
+
+bundle edit_line append_users_shadow(user_pw_value) {
+
+insert_lines:
+  "${user_pw_value}";
+}
+
+bundle edit_line ssh_users(param) {
+
+delete_lines:
+
+ ".*";
+
+insert_lines:
+  "${param}";
+}

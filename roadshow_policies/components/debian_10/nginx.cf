@@ -1,0 +1,13 @@
+bundle agent nginx {
+
+vars:
+
+    "pkg[certbot]"                         string => "*";
+    "pkg[nginx]"                           string => "*";
+    "pkg[python-certbot-nginx]"            string => "*";
+
+methods:
+
+    "We require nginx for multiple ssl" usebundle => packages("nginx.pkg");
+
+}

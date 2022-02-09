@@ -1,0 +1,47 @@
+bundle agent pdns_recursor {
+
+vars:
+
+  "pkg[pdns-recursor]"              string => "*";
+
+  "pdns_package_name"               slist  => getindices("pkg");
+  "pdns_recursor_templates"         slist  => { "pdns-recursor.conf.tmpl", "recursor.forward-zones.tmpl" };
+
+methods:
+
+  "Check Ip Addresses first"     usebundle => check_ip("$(role_data.ddns[support][ip])");
+
+ !bad_ip::
+  "We desire powerdns"           usebundle => packages("pdns_recursor.pkg");
+  "The recursor needs templates" usebundle => get_template("$(pdns_recursor_templates)");
+  "Configure the recursor"       usebundle => recursor_conf;
+
+}
+
+bundle agent recursor_conf {
+
+files:
+
+ "/etc/powerdns/recursor.conf"
+  comment                   => "recursor.conf door class_domain nameserver listens on support IP",
+  create                    => "true",
+  perms                     => mog("640","root","pdns"),
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-recursor.conf.tmpl",
+  classes                   => r_if_repaired("restart_recursor");
+
+ "/etc/powerdns/recursor.forward-zones"
+  comment                   => "recursor.forward-zones door class_domain nameserver",
+  create                    => "true",
+  perms                     => mog("640","root","pdns"),
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/recursor.forward-zones.tmpl",
+  classes                   => r_if_repaired("restart_recursor");
+
+commands:
+
+  restart_recursor::
+   "/etc/init.d/pdns-recursor restart";
+
+}
+

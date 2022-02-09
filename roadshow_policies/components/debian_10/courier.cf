@@ -1,0 +1,19 @@
+bundle agent courier {
+
+vars:
+
+  "pkg[courier-authdaemon]"     string => "*";
+  "pkg[courier-authlib-mysql]"  string => "*";
+  "pkg[courier-imap]"           string => "*";
+  "pkg[libsasl2-2]"             string => "*";
+  "pkg[libsasl2-modules]"       string => "*";
+  "pkg[libsasl2-modules-sql]"   string => "*";
+  "pkg[sasl2-bin]"              string => "*";
+
+  "courier_package_name"         slist => getindices("pkg");
+
+methods:
+
+  "any" usebundle => packages("courier.pkg");
+
+}

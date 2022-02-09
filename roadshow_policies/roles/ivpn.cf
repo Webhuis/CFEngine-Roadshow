@@ -1,0 +1,52 @@
+bundle agent ivpn {
+
+vars:
+
+  "role_name"                         string => "IPSec VPN server";
+
+  "bundles[stepping_stone]"           string => "ivpn_server.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+  "etc_hosts_nic"                      slist => { "$($(sys.flavor).nics[one])" };
+  "admin_nics"                         slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
+
+methods:
+
+  "We are an ssh stepping stone"   usebundle => "ivpn_server";
+
+reports:
+
+ "${this.bundle}: $($(sys.flavor).nics)";
+
+}
+
+bundle agent role_data {
+  
+vars:
+
+  "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
+  "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
+  "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
+
+  "vnic_index"                         slist => getindices("vnic");
+
+
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[support])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+
+methods:
+
+  "Check interfaces are up"        usebundle => check_vnic( "$(vnic[$(vnic_index)])" ),
+                                   comment   => "This is a layer I and II check on the virtual switch";
+
+
+reports:
+
+  "${this.bundle} nics: $(vnic)";
+  "${this.bundle} service_nic: $(etc_hosts_nic)";
+  "${this.bundle} admin_nics: ${admin_nics}";
+
+}
+

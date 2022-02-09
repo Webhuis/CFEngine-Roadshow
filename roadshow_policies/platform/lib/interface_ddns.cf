@@ -1,0 +1,38 @@
+bundle agent interface_ddns(ip_suffix) {
+
+vars:
+
+  "ddns_index"                                    slist => getindices($(ip_suffix));
+
+methods:
+
+  "We do one interface at a time"             usebundle => do_interface("$($(ip_suffix)[$(ddns_index)][ip])",
+                                                                        "$($(ip_suffix)[$(ddns_index)][nic])",
+                                                                        "$($(ip_suffix)[$(ddns_index)][suffix])",
+                                                                        "$($(ip_suffix)[$(ddns_index)][vlan])");
+
+reports:
+
+  "$(this.bundle) dhcp ddns:";
+
+}
+
+bundle agent do_interface(ip_address, nic, suffix, vlan) {
+
+vars:
+
+  "ddns_name"                                    string => "$(sys.uqhost)$(suffix)";
+
+methods:
+
+  "We update the isc-dhcp ldap-server"        usebundle => dhcp_ldap_update($(ddns_name), $(get_mac_address.mac_address), $(ip_address), $(vlan));
+  "We dynamically update the name server"     usebundle => ddns_update($(ddns_name), $(ip_address)),
+                                                comment => "We make ourselves known";
+
+reports:
+
+  "$(this.bundle) ddns name: $(ddns_name)";
+  "$(this.bundle) MAC Address: $(get_mac_address.mac_address)";
+
+}
+

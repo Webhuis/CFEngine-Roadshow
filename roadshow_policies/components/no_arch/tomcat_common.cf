@@ -1,0 +1,22 @@
+bundle agent tomcat_common {
+
+files:
+ "${tomcat.config}/tomcat-users.xml"
+         comment  => "tomcat users for management",
+           perms  => mog("664","${tomcat.user}","${tomcat.group}"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)roadshow_/dynamic_inputs/templates/tomcat-users.xml.tmpl",
+         classes  => r_if_repaired("restart_tomcat");
+
+  "${tomcat.home}"
+           perms  => mog("775","root","${tomcat.group}"),
+          handle  => "tomcat_home",
+         comment  => "tomcat home",
+         classes  => if_repaired("restart_tomcat");
+
+methods:
+
+  "any" usebundle => get_template("tomcat-users.xml.tmpl");
+
+}

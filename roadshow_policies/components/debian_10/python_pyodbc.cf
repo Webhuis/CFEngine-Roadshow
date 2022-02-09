@@ -1,0 +1,17 @@
+bundle agent python_pyodbc {
+
+vars:
+
+  "pkg[python3-pyodbc]"                 string => "*";
+
+
+methods:
+
+  "odbc for Python"                  usebundle => packages("python_pyodbc.pkg");
+
+reports:
+
+  "${this.bundle}: Database access for Python";
+
+}
+

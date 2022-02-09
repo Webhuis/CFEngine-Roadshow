@@ -1,0 +1,44 @@
+# Webhuis template voor rsyslog.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+# We desire clean log files and want to avoid duplicate entries is different logs
+#### MODULES ####
+module(load="imuxsock") # provides support for local system logging
+module(load="imklog")   # provides kernel logging support
+#### GLOBAL DIRECTIVES ####
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+$FileOwner root
+$FileGroup adm
+$FileCreateMode 0640
+$DirCreateMode 0755
+$Umask 0022
+$WorkDirectory /var/spool/rsyslog
+$IncludeConfig /etc/rsyslog.d/*.conf
+#### RULES ####
+:msg,contains,"Dropped by firewall:" -/var/log/iptables.log
+:msg,contains,"Dropped by firewall:" stop
+auth,authpriv.*			/var/log/auth.log
+:programname, startswith, "cf-"  -/var/log/CFEngine.log
+:programname, startswith, "cf-"  stop
+*.*;auth,authpriv,kern.none;    -/var/log/syslog
+cron.*				/var/log/cron.log
+daemon.*			-/var/log/daemon.log
+kern.*				-/var/log/kern.log
+kern.*				stop
+lpr.*				-/var/log/lpr.log
+mail.*				-/var/log/mail.log
+user.*				-/var/log/user.log
+mail.info			-/var/log/mail.info
+mail.warn			-/var/log/mail.warn
+mail.err			/var/log/mail.err
+# Whatever is left for .debug and .info
+*.=debug;\
+	auth,authpriv.none;\
+	news.none;mail.none 	-/var/log/debug
+*.=info;*.=notice;*.=warn;\
+	auth,authpriv.none;\
+	cron,daemon.none;\
+	mail,news.none		-/var/log/messages
+*.emerg				:omusrmsg:*

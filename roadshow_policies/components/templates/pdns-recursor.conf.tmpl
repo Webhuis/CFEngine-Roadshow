@@ -1,0 +1,15 @@
+# Webhuis template voor recursor.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+local-address=$(role_data.ddns[support][ip])
+local-port=53
+dnssec=process-no-validate
+daemon=yes
+serve-rfc1918=yes
+#allow-from=10.0.0.0/8,192.168.0.0/16
+forward-zones-file=/etc/powerdns/recursor.forward-zones
+quiet=no
+setgid=pdns
+setuid=pdns

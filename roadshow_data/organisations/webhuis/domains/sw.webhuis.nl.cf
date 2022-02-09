@@ -1,0 +1,48 @@
+###############################################################################
+#
+#   webhuis.nl.cf - Basic Policy for Community
+#
+###############################################################################
+
+bundle agent sw_webhuis_nl {
+
+vars:
+
+  "subnet[service]"                    string => "10.10.17.0";
+  "subnet[support]"                    string => "10.10.117.0";
+  "subnet[admin]"                      string => "10.110.17.0";
+  "subnet[gw]"                         string => "10.254.0.0";
+  "subnet[wan]"                        string => "";
+  "subnet[life]"                       string => "10.110.117.0";
+  "subnet[roadshow]"                   string => "10.111.111.0";
+
+# "mldap"                               slist => {"ldapm1", "ldapm2"};
+  "mldap"                               slist => {"ldapm1"};
+  "ldap"                                slist => {"ldap1", "ldap2"};
+  "ldap_base"                          string => "dc=webhuis,dc=nl";
+  "ldap_admin"                         string => "cn=admin,${ldap_base}";
+ 
+  "https_repo[jts]"                    string => "https://download.jitsi.org";
+  "https_repo[kea]"                    string => "https://dl.cloudsmith.io/public/isc/kea-1-6/deb/debian";
+  "https_repo[one]"                    string => "https://downloads.opennebula.org/repo/6.0/Debian/10/";
+
+# "ntp_server"                         string => "inuc-01.webhuis.nl";
+  "ntp_server"                          slist => { "time.nl" };
+  "nfs_host"                           string => "time.nl";
+  "nfs_webapps"                        string => "/var/local/webapps";
+  "export_network"                     string => "10.0.0.0/8";
+  "nfs_backup"                         string => "/bur-san";
+  "san_host"                           string => "san.webhuis.nl";
+  "san_export"                         string => "/volume1/exports";
+  "exports_ro"                         string => "(ro,sync,root_squash,no_subtree_check)";
+  "exports_rw"                         string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
+  "nfs_ro"                             string => "ro,hard,intr,noatime,nodiratime 0 0";
+  "nfs_rw"                             string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+  "domain_exports"                      slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
+
+  "ntp_pool"                           string => "nl.pool.ntp.org";
+  "ntp_master"                          slist => { "1", "2", "3" };
+# "restrict"                            slist => { "${g.ip_address}", "127.0.0.1", "::1" };
+
+}

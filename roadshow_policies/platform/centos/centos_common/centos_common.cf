@@ -1,0 +1,101 @@
+bundle agent centos_common {
+
+vars:
+
+  "pkg[openssh-server]"                  string => "*";
+  "pkg[vim-enhanced]"                    string => "*";
+
+  "nopkg[NetworkManager-libnm]"          string => "*";
+  "nopkg[NetworkManager-team]"           string => "*";
+  "nopkg[NetworkManager-tui]"            string => "*";
+  "nopkg[NetworkManager-wifi]"           string => "*";
+
+files:
+
+ "/etc/yum/pluginconf.d/fastestmirror.conf"
+          perms  => mo("644","root"),
+         create  => "true",
+      edit_line  => edit_yum_fastest_mirror_conf,
+         action  => r_immediate;
+
+ "/etc/sysconfig/network"
+          perms  => mo("644","root"),
+         create  => "true",
+      edit_line  => edit_sysconfig_network,
+         action  => r_immediate;
+
+methods:
+
+  "Provide the template for yum.conf" usebundle => get_template("yum_conf.tmpl");
+  "Configure yum, no match to apt"    usebundle => yum_conf;
+  "Install common packages"           usebundle => packages("centos_common.pkg");
+  "remove undesired packages"         usebundle => nopackages("centos_common.nopkg");
+  "Automate Security Upgras"          usebundle => unattended_upgrades;
+
+reports:
+
+ "$(this.bundle): CFEngine package string = $(package_cache)/$(cfengine_package)";
+
+}
+
+
+bundle agent restart_sshd {
+
+commands:
+
+  "service sshd restart"
+   handle => "restart_ssdd",
+   comment => "restarting sshd";
+
+}
+
+bundle edit_line edit_yum_conf(proxy) {
+
+ delete_lines:
+
+   ".*";
+
+ insert_lines:
+"# Webhuis template voor yum.conf
+#
+# Do not edit
+#
+[main]
+cachedir=/var/cache/yum/$basearch/$releasever
+keepcache=0
+debuglevel=2
+logfile=/var/log/yum.log
+exactarch=1
+obsoletes=1
+gpgcheck=1
+plugins=1
+installonly_limit=5
+bugtracker_url=http://bugs.centos.org/set_project.php?project_id=19&ref=http://bugs.centos.org/bug_report_page.php?category=yum
+distroverpkg=centos-release
+proxy=http://$(proxy)";
+
+}
+
+bundle edit_line edit_yum_fastest_mirror_conf {
+
+ delete_lines:
+
+   ".*";
+
+ insert_lines:
+"[main]
+enabled=0";
+
+}
+
+bundle edit_line edit_sysconfig_network {
+
+ delete_lines:
+
+   ".*";
+
+ insert_lines:
+"# Webhuis suppress apipa addresses
+NOZEROCONF=yes";
+
+}

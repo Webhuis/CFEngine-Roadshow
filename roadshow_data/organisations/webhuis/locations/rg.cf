@@ -1,0 +1,21 @@
+bundle agent rg {
+
+vars:
+
+  "location_name"                 string => "ronge";
+  "apt_cacher"                    string => "aptgwhpdcrg1.rg.webhuis.nl";
+  "resolvers"                     slist  => { "10.94.112.24", "10.68.171.24", "10.10.117.24" };
+
+  "subnet[service]"               string => "10.94.12.0";
+  "subnet[support]"               string => "10.94.112.0";
+  "subnet[admin]"                 string => "10.194.12.0";
+  "subnet[wan]"                   string => "213.127.130.120";
+  "subnet[gw]"                    string => "10.254.0.0";
+  "subnet[life]"                  string => "10.194.112.0";
+  "subnet[roadshow]"              string => "10.111.111.0";
+
+reports:
+
+  "$(this.bundle):";
+
+}

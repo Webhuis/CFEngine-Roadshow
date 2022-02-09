@@ -1,0 +1,33 @@
+bundle agent openssh_server {
+
+vars:
+
+  "sshd_config"                string => "/etc/ssh/sshd_config";
+
+files:
+
+  "$(sshd_config)"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/sshd_config.tmpl",
+    classes        => if_repaired("restart_sshd");
+
+services:
+
+  "sshd"                    service_policy => "start";
+
+commands:
+
+ restart_sshd::
+  "/usr/sbin/service sshd restart"
+    comment => "restarting sshd";
+
+methods:
+
+  "We desire the policy packages installed" usebundle => packages("openssh_server.pkg");
+
+reports:
+
+  "$(this.bundle) admin_nic: $($(classify.role).admin_nics)";
+
+}

@@ -1,0 +1,18 @@
+bundle agent kea_server {
+
+vars:
+
+  "pkg[kea-admin]"	       string => "*";
+  "pkg[kea-common]"	       string => "*";
+  "pkg[kea-dhcp-ddns-server]"  string => "*";
+  "pkg[kea-dhcp4-server]"      string => "*";
+
+methods:
+
+  "We desire the Kea server"    usebundle => packages("kea_server.pkg");
+
+reports:
+
+  "${this.bundle}: component";
+
+}

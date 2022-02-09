@@ -1,0 +1,11 @@
+# Webhuis template for ldapadd dhcp_ldap
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+dn: cn=$(dhcp_ldap_update.ddns_name),cn=fixed,cn=$(dhcp_ldap_update.subnet),cn=$(dhcp_ldap_update.vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl
+cn: $(dhcp_ldap_update.ddns_name)
+dhcpHWaddress: ethernet $(dhcp_ldap_update.mac_address)
+dhcpStatements: fixed-address $(dhcp_ldap_update.ip_address)
+objectClass: top
+objectClass: dhcpHost

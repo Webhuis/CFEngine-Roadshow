@@ -1,0 +1,68 @@
+bundle agent dgwy {
+
+vars:
+
+  "role_name"                         string => "DMZ gateway";
+
+  "bundles[dmz_gateway]"              string => "${sys.flavor}/dmz_gateway.cf";
+  "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+methods:
+
+  "We are a dmz gateway"           usebundle => "dmz_gateway";
+  "We desire gateway tooling"      usebundle => "gateway_tools";
+
+
+reports:
+
+ "${this.bundle}: $(role-name)";
+
+}
+
+bundle agent role_data {
+  
+vars:
+
+  "nic[service]"                      string => "$($(classify.organisation).nic[service])";
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
+  "nic_trick"                          slist => { "0", "1", "2", "3" };
+
+  "ddns[service][ip]"                 string => "$(sys.ipv4[$(nic[service])])";
+  "ddns[service][nic]"                string => "$(nic[service])";
+  "ddns[service][suffix]"             string => "-fe";
+  "ddns[service][vlan]"               string => "$($(classify.organisation).vlan[service])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
+  "ddns[support][nic]"                string => "$(nic[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
+  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(nic[admin])])";
+  "ddns[admin][nic]"                  string => "$(nic[admin])";
+  "ddns[admin][suffix]"               string => "-ssh";
+  "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
+  "ddns[gw][ip]"                      string => "$(sys.ipv4[$(nic[gw])])";
+  "ddns[gw][nic]"                     string => "$(nic[gw])";
+  "ddns[gw][suffix]"                  string => "-gw";
+  "ddns[gw][vlan]"                    string => "$($(classify.organisation).vlan[gw])";
+
+  "ddns_index"                         slist => getindices("ddns");
+
+  "etc_hosts_nic"                      slist => { "$(ddns[support][ip])" };
+  "support_ip"                         slist => { "$(ddns[support][ip])" };
+  "admin_nics"                         slist => { "$(ddns[admin][ip])" };
+
+methods:
+
+  "We need predictable names"      usebundle => "nic_mac_map";
+
+reports:
+
+  "$(this.bundle) nics: $(nic)";
+  "$(this.bundle) service_nic: $(nic[service])";
+  "$(this.bundle) admin_nics: $(admin_nics)";
+
+}

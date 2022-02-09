@@ -1,0 +1,53 @@
+bundle agent kea_server {
+
+vars:
+
+  "pkg[isc-kea-admin]"	           string => "*";
+  "pkg[isc-kea-common]"	           string => "*";
+  "pkg[isc-kea-ctrl-agent]"        string => "*";
+  "pkg[isc-kea-dhcp-ddns-server]"  string => "*";
+  "pkg[isc-kea-dhcp4-server]"      string => "*";
+
+  "cache_repo[kea]"                string => "deb http://$($(do_roadshow.class_domain).apt_cacher)-kea.$(sys.domain) buster main";
+  "apt_key"                        string => "opennebula.pubkey.gpg";
+
+  "repo_index"                     slist => getindices("kea_server.cache_repo");
+
+files:
+
+  "/var/cache/apt/downloads.opennebula.org.gpg"
+    comment      => "Prepare grml debootstrap environment",
+    perms        => mo("644","root"),
+    copy_from    => local_cp("/tmp/downloads.opennebula.org.gpg"),
+    create       => "true",
+    action       => r_immediate,
+    classes      => r_if_repaired("new_repo_key");
+
+methods:
+
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need all isc-kea cache repos"   usebundle => apt_repo_list("$(repo_index)", "$(cache_repo[$(repo_index)])");
+
+  "We desire the Kea server"          usebundle => packages("kea_server.pkg");
+
+reports:
+
+  "$(this.bundle): $(repo_index)";
+  "$(this.bundle): $(cache_repo[$(repo_index)])";
+
+}
+
+bundle agent kea_repo(repo) {
+
+methods:
+
+# "We need the opennebula repo key"   usebundle => get_apt_repo_key("$(apt_key)");
+
+  "We need a isc-kea cache repo"      usebundle => apt_repo_list("$(repo)", "$(kea_server.cache_repo[$(repo)])");
+
+reports:
+
+  "${this.bundle}: kea_repo source list";
+
+}

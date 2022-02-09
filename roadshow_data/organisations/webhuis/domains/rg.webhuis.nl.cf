@@ -1,0 +1,55 @@
+###############################################################################
+#
+#   webhuis.nl.cf - Basic Policy for Community
+#
+###############################################################################
+
+bundle agent rg_webhuis_nl {
+
+vars:
+
+  "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
+  "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
+  "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
+
+  "dns"                                slist => {"ns1", "ns2"};
+  "idns"                               slist => {"nsid1", "nsid2"};
+  "ttl"                                string => "600";
+  "name"                               string => "buster";
+
+  "subnet[service]"                    string => "10.94.12.0";
+  "subnet[support]"                    string => "10.94.112.0";
+  "subnet[admin]"                      string => "10.194.12.0";
+  "subnet[gw]"                         string => "10.254.0.0";
+  "subnet[wan]"                        string => "";
+  "subnet[life]"                       string => "10.194.112.0";
+  "subnet[roadshow]"                   string => "10.111.111.0";
+
+# "mldap"                               slist => {"ldapm1", "ldapm2"};
+  "mldap"                               slist => {"ldapm1"};
+  "ldap"                                slist => {"ldap1", "ldap2"};
+  "ldap_base"                          string => "dc=webhuis,dc=nl";
+  "ldap_admin"                         string => "cn=admin,${ldap_base}";
+
+  "apt_cacher"                         string => "aptgwhpdcrg1";
+  "nfs_host"                           string => "time.nl";
+  "nfs_webapps"                        string => "/var/local/webapps";
+  "export_network"                     string => "10.0.0.0/8";
+  "nfs_backup"                         string => "/bur-san";
+  "san_host"                           string => "san.webhuis.nl";
+  "san_export"                         string => "/volume1/exports";
+  "exports_ro"                         string => "(ro,sync,root_squash,no_subtree_check)";
+  "exports_rw"                         string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
+  "nfs_ro"                             string => "ro,hard,intr,noatime,nodiratime 0 0";
+  "nfs_rw"                             string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+# "ntp_server"                         string => "inuc-01.webhuis.nl";
+  "ntp_server"                          slist => { "time.nl" };
+
+  "domain_exports"                      slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
+
+  "ntp_pool"                           string => "nl.pool.ntp.org";
+  "ntp_master"                          slist => { "1", "2", "3" };
+# "restrict"                            slist => { "${g.ip_address}", "127.0.0.1", "::1" };
+
+}

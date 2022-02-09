@@ -1,0 +1,57 @@
+###############################################################################
+#
+#   whpdcrg.cf - Basic Policy for Community
+#
+###############################################################################
+
+bundle agent whpdcrg {
+
+vars:
+
+  "mdns"                                 string => "nsid2.webhuis.nl";
+  "mdns_key"                             string => "nsid2.webhuis.nl.:neQQPaGetzFWcCK5ajF4Vw==";
+  "dns"                                   slist => {"ns1", "ns2"};
+  "idns"                                  slist => {"nsid1", "nsid2"};
+  "network"                              string => "10.68.71.0";
+  "mask"                                 string => "255.255.255.0";
+
+# "mldap"                                 slist => {"ldapm1", "ldapm2"};
+  "mldap"                                 slist => {"ldapm1"};
+  "ldap"                                  slist => {"ldap1", "ldap2"};
+  "ldap_base"                            string => "dc=webhuis,dc=nl";
+  "ldap_admin"                           string => "cn=admin,${ldap_base}";
+
+  "local_slaves"                          slist => { "10.10.117.23", "10.68.171.21","10.94.112.23" };
+  "local_resolvers"                       slist => { "10.10.117.24", "10.68.171.24","10.94.112.24" };
+  "remote_resolvers"                      slist => { "208.67.222.123","208.67.220.123" };
+  "searchlist"                           string => "rs.webhuis.nl";
+  "domains_we_serve"                      slist => { "rg.webhuis.nl", "rs.webhuis.nl", "sw.webhuis.nl", "10.in-addr.arpa" };
+
+  "forward_zones"                        string => join(", ", local_slaves);
+
+  "zone[yoga-renkum.nl]"                 string => "$(forward_zones)";
+  "zone[webhuis.nl]"                     string => "$(forward_zones)";
+  "zone[rg.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[rs.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[sw.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[10.in-addr.arpa]"                string => "$(forward_zones)";
+
+  "zone_index"                            slist => getindices("zone");
+ 
+  "nfs_host"                             string => "nfsutl0001.webhuis.nl";
+  "nfs_webapps"                          string => "/var/local/webapps";
+  "export_network"                       string => "10.0.0.0/8";
+  "nfs_backup"                           string => "/bur-san";
+  "san_host"                             string => "san.webhuis.nl";
+  "san_export"                           string => "/volume1/exports";
+  "exports_ro"                           string => "(ro,sync,root_squash,no_subtree_check)";
+  "exports_rw"                           string => "(rw,sync,insecure,no_root_squash,no_subtree_check)";
+  "nfs_ro"                               string => "ro,hard,intr,noatime,nodiratime 0 0";
+  "nfs_rw"                               string => "rw,hard,intr,noatime,nodiratime 0 0";
+
+# "nameserver"                            slist => { "10.168.0.17", "10.68.71.187", "10.68.171.1", "8.8.8.8" };
+  "nameserver"                            slist => { "10.94.112.17", "8.8.8.8" };
+
+  "domain_exports"                        slist => splitstring(execresult("/bin/ls /mnt/export/${sys.domain}/","noshell"),"\n","99");
+
+}

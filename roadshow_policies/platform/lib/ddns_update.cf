@@ -1,0 +1,81 @@
+bundle agent ddns_update (suffix, ip_address) {
+
+classes:
+
+ "parsed_ip"                                expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", $(ip_address), "part");
+
+files:
+
+  "/etc/dhcp/webhuis.nl.update"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_line      => edit_ddns_key;
+
+  "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_line      => edit_nsupdate_command($(mdns), $(ddns_name), $(ttl), $(ip_address), $(arpa_zone), $(arpa_address));
+
+vars:
+
+  "ddns_name"                                    string => "$(sys.uqhost)$(suffix)";
+  "mdns"                                         string => "$($(classify.organisation).mdns)";
+  "key"                                          string => "$($(classify.organisation).mdns_key)";
+  "ttl"                                          string => "$($(classify.organisation).ttl)";
+  "arpa_zone"                                    string => "$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
+  "arpa_address"                                 string => "$(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
+
+methods:
+
+  "Check host entry in DNS"                   usebundle => ddns_check("$(ddns_name).$(sys.domain)", "$(ip_address)");
+
+commands:
+
+ !(a_record&ptr_record)::
+  "/usr/bin/nsupdate -v -k $(key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
+
+reports:
+
+  "$(this.bundle): $(ddns_name), $(ip_address)";
+ a_record&ptr_record::
+  "$(this.bundle) DNS is Ok!";
+ !(a_record&ptr_record)::
+  "$(this.bundle) update DNS!";
+
+}
+
+bundle edit_line  edit_ddns_key {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"key \"webhuis.nl.update\" {  
+     algorithm hmac-md5;  
+     secret \"nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U=\";
+};"; 
+
+}
+
+
+bundle edit_line  edit_nsupdate_command (mdns, ddns_name, ttl, ip_address, arpa_zone, arpa_address) {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+ "server $(mdns)
+  zone $(sys.domain)
+  update add $(ddns_name).$(sys.domain). $(ttl) A $(ip_address)
+
+  zone $(arpa_zone)
+  update add $(arpa_address) $(ttl) PTR $(ddns_name).$(sys.domain).
+  send";
+
+
+}
+

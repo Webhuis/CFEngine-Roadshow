@@ -1,0 +1,11 @@
+bundle agent dc {
+
+vars:
+
+  "department"                      string => "Data Centre";
+
+reports:
+
+  "$(this.bundle):";
+
+}

@@ -1,0 +1,48 @@
+bundle agent ddns_check (host, ip_address) {
+
+methods:
+
+  "Does DNS have hostname and IP Address?"    usebundle => set_ddns_class;
+
+reports:
+
+  "$(this.bundle): $(host), $(ip_address)";
+
+ "!a_record"::
+  "$(this.bundle): Update A Record for $(host)!";
+
+ "!ptr_record"::
+  "$(this.bundle): Update PTR Record for $(ip_address)!";
+
+}
+
+bundle common set_ddns_class {
+
+classes:
+
+  "a_record"                                 expression => strcmp("$(dns_host)", "$(ddns_check.host).");
+  "ptr_record"                               expression => strcmp("$(dns_ip)", "$(ddns_check.ip_address)");
+
+ !a_record|!ptr_record::
+  "ddns_update"                              expression => "any";
+
+ a_record.ptr_record::
+  "ddns_exist"                               expression => "any";
+
+vars:
+
+  "dns_ip"                                       string => execresult("/usr/bin/dig +short $(ddns_check.host)", "noshell");
+  "dns_host"                                     string => execresult("/usr/bin/dig +short -x $(ddns_check.ip_address)", "noshell");
+
+reports:
+
+  "$(this.bundle): dig result: $(dns_host) $(dns_ip)";
+
+ "!a_record"::
+  "$(this.bundle): $(ddns_check.host) DNS A record: $(dns_host)";
+
+ "!ptr_record"::
+  "$(this.bundle): $(ddns_check.ip_address) DNS PTR rec0rd: $(dns_ip)";
+
+}
+

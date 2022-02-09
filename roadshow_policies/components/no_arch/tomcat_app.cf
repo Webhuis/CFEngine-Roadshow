@@ -1,0 +1,55 @@
+bundle agent tomcat_app (app) {
+
+vars:
+
+  "bundles[tomcat]"                 string => "${sys.flavor}/tomcat.cf";
+  "bundles[app_mount]"              string => "app_mount.cf"; 
+  "bundles[tomcat_common]"          string => "tomcat_common.cf";
+
+  "sequence"                         slist => getindices("bundles");
+  "inputs"                           slist => getvalues("bundles");
+
+methods:
+
+  "Make webapps share available" usebundle => app_mount;
+  "Deploy the Tomcat App"        usebundle => deploy_tomcat_app("${app}");
+  "Provide Tomcat common"        usebundle => tomcat_common;
+  "Provide Tomcat software"      usebundle => tomcat;
+
+reports:
+
+  "tomcat_app.inputs: ${inputs}";
+
+}
+
+
+bundle agent deploy_tomcat_app (app) {
+
+files:
+
+  "$(tomcat.catalina_base)/webapps/${app}.war"
+          handle  => "deploy_app",
+         comment  => "deploying app.war",
+           perms  => mog("644","${tomcat.user}","${tomcat.group}"),
+       copy_from  => local_cp("/mnt/webapps/${app}/${app}.war"),
+         classes  => if_repaired("restart_tomcat");
+
+methods:
+
+ restart_tomcat::
+  "Delete any existing app"      usebundle => delete_tomcat_app(${app});
+
+}
+
+bundle agent delete_tomcat_app (app) {
+
+files:
+
+  "$(tomcat.catalina_base)/webapps/${app}/."
+          handle  => "app_delete",
+         comment  => "deleting app",
+      file_select => all,
+    depth_search  => recurse(inf),
+          delete  => tidy;
+
+}

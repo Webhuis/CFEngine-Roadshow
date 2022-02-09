@@ -1,0 +1,22 @@
+bundle agent sw {
+
+vars:
+
+  "location_name"                 string => "Schoolweg";
+  #"apt_cacher"                    string => "aptgpdcsw001.sw.webhuis.nl";
+  "apt_cacher"                    string => "10.68.171.11";
+  "resolvers"                     slist  => { "10.68.171.24", "10.10.117.24","10.94.112.24" };
+
+  "vlan[service]"                 string => "10.68.71.0";
+  "vlan[support]"                 string => "10.68.171.0";
+  "vlan[admin]"                   string => "10.168.71.0";
+  "vlan[wan]"                     string => "213.127.130.120";
+  "vlan[gw]"                      string => "10.254.0.0";
+  "vlan[life]"                    string => "10.168.171.0";
+  "vlan[roadshow]"                string => "10.111.111.0";
+
+reports:
+
+  "$(this.bundle):";
+
+}

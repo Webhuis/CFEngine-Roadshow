@@ -1,0 +1,8 @@
+# Webhuis template for resolv.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+auto $(interface)
+allow-hotplug $(interface)
+iface $(interface) inet dhcp
