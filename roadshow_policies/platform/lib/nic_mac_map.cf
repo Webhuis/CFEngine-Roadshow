@@ -17,6 +17,7 @@ vars:
 
 methods:
 
+  "l0 source interfaces.d"        usebundle => l0_interface;
   "map nics and macs"             usebundle => configure_interfaces($(role_data.nic_trick));
 
 reports:
@@ -24,3 +25,23 @@ reports:
   "$(this.bundle) nics_number: $(nics_number)";
 
 }
+
+bundle agent l0_interface {
+
+files:
+
+  "/etc/network/interfaces"
+    comment                                => "loopback interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl",
+    classes                                => if_repaired("reboot");
+
+reports:
+
+  "$(this.bundle): source interface.d";
+
+}
+

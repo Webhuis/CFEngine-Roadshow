@@ -23,15 +23,6 @@ vars:
 
 files:
 
-  "/etc/network/interfaces"
-    comment                                => "loopback interface",
-    create                                 => "true",
-    perms                                  => mo("644", "root"),
-    action                                 => immediate,
-    edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl",
-    classes                                => if_repaired("reboot");
-
  !bad_ip::
   "/etc/network/interfaces.d/$(nic)_interface"
     comment                                => "one file per nic",
@@ -63,10 +54,10 @@ commands:
 
 reports:
 
- #"$(this.bundle) default_device: $(default_device)";
+  "$(this.bundle) default_device: $(default_device)";
   "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
- #"$(this.bundle) current_dev : $(current_device), $(pos)";
- #"$(this.bundle) current_ip : $(current_ip)";
+  "$(this.bundle) current_dev : $(current_device), $(pos)";
+  "$(this.bundle) current_ip : $(current_ip)";
 
  gateway::
   "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
