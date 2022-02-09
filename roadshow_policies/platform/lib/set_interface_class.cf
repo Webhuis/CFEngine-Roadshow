@@ -16,13 +16,13 @@ methods:
 
  "no_device_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Add device $(vlan)"             usebundle => add_device( "$(interface)", "$(vlan)" );
-  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
+  "Add device $(vlan)"             usebundle => add_device( "$(classify.interface)", "$(vlan)" );
+  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(classify.interface)", "$(vlan)" ),
                                      comment => "layer one";
 
  "if_down_$(vlan)"::
   "Set status bad"                 usebundle => status_device("bad");
-  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(interface)", "$(vlan)" ),
+  "Bring up interface $(vlan)"     usebundle => bring_device_up( "$(classify.interface)", "$(vlan)" ),
                                      comment => "layer one";
 
 reports:

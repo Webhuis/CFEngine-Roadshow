@@ -2,30 +2,29 @@ bundle agent debian_9 {
 
 vars:
 
-  "pkg[autofs5]"                         string => "*";
-  "pkg[autofs5-ldap]"                    string => "*";
-  "pkg[libzmq3]"                         string => "*";
-  "pkg[python-zmq]"                      string => "*";
+  "pkg[autofs5]"                            string => "*";
+  "pkg[autofs5-ldap]"                       string => "*";
+  "pkg[libzmq3]"                            string => "*";
+  "pkg[python-zmq]"                         string => "*";
 
-  "sources_list"      string => "deb http://ftp.nl.debian.org/debian/ stretch main contrib non-free
-deb-src http://ftp.nl.debian.org/debian/ stretch main contrib non-free
+  "name"                                    string => "stretch";
+  "updates"                                 string => "stretch/updates";
 
-deb http://security.debian.org/debian-security stretch/updates main
-deb-src http://security.debian.org/debian-security stretch/updates main";
+  "nic[service]"                            string => "ens3";
+  "nic[support]"                            string => "ens7";
+  "nic[admin]"                              string => "ens8";
+  "nic[wan]"                                string => "ens9";
+  "nic[gw]"                                 string => "ensa";
+  "nic[life]"                               string => "ensb";
+  "nic[roadshow]"                           string => "ensc";
 
-  "vnic[service]"                        string => "ens3";
-  "vnic[support]"                        string => "ens7";
-  "vnic[admin]"                          string => "ens8";
-  "vnic[wan]"                            string => "ens9";
-  "vnic[gw]"                             string => "ensa";
-  "vnic[life]"                           string => "ensb";
-  "vnic[roadshow]"                       string => "ensc";
+  "nic_index"                                slist => getindices("nic");
 
-  "vnic_index"                            slist => getindices("vnic");
+  "ip_cmd"                                  string => "/sbin/ip";
 
 methods:
 
-  "We desire the Stretch sources_list" usebundle => sources_list("$(sources_list)");
+  "We desire stretchpackages"            usebundle => packages("debian_9.pkg");
 
 reports:
 

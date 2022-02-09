@@ -5,7 +5,7 @@ vars:
 #  "hash"                          string => file_hash("${sys.workdir}/Data/request_role_view" , "md5" );
 #  "hash"                          string => readfile("${sys.workdir}/Data/request_role_view" , "0" );
 # "role_view"                        data => parsejson('
-#     { "message": "view", "query": "$(classify.role)", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "$(classify.role)" } }');
+#     { "message": "view", "query": "role", "content": { "request_host": "$(sys.uqhost)", "domain": "$(sys.domain)", "role": "role" } }');
 
 # "request_role_view"              string => storejson(role_view);
 # "response"                       string => execresult("/var/cfengine/bin/cf-message.py '${request_role_view}'","noshell");
@@ -28,7 +28,7 @@ files:
 methods:
 
 # "Collect environment information" usebundle => classify_environment;
-  "Collect role data"               usebundle => "$(classify.role)_data";
+  "Collect role data"               usebundle => "role_data";
 
 # wru::
 # "Feed role to Data"           usebundle => cf_message( ${request_role_view_write} );
@@ -38,9 +38,6 @@ reports:
 # "${this.bundle} response: ${response}";
 # "${this.bundle} response_role_information: ${response_role_information}";
 
- stop_ip::
-  "${this.bundle}: bad device or down";
- !stop_ip::
-  "${this.bundle}: good devices and bridges.";
+  "${this.bundle}: We collect role data";
 
 }

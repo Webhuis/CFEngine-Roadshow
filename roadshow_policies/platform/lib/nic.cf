@@ -10,19 +10,21 @@ classes:
 
  ens::
 
-  "front"            expression => regcmp("3", "$(nic_ord[2])");
+  "service"          expression => regcmp("3", "$(nic_ord[2])");
   "support"          expression => regcmp("7", "$(nic_ord[2])");
   "admin"            expression => regcmp("8", "$(nic_ord[2])");
+  "gw"               expression => regcmp("9", "$(nic_ord[2])");
+  "wan"              expression => regcmp("10", "$(nic_ord[2])");
 
  eth::
 
-  "front"            expression => regcmp("0", "$(nic_ord[2])");
+  "service"          expression => regcmp("0", "$(nic_ord[2])");
   "support"          expression => regcmp("1", "$(nic_ord[2])");
   "admin"            expression => regcmp("2", "$(nic_ord[2])");
 
  breth::
 
-  "front"            expression => regcmp("0_1001", "$(nic_ord[2])");
+  "service"          expression => regcmp("0_1001", "$(nic_ord[2])");
   "support"          expression => regcmp("0_123",  "$(nic_ord[2])");
   "admin"            expression => regcmp("0_22",   "$(nic_ord[2])");
   "wan"              expression => regcmp("0_213",  "$(nic_ord[2])");
@@ -31,11 +33,11 @@ classes:
 
 vars:
 
-  front::
-   "nic_front"           string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
+  service::
+   "nic_service"         string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";
 
-  !front::
-   "nic_front"           string => "nic_front not present";
+  !service::
+   "nic_service"         string => "nic_service not present";
 
   support::
    "nic_support"         string => "$(sys.ipv4[$(nic_ord[1])$(nic_ord[2])])";

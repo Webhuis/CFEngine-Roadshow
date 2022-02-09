@@ -4,8 +4,8 @@ vars:
 
   "role_name"                                 string => "kvm hypervisor opennebula node";
 
-  "bundles[kvm_host]"                         string => "${sys.flavor}/kvm_host.cf";
-  "bundles[opennebula_node]"                  string => "${sys.flavor}/opennebula_node.cf";
+  "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
+  "bundles[opennebula_node]"                  string => "$(sys.flavor)/opennebula_node.cf";
 
   "sequence"                                  slist  => getindices("bundles");
   "inputs"                                    slist  => getvalues("bundles");
@@ -18,27 +18,50 @@ methods:
 reports:
 
  "$(this.bundle): $(classify.role) $($(classify.role).inputs)";
- "$(this.bundle): $(admin_nics)";
+ "$(this.bundle): admin nics: $(admin_nics)";
 
 }
 
-bundle agent kvmo_data {
+bundle agent role_data {
   
 vars:
 
-  "vlan[service]"                     string => "1001";
-  "vlan[support]"                     string => "123";
-  "vlan[admin]"                       string => "22";
-  "vlan[wan]"                         string => "213";
-  "vlan[gw]"                          string => "254";
-  "vlan[life]"                        string => "42";
-  "vlan[roadshow]"                    string => "1111";
+  "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
+  "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
+  "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";
+  "vlan[wan]"                         string => "$($(classify.organisation).vlan[wan])";
+  "vlan[gw]"                          string => "$($(classify.organisation).vlan[gw])";
+  "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
+  "vlan[roadshow]"                    string => "$($(classify.organisation).vlan[roadshow])";
 
-  "vlan_index"                        slist  => getindices("kvmo_data.vlan");
+  "vlan_index"                         slist => getindices("vlan");
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[breth0_$(vlan[support])])" };
-  "support_ip"                        slist  => { "$(sys.ipv4[breth0_$(vlan[support])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[breth0_$(vlan[support])])", "$(sys.ipv4[breth0_$(vlan[life])])" };
+  "nic[service]"                      string => "$(classify.bridge).$(vlan[service])";
+  "nic[support]"                      string => "$(classify.bridge).$(vlan[support])";
+  "nic[admin]"                        string => "$(classify.bridge).$(vlan[admin])";
+  "nic[wan]"                          string => "$(classify.bridge).$(vlan[wan])";
+  "nic[gw]"                           string => "$(classify.bridge).$(vlan[gw])";
+  "nic[life]"                         string => "$(classify.bridge).$(vlan[life])";
+  "nic[roadshow]"                     string => "$(classify.bridge).$(vlan[roadshow])";
+
+  "nic_index"                          slist => getindices("nic");
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[canonify($(nic[support]))])";
+  "ddns[support][nic]"                string => "$(nic[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$(vlan[support])"; 
+  "ddns[life][ip]"                    string => "$(sys.ipv4[canonify($(nic[life]))])";
+  "ddns[life][nic]"                   string => "$(nic[life])";
+  "ddns[life][suffix]"                string => "-life";
+  "ddns[life][vlan]"                  string => "$(vlan[life])";
+
+  "ddns_index"                         slist => getindices("ddns");
+
+  "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
+  "support_ip"                        slist  => { "$(ddns[support][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[life][ip])" };
+
+  "authorized_key"                    string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOEvHOns3gERsYAYHCb7XuQhigjFw+QoYs46OG3wrEzgO2HEKcK9VYFk7tzBcWoU6LkgmRRNjTrRF9hDBgDN/CPLgrMR27Ya1al4am/t7XBMQpOSgRqVsStPjZ7n4DwKOT4+BsF40QstpEYhW2oSA4QJ/0S6p+1BUegD+wEgDCfwKUS9UWypTKdw0LYlLFw3EaDIKkxpEVDAy1rhHfEle3PHMaFANqgoU2WhugsKBkoC7u0tz6fYmRwuR5j+jMU4SCbhRpV3OnBk5hAPKNHaIrLLyAwyNn1pfOLDnVqA19ryY5gNRtoqX0ml9OSHRJvDkRdxI4GuoXZVoYMayiBpAd oneadmin@onedpdcsw001";
 
 methods:
 
@@ -47,10 +70,14 @@ methods:
 
 reports:
 
- "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
- "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
- "$(this.bundle) admin_nics: $(admin_nics)";
-
+  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
+  "$(this.bundle) ddns[index][ip], $(ddns[$(ddns_index)][ip])";
+  "$(this.bundle) ddns[index][nic], $(ddns[$(ddns_index)][nic])";
+  "$(this.bundle) ddns[index][vlan], $(ddns[$(ddns_index)][vlan])";
+  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
+  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
+  "$(this.bundle) admin_nics: $(admin_nics)";
 
 }
 

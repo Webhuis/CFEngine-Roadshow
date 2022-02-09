@@ -2,20 +2,28 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want a valid host IP Address"     usebundle => check_ip("$($(classify.role)_data.etc_hosts_nic)");
+  "We want valid ssh server IP Addressies"  usebundle => check_ip("$(role_data.admin_nics)");
 
-  !bad_ip::
+ !bad_ip::
+  "openssh server and client"               usebundle => ssh_all_config;
 
-    "Standardize hosts setup"           usebundle => etc_hosts;
+ any::
+  "We want a valid host IP Address"         usebundle => check_ip("$(role_data.etc_hosts_nic)");
 
-  any::
+ !bad_ip::
+  "Standardize hosts setup"                 usebundle => etc_hosts;
 
-    "Check list of resolvers"           usebundle => check_ip("$($(classify.eco_vars).resolvers)");
+ any::
+  "Check list of resolvers"                 usebundle => check_ip("$($(classify.location).resolvers)");
 
-  !bad_ip::
+ !bad_ip::
+  "Standardize resolv.conf setup"           usebundle => resolv_conf;
 
-    "Standardize resolv.conf setup"     usebundle => resolv_conf;
-                                                                                                                                                                                       
+ any::
+  "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(classify.domain).ntp_server)");
+
+ !bad_fqdn::
+  "Configure all time settings"             usebundle => time_conf;                                                                                                                                                                                       
 reports:
                                                                                                                                                                                        
   "$(this.bundle): I am doing data driven policies and my verdict is as folows";  
@@ -23,8 +31,9 @@ reports:
  bad_ip::
   "$(this.bundle): Invalid IP Address!";
 
-  "$(this.bundle) etc_hosts_nic: $($(classify.role)_data.etc_hosts_nic)";  
-  "$(this.bundle) resolvers: $($(classify.eco_vars).resolvers)";  
+  "$(this.bundle) etc_hosts_nic: $(role_data.admin_nics)";  
+  "$(this.bundle) etc_hosts_nic: $(role_data.etc_hosts_nic)";  
+  "$(this.bundle) resolvers: $($(classify.location).resolvers)";  
 
  !bad_ip::
    "$(this.bundle): Valid IP Addresses!";

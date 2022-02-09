@@ -8,12 +8,34 @@ methods:
 # "Feed Hard Classes to Data"               usebundle => feed_hard_classes;
   "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
- '!stop_ip'::
+  "Check the interfaces"                    usebundle => check_interfaces("$(role_data.nic[$(role_data.nic_index)])"),
+                                              comment => "OSI Layers one and two";
+  "Check the soft IP Addresses given"       usebundle => check_ip("$(role_data.ddns[$(role_data.ddns_index)][ip])");
+
+ !bad_ip.mac_ok::
+  "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_data.ddns[$(role_data.ddns_index)][suffix])",
+                                                                          "$(role_data.ddns[$(role_data.ddns_index)][nic])",
+                                                                          "$(role_data.ddns[$(role_data.ddns_index)][ip])",
+                                                                          "$(role_data.ddns[$(role_data.ddns_index)][vlan])");
+
+ !bad_ip::
+  "We update ddns"                          usebundle => ddns_update("$(role_data.ddns[$(role_data.ddns_index)][suffix])",
+                                                                     "$(role_data.ddns[$(role_data.ddns_index)][ip])");
+
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
-  "We do role date driven policies here"    usebundle => role_data_driven_policies;
+  "We do role date driven policies here"    usebundle => role_data_driven_policies("$(role_data.ddns)");
 
 reports:
 
- "$(this.bundle): I am doing common policies.";
+  "$(this.bundle) ip list: $(role_data.ddns[$(role_data.ddns_index)][ip])";
+
+  "$(this.bundle): I am checking basic interface stuff first, $(role_data.nic[$(role_data.nic_index)]).";
+  "$(this.bundle): I am doing common and data driven policies.";
+
+ !bad_ip::
+  "$(this.bundle) The soft ip addresses supplied are Ok.";
+
+ bad_ip::
+  "$(this.bundle) Invalid soft ip addresses are being supplied, no processing of soft ip address policies is going to take place.";
 
 }

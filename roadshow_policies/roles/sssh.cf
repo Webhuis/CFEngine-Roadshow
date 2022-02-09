@@ -22,11 +22,11 @@ reports:
 
 }
 
-bundle agent sssh_data {
+bundle agent role_data {
   
 vars:
 
-  "vnic[sservice]"                    string => "$($(sys.flavour).vnic[service])";
+  "vnic[service]"                     string => "$($(sys.flavour).vnic[service])";
   "vnic[support]"                     string => "$($(sys.flavour).vnic[support])";
   "vnic[admin]"                       string => "$($(sys.flavour).vnic[admin])";
   "vnic[wan]"                         string => "$($(sys.flavour).vnic[wan])";
@@ -34,8 +34,8 @@ vars:
   "vnic_index"                         slist => getindices("vnic");
 
 
-  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[service])])" };
-  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[service])])", "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
+  "etc_hosts_nic"                     slist  => { "$(sys.ipv4[$(vnic[wan])])" };
+  "admin_nics"                        slist  => { "$(sys.ipv4[$(vnic[admin])])", "$(sys.ipv4[$(vnic[wan])])" };
 
 methods:
 

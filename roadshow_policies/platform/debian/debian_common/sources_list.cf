@@ -1,20 +1,21 @@
-bundle agent sources_list (sources_list) {
+bundle agent sources_list {
 
 vars:
 
-  "pkg[apt-transport-https]"       string => "*";
+  "pkg[apt-transport-https]"             string => "*";
 
 files:
 
   "/etc/apt/sources.list"
            create => "true",
     edit_defaults => no_backup,
-        edit_line => edit_sources_list($(sources_list)),
-          classes => if_repaired("new_sources_list");
+    edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/sources_list.tmpl",
+          classes => r_if_repaired("new_sources_list");
 
 methods:
 
-  "Provide desired packages"   usebundle => packages("sources_list.pkg");
+  "Provide the sources.list template" usebundle => get_template("sources_list.tmpl");
+  "Provide desired packages"          usebundle => packages("sources_list.pkg");
 
  new_sources_list::
 
@@ -22,18 +23,6 @@ methods:
 
 reports:
 
-  "${this.bundle}:";
-
-}
-
-bundle edit_line edit_sources_list(sources_list) {
-
-delete_lines:
-
-".*";
-
-insert_lines:
-
-"$(sources_list)";
+  "${this.bundle}: sys_flavour_name";
 
 }

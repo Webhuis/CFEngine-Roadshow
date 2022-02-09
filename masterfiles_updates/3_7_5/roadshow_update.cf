@@ -41,7 +41,7 @@ files:
 
   "$(roadshow_inputs)/domain/$(sys.domain).cf"
      handle       => "update_files_inputs_roadshow_domain",
-     copy_from    => r_rcp("$(master_data)/domains/$(sys.domain).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/domains/$(sys.domain).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
@@ -102,15 +102,7 @@ files:
 
   "$(roadshow_inputs)/organisation/$(organisation).cf"
      handle       => "update_files_inputs_roadshow_organisation",
-     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(organisation).cf", $(sys.policy_hub)),
-     file_select  => r_policies,
-     action       => r_immediate,
-     create       => "true",
-     classes      => r_if_repaired("update_report");
-
-  "$(roadshow_inputs)/eco_vars/$(eco_vars).cf"
-     handle       => "update_files_inputs_roadshow_eco_vars",
-     copy_from    => r_rcp("$(master_data)/organisations/$(classify.organisation)/$(eco_vars).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/$(organisation).cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",

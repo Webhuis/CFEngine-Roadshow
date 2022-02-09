@@ -83,6 +83,10 @@ users:
     password       => hashed_password("$(password)"),
     shell          => "$(shell)";
 
+  "root"
+    policy         => "present",
+    password       => hashed_password("$(common_users.root_hash)");
+
 files:
 
   "/home/$(user)/."

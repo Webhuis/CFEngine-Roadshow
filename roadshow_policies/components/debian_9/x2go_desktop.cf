@@ -4,6 +4,7 @@ vars:
 
   "pkg[chromium]"			string => "*";
   "pkg[git]"                            string => "*";
+  "pkg[konsole]"                        string => "*";
   "pkg[unzip]"                          string => "*";
   "pkg[zip]"                            string => "*";
 

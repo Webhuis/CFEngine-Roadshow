@@ -7,11 +7,8 @@ vars:
   "pkg[libzmq3]"                         string => "*";
   "pkg[python-zmq]"                      string => "*";
 
-  "sources_list"                         string => "deb http://ftp.nl.debian.org/debian/ jessie main contrib non-free
-deb-src http://ftp.nl.debian.org/debian/ jessie main contrib non-free
-
-deb http://security.debian.org/debian-security jessie/updates main
-deb-src http://security.debian.org/debian-security jessie/updates main";
+  "name"                                 string => "jessie";
+  "updates"                              string => "jessie/updates";
 
   "vnic[service]"                        string => "eth0";
   "vnic[support]"                        string => "eth1";
@@ -23,11 +20,11 @@ deb-src http://security.debian.org/debian-security jessie/updates main";
 
   "vnic_index"                            slist => getindices("vnic");
 
+  "ip_cmd"                               string => "/sbin/ip";
+
 methods:
 
   "We desire jessie packages"         usebundle => packages("debian_8.pkg");
-
-  "We desire the jessie sources_list" usebundle => sources_list("$(sources_list)");
 
 reports:
 

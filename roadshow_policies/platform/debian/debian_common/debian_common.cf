@@ -3,24 +3,28 @@ bundle agent debian_common {
 vars:
 
  x86_64::
-  "arch"                       string => "amd64";
+  "arch"                                string => "amd64";
  !x86_64::
-  "arch"                       string => "${sys.arch}";
+  "arch"                                string => "${sys.arch}";
 
  any::
 
-  "pkg[debian-goodies]"        string => "*";
-  "pkg[openssh-server]"        string => "*";
-  "pkg[libpam-ldap]"           string => "*";
-  "pkg[libnss-ldap]"           string => "*";
-  "pkg[libpam-cracklib]"       string => "*";
-  "pkg[ldap-utils]"            string => "*";
-  "pkg[smbclient]"             string => "*";
+  "pkg[debian-goodies]"                 string => "*";
+  "pkg[dnsutils]"                       string => "*";
+  "pkg[openssh-server]"                 string => "*";
+  "pkg[libpam-ldap]"                    string => "*";
+  "pkg[libnss-ldap]"                    string => "*";
+  "pkg[libpam-cracklib]"                string => "*";
+  "pkg[ldap-utils]"                     string => "*";
+  "pkg[locales-all]"                    string => "*";
+  "pkg[smbclient]"                      string => "*";
+  "pkg[vim]"                            string => "*";
+  "pkg[wget]"                           string => "*";
 
-  "desired"                    string => "addupdate";
-  "cfengine_version"           string => "3.6.6-1";
-  "cfengine_package"           string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
-  "package_cache"              string => "/var/cache/apt/archives";
+  "desired"                             string => "addupdate";
+  "cfengine_version"                    string => "3.6.6-1";
+  "cfengine_package"                    string => "cfengine-community-${cfengine_version}.${sys.arch}.deb";
+  "package_cache"                       string => "/var/cache/apt/archives";
 
   "cpkg[cfengine_community][package]"   string => "${package_cache}/${cfengine_package}";
   "cpkg[cfengine_community][desired]"   string => "${desired}";
@@ -29,11 +33,12 @@ vars:
 
 methods:
  
- "Configure apt mirror"      usebundle => apt_cacher;
- "Install common packages"   usebundle => packages("debian_common.pkg");
- "Automate Security Upgras"  usebundle => unattended_upgrades;
-# "CFEngine custom package"  usebundle => get_custom_package("${cfengine_package}");
-# "Update CFEngine"          usebundle => custom_packages("debian_common.cpkg");
+  "We desire the flavour sources_list"   usebundle => sources_list;
+  "Configure apt mirror"                 usebundle => apt_cacher;
+  "Install common packages"              usebundle => packages("debian_common.pkg");
+  "Automate Security Upgrades"           usebundle => unattended_upgrades;
+# "CFEngine custom package"              usebundle => get_custom_package("${cfengine_package}");
+# "Update CFEngine"                      usebundle => custom_packages("debian_common.cpkg");
 
 reports:
 
