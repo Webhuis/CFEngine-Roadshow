@@ -56,6 +56,8 @@ reports:
 
   "$(this.bundle) default_device: $(default_device)";
   "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
+  "$(this.bundle) nic_mac_map.ipr : $(nic_mac_map.ipr)";
+  "$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
   "$(this.bundle) current_dev : $(current_device), $(pos)";
   "$(this.bundle) current_ip : $(current_ip)";
 
