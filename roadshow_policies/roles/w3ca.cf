@@ -29,6 +29,7 @@ vars:
   "nic[service]"                      string => "$($(classify.organisation).nic[service])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic_index"                          slist => getindices("nic");
   "nic_trick"                          slist => { "0", "1", "2" };
 
   "ddns[service][ip]"                 string => "$(sys.ipv4[$(nic[service])])";
