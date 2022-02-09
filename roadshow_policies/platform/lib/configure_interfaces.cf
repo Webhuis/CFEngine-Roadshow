@@ -15,8 +15,10 @@ vars:
 
   "current_device_line"             string => nth("nic_mac_map.ips", "$(pos)");
   "current_device_list"              slist => splitstring( $(current_device_line), " ", "20"); 
-  "current_ip"                      string => nth("current_device_list", "5"); 
-  "current_device"                  string => nth("current_device_list", "10"); 
+  "current_device"                  string => nth("current_device_list", "10");
+  "current_ip-sub"                  string => nth("current_device_list", "5"); 
+  "current_ip_list"                 string => splitstring( $(current_ip_sub), "/", "3"); 
+  "current_ip"                      string => nth("current_ip_list", "0"); 
 
  mac_ok::
   "mac_address"                     string => "$(part[1])";
@@ -54,11 +56,11 @@ commands:
 
 reports:
 
-  "$(this.bundle) default_device: $(default_device)";
+ #"$(this.bundle) default_device: $(default_device)";
   "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
-  "$(this.bundle) nic_mac_map.ipr : $(nic_mac_map.ipr)";
-  "$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
-  "$(this.bundle) current_dev : $(current_device), $(pos)";
+ #"$(this.bundle) nic_mac_map.ipr : $(nic_mac_map.ipr)";
+ #"$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
+ #"$(this.bundle) current_dev : $(current_device), $(pos)";
   "$(this.bundle) current_ip : $(current_ip)";
 
  gateway::
