@@ -58,12 +58,10 @@ vars:
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
   "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[life][ip])" };
 
-  "authorized_key"                    string => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOEvHOns3gERsYAYHCb7XuQhigjFw+QoYs46OG3wrEzgO2HEKcK9VYFk7tzBcWoU6LkgmRRNjTrRF9hDBgDN/CPLgrMR27Ya1al4am/t7XBMQpOSgRqVsStPjZ7n4DwKOT4+BsF40QstpEYhW2oSA4QJ/0S6p+1BUegD+wEgDCfwKUS9UWypTKdw0LYlLFw3EaDIKkxpEVDAy1rhHfEle3PHMaFANqgoU2WhugsKBkoC7u0tz6fYmRwuR5j+jMU4SCbhRpV3OnBk5hAPKNHaIrLLyAwyNn1pfOLDnVqA19ryY5gNRtoqX0ml9OSHRJvDkRdxI4GuoXZVoYMayiBpAd oneadmin@onedpdcsw001";
-
-methods:
-
-  "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
-                                           comment   => "This is a layer I and II check on the virtual switch";
+#methods:
+#
+# "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
+#                                          comment   => "This is a layer I and II check on the virtual switch";
 
 reports:
 
