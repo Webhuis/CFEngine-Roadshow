@@ -34,14 +34,15 @@ vars:
 
   "vlan_index"                         slist => getindices("vlan");
 
-  "nic[service]"                      string => "$(classify.bridge).$(vlan[service])";
-  "nic[support]"                      string => "$(classify.bridge).$(vlan[support])";
-  "nic[admin]"                        string => "$(classify.bridge).$(vlan[admin])";
-  "nic[wan]"                          string => "$(classify.bridge).$(vlan[wan])";
-  "nic[gw]"                           string => "$(classify.bridge).$(vlan[gw])";
-  "nic[life]"                         string => "$(classify.bridge).$(vlan[life])";
-  "nic[roadshow]"                     string => "$(classify.bridge).$(vlan[roadshow])";
-  "nic_trick"                          slist => { "0", "1", "2" };
+  "nic[service]"                      string => "$(classify.interface)$(vlan[service])";
+  "nic[support]"                      string => "$(classify.interface)$(vlan[support])";
+  "nic[admin]"                        string => "$(classify.interface)$(vlan[admin])";
+  "nic[wan]"                          string => "$(classify.interface)$(vlan[wan])";
+  "nic[gw]"                           string => "$(classify.interface)$(vlan[gw])";
+  "nic[life]"                         string => "$(classify.interface)$(vlan[life])";
+  "nic[roadshow]"                     string => "$(classify.interface)$(vlan[roadshow])";
+  "nic_index"                          slist => getindices("nic");
+  "nic_trick"                          slist => { "0", "1" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[canonify($(nic[support]))])";
   "ddns[support][nic]"                string => "$(nic[support])";

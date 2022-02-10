@@ -5,8 +5,9 @@ classes:
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
-  "eth"              expression => regcmp("^eth", "$(ipv4_index)");
   "breth0"           expression => regcmp("^breth0", "$(ipv4_index)");
+  "eth"              expression => regcmp("^eth", "$(ipv4_index)");
+  "vmbr0"            expression => regcmp("^vlan", "$(ipv4_index)");
 
 vars:
     
@@ -31,6 +32,10 @@ vars:
  breth0::
   "interface"                          string => "eth0";
   "bridge"                             string => "breth0";
+
+ vmbr0::
+  "interface"                          string => "vlan";
+  "bridge"                             string => "vmbr0";
 
 reports:
 
