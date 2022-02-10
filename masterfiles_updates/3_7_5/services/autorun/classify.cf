@@ -32,7 +32,7 @@ vars:
 
   "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
   "ips"                                 slist => string_split($(ips_all), "\n", 99);
-  "current_device_list"                 slist => splitstring( $(current_device_line), " ", "20");
+  "current_device_list"                 slist => splitstring( $(ips), " ", "20");
   "current_device"                     string => nth("current_device_list", "10");
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
