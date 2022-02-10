@@ -72,7 +72,8 @@ vars:
   "dummy_ips"                          string => concat("dummy", $(ips));
   "device_type"                         slist => splitstring($(ips), " ", 99);
   "length_device"                         int => length("device_type");
-  "current_device"                     string => nth("dummy_ips", $(length_device));
+  "dummy_type"                          slist => splitstring($(dummy_ips), " ", 99);
+  "current_device"                     string => nth("dummy_type", $(length_device));
 
 reports:
 
