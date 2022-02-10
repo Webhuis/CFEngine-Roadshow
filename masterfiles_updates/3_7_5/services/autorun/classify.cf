@@ -71,7 +71,7 @@ vars:
 
   "device_type"                         slist => string_split($(ips), " ", 99);
  #"first_device_list"                   slist => string_split($(first_device), " ", 99);
-  "length_device"                         int => length($(devicei_type));
+  "length_device"                         int => length($(device_type));
   "current_device"                     string => nth($(device_type), "$(length_device)");
 
 reports:
@@ -79,7 +79,7 @@ reports:
   "$(this.bundle) ips: $(ips)";
   "$(this.bundle) first device: $(first_device)";
   "$(this.bundle) length device: $(length_device)";
-  "$(this.bundle) device_type: $(device_type)";
+  "$(this.bundle) current_device: $(current_device)";
 
 }
 
