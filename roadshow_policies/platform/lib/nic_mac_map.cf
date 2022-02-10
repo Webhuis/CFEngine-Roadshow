@@ -2,15 +2,6 @@ bundle agent nic_mac_map {
   
 vars:
 
-  "ip_link_all"                      string => execresult("/usr/sbin/ip link | grep 'ether' ", useshell);
-  "macs"                              slist => string_split($(ip_link_all), "\n", 99);
-
-  "ip_all"                           string => execresult("/usr/sbin/ip r | grep 'dev' ", useshell);
-  "ipr"                               slist => string_split($(ip_all), "\n", 99);
-
-  "ips_all"                          string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
-  "ips"                               slist => string_split($(ips_all), "\n", 99);
-
   "nics"                              slist => getvalues("role_data.nic");
   "nics_sort"                         slist => sort("nics", lex);
   "nics_number"                         int => length("role_data.nic_trick");

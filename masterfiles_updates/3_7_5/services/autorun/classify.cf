@@ -5,9 +5,9 @@ classes:
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
-  "breth0"           expression => regcmp("^breth0", "$(ipv4_index)");
-  "eth"              expression => regcmp("^eth", "$(ipv4_index)");
-  "vmbr0"            expression => regcmp("^vlan", "$(ipv4_index)");
+  "breth0"           expression => regcmp("^breth0", "$(current_device)");
+  "eth"              expression => regcmp("^eth", "$(current_device)");
+  "vmbr0"            expression => regcmp("^vlan", "$(current_device)");
 
 vars:
     
@@ -23,6 +23,17 @@ vars:
  #"eco_vars"                           string => "$(classify.environment)$(classify.department)$(classify.location)";
   "domain"                             string => canonify($(sys.domain));
   "vendor"                             string => $(inventory_linux.id_array[1]);
+
+  "ip_link_all"                        string => execresult("/usr/sbin/ip link | grep 'ether' ", useshell);
+  "macs"                                slist => string_split($(ip_link_all), "\n", 99);
+
+  "ip_all"                             string => execresult("/usr/sbin/ip r | grep 'dev' ", useshell);
+  "ipr"                                 slist => string_split($(ip_all), "\n", 99);
+
+  "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
+  "ips"                                 slist => string_split($(ips_all), "\n", 99);
+  "current_device_list"                 slist => splitstring( $(current_device_line), " ", "20");
+  "current_device"                     string => nth("current_device_list", "10");
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
 
