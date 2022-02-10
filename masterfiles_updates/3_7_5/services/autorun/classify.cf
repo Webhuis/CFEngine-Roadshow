@@ -48,7 +48,7 @@ vars:
 
 methods:
 
-  "We want to know the device type" usebundle => dev_type("classify.ips");
+  "We want to know the device type" usebundle => dev_type("$(ips)");
 
 reports:
 
