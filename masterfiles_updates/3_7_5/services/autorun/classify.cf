@@ -55,6 +55,8 @@ reports:
   "$(this.bundle) organisation: $(organisation)";
   "$(this.bundle) location: $(location) $($(location).location_name)";
   "$(this.bundle) ips: $(ips)";
+  "$(this.bundle) first device: $(first_device)";
+  "$(this.bundle) length device: $(length_device)";
   "$(this.bundle) current_device: $(current_device)";
   "$(this.bundle) interface: $(interface)";
 
