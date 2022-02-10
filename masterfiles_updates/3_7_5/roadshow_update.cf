@@ -47,7 +47,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(sys.workdir)/roadshow_inputs/platform/common"
+  "$(roadshow_inputs)/platform/common"
      handle       => "update_files_inputs_roadshow_platform_common",
      depth_search => r_recurse("inf"),
      copy_from    => r_rcp("$(master_roadshow)/platform/common", $(sys.policy_hub)),
