@@ -35,7 +35,7 @@ body common control
 
       # Roadshow policy update body values
 
-                  "/var/cfengine/roadshow_inputs/platform/common/classify.cf",
+                  "services/autorun/classify.cf",
                   "roadshow_update_policy.cf",
                   "roadshow_update.cf"
 
