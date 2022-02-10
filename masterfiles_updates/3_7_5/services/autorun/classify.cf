@@ -20,7 +20,7 @@ vars:
   "organisation"                       string => "$(org_part[2])";
 
   "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
- #"eco_vars"                           string => "$(classify.environment)$(classify.department)$(classify.location)";
+
   "domain"                             string => canonify($(sys.domain));
   "vendor"                             string => $(inventory_linux.id_array[1]);
 
@@ -32,33 +32,54 @@ vars:
 
   "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
   "ips"                                 slist => string_split($(ips_all), "\n", 99);
-  "first_device"                       string => nth($(ips), 0);
-  "first_device_list"                   slist => string_split($(first_device), " ", 99);
-  "length_device"                         int => length($(first_device_list));
-  "current_device"                     string => nth($(first_device), "$(length_device)");
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
 
- eth::
+ "dev_type.eth"::
   "interface"                          string => "eth";
 
- breth0::
+ "dev_type.breth0"::
   "interface"                          string => "eth0";
   "bridge"                             string => "breth0";
 
- vmbr0::
+ "dev_type.vmbr0"::
   "interface"                          string => "vlan";
   "bridge"                             string => "vmbr0";
+
+methods:
+
+  "We want to know the device type" usebundle => dev_type("classify.ips");
 
 reports:
 
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) organisation: $(organisation)";
   "$(this.bundle) location: $(location) $($(location).location_name)";
+  "$(this.bundle) interface: $(interface)";
+
+}
+
+bundle agent dev_type(ips) {
+
+classes:
+
+  "breth0"           expression => regcmp("^breth0", "$(current_device)");
+  "eth"              expression => regcmp("^eth", "$(current_device)");
+  "vmbr0"            expression => regcmp("^vlan", "$(current_device)");
+
+vars:
+
+  "first_device"                        slist => string_split($(ips), " ", 99);
+ #"first_device_list"                   slist => string_split($(first_device), " ", 99);
+  "length_device"                         int => length($(first_device));
+  "current_device"                     string => nth($(first_device), "$(length_device)");
+
+reports:
+
   "$(this.bundle) ips: $(ips)";
   "$(this.bundle) first device: $(first_device)";
   "$(this.bundle) length device: $(length_device)";
   "$(this.bundle) current_device: $(current_device)";
-  "$(this.bundle) interface: $(interface)";
 
 }
+
