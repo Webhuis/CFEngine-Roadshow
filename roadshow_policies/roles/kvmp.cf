@@ -45,11 +45,11 @@ vars:
   "nic_index"                          slist => getindices("nic");
   "nic_trick"                          slist => { "0", "1" };
 
-  "ddns[support][ip]"                 string => "$(sys.ipv4[canonify($(nic[support]))])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$(vlan[support])"; 
-  "ddns[life][ip]"                    string => "$(sys.ipv4[canonify($(nic[life]))])";
+  "ddns[life][ip]"                    string => "$(sys.ipv4[$(nic[life])])";
   "ddns[life][nic]"                   string => "$(nic[life])";
   "ddns[life][suffix]"                string => "-life";
   "ddns[life][vlan]"                  string => "$(vlan[life])";
