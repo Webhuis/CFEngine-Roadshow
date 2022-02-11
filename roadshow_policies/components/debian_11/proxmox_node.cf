@@ -50,6 +50,8 @@ methods:
 
   "We desire Proxmox repo"          usebundle => apt_repo("proxmox_node.apt_repo", "$(apt_key)");
 
+  "Common kvm host stuff"           usebundle => kvm_host;
+
   "We are a Proxmox client"         usebundle => packages("proxmox_node.pkg");
 
 reports:
@@ -57,4 +59,3 @@ reports:
   "$(this.bundle): Repo and software install";
 
 }
-
