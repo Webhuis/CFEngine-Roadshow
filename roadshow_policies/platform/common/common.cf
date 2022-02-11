@@ -23,7 +23,6 @@ methods:
                                                                      "$(role_data.ddns[$(role_data.ddns_index)][ip])");
 
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
-  "We do role date driven policies here"    usebundle => role_data_driven_policies("$(role_data.ddns)");
 
 reports:
 

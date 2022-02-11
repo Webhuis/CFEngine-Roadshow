@@ -4,6 +4,10 @@ methods:
 
  "Clean up old report files"    usebundle => cleanup;
 
+reports:
+
+  "$(this.bundle): Tidying up"
+
 }
 
 bundle agent cleanup {
@@ -17,5 +21,9 @@ files:
         delete          => tidy,
         file_select     => days_old("1"),
         depth_search    => recurse("inf");
+
+reports:
+
+  "$(this.bundle): Old reports"
 
 }
