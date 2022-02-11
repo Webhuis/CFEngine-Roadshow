@@ -10,6 +10,6 @@ methods:
 
 reports:
 
- "${this.bundle}: Basic settings common to all platforms";
+ "$(this.bundle): Basic settings common to all platforms";
 
 }
