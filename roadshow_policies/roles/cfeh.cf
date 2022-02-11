@@ -50,10 +50,10 @@ methods:
 
 reports:
 
-  "${this.bundle} nics: $(nic)";
-  "${this.bundle} ddns: $(ddns[$(ddns_index)][ip])";
-  "${this.bundle} support_nic: $(etc_hosts_nic)";
-  "${this.bundle} admin_nics: ${admin_nics}";
+  "$(this.bundle) nics: $(nic)";
+  "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
+  "$(this.bundle) support_nic: $(etc_hosts_nic)";
+  "$(this.bundle) admin_nics: $(admin_nics)";
 
 }
 
