@@ -34,13 +34,13 @@ vars:
 
   "vlan_index"                         slist => getindices("vlan");
 
-  "nic[service]"                      string => "$(classify.interface)$(vlan[service])";
-  "nic[support]"                      string => "$(classify.interface)$(vlan[support])";
-  "nic[admin]"                        string => "$(classify.interface)$(vlan[admin])";
-  "nic[wan]"                          string => "$(classify.interface)$(vlan[wan])";
-  "nic[gw]"                           string => "$(classify.interface)$(vlan[gw])";
-  "nic[life]"                         string => "$(classify.interface)$(vlan[life])";
-  "nic[roadshow]"                     string => "$(classify.interface)$(vlan[roadshow])";
+  "nic[service]"                      string => "$(dev_type.interface)$(vlan[service])";
+  "nic[support]"                      string => "$(dev_type.interface)$(vlan[support])";
+  "nic[admin]"                        string => "$(dev_type.interface)$(vlan[admin])";
+  "nic[wan]"                          string => "$(dev_type.interface)$(vlan[wan])";
+  "nic[gw]"                           string => "$(dev_type.interface)$(vlan[gw])";
+  "nic[life]"                         string => "$(dev_type.interface)$(vlan[life])";
+  "nic[roadshow]"                     string => "$(dev_type.interface)$(vlan[roadshow])";
   "nic_index"                          slist => getindices("nic");
   "nic_trick"                          slist => { "0", "1" };
 
