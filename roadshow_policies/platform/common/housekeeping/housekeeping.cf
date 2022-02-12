@@ -6,7 +6,7 @@ methods:
 
 reports:
 
-  "$(this.bundle): Tidying up"
+  "$(this.bundle): Tidying up";
 
 }
 
@@ -24,6 +24,6 @@ files:
 
 reports:
 
-  "$(this.bundle): Old reports"
+  "$(this.bundle): Old reports";
 
 }
