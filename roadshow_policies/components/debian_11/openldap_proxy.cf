@@ -10,9 +10,9 @@ files:
          comment  => "Configfile for keepalived",
            perms  => mog("644","root","root"),
           create  => "true",
-          action  => u_immediate,
+          action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/keepalived.conf.tmpl",
-         classes  => u_if_repaired("restart_keepalived");
+         classes  => r_if_repaired("restart_keepalived");
 
 methods:
 
