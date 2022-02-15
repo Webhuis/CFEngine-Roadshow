@@ -33,7 +33,7 @@ vars:
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r link show dev $(nic[support]) | grep 'dev' ", useshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), ".*dev ", 99);
-  "ip[support]"                       string => nth(ip_list[support], "1");
+  "ip[support]"                       string => nth("ip_list[support]", "1");
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
