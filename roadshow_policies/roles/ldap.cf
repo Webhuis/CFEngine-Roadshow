@@ -31,6 +31,10 @@ vars:
   "nic_index"                          slist => getindices("nic");
   "nic_trick"                          slist => { "0", "1" };
 
+  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r link show dev $(nic[support]) | grep 'dev' ", useshell);
+  "ip_list[support]"                   slist => string_split($(ip_line[support]), ".*dev ", 99);
+  "ip[support]"                       string => nth(ip_list[support], "1");
+
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -53,6 +57,7 @@ methods:
 reports:
 
   "$(this.bundle) nics: $(nic)";
+  "$(this.bundle) ip[support]: $(ip[support])";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
   "$(this.bundle) support_nic: $(etc_hosts_nic)";
   "$(this.bundle) admin_nics: $(admin_nics)";
