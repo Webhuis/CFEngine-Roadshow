@@ -4,7 +4,8 @@ vars:
 
   "role_name"                         string => "The HA LDAP cluster server";
 
-  "bundles[openldap_server]"          string => "$(sys.flavor)/openldap_proxy.cf";
+  "bundles[openldap_server]"          string => "$(sys.flavor)/openldap_server.cf";
+  "bundles[openldap_proxy]"           string => "$(sys.flavor)/openldap_proxy.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
