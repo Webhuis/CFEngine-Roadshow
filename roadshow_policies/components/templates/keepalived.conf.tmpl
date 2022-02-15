@@ -1,0 +1,31 @@
+# Webhuis template voor keepalived.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+! Configuration File for keepalived
+
+global_defs {
+   notification_email {
+     martin@webhuis.nl
+   }
+   notification_email_from ldap@$(sys.fqdn)
+   smtp_server mail.webhuis.nl
+   smtp_connect_timeout 30
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth1
+    virtual_router_id 101
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        10.68.171.100
+    }
+}
+

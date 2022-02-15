@@ -1,0 +1,18 @@
+bundle agent openldap_server {
+
+vars:
+
+  "pkg[ldap-utils]"                    string => "*";
+  "pkg[python3-ldap]"                  string => "*";
+  "pkg[slapd]"          	       string => "*";
+  "pkg[slapd-contrib]"                 string => "*";
+
+methods:
+
+  "We desire the openldap server"   usebundle => packages("openldap_server.pkg");
+
+reports:
+
+  "$(this.bundle): ";
+
+}

@@ -1,0 +1,32 @@
+bundle agent openldap_proxy {
+
+vars:
+
+  "pkg[keepalived]"                    string => "*";
+
+files:
+
+  "/etc/keepalived/keepalived.conf"
+         comment  => "Configfile for keepalived",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => u_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/keepalived.conf.tmpl",
+         classes  => u_if_repaired("restart_keepalived");
+
+methods:
+
+  "We desire the proxy template"    usebundle => get_template("keepalived.conf.tmpl");
+
+  "We desire the openldap proxy"    usebundle => packages("openldap_proxy.pkg");
+
+commands:
+
+  restart_keepalived::
+   "/etc/init.d/keepalived restart";
+
+reports:
+
+  "$(this.bundle): ";
+
+}
