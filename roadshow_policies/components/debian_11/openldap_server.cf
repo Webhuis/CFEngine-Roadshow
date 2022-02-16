@@ -10,12 +10,12 @@ vars:
 
 files:
 
-  "/etc/ldap/schema/syncproc.ldif"
+  "/etc/ldap/schema/syncprov.ldif"
     comment                                => "Modules for ldap mirror mode replication",
     create                                 => "true",
     perms                                  => mo("644", "root"),
     action                                 => immediate,
-    edit_line                              => syncproc_ldif,
+    edit_line                              => syncprov_ldif,
     edit_defaults                          => no_backup;
 
 methods:
@@ -28,7 +28,7 @@ reports:
 
 }
 
-bundle edit_line syncproc_ldif {
+bundle edit_line syncprov_ldif {
 
 delete_lines:
 
