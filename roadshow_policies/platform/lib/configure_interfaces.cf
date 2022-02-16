@@ -2,7 +2,7 @@ bundle agent configure_interfaces (pos) {
  
 classes:
 
-  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("nic_mac_map.macs", "$(pos)"), "part"); 
+  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("classify.macs", "$(pos)"), "part"); 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
 
 vars:
@@ -26,7 +26,7 @@ vars:
 files:
 
  !bad_ip::
-  "/etc/network/interfaces.d/$(nic)_interface"
+  "/etc/network/interfaces.d/$(nic)"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
@@ -62,6 +62,7 @@ reports:
  #"$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
  #"$(this.bundle) current_dev : $(current_device), $(pos)";
   "$(this.bundle) current_ip : $(current_ip)";
+  "$(this.bundle) classify_ipr : $(classify.ipr)";
 
  gateway::
   "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 

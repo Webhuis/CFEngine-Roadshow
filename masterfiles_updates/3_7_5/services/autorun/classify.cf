@@ -27,10 +27,10 @@ vars:
   "ip_link_all"                        string => execresult("/usr/sbin/ip link | grep 'ether' ", useshell);
   "macs"                                slist => string_split($(ip_link_all), "\n", 99);
 
-  "ip_all"                             string => execresult("/usr/sbin/ip r | grep 'dev' ", useshell);
-  "ipr"                                 slist => string_split($(ip_all), "\n", 99);
+  "ipr_all"                            string => execresult("/usr/sbin/ip r", noshell);
+  "ipr"                                 slist => string_split($(ipr_all), "\n", 99);
 
-  "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
+  "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'brd' | grep 'scope global' ", useshell);
   "ips"                                 slist => string_split($(ips_all), "\n", 99);
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
