@@ -6,6 +6,17 @@ vars:
   "pkg[python3-ldap]"                  string => "*";
   "pkg[slapd]"          	       string => "*";
   "pkg[slapd-contrib]"                 string => "*";
+  "pkg[sudo-ldap]"                     string => "*";
+
+files:
+
+  "/etc/ldap/schema/syncproc.ldif"
+    comment                                => "Modules for ldap mirror mode replication",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_line                              => syncproc_ldif,
+    edit_defaults                          => no_backup;
 
 methods:
 
@@ -16,3 +27,20 @@ reports:
   "$(this.bundle): ";
 
 }
+
+bundle edit_line syncproc_ldif {
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+"
+dn: cn=module,cn=config
+objectClass: olcModuleList
+cn: module
+olcModulePath: /usr/lib/openldap
+olcModuleLoad: syncprov.la
+";
+}
+
