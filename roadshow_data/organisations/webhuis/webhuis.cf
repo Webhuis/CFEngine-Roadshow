@@ -2,30 +2,34 @@ bundle agent webhuis {
 
 vars:
 
-  "organisation"                    string => "Webhuis";
+  "organisation"                       string => "Webhuis";
 
-  "dhcp_ldap"                       string => "mihrwhpdcsw1.sw.webhuis.nl";
-  "mdns"                            string => "pdnmwhpdcsw1.sw.webhuis.nl";
-  "mdns_key"                        string => "/etc/dhcp/webhuis.nl.update";
+  "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
+  "ldap_frontend"                      string => "ldap.sw.webhuis.nl";
+  "ldap_vip"                           string => host2ip("$(ldap_frontend)";
+  "ldap_m[ldappdcsw001.sw.webhuis.nl]" string => "100";
+  "ldap_m[ldappdcsw002.sw.webhuis.nl]" string => "101";
+  "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
+  "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
 
-  "ttl"                             string => "300";
-  "ntp_server"                      string => "ntp.time.nl";
+  "ttl"                                string => "300";
+  "ntp_server"                         string => "ntp.time.nl";
 
-  "vlan[service]"                   string => "1001";
-  "vlan[support]"                   string => "123";
-  "vlan[admin]"                     string => "22";
-  "vlan[wan]"                       string => "213";
-  "vlan[gw]"                        string => "254";
-  "vlan[life]"                      string => "42";
-  "vlan[roadshow]"                  string => "1111";
+  "vlan[service]"                      string => "1001";
+  "vlan[support]"                      string => "123";
+  "vlan[admin]"                        string => "22";
+  "vlan[wan]"                          string => "213";
+  "vlan[gw]"                           string => "254";
+  "vlan[life]"                         string => "42";
+  "vlan[roadshow]"                     string => "1111";
 
-  "nic[service]"                    string => "eth0";
-  "nic[support]"                    string => "eth1";
-  "nic[admin]"                      string => "eth2";
-  "nic[gw]"                         string => "eth3";
-  "nic[wan]"                        string => "eth4";
-  "nic[life]"                       string => "eth5";
-  "nic[roadshow]"                   string => "eth6";
+  "nic[service]"                       string => "eth0";
+  "nic[support]"                       string => "eth1";
+  "nic[admin]"                         string => "eth2";
+  "nic[gw]"                            string => "eth3";
+  "nic[wan]"                           string => "eth4";
+  "nic[life]"                          string => "eth5";
+  "nic[roadshow]"                      string => "eth6";
 
 reports:
 

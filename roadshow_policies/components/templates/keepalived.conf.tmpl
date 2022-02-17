@@ -10,7 +10,7 @@ global_defs {
      martin@webhuis.nl
    }
    notification_email_from ldap@$(sys.fqhost)
-   smtp_server mail.webhuis.nl
+   smtp_server mailsw.webhuis.nl
    smtp_connect_timeout 30
 }
 
@@ -18,14 +18,17 @@ vrrp_instance VI_1 {
     state MASTER
     interface eth1
     virtual_router_id 101
-    priority 100
+    priority $(priority_pear.priority)
     advert_int 1
     authentication {
         auth_type PASS
         auth_pass 1111
     }
+    unicast_peer { 
+        $(priority_pear.pear)
+    }
     virtual_ipaddress {
-        10.68.171.100
+        $($(classify.organisation).ldapm_vip)
     }
 }
 

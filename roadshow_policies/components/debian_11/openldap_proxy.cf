@@ -3,6 +3,7 @@ bundle agent openldap_proxy {
 vars:
 
   "pkg[keepalived]"                    string => "*";
+  "proxy_index"                         slist => getindices($($(classify.organisation).ldapm));
 
 files:
 
@@ -27,6 +28,29 @@ commands:
 
 reports:
 
-  "$(this.bundle): ";
+  "$(this.bundle): $(proxy_index)";
 
 }
+
+bundle agent priority_pear(proxy_index) {
+  
+classes:
+
+  "priority"                       expression => strcmp($(default_device), $(current_device));
+  "pear"                           expression => strcmp($(default_device), $(current_device));
+
+vars:
+
+ match_host::
+  "priority"                           string => "$($(classify.organisation).ldapm[$(proxy_index)])";
+
+ !match_host::
+  "pear"                               string => "$(proxy_index)";
+
+reports:
+
+  "$(this.bundle): $(priority)";
+  "$(this.bundle): $(pear)";
+
+}
+
