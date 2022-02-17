@@ -6,7 +6,7 @@ vars:
 
   "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
   "ldap_frontend"                      string => "ldap.sw.webhuis.nl";
-  "ldap_vip"                           string => host2ip("$(ldap_frontend)";
+  "ldap_vip"                           string => host2ip("$(ldap_frontend)");
   "ldap_m[ldappdcsw001.sw.webhuis.nl]" string => "100";
   "ldap_m[ldappdcsw002.sw.webhuis.nl]" string => "101";
   "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
