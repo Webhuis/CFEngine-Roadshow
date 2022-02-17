@@ -3,7 +3,7 @@ bundle agent openldap_proxy {
 vars:
 
   "pkg[keepalived]"                    string => "*";
-  "proxy_index"                         slist => getindices($($(classify.organisation).ldapm));
+  "proxy_index"                         slist => getindices("$($(classify.organisation).ldapm)");
 
 files:
 
