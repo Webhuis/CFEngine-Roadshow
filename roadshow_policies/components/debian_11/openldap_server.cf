@@ -40,7 +40,7 @@ dn: cn=module,cn=config
 objectClass: olcModuleList
 cn: module
 olcModulePath: /usr/lib/openldap
-olcModuleLoad: syncprov.la
+olcModuleLoad: /usr/lib/ldap/syncprov.la
 ";
 }
 

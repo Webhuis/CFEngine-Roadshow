@@ -18,17 +18,17 @@ vrrp_instance VI_1 {
     state MASTER
     interface eth1
     virtual_router_id 101
-    priority $(priority_pear.priority)
+    priority $(keepalive.priority)
     advert_int 1
     authentication {
         auth_type PASS
         auth_pass 1111
     }
     unicast_peer { 
-        $(priority_pear.pear)
+        $(keepalive.pear)
     }
     virtual_ipaddress {
-        $($(classify.organisation).ldapm_vip)
+        $($(classify.organisation).ldap_vip)
     }
 }
 

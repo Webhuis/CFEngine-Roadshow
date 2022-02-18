@@ -16,6 +16,7 @@ meta:
 methods:
   "Collect values and policies"                   usebundle => do_roadshow;
   "Determine role, organisation and geography"    usebundle => classify;
+  "We require the organisation's information"     usebundle => $(classify.organisation);
   "We require the domain information"             usebundle => $(do_roadshow.class_domain);
   "Request Data for machine information"          usebundle => request_role_information;
   "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));

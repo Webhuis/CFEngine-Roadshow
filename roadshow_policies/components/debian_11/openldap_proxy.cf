@@ -3,7 +3,65 @@ bundle agent openldap_proxy {
 vars:
 
   "pkg[keepalived]"                    string => "*";
-  "proxy_index"                         slist => getindices("$($(classify.organisation).ldapm)");
+  "proxy_index"                         slist => getindices("$(classify.organisation).ldap_m");
+  "priority"                           string => "$(priority_pear.priority)";
+  "pear"                               string => "$(priority_pear.pear)";
+
+methods:
+
+  "We desire the proxy template"    usebundle => get_template("keepalived.conf.tmpl");
+
+  "We desire the openldap proxy"    usebundle => packages("openldap_proxy.pkg");
+
+  "We need pears and priority"      usebundle => priority_pear("$(proxy_index)");
+
+  "We configure keepalived"         usebundle => keepalive("$(priority_pear.priority)", "$(priority_pear.pear)");
+
+commands:
+
+  restart_keepalived::
+   "/etc/init.d/keepalived restart";
+
+reports:
+
+  "$(this.bundle) Webhuis ldap cluster hostnames: $(proxy_index)";
+  "$(this.bundle) Webhuis ldap keepalive priorites: $($(classify.organisation).ldap_m[$(proxy_index)])";
+  "$(this.bundle) priority: $(priority)";
+  "$(this.bundle) pear: $(pear)";
+
+}
+
+bundle agent priority_pear(proxy_index) {
+  
+classes:
+
+  "match_host"                     expression => strcmp($(sys.fqhost), $(proxy_index));
+  "pear_if_no_match"               expression => not(strcmp($(sys.fqhost), $(proxy_index)));
+
+vars:
+
+  "current_hostname"                   string => "$(proxy_index)";
+  "current_priority"                   string => "$($(classify.organisation).ldap_m[$(proxy_index)])";
+
+ match_host::
+  "priority"                           string => "$(current_priority)";
+
+ pear_if_no_match::
+  "pear"                               string => host2ip("$(current_hostname)");
+
+reports:
+
+  "$(this.bundle) current_hostname: $(current_hostname)";
+  "$(this.bundle) current_priority: $(current_priority)";
+
+ match_host::
+  "$(this.bundle) hostname matches, so this is my priority: $(proxy_index), $(priority)";
+ pear_if_no_match::
+  "$(this.bundle) hostname is my pear: $(current_hostname), $(pear), ";
+
+}
+
+bundle agent keepalive (priority, pear) {
 
 files:
 
@@ -15,42 +73,10 @@ files:
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/keepalived.conf.tmpl",
          classes  => r_if_repaired("restart_keepalived");
 
-methods:
-
-  "We desire the proxy template"    usebundle => get_template("keepalived.conf.tmpl");
-
-  "We desire the openldap proxy"    usebundle => packages("openldap_proxy.pkg");
-
-commands:
-
-  restart_keepalived::
-   "/etc/init.d/keepalived restart";
-
 reports:
 
-  "$(this.bundle): $(proxy_index)";
-
-}
-
-bundle agent priority_pear(proxy_index) {
-  
-classes:
-
-  "priority"                       expression => strcmp($(default_device), $(current_device));
-  "pear"                           expression => strcmp($(default_device), $(current_device));
-
-vars:
-
- match_host::
-  "priority"                           string => "$($(classify.organisation).ldapm[$(proxy_index)])";
-
- !match_host::
-  "pear"                               string => "$(proxy_index)";
-
-reports:
-
-  "$(this.bundle): $(priority)";
-  "$(this.bundle): $(pear)";
+  "$(this.bundle) priority: $(priority)";
+  "$(this.bundle) pear: $(pear)";
 
 }
 
