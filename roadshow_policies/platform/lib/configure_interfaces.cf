@@ -2,7 +2,7 @@ bundle agent configure_interfaces (nic) {
  
 methods:
 
-  "match nic with ips"           usebundle => match_nic_ips($(nic), $(classify.ips));
+  "match nic with ips"           usebundle => match_nic_ips($(classify.ips));
 
 reports:
 
@@ -10,7 +10,7 @@ reports:
 
 }
 
-bundle agent match_nic_ips(nic, ips) {
+bundle agent match_nic_ips(ips) {
 
 classes:
 
@@ -29,7 +29,7 @@ vars:
 
 files:
 
-  "/etc/network/interfaces.d/$(nic)"
+  "/etc/network/interfaces.d/$(configure_interfaces.nic)"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
@@ -46,8 +46,8 @@ commands:
 
 reports:
 
-  "$(this.bundle) nic: $(nic)";
-  "$(this.bundle) paired: $(nic), $(current_ip)";
+  "$(this.bundle) current_device: $(current_device)";
+  "$(this.bundle) paired: $(configure_interfaces.nic), $(current_ip)";
   "$(this.bundle) current_ip : $(current_ip)";
 
  gateway::
