@@ -1,0 +1,37 @@
+bundle agent apache2 {
+
+vars:
+
+  "apache_log_dir"   string => "/var/log/apache2";
+  "apache_conf_dir"  string => "/etc/apache2";
+  "default_conf"     string => "000-default.conf";
+  "000_default"      string => "apache2-000-default.conf.tmpl";
+
+  "pkg[apache2]"     string => "*";
+
+files:
+
+  "$(apache_conf_dir)/sites-available/$(default_conf)"
+         comment  => "default apache2 config wijst naar webhuis.nl",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(000_default)",
+         classes  => r_if_repaired("restart_apache");
+
+  "$(apache_conf_dir)/sites-enabled/$(default_conf)"
+         comment  => "default apache2 symbolic link",
+        link_from => ln_s("$(apache_conf_dir)/sites-available/$(default_conf)"),
+         classes  => r_if_repaired("restart_apache");
+
+methods:
+
+  "any" usebundle => get_template("$(000_default)");
+  "any" usebundle => packages("apache2.pkg");
+
+commands:
+
+  restart_apache::
+   "/bin/systemctl restart apache2";
+
+}
