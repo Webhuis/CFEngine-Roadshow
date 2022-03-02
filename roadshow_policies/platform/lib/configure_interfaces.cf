@@ -34,16 +34,9 @@ commands:
 
 reports:
 
-  "$(this.bundle) role_data_ip: $(role_data_ip)";
   "$(this.bundle) nic: $(nic)";
-  "$(this.bundle) paired: $(nic), $(pos), $(current_ip)";
+  "$(this.bundle) paired: $(nic), $(current_ip)";
   "$(this.bundle) current_ip : $(current_ip)";
-
- bad_ip::
-  "$(this.bundle) bad_ip : $(current_ip)";
-
- !bad_ip::
-  "$(this.bundle) good_ip : $(current_ip)";
 
  gateway::
   "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
