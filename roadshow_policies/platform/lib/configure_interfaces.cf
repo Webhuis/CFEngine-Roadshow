@@ -7,7 +7,7 @@ classes:
 
 vars:
 
-  "nic"                             string => nth("nics_sort", "$(pos)");
+ #"nic"                             string => nth("nics_sort", "$(pos)");
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
   "default_device"                  string => nth("default_device_list", "4");
@@ -26,7 +26,7 @@ vars:
 files:
 
  !(check_ip.bad_ip)::
-  "/etc/network/interfaces.d/$(nic)"
+  "/etc/network/interfaces.d/$(nic_sort)"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
