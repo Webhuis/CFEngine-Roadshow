@@ -1,0 +1,65 @@
+bundle agent apt_cacher_ng {
+
+vars:
+
+  "pkg[apt-cacher-ng]"           string => "*";
+
+  "acng_conf"                    string => "/etc/apt-cacher-ng/acng.conf";
+  "templates"                     slist => { "acng.conf.tmpl", "apt_cacher_backends.tmpl" };
+  "repo"                          slist => getindices("$(do_roadshow.class_domain).https_repo");
+ 
+files:
+
+ "$(acng_conf)"
+  comment       => "Edit acng.conf for https backends, Remap-repo: http://repo.nick ; file:backends_repo",
+  create        => "true",
+  perms         => mo("644","root"),
+  action        => r_immediate,
+  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/acng.conf.tmpl",
+  classes       => r_if_repaired("restart_apt_cacher");
+
+methods:
+
+  "We desire apt-cacher-ng"   usebundle => packages("apt_cacher_ng.pkg");
+  "Get apt_cacher templates"  usebundle => get_template("$(templates)");
+  "We desire https remap's"   usebundle => apt_cacher_backends($(repo));
+# "We desire https repo's"    usebundle => apt_cacher_backends($(do_roadshow.class_domain).https_repo[$(repo)]);
+
+commands:
+
+ restart_apt_cacher::
+
+  "/etc/init.d/apt-cacher-ng restart";
+
+reports:
+
+  "${this.bundle}: $(repo)";
+  "${this.bundle}: $($(do_roadshow.class_domain).https_repo[$(repo)])";
+
+}
+
+bundle agent apt_cacher_backends(repo) {
+
+vars:
+
+  "repo_nick"                    string => $(repo);
+  "https_repo"                   string => "$($(do_roadshow.class_domain).https_repo[$(repo_nick)])";
+
+  "apt_backends_file"            string => "/etc/apt-cacher-ng/backends_";
+
+files:
+
+ "$(apt_backends_file)$(repo_nick)"
+  comment       => "Create backends file containing the https repo names",
+  create        => "true",
+  perms         => mo("644","root"),
+  action        => r_immediate,
+  edit_template => "$(sys.workdir)/roadshow_dynamic_inputs/templates/apt_cacher_backends.tmpl",
+  classes       => r_if_repaired("restart_apt_cacher");
+
+reports:
+
+  "${this.bundle}: repo_nick $(repo_nick)";
+  "${this.bundle}: https repo $(https_repo)";
+
+}

@@ -1,0 +1,70 @@
+bundle agent psql {
+
+vars:
+
+  "role_name"                                  string => "postgresql database cluster server";
+
+  "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
+
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => getvalues("bundles");
+
+  "admin_nics"                                  slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
+
+methods:
+
+  "We desire the postgresql server"         usebundle => postgresql;
+
+reports:
+
+  "$(this.bundle): $(classify.role)";
+  "$(this.bundle): admin nics:  $(admin_nics)";
+
+}
+
+bundle agent role_data {
+  
+vars:
+
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
+
+  "nic_trick"                          slist => { "0", "1", "2" };
+
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
+  "ddns[support][nic]"                string => "$(nic[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$(vlan[support])"; 
+  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(nic[admin])])";
+  "ddns[admin][nic]"                  string => "$(nic[admin])";
+  "ddns[admin][suffix]"               string => "-ssh";
+  "ddns[admin][vlan]"                 string => "$(vlan[admin])"; 
+  "ddns[life][ip]"                    string => "$(sys.ipv4[$(nic[life])])";
+  "ddns[life][nic]"                   string => "$(nic[life])";
+  "ddns[life][suffix]"                string => "-life";
+  "ddns[life][vlan]"                  string => "$(vlan[life])"; 
+
+  "ddns_index"                         slist => getindices("ddns");
+
+  "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
+  "support_ip"                        slist  => { "$(ddns[support][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[admin][ip])", "$(ddns[life][ip])" };
+
+methods:
+
+  "We need predictable names"      usebundle => nic_mac_map;
+
+reports:
+
+  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
+  "$(this.bundle) ddns[index][ip], $(ddns[$(ddns_index)][ip])";
+  "$(this.bundle) ddns[index][nic], $(ddns[$(ddns_index)][nic])";
+  "$(this.bundle) ddns[index][vlan], $(ddns[$(ddns_index)][vlan])";
+  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
+  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
+  "$(this.bundle) admin_nics: $(admin_nics)";
+
+}
+
