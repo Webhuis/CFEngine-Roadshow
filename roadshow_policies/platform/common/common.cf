@@ -10,7 +10,7 @@ methods:
 
   "Check the interfaces"                    usebundle => check_interfaces("$($($(classify.role).role_data).nic[$($($(classify.role).role_data).nic_index)])"),
                                               comment => "OSI Layers one and two";
-  "Check the soft IP Addresses given"       usebundle => check_ip("$(r$($(classify.role).role_data)ole_data.ddns[$($($(classify.role).role_data).ddns_index)][ip])");
+  "Check the soft IP Addresses given"       usebundle => check_ip("$($($(classify.role).role_data)ole_data.ddns[$($($(classify.role).role_data).ddns_index)][ip])");
 
  !bad_ip.mac_ok::
   "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$($($(classify.role).role_data).ddns[$($($(classify.role).role_data).ddns_index)][suffix])",
