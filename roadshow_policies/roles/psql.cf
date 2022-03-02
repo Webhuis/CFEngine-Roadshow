@@ -9,8 +9,6 @@ vars:
   "sequence"                                    slist => getindices("bundles");
   "inputs"                                      slist => getvalues("bundles");
 
-  "admin_nics"                                  slist => { "$($(sys.flavor).nics[one])", "$($(sys.flavor).nics[five])" };
-
 methods:
 
   "We desire the postgresql server"         usebundle => postgresql;
@@ -28,9 +26,8 @@ vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
-  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
 
-  "nic_trick"                          slist => { "0", "1", "2" };
+  "nic_trick"                          slist => { "0", "1" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
@@ -40,16 +37,12 @@ vars:
   "ddns[admin][nic]"                  string => "$(nic[admin])";
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$(vlan[admin])"; 
-  "ddns[life][ip]"                    string => "$(sys.ipv4[$(nic[life])])";
-  "ddns[life][nic]"                   string => "$(nic[life])";
-  "ddns[life][suffix]"                string => "-life";
-  "ddns[life][vlan]"                  string => "$(vlan[life])"; 
 
   "ddns_index"                         slist => getindices("ddns");
 
   "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
-  "admin_nics"                        slist  => { "$(ddns[admin][ip])", "$(ddns[life][ip])" };
+  "admin_nics"                        slist  => { "$(ddns[admin][ip])" };
 
 methods:
 

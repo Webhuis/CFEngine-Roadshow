@@ -2,13 +2,13 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want valid ssh server IP Addressies"  usebundle => check_ip("$(role_data.admin_nics)");
+  "We want valid ssh server IP Addressies"  usebundle => check_ip("$($($(classify.role).role_data).admin_nics)");
 
  !bad_ip::
   "openssh server and client"               usebundle => ssh_all_config;
 
  any::
-  "We want a valid host IP Address"         usebundle => check_ip("$(role_data.etc_hosts_nic)");
+  "We want a valid host IP Address"         usebundle => check_ip("$($($(classify.role).role_data).etc_hosts_nic)");
 
  !bad_ip::
   "Standardize hosts setup"                 usebundle => etc_hosts;
@@ -31,8 +31,8 @@ reports:
  bad_ip::
   "$(this.bundle): Invalid IP Address!";
 
-  "$(this.bundle) etc_hosts_nic: $(role_data.admin_nics)";  
-  "$(this.bundle) etc_hosts_nic: $(role_data.etc_hosts_nic)";  
+  "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).admin_nics)";  
+  "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).etc_hosts_nic)";  
   "$(this.bundle) resolvers: $($(classify.location).resolvers)";  
 
  !bad_ip::

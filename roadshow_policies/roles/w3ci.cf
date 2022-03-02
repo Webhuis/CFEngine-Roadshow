@@ -1,8 +1,8 @@
-bundle agent w3ca {
+bundle agent w3ci {
 
 vars:
 
-  "role_name"                         string => "HTTP / HTTPS w3c compliant Webserver";
+  "role_name"                         string => "HTTP / HTTPS w3c compliant internal Webserver";
 
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
   "bundles[nginx]"                    string => "${sys.flavor}/nginx.cf";
@@ -25,16 +25,11 @@ bundle agent role_data {
   
 vars:
 
-  "nic[service]"                      string => "$($(classify.organisation).nic[service])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic_index"                          slist => getindices("nic");
-  "nic_trick"                          slist => { "0", "1", "2" };
+  "nic_trick"                          slist => { "0", "1" };
 
-  "ddns[service][ip]"                 string => "$(sys.ipv4[$(nic[service])])";
-  "ddns[service][nic]"                string => "$(nic[service])";
-  "ddns[service][suffix]"             string => "-fe";
-  "ddns[service][vlan]"               string => "$($(classify.organisation).vlan[service])";
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";

@@ -28,7 +28,7 @@ files:
 methods:
 
 # "Collect environment information" usebundle => classify_environment;
-  "Collect role data"               usebundle => "role_data";
+  "Collect role data"               usebundle => $($(classify.role).role_data);
 
 # wru::
 # "Feed role to Data"           usebundle => cf_message( $(request_role_view_write) );
