@@ -1,9 +1,9 @@
-bundle agent nic_mac_map (nic, ip) {
+bundle agent nic_mac_map (nic) {
 
 methods:
 
   "l0 source interfaces.d"        usebundle => l0_interface;
-  "map nics and macs"             usebundle => configure_interfaces($(nic), $(ip));
+  "map nics and macs"             usebundle => configure_interfaces($(nic));
 
 reports:
 
