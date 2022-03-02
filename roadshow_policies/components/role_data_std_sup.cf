@@ -38,7 +38,7 @@ methods:
 
 reports:
 
-  "$(this.bundle) nics: $(nic)";
+  "$(this.bundle) nic: $(nic[$(nic_index)])";
   "$(this.bundle) nic_index: $(nic_index)";
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) ip[support]: $(ip[support])";

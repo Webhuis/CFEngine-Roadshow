@@ -7,7 +7,7 @@ classes:
 vars:
 
   "role_data_ip"                     slist => getvalues("$($(classify.role).role_data).ip");
-  "nic"                             string => nth("nic_mac_map.nics", "$(pos)");
+  "nic"                             string => nth("$($(classify.role).role_data).nic_values", "$(pos)");
 
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
