@@ -15,6 +15,7 @@ bundle agent match_nic_ips(ips) {
 classes:
 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
+  "configure_interface"         expression => strcmp($(configure_interfaces.nic), $(current_device));
 
 vars:
 
@@ -29,6 +30,7 @@ vars:
 
 files:
 
+ configure_interface::
   "/etc/network/interfaces.d/$(configure_interfaces.nic)"
     comment                                => "one file per nic",
     create                                 => "true",
