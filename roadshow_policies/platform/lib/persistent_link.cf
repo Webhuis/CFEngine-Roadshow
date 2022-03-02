@@ -6,7 +6,7 @@ classes:
 
 vars:
 
-  "nic"                             string => nth("nic_mac_map.nics", "$(pos)");
+  "nic"                             string => nth("$($(classify.role).role_data).nic", "$(pos)");
 
  mac_ok::
   "mac_address"                     string => "$(part[1])";

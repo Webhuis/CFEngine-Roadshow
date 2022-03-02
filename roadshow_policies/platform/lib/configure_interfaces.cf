@@ -45,7 +45,7 @@ reports:
 
   "$(this.bundle) role_data_ip: $(role_data_ip)";
   "$(this.bundle) nic: $(nic)";
-  "$(this.bundle) paired: $(nic), $(pos), $(current_ip), $(mac_address)";
+  "$(this.bundle) paired: $(nic), $(pos), $(current_ip)";
   "$(this.bundle) current_ip : $(current_ip)";
 
  bad_ip::
