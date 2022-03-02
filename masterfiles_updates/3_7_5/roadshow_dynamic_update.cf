@@ -16,7 +16,7 @@ files:
   "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role).inputs)"
       handle       => "update_files_inputs_roadshow_components",
       copy_from    => r_rcp("${master_policies}/components/$($(classify.role).inputs)", $(sys.policy_hub)),
-      depth_search => r_recurse("inf"),
+     #depth_search => r_recurse("inf"),
       file_select  => r_policies,
       action       => r_immediate,
       create       => "true",
