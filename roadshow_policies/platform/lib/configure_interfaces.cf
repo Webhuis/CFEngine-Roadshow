@@ -2,7 +2,7 @@ bundle agent configure_interfaces (nic) {
  
 methods:
 
-  "match nic with ips"           usebundle => match_nic_ips($(classify.ips));
+  "match nic with ips"           usebundle => match_nic_ips($(nic), $(classify.ips));
 
 reports:
 
@@ -10,12 +10,12 @@ reports:
 
 }
 
-bundle agent match_nic_ips(ips) {
+bundle agent match_nic_ips(nic, ips) {
 
 classes:
 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
-  "configure_interface"         expression => strcmp($(configure_interfaces.nic), $(current_device));
+  "configure_interface"         expression => strcmp($(nic), $(current_device));
 
 vars:
 
