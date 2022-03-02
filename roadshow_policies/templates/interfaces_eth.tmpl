@@ -9,7 +9,7 @@
 allow-hotplug $(configure_interfaces.nic)
 auto $(configure_interfaces.nic)
 iface $(configure_interfaces.nic) inet static
-  address $(configure_interfaces.current_ip)
+  address $(match_nic_ips.current_ip)
 [%CFEngine gateway:: %]
-  gateway $(configure_interfaces.gateway_ip)
+  gateway $(match_nic_ips.gateway_ip)
   post-up /usr/local/bin/local-rules.sh
