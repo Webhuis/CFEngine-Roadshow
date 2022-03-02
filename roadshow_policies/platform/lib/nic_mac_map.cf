@@ -15,7 +15,7 @@ reports:
 
   "$(this.bundle) nics: $(nics)";
   "$(this.bundle) nics_sort: $(nics_sort)";
-  "$(this.bundle) nics_trick: $(nics_trick)";
+  "$(this.bundle) nic_trick: $(nic_trick)";
 
 }
 
