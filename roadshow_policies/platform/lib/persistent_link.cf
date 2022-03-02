@@ -1,0 +1,35 @@
+bundle agent persistent_link (pos) {
+ 
+classes:
+
+  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("classify.macs", "$(pos)"), "part"); 
+
+vars:
+
+  "nic"                             string => nth("nic_mac_map.nics", "$(pos)");
+
+ mac_ok::
+  "mac_address"                     string => "$(part[1])";
+
+files:
+
+ mac_ok::
+  "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/eth_persistent.link.tmpl",
+    classes                                => if_repaired("reboot");
+
+commands:
+
+ reboot:: 
+  "/usr/sbin/shutdown -r 3";
+
+reports:
+
+  "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
+ 
+}

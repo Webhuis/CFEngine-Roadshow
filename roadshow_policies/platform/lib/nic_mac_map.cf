@@ -8,6 +8,7 @@ vars:
 
 methods:
 
+  "persistent links"              usebundle => persistent_link($(nic_trick));
   "l0 source interfaces.d"        usebundle => l0_interface;
   "map nics and macs"             usebundle => configure_interfaces($(nic_trick));
 
@@ -15,7 +16,7 @@ reports:
 
   "$(this.bundle) nics: $(nics)";
   "$(this.bundle) nics_sort: $(nics_sort)";
-  "$(this.bundle) nics_number: $(nics_number)";
+  "$(this.bundle) nics_trick: $(nics_trick)";
 
 }
 

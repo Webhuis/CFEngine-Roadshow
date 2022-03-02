@@ -6,8 +6,8 @@
 #
 [%CFEngine any:: %]
 [Match]
-MACAddress=$(configure_interfaces.mac_address)
+MACAddress=$(persistent_link.mac_address)
 
 [Link]
-Name=$(configure_interfaces.nic)
+Name=$(persistent_link.nic)
 
