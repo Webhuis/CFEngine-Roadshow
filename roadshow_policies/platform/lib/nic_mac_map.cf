@@ -9,7 +9,7 @@ vars:
 methods:
 
   "l0 source interfaces.d"        usebundle => l0_interface;
-  "map nics and macs"             usebundle => configure_interfaces($($($(classify.role).role_data).nic_trick));
+  "map nics and macs"             usebundle => configure_interfaces($(nics_number));
 
 reports:
 
