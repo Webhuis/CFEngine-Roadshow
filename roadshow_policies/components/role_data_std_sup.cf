@@ -16,6 +16,13 @@ vars:
   "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
   "ip[admin]"                         string => nth("ip_list[admin]", "1");
 
+  "interface[support][dev]"           string => "$(nic[support])";
+  "interface[support][masked_ip]"     string => "$(ip[support])";
+  "interface[admin][dev]"             string => "$(nic[support])";
+  "interface[admin][masked_ip]"       string => "$(ip[support])";
+
+  "interface_index"                    slist => getindices("interface");
+
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -34,7 +41,7 @@ vars:
 methods:
 
   "We need predictable names"      usebundle => persistent_link($(nic_trick));
-  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values), $(classify.ips));
+  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values));
 
 reports:
 
