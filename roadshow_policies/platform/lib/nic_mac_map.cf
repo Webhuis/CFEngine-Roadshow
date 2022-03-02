@@ -2,13 +2,12 @@ bundle agent nic_mac_map {
   
 vars:
 
-  "nics"                              slist => getvalues("$($(classify.role).role_data).nic");
+  "nics"                              slist => getvalues("$($(classify.role).role_data).nic_values");
   "nics_sort"                         slist => sort("nics", lex);
   "nic_trick"                           int => length("$($(classify.role).role_data).nic_trick");
 
 methods:
 
-  "persistent links"              usebundle => persistent_link($(nic_trick));
   "l0 source interfaces.d"        usebundle => l0_interface;
   "map nics and macs"             usebundle => configure_interfaces($(nic_trick));
 
