@@ -2,7 +2,7 @@ bundle agent request_role_information {
 
 vars:
 
-  "role_data"                      string => $($(classify.role).role_data);
+  "role_data"                      string => "$($(classify.role).role_data)";
 #  "hash"                          string => file_hash("$(sys.workdir)/Data/request_role_view" , "md5" );
 #  "hash"                          string => readfile("$(sys.workdir)/Data/request_role_view" , "0" );
 # "role_view"                        data => parsejson('
