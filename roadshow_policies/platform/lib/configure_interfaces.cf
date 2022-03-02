@@ -10,7 +10,7 @@ reports:
 
 }
 
-bundle agent configure_interfaces (nic, ips) {
+bundle agent match_nic_ips (nic, ips) {
 
 classes:
 
