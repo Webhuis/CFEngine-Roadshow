@@ -1,4 +1,4 @@
-bundle agent configure_interfaces (nics_sort, pos) {
+bundle agent configure_interfaces (pos) {
  
 classes:
 
@@ -7,7 +7,7 @@ classes:
 
 vars:
 
- #"nic"                             string => nth("nics_sort", "$(pos)");
+  "nic"                             string => nth("nic_mac_map.nics", "$(pos)");
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
   "default_device"                  string => nth("default_device_list", "4");
@@ -25,8 +25,8 @@ vars:
 
 files:
 
- !(check_ip.bad_ip)::
-  "/etc/network/interfaces.d/$(nic_sort)"
+ !bad_ip::
+  "/etc/network/interfaces.d/$(nic)"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
@@ -57,12 +57,18 @@ commands:
 reports:
 
  #"$(this.bundle) default_device: $(default_device)";
-  "$(this.bundle) pair: $(nic), $(current_ip), $(mac_address)";
+  "$(this.bundle) paired: $(nic), $(pos), $(current_ip), $(mac_address)";
  #"$(this.bundle) nic_mac_map.ipr : $(nic_mac_map.ipr)";
  #"$(this.bundle) nic_mac_map.ips : $(nic_mac_map.ips)";
  #"$(this.bundle) current_dev : $(current_device), $(pos)";
   "$(this.bundle) current_ip : $(current_ip)";
   "$(this.bundle) classify_ipr : $(classify.ipr)";
+
+ bad_ip::
+  "$(this.bundle) bad_ip : $(current_ip)";
+
+ !bad_ip::
+  "$(this.bundle) good_ip : $(current_ip)";
 
  gateway::
   "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
