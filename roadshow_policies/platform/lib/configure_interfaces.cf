@@ -1,4 +1,4 @@
-bundle agent configure_interfaces (pos) {
+bundle agent configure_interfaces (nics_sort, pos) {
  
 classes:
 
@@ -7,7 +7,7 @@ classes:
 
 vars:
 
-  "nic"                             string => nth("nic_mac_map.nics_sort", "$(pos)");
+  "nic"                             string => nth("nics_sort", "$(pos)");
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
   "default_device"                  string => nth("default_device_list", "4");
@@ -25,7 +25,7 @@ vars:
 
 files:
 
- !bad_ip::
+ !(check_ip.bad_ip)::
   "/etc/network/interfaces.d/$(nic)"
     comment                                => "one file per nic",
     create                                 => "true",
@@ -47,7 +47,7 @@ files:
 
 methods:
 
-  "Are the IP's valid"            usebundle => check_ip($(current_ip));
+  "We desire a valid IP"         usebundle => check_ip($(current_ip));
 
 commands:
 
