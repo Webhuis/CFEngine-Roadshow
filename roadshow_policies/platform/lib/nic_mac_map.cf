@@ -2,9 +2,9 @@ bundle agent nic_mac_map {
   
 vars:
 
-  "nics"                              slist => getvalues("$($(classify.role).role_data).nic");
+  "nics"                              slist => getvalues("$($($(classify.role).role_data).nic)");
   "nics_sort"                         slist => sort("nics", lex);
-  "nics_number"                         int => length("$($(classify.role).role_data).nic_trick");
+  "nics_number"                         int => length("$($($(classify.role).role_data).nic_trick)");
 
 methods:
 
