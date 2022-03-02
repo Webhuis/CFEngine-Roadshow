@@ -34,7 +34,7 @@ vars:
 methods:
 
   "We need predictable names"      usebundle => persistent_link($(nic_trick));
-  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values), $(ip[$(nic_index)));
+  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values), $(ip[$(nic_index)]));
 
 reports:
 
