@@ -2,7 +2,7 @@ bundle agent w3ca {
 
 vars:
 
-  "role_name"                         string => "HTTP / HTTPS w3c compliant Webserver";
+  "role_name"                         string => "HTTP HTTPS w3c compliant Webserver";
 
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
   "bundles[nginx]"                    string => "${sys.flavor}/nginx.cf";

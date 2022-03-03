@@ -2,7 +2,7 @@ bundle agent w3ci {
 
 vars:
 
-  "role_name"                         string => "HTTP / HTTPS w3c compliant internal Webserver";
+  "role_name"                         string => "HTTP HTTPS w3c compliant internal Webserver";
   "role_data"                         string => "role_data_std_sup";
 
   "bundles[role_data]"                string => "$(role_data).cf";
