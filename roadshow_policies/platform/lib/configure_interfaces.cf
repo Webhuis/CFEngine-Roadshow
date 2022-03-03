@@ -31,7 +31,7 @@ vars:
 files:
 
  configure_interface::
-  "/etc/network/interfaces.d/$(configure_interfaces.nic)"
+  "/etc/network/interfaces.d/$(nic)"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("644", "root"),
@@ -49,8 +49,10 @@ commands:
 reports:
 
   "$(this.bundle) current_device: $(current_device)";
-  "$(this.bundle) paired: $(configure_interfaces.nic), $(current_ip)";
+
+ configure_interface::
   "$(this.bundle) current_ip : $(current_ip)";
+  "$(this.bundle) paired: $(nic), $(current_ip)";
 
  gateway::
   "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
