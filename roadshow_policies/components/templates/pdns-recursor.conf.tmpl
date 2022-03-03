@@ -3,7 +3,7 @@
 # Do not edit
 #
 [%CFEngine any:: %]
-local-address=$(role_data.ddns[support][ip])
+local-address=$($($(classify.role).role_data).ddns[support][ip])
 local-port=53
 dnssec=process-no-validate
 daemon=yes
