@@ -4,6 +4,7 @@ vars:
 
   "gateway_tools"           string => "I provide gateway tools"; 
 
+  "pkg[iptables]"           string => "*";
   "pkg[iputils-arping]"     string => "*";
   "pkg[iputils-clockdiff]"  string => "*";
   "pkg[iputils-ping]"       string => "*";
