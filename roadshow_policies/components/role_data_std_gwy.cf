@@ -7,7 +7,7 @@ vars:
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
   "nic_index"                          slist => getindices("nic");
-  "nic_values"                         slist => getvalues("nic");
+  "nic_values"                         slist => sort(getvalues("nic"));
   "nic_trick"                          slist => { "0", "1", "2", "3" };
 
   "ip_line[service]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[service])", noshell);
