@@ -5,10 +5,10 @@
 [%CFEngine any:: %]
 master=yes
 allow-dnsupdate-from=10.0.0.0/8
-#allow-axfr-ips=$(role_data.local_resolvers)
+#allow-axfr-ips=$($($(classify.role).role_data).local_resolvers)
 allow-axfr-ips=10.68.171.23, 10.10.117.23, 10.94.112.17
 config-dir=/etc/powerdns
-local-address=$(role_data.ddns[support][ip])
+local-address=$($($(classify.role).role_data).ddns[support][ip])
 local-port=53
 default-soa-name=$(sys.fqhost)
 disable-axfr=no
@@ -22,7 +22,7 @@ slave=yes
 api=yes
 api-key=789456123741852963
 webserver=yes
-webserver-address=$(role_data.ddns[support][ip])
+webserver-address=$($($(classify.role).role_data).ddns[support][ip])
 webserver-allow-from=0.0.0.0/0,::/0
 webserver-port=8081
 include-dir=/etc/powerdns/pdns.d
