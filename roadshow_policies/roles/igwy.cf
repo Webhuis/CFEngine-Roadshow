@@ -5,6 +5,7 @@ vars:
   "role_name"                         string => "Internal gateway";
   "role_data"                         string => "role_data_std_gwy";
 
+  "bundles[role_data]"                string => "$(role_data).cf";
   "bundles[internal_gateway]"         string => "${sys.flavor}/internal_gateway.cf";
   "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
@@ -18,6 +19,8 @@ methods:
 
 reports:
 
- "${this.bundle}: $(role_name)";
+  "${this.bundle}: $(role_name)";
+  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }
