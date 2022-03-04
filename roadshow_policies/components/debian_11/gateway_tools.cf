@@ -1,0 +1,22 @@
+bundle agent gateway_tools {
+
+vars:
+
+  "gateway_tools"           string => "I provide gateway tools"; 
+
+  "pkg[iputils-arping]"     string => "*";
+  "pkg[iputils-clockdiff]"  string => "*";
+  "pkg[iputils-ping]"       string => "*";
+  "pkg[iputils-tracepath]"  string => "*";
+  "pkg[lsm]"                string => "*";
+  "pkg[netdiag]"            string => "*";
+
+methods:
+
+  "We desire tools"      usebundle => packages("gateway_tools.pkg");
+
+reports:
+
+  "$(this.bundle): $(gateway_tools)";
+
+}
