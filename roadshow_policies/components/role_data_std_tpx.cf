@@ -5,7 +5,7 @@ vars:
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
-  "nic[wlan]"                         string => "$($(classify.organisation).nic[wlan])";
+  "nic[wan]"                          string => "$($(classify.organisation).nic[wan])";
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
@@ -23,9 +23,9 @@ vars:
   "ip_list[gw]"                        slist => string_split($(ip_line[gw]), "src ", 99);
   "ip[gw]"                            string => nth("ip_list[gw]", "1");
 
-  "ip_line[wlan]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[wlan])", noshell);
-  "ip_list[wlan]"                      slist => string_split($(ip_line[wlan]), "src ", 99);
-  "ip[wlan]"                          string => nth("ip_list[wlan]", "1");
+  "ip_line[wan]"                      string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[wan])", noshell);
+  "ip_list[wan]"                      slist => string_split($(ip_line[wan]), "src ", 99);
+  "ip[wan]"                           string => nth("ip_list[wan]", "1");
 
   "interface[support][dev]"           string => "$(nic[support])";
   "interface[support][masked_ip]"     string => "$(ip[support])";
@@ -33,8 +33,8 @@ vars:
   "interface[admin][masked_ip]"       string => "$(ip[support])";
   "interface[gw][dev]"                string => "$(nic[support])";
   "interface[gw][masked_ip]"          string => "$(ip[support])";
-  "interface[wlan][dev]"              string => "$(nic[wlan])";
-  "interface[wlan][masked_ip]"        string => "$(ip[wlan])";
+  "interface[wan][dev]"               string => "$(nic[wan])";
+  "interface[wan][masked_ip]"         string => "$(ip[wan])";
 
   "interface_index"                    slist => getindices("interface");
 
@@ -50,10 +50,10 @@ vars:
   "ddns[gw][nic]"                     string => "$(nic[gw])";
   "ddns[gw][suffix]"                  string => "-gw";
   "ddns[gw][vlan]"                    string => "$($(classify.organisation).vlan[gw])";
-  "ddns[wlan][ip]"                    string => "$(ip[wlan])";
-  "ddns[wlan][nic]"                   string => "$(nic[wlan])";
-  "ddns[wlan][suffix]"                string => "-wlan";
-  "ddns[wlan][vlan]"                  string => "$($(classify.organisation).vlan[wlan])";
+  "ddns[wan][ip]"                     string => "$(ip[wan])";
+  "ddns[wan][nic]"                    string => "$(nic[wan])";
+  "ddns[wan][suffix]"                 string => "-wan";
+  "ddns[wan][vlan]"                   string => "$($(classify.organisation).vlan[wan])";
 
   "ddns_index"                         slist => getindices("ddns");
 
