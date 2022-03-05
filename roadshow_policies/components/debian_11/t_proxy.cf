@@ -6,12 +6,27 @@ vars:
 
   "pkg[fail2ban]"           string => "*";
 
+files:
+
+  "/etc/fail2ban/jail.local"
+         comment  => "local fail2ban config",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpL)",
+         classes  => r_if_repaired("restart_fail2ban");
+  
 methods:
 
   "We do IP filtering"   usebundle => packages("t_proxy.pkg");
 
+commands:
+
+  restart_fail2ban::
+   "/bin/systemctl restart fail2ban";
+
 reports:
 
-  "${this.bundle}: ";
+  "${this.bundle}: Configure fail2ban among others";
 
 }

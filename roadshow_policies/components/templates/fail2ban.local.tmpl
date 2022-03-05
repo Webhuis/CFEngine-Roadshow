@@ -1,0 +1,10 @@
+#
+# Webhuis template for sources.list
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+[DEFAULT]
+
+ignoreip = 127.0.0.1/8 ::1 $($(classify.organisation).local_networks)
