@@ -3,6 +3,7 @@ bundle agent t_proxy {
 vars:
 
   "t_proxy.cf"              string => "I am a Transparent Proxy"; 
+  "templates"                slist => { "fail2ban.local.tmpl" };
 
   "pkg[fail2ban]"           string => "*";
 
@@ -13,12 +14,13 @@ files:
            perms  => mog("644","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpL)",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpl)",
          classes  => r_if_repaired("restart_fail2ban");
   
 methods:
 
-  "We do IP filtering"   usebundle => packages("t_proxy.pkg");
+  "Get fail2ban templates"  usebundle => get_template("$(templates)");
+  "We do IP filtering"      usebundle => packages("t_proxy.pkg");
 
 commands:
 
