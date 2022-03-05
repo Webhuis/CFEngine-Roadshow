@@ -8,7 +8,7 @@ vars:
 
 methods:
 
-  "We IP filtering"      usebundle => packages("gateway_tools.pkg");
+  "We do IP filtering"   usebundle => packages("t_proxy.pkg");
 
 reports:
 
