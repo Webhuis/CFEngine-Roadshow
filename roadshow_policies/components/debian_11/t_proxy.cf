@@ -3,7 +3,7 @@ bundle agent t_proxy {
 vars:
 
   "t_proxy.cf"              string => "I am a Transparent Proxy"; 
-  "templates"                slist => { "fail2ban.local.tmpl" };
+  "templates"                slist => { "fail2ban.local.tmpl", "fail2ban.report.tmpl" };
 
   "pkg[fail2ban]"           string => "*";
 
