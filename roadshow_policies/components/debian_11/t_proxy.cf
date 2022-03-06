@@ -11,7 +11,7 @@ files:
 
   "/usr/local/bin/routes.sh"
          comment  => "local routes config",
-           perms  => mog("644","root","root"),
+           perms  => mog("755","root","root"),
           create  => "true",
           action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/routes.tmpl",
@@ -19,7 +19,7 @@ files:
 
   "/usr/local/bin/local-rules.sh"
          comment  => "local firewall config",
-           perms  => mog("644","root","root"),
+           perms  => mog("755","root","root"),
           create  => "true",
           action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-rules.tmpl",
@@ -27,7 +27,7 @@ files:
 
   "/usr/local/bin/local-ipv6-rules.sh"
          comment  => "disable ipv6",
-           perms  => mog("644","root","root"),
+           perms  => mog("755","root","root"),
           create  => "true",
           action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-ipv6-rules.tmpl",
