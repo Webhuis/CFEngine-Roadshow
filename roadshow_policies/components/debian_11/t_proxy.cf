@@ -52,6 +52,6 @@ bundle edit_line add_crontab_line {
 
 insert_lines:
 
-"19-21 5 * * * /usr/local/bin/fail2ban.report"
+"19-21 5 * * * /usr/local/bin/fail2ban.report";
 
 }
