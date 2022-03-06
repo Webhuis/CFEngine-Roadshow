@@ -14,7 +14,7 @@ files:
            perms  => mog("644","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpl)",
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpl",
          classes  => r_if_repaired("restart_fail2ban");
   
 methods:
