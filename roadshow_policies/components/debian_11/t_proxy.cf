@@ -3,19 +3,35 @@ bundle agent t_proxy {
 vars:
 
   "t_proxy.cf"              string => "I am a Transparent Proxy"; 
-  "templates"                slist => { "fail2ban.local.tmpl", "fail2ban.report.tmpl" };
+  "templates"                slist => { "fail2ban.local.tmpl", "fail2ban.report.tmpl", "routes.tmpl", "local-rules.tmpl", "local-ipv6-rules.tmpl" };
 
   "pkg[fail2ban]"           string => "*";
 
 files:
 
   "/usr/local/bin/routes.sh"
-         comment  => "local fail2ban config",
+         comment  => "local routes config",
            perms  => mog("644","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpl",
-         classes  => r_if_repaired("restart_fail2ban");
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/routes.tmpl",
+         classes  => r_if_repaired("restart_firewall");
+
+  "/usr/local/bin/local-rules.sh"
+         comment  => "local firewall config",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-rules.tmpl",
+         classes  => r_if_repaired("restart_firewall");
+
+  "/usr/local/bin/local-ipv6-rules.sh"
+         comment  => "disable ipv6",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-ipv6-rules.tmpl",
+         classes  => r_if_repaired("restart_firewall");
 
   "/etc/fail2ban/jail.local"
          comment  => "local fail2ban config",
@@ -54,6 +70,9 @@ methods:
   "We do IP filtering"      usebundle => packages("t_proxy.pkg");
 
 commands:
+
+  restart_firewall::
+   "/usr/local/bin/local-rules.sh";
 
   restart_fail2ban::
    "/bin/systemctl restart fail2ban";

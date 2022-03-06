@@ -1,0 +1,16 @@
+#
+# Webhuis template for local-ipv6-rules
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+#!/bin/bash
+
+ip6tables -F INPUT
+ip6tables -F OUTPUT
+ip6tables -F FORWARD
+ip6tables -F
+
+ip6tables -A INPUT -j REJECT
+ip6tables -A OUTPUT -j REJECT
+ip6tables -A FORWARD -j REJECT
