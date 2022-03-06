@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Webhuis template for internal routes
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+/usr/sbin/ip route add $($(do_roadshow.class_domain).internal_routes[$(internal_gateway.gateway_index)]) vi $(internal_gateway.gateway_index) dev $($(classify.organisation).nic[support])

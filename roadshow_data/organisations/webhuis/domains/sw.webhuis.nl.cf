@@ -1,6 +1,6 @@
 ###############################################################################
 #
-#   webhuis.nl.cf - Basic Policy for Community
+#   sw.webhuis.nl.cf - Basic Policy for Community
 #
 ###############################################################################
 
@@ -8,14 +8,7 @@ bundle agent sw_webhuis_nl {
 
 vars:
 
-  "subnet[service]"                    string => "10.10.17.0";
-  "subnet[support]"                    string => "10.10.117.0";
-  "subnet[admin]"                      string => "10.110.17.0";
-  "subnet[gw]"                         string => "10.254.0.0";
-  "subnet[wan]"                        string => "";
-  "subnet[life]"                       string => "10.110.117.0";
-  "subnet[roadshow]"                   string => "10.111.111.0";
-
+  internal_routes["10.254.0.17"]        slist => { "10.10.117.0/24", "10.110.17.0/24" }
 # "mldap"                               slist => {"ldapm1", "ldapm2"};
   "mldap"                               slist => {"ldapm1"};
   "ldap"                                slist => {"ldap1", "ldap2"};
