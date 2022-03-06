@@ -3,6 +3,7 @@ bundle agent internal_gateway {
 vars:
 
   "internal_gateway.cf"     string => "I am an Internal Gateway"; 
+  "templates"                slist => { "routes.tmpl", "igwy-rules.tmpl", "local-ipv6-rules.tmpl" };
   "gateway_index"            slist => getindices("$(do_roadshow.class_domain).internal_routes"
 
 files:
@@ -30,6 +31,11 @@ files:
           action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-ipv6-rules.tmpl",
          classes  => r_if_repaired("restart_firewall");
+
+methods:
+
+  "Get gateway templates"  usebundle => get_template("$(templates)");
+
 reports:
 
   "${this.bundle}: ";

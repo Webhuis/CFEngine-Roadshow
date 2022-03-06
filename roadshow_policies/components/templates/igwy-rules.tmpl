@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Webhuis template for local-rules
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+#       Postrouting, van binnen naar buiten
+
+echo 1 > /proc/sys/net/ipv4/ip_forward 
+
+IPTABLES="/sbin/iptables"
+
+$IPTABLES -F
+$IPTABLES -t nat -F
+$IPTABLES -t nat -F PREROUTING
+$IPTABLES -t nat -F POSTROUTING
+
+$IPTABLES -A INPUT -p tcp -s 192.168.68.0/24 -j ACCEPT
+
+$IPTABLES -A OUTPUT -p tcp -j ACCEPT
+$IPTABLES -F FORWARD
+
+$IPTABLES -A FORWARD -s 10.0.0.0/8 -d 10.0.0.0/8 -j ACCEPT
+$IPTABLES -A FORWARD -s 192.168.0.0/16 -d 10.0.0.0/8 -j ACCEPT
+
+$IPTABLES -A FORWARD -s 10.0.0.0/8 ! -d 10.0.0.0/8 -j ACCEPT
+$IPTABLES -A FORWARD -s 192.168.0.0/16 ! -d 10.0.0.0/8 -j ACCEPT
+$IPTABLES -t nat -A POSTROUTING -s 10.0.0.0/8 ! -d 10.0.0.0/8 -j MASQUERADE
+
+# BLock ipv6
+
+. /usr/local/bin/routes.sh
+. /usr/local/bin/local-ipv6-rules.sh
+
+# Logging
+
+$IPTABLES -A FORWARD -j LOG  --log-level 7 --log-prefix "Dropped by firewall: "
+$IPTABLES -A FORWARD -j DROP
+
+exit
+
