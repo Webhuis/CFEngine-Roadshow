@@ -1,9 +1,9 @@
+#!/bin/bash
 #
 # Webhuis template for routes
 #
 # Do not edit
 #
 [%CFEngine any:: %]
-#!/bin/bash
 
 /usr/sbin/ip route add 10.0.0.0/8 via $(configure_interfaces.gateway_ip) dev $($(classify.organisation).nic[support])
