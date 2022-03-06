@@ -16,6 +16,21 @@ files:
           action  => r_immediate,
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.local.tmpl",
          classes  => r_if_repaired("restart_fail2ban");
+
+  "/usr/local/bin/fail2ban.report"
+         comment  => "fail2ban report",
+           perms  => mog("755","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/fail2ban.report.tmpl";
+
+  "/var/spool/cron/crontabs/root"
+         comment  => "fail2ban report in crontab",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+       edit_line  => add_crontab_line;
+  
   
 methods:
 
@@ -30,5 +45,13 @@ commands:
 reports:
 
   "${this.bundle}: Configure fail2ban among others";
+
+}
+
+bundle edit_line add_crontab_line {
+
+insert_lines:
+
+"19-21 5 * * * /usr/local/bin/fail2ban.report"
 
 }
