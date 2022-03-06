@@ -3,6 +3,7 @@ bundle common webhuis {
 vars:
 
   "organisation"                       string => "Webhuis";
+  "administrator"                      string => "martin@webhuis.nl";
 
   "dhcp_ldap"                          string => "mihrwhpdcsw1.sw.webhuis.nl";
   "ldap_frontend"                      string => "ldap.sw.webhuis.nl";

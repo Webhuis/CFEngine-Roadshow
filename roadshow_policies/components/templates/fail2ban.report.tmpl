@@ -1,0 +1,56 @@
+#
+# Webhuis template for sources.list
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+
+#!/bin/bash
+
+# Daily Fail2Ban Report
+# Be sure to sudo chmod +x script_name.sh to make it executable
+# Original script from https://www.mopar4life.com/fail2ban-daily-report-script/
+
+FAIL2BAN_PATH="/var/log/fail2ban*"
+LOGFILE="/tmp/fail2ban.report.$(date +%d%m%Y)"
+MAILTOADDRESS="$($(classify.organisation).administrator)"
+SUBJECT="$HOSTNAME Daily Fail2Ban Report"
+
+echo $(date +%d-%m-%Y) > $LOGFILE
+echo '' >> $LOGFILE
+echo '' >> $LOGFILE
+echo 'Most frequently banned IP addresses'  >> $LOGFILE
+echo '  Count IP Address' >> $LOGFILE
+echo '_______________________________________' >> $LOGFILE
+# show only the most problomatic IP Addresses
+zgrep -h "Ban " $FAIL2BAN_PATH* | awk '{print $NF}' | sort | uniq -c  | sort -n | tail | sort -nr  >> $LOGFILE
+
+## Generate GeoIP report
+echo '' >> $LOGFILE
+echo '' >> $LOGFILE
+echo '' >> $LOGFILE
+echo 'GeoIP' >> $LOGFILE
+echo '_____' >> $LOGFILE
+for ip in `zgrep -h "Ban " $FAIL2BAN_PATH* | awk '{print $NF}' | sort | uniq -c  | sort -n | tail -n15 | sort -nr| awk '{print $2}'`; do
+  geo=`geoiplookup -l $ip | cut -d ':' -f2`
+  echo -e "$ip \t $geo" >> $LOGFILE
+done
+
+echo '' >> $LOGFILE
+echo '' >> $LOGFILE
+echo '' >> $LOGFILE
+echo 'All banned IP addresses with service type'  >> $LOGFILE
+echo '_______________________________________' >> $LOGFILE
+# Show what service the IP was banned from and how many times for all log files including rotated
+# Sorts from high to low (using sort -nr) to sort low to high replace -nr with -n
+# To not use WILDCARD (*), you much change from {print $11,$9} to {print $10,$8}
+# SAMPLE OUTPUT
+#      1 XXX.71.214.66 [ssh-iptables]
+#      1 XXX.62.36.219 [sendmail]
+#      2 XX.165.195.40 [vsftpd]
+grep "Ban " $FAIL2BAN_PATH* | awk -F[\ \:] '{print $11,$9}' | sort | uniq -c | sort -nr  >> $LOGFILE
+
+# EMail File after completion (wait 10 seconds to finish writing log first)
+sleep 10
+mail -s "$SUBJECT" "$MAILTOADDRESS" < $LOGFILE
+
