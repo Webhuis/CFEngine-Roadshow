@@ -8,6 +8,7 @@ bundle agent sw_webhuis_nl {
 
 vars:
 
+  "internal_routes[10.254.0.12]"        slist => { "10.94.112.0/24", "10.194.12.0/24" };
   "internal_routes[10.254.0.17]"        slist => { "10.10.117.0/24", "10.110.17.0/24" };
   "internal_routes[10.254.0.71]"        slist => { "10.68.171.0/24", "10.168.71.0/24" };
 # "mldap"                               slist => {"ldapm1", "ldapm2"};
