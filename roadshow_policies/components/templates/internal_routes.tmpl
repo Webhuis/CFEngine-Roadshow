@@ -6,4 +6,4 @@
 #
 [%CFEngine any:: %]
 
-/usr/sbin/ip route add $($(do_roadshow.class_domain).internal_routes[$(internal_gateway.gateway_index)]) via $(internal_gateway.gateway_index) dev $($(classify.organisation).nic[support])
+/usr/sbin/ip route add $($(do_roadshow.class_domain).internal_routes[$(internal_gateway.gateway_index)]) via $(internal_gateway.gateway_index) dev $($(classify.organisation).nic[gw])
