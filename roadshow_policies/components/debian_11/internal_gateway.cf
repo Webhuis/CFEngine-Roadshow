@@ -36,6 +36,11 @@ methods:
 
   "Get gateway templates"  usebundle => get_template("$(templates)");
 
+commands:
+
+ restart_firewall::
+  "/usr/local/bin/local-rules.sh";
+
 reports:
 
   "${this.bundle}: ";
