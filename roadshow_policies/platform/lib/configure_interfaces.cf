@@ -28,9 +28,6 @@ vars:
   "current_ip"                      string => nth("current_device_list", "5"); 
   "current_device"                  string => nth("current_device_list", "10"); 
 
- gateway::
-  "keep_gateway_ip"                 string => "$(gateway_ip)";
-
 files:
 
  configure_interface::

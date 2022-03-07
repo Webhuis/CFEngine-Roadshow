@@ -8,13 +8,13 @@ vars:
 
 files:
 
- #"/usr/local/bin/routes.sh"
- #       comment  => "internal routes config",
- #         perms  => mog("755","root","root"),
- #        create  => "true",
- #        action  => r_immediate,
- # edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/internal_routes.tmpl",
- #       classes  => r_if_repaired("restart_firewall");
+  "/usr/local/bin/routes.sh"
+         comment  => "internal routes config",
+           perms  => mog("755","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/internal_routes.tmpl",
+         classes  => r_if_repaired("restart_firewall");
 
   "/usr/local/bin/local-rules.sh"
          comment  => "local firewall config",
