@@ -4,7 +4,6 @@ vars:
 
   "gateway_tools"           string => "I provide gateway tools"; 
 
-  "pkg[arp]"                string => "*";
   "pkg[ethtool]"            string => "*";
   "pkg[iftop]"              string => "*";
   "pkg[iperf3]"             string => "*";
