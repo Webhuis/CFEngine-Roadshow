@@ -4,6 +4,9 @@ vars:
 
   "gateway_tools"           string => "I provide gateway tools"; 
 
+  "pkg[arp]"                string => "*";
+  "pkg[iftop]"              string => "*";
+  "pkg[iperf3]"             string => "*";
   "pkg[iptables]"           string => "*";
   "pkg[iputils-arping]"     string => "*";
   "pkg[iputils-clockdiff]"  string => "*";
@@ -11,6 +14,7 @@ vars:
   "pkg[iputils-tracepath]"  string => "*";
   "pkg[lsm]"                string => "*";
   "pkg[netdiag]"            string => "*";
+  "pkg[traceroute]"         string => "*";
 
 methods:
 
