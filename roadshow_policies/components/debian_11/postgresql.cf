@@ -1,0 +1,43 @@
+bundle agent postgresql {
+
+vars:
+
+  "pkg[phppgadmin]"	   	   	string => "*";
+  "pkg[postgresql-13]"	   	   	string => "*";
+  "pkg[postgresql-client-13]"	   	string => "*";
+  "pkg[python-psycopg2]"   	   	string => "*";
+  "pkg[python-pygresql]"   	   	string => "*";
+
+files:
+
+  "/etc/apache2/conf-available/phppgadmin.conf"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_line         => edit_phppgadmin_cfg,
+   classes           => r_if_repaired("restart_apache");
+
+files:
+
+  "/etc/phppgadmin/config.inc.php"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgres.config.inc.php.tmpl",
+   classes           => r_if_repaired("restart_apache");
+
+methods:
+
+  "Provide us with the phppgadmin template" usebundle => get_template("postgres.config.inc.php.tmpl");
+  "Install the Postgresql Server"           usebundle => packages("postgresql.pkg");
+#  "any" usebundle => get_template("my.cnf.tmpl");
+#  "any" usebundle => my_cnf;
+
+}
+
+bundle edit_line edit_phppgadmin_cfg {
+
+delete_lines:
+  "Require local.*";
+
+}
