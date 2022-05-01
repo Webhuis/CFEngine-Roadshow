@@ -2,42 +2,38 @@ bundle agent postgresql {
 
 vars:
 
-  "pkg[phppgadmin]"	   	   	string => "*";
+  "pkg[etcd]"	        	   	string => "*";
+  "pkg[patroni]"	   	   	string => "*";
   "pkg[postgresql-13]"	   	   	string => "*";
   "pkg[postgresql-client-13]"	   	string => "*";
-  "pkg[python3-psycopg2]"   	   	string => "*";
-  "pkg[python3-pygresql]"        	string => "*";
+
+
+  "templates"                     slist => { "pg_hbd.conf.tmpl", "postgresql.conf };
 
 files:
 
-  "/etc/apache2/conf-available/phppgadmin.conf"
-   perms             => mo("644","root"),
+  "/etc/postgresql/13/main/pg_hba.conf"
+   perms             => mo("644","postgres"),
    create            => "true",
    action            => r_immediate,
-   edit_line         => edit_phppgadmin_cfg,
-   classes           => r_if_repaired("restart_apache");
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pg_hba.conf.tmpl",
+   classes           => r_if_repaired("restart_postgresql");
 
-files:
-
-  "/etc/phppgadmin/config.inc.php"
-   perms             => mo("644","root"),
+  "/etc/postgresql/13/main/postgresql.conf"
+   perms             => mo("644","postgres"),
    create            => "true",
    action            => r_immediate,
-   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgres.config.inc.php.tmpl",
-   classes           => r_if_repaired("restart_apache");
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
+   classes           => r_if_repaired("restart_postgresql");
 
 methods:
+ 
+  "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
+  "We desire the HA Postgresql cluster"        usebundle => packages("postgresql.pkg");
 
-  "Provide us with the phppgadmin template" usebundle => get_template("postgres.config.inc.php.tmpl");
-  "Install the Postgresql Server"           usebundle => packages("postgresql.pkg");
-#  "any" usebundle => get_template("my.cnf.tmpl");
-#  "any" usebundle => my_cnf;
+commands:
 
-}
+ restart_postgresql::
 
-bundle edit_line edit_phppgadmin_cfg {
-
-delete_lines:
-  "Require local.*";
-
+  "/etc/init.d/postgresql restart";
 }

@@ -1,0 +1,38 @@
+bundle agent pgadmin {
+
+vars:
+  "pkg[phppgadmin]"	   	   	string => "*";
+  "pkg[python3-psycopg2]"   	   	string => "*";
+  "pkg[python3-pygresql]"        	string => "*";
+
+  "templates"                            slist => { "postgres.config.inc.php.tmpl" };
+
+files:
+
+  "/etc/apache2/conf-available/phppgadmin.conf"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_line         => edit_phppgadmin_cfg,
+   classes           => r_if_repaired("restart_apache");
+
+  "/etc/phppgadmin/config.inc.php"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgres.config.inc.php.tmpl",
+   classes           => r_if_repaired("restart_apache");
+
+methods:
+ 
+  "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
+  "We desire the Postgresql admin tool"        usebundle => packages("pgadmin.pkg");
+
+}
+
+bundle edit_line edit_phppgadmin_cfg {
+
+delete_lines:
+  "Require local.*";
+
+}
