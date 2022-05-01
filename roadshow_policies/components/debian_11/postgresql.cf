@@ -8,7 +8,7 @@ vars:
   "pkg[postgresql-client-13]"	   	string => "*";
 
 
-  "templates"                     slist => { "pg_hbd.conf.tmpl", "postgresql.conf };
+  "templates"                     slist => { "pg_hbd.conf.tmpl", "postgresql.conf" };
 
 files:
 
