@@ -1,0 +1,28 @@
+bundle agent ppgh {
+
+vars:
+
+  "role_name"                                  string => "pgbouncer for postgresql database cluster server";
+  "role_data"                                  string => "role_data_std_sup";
+
+  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
+
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => getvalues("bundles");
+
+methods:
+
+  "We desire the postgresql server"         usebundle => "postgresql";
+
+reports:
+
+  "$(this.bundle): $(classify.role)";
+  "$(this.bundle) role name: $(role_name)";
+  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role inputs: $(inputs)";
+
+}
+
+
+

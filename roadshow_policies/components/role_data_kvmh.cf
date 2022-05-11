@@ -1,31 +1,4 @@
-bundle agent kvmp {
-
-vars:
-
-  "role_name"                                 string => "kvm hypervisor proxmox";
-  "role_data"                                  string => "role_data_kvmh";
-
-  "bundles[role_data]"                         string => "$(role_data).cf";
-  "bundles[proxmox_node]"                     string => "$(sys.flavor)/proxmox_node.cf";
-  "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
-
-  "sequence"                                  slist  => getindices("bundles");
-  "inputs"                                    slist  => getvalues("bundles");
-
-methods:
-
-  "We desire proxmox"                      usebundle => "proxmox_node"; 
-
-reports:
-
-  "$(this.bundle): $(classify.role)";
-  "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
-  "$(this.bundle) role inputs: $(inputs)";
-
-}
-
-bundle agent role_data {
+bundle agent role_data_kvmh {
   
 vars:
 
