@@ -3,9 +3,9 @@ bundle agent kvmp {
 vars:
 
   "role_name"                                 string => "kvm hypervisor proxmox";
-  "role_data"                                  string => "role_data_kvmh";
+  "role_data"                                 string => "role_data_kvmh";
 
-  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[role_data]"                        string => "$(role_data).cf";
   "bundles[proxmox_node]"                     string => "$(sys.flavor)/proxmox_node.cf";
   "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
 
@@ -24,61 +24,3 @@ reports:
   "$(this.bundle) role inputs: $(inputs)";
 
 }
-
-bundle agent role_data {
-  
-vars:
-
-  "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
-  "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
-  "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";
-  "vlan[wan]"                         string => "$($(classify.organisation).vlan[wan])";
-  "vlan[gw]"                          string => "$($(classify.organisation).vlan[gw])";
-  "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
-  "vlan[roadshow]"                    string => "$($(classify.organisation).vlan[roadshow])";
-
-  "vlan_index"                         slist => getindices("vlan");
-
-  "nic[service]"                      string => "$(dev_type.interface)$(vlan[service])";
-  "nic[support]"                      string => "$(dev_type.interface)$(vlan[support])";
-  "nic[admin]"                        string => "$(dev_type.interface)$(vlan[admin])";
-  "nic[wan]"                          string => "$(dev_type.interface)$(vlan[wan])";
-  "nic[gw]"                           string => "$(dev_type.interface)$(vlan[gw])";
-  "nic[life]"                         string => "$(dev_type.interface)$(vlan[life])";
-  "nic[roadshow]"                     string => "$(dev_type.interface)$(vlan[roadshow])";
-  "nic_index"                          slist => getindices("nic");
-  "nic_trick"                          slist => { "0", "1" };
-
-  "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
-  "ddns[support][nic]"                string => "$(nic[support])";
-  "ddns[support][suffix]"             string => "";
-  "ddns[support][vlan]"               string => "$(vlan[support])"; 
-  "ddns[life][ip]"                    string => "$(sys.ipv4[$(nic[life])])";
-  "ddns[life][nic]"                   string => "$(nic[life])";
-  "ddns[life][suffix]"                string => "-life";
-  "ddns[life][vlan]"                  string => "$(vlan[life])";
-
-  "ddns_index"                         slist => getindices("ddns");
-
-  "etc_hosts_nic"                     slist  => { "$(ddns[support][ip])" };
-  "support_ip"                        slist  => { "$(ddns[support][ip])" };
-  "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[life][ip])" };
-
-#methods:
-#
-# "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
-#                                          comment   => "This is a layer I and II check on the virtual switch";
-
-reports:
-
-  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
-  "$(this.bundle) vlans: $(vlan_index), $(vlan[$(vlan_index)])";
-  "$(this.bundle) ddns[index][ip], $(ddns[$(ddns_index)][ip])";
-  "$(this.bundle) ddns[index][nic], $(ddns[$(ddns_index)][nic])";
-  "$(this.bundle) ddns[index][vlan], $(ddns[$(ddns_index)][vlan])";
-  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
-  "$(this.bundle) etc_hosts_nic: $(etc_hosts_nic)";
-  "$(this.bundle) admin_nics: $(admin_nics)";
-
-}
-
