@@ -1,0 +1,44 @@
+bundle agent postgresql_proxy {
+
+vars:
+
+  "pkg[haproxy]"	   	   	string => "*";
+  "pkg[keepalived]"	   	   	string => "*";
+  "pkg[pgbouncer]"	           	string => "*";
+
+
+  "templates"                            slist => { "haproxy.conf.tmpl", "keepalived.conf.tmpl", "pgbouncer.conf.tmpl" };
+
+files:
+
+  "/etc/postgresql/13/main/pg_hba.conf"
+   perms             => mo("644","postgres"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pg_hba.conf.tmpl",
+   classes           => r_if_repaired("restart_postgresql");
+
+  "/etc/postgresql/13/main/postgresql.conf"
+   perms             => mo("644","postgres"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
+   classes           => r_if_repaired("restart_postgresql");
+
+methods:
+ 
+  "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
+  "We desire the HA Postgresql cluster"        usebundle => packages("postgresql_proxy.pkg");
+
+commands:
+
+ restart_haproxy::
+
+  "/etc/init.d/haproxy restart";
+
+reports:
+
+  "$(this.bundle): Configure postgresql_proxy";
+  "$(this.bundle) Packages: $(pkg)";
+
+}
