@@ -36,6 +36,7 @@ files:
 
   "/etc/udev/rules.d/61-watchdog.rules"
    perms             => mog("644","root","root"),
+   create            => "true",
    action            => r_immediate,
    edit_defaults     => no_backup,
    edit_line         => watchdog_rules,
