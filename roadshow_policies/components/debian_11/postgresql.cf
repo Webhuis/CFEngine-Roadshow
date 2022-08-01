@@ -30,7 +30,7 @@ files:
    perms             => mo("644","root"),
    create            => "true",
    action            => r_immediate,
-   edit_defaultsi    => no_backup,
+   edit_defaults     => no_backup,
    edit_line         => patroni_modules,
    classes           => r_if_repaired("restart_patroni");
 
