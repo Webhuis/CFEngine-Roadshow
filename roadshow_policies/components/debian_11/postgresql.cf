@@ -35,13 +35,13 @@ files:
    classes           => r_if_repaired("restart_patroni");
 
   "/etc/udev/rules.d/61-watchdog.rules"
-   perms             => mo9("644","root:root"),
+   perms             => mog("644","root:root"),
    action            => r_immediate,
    edit_defaults     => no_backup,
    classes           => r_if_repaired("restart_patroni");
 
   "/dev/watchdog*"
-   perms             => mo9("660","postgres:postgres"),
+   perms             => mog("660","postgres:postgres"),
    action            => r_immediate,
    edit_defaults     => no_backup,
    edit_line         => watchdog_rules,
