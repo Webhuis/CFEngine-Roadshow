@@ -26,6 +26,27 @@ files:
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
    classes           => r_if_repaired("restart_postgresql");
 
+  "/etc/modules"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_defaultsi    => no_backup,
+   edit_line         => patroni_modules,
+   classes           => r_if_repaired("restart_patroni");
+
+  "/etc/udev/rules.d/61-watchdog.rules"
+   perms             => mo9("644","root:root"),
+   action            => r_immediate,
+   edit_defaults     => no_backup,
+   classes           => r_if_repaired("restart_patroni");
+
+  "/dev/watchdog*"
+   perms             => mo9("660","postgres:postgres"),
+   action            => r_immediate,
+   edit_defaults     => no_backup,
+   edit_line         => watchdog_rules,
+   classes           => r_if_repaired("restart_patroni");
+
 methods:
  
   "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
@@ -36,4 +57,33 @@ commands:
  restart_postgresql::
 
   "/etc/init.d/postgresql restart";
+
+ restart_patroni::
+
+  "/etc/init.d/patroni restart";
 }
+
+bundle edit_line  patroni_modules {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"softdog";
+
+}
+
+bundle edit_line  watchdog_rules {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+'KERNEL==\"watchdog\", OWNER=\"postgres\", GROUP=\"postgres\"';
+
+}
+
