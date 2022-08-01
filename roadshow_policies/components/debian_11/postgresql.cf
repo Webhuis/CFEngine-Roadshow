@@ -38,13 +38,13 @@ files:
    perms             => mog("644","root","root"),
    action            => r_immediate,
    edit_defaults     => no_backup,
+   edit_line         => watchdog_rules,
    classes           => r_if_repaired("restart_patroni");
 
   "/dev/watchdog*"
    perms             => mog("660","postgres","postgres"),
    action            => r_immediate,
    edit_defaults     => no_backup,
-   edit_line         => watchdog_rules,
    classes           => r_if_repaired("restart_patroni");
 
 methods:
