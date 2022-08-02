@@ -16,6 +16,7 @@ vars:
   "pkg[netdiag]"            string => "*";
   "pkg[netcat-openbsd]"     string => "*";
   "pkg[netdiag]"            string => "*";
+  "pkg[tcpdump]"            string => "*";
   "pkg[traceroute]"         string => "*";
 
 methods:

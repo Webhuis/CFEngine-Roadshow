@@ -6,7 +6,7 @@
 driftfile /var/lib/ntp/ntp.drift
 statsdir /var/log/ntpstats/
 
-server $($(classify.domain).ntp_server)
+server $($(classify.domain).ntp_server) prefer iburst
 
 restrict default kodi limited nomodify notrap nopeer noquery
 restrict 127.0.0.1
