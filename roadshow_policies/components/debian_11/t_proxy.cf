@@ -6,6 +6,8 @@ vars:
   "templates"                slist => { "fail2ban.local.tmpl", "fail2ban.report.tmpl", "routes.tmpl", "local-rules.tmpl", "local-ipv6-rules.tmpl" };
 
   "pkg[fail2ban]"           string => "*";
+  "pkg[nmap]"               string => "*";
+  "pkg[tcpdump]"            string => "*";
 
 files:
 
