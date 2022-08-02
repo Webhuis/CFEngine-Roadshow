@@ -8,6 +8,12 @@ files:
     edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ntp_client.conf.tmpl",
     classes        => if_repaired("restart_ntp");
 
+  "/etc/default/ntp"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_line      => default_ntp.conf,
+    classes        => if_repaired("restart_ntp");
+
 commands:
 
   "/sbin/hwclock -w";
@@ -22,3 +28,16 @@ reports:
  "${this.bundle}: I am doing time client configuration common to all platforms";
 
 }
+
+bundle edit_line  default_ntp.conf {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"NTPD_OPTS='-4 -g'";
+
+}
+

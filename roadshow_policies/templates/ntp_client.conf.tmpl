@@ -8,7 +8,5 @@ statsdir /var/log/ntpstats/
 
 server $($(classify.domain).ntp_server)
 
-restrict default kod limited nomodify notrap nopeer noquery
-restrict -6 default kodi limited nomodify notrap nopeer noquery
+restrict default kodi limited nomodify notrap nopeer noquery
 restrict 127.0.0.1
-restrict -6 ::1
