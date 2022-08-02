@@ -11,7 +11,7 @@ files:
   "/etc/default/ntp"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_line      => default_ntp.conf,
+    edit_line      => default_ntp_conf,
     classes        => if_repaired("restart_ntp");
 
 commands:
@@ -29,7 +29,7 @@ reports:
 
 }
 
-bundle edit_line  default_ntp.conf {
+bundle edit_line  default_ntp_conf {
 
 delete_lines:
 
