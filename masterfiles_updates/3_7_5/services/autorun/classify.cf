@@ -30,7 +30,8 @@ vars:
   "ipr_all"                            string => execresult("/usr/sbin/ip r", noshell);
   "ipr"                                 slist => string_split($(ipr_all), "\n", 99);
 
-  "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'brd' | grep 'scope global' ", useshell);
+  "ips_all"                            string => execresult("/usr/sbin/ip a | grep 'scope global' ", useshell);
+ #"ips_all"                            string => execresult("/usr/sbin/ip a | grep 'brd' | grep 'scope global' ", useshell);
   "ips"                                 slist => string_split($(ips_all), "\n", 99);
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
