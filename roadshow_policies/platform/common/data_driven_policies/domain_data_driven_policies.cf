@@ -2,16 +2,16 @@ bundle agent domain_data_driven_policies {
 
 methods:
 
-  "We want valid ssh server IP Addressies"  usebundle => check_ip("$($($(classify.role).role_data).admin_nics)");
-
- !bad_ip::
-  "openssh server and client"               usebundle => ssh_all_config;
-
- any::
-  "We want a valid host IP Address"         usebundle => check_ip("$($($(classify.role).role_data).etc_hosts_nic)");
-
- !bad_ip::
-  "Standardize hosts setup"                 usebundle => etc_hosts;
+# "We want valid ssh server IP Addressies"  usebundle => check_ip("$($($(classify.role).role_data).admin_nics)");
+#
+#!bad_ip::
+# "openssh server and client"               usebundle => ssh_all_config;
+#
+#any::
+# "We want a valid host IP Address"         usebundle => check_ip("$($($(classify.role).role_data).etc_hosts_nic)");
+#
+#!bad_ip::
+# "Standardize hosts setup"                 usebundle => etc_hosts;
 
  any::
   "Check list of resolvers"                 usebundle => check_ip("$($(classify.location).resolvers)");
@@ -19,11 +19,11 @@ methods:
  !bad_ip::
   "Standardize resolv.conf setup"           usebundle => resolv_conf;
 
- any::
-  "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(classify.domain).ntp_server)");
-
- !bad_fqdn::
-  "Configure all time settings"             usebundle => time_conf;                                                                                                                                                                                       
+#any::
+# "We want valid ntp server IP Addressies"  usebundle => check_fqdn("$($(classify.domain).ntp_server)");
+#
+#!bad_fqdn::
+# "Configure all time settings"             usebundle => time_conf;                                                                                                                                                                                       
 reports:
                                                                                                                                                                                        
   "$(this.bundle): I am doing data driven policies and my verdict is as folows";  
@@ -31,8 +31,8 @@ reports:
  bad_ip::
   "$(this.bundle): Invalid IP Address!";
 
-  "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).admin_nics)";  
-  "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).etc_hosts_nic)";  
+# "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).admin_nics)";  
+# "$(this.bundle) etc_hosts_nic: $($($(classify.role).role_data).etc_hosts_nic)";  
   "$(this.bundle) resolvers: $($(classify.location).resolvers)";  
 
  !bad_ip::
