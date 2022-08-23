@@ -16,7 +16,12 @@ vars:
   "ldap"                                slist => {"ldap1", "ldap2"};
   "ldap_base"                          string => "dc=sw,dc=webhuis,dc=nl";
   "ldap_admin"                         string => "cn=admin,${ldap_base}";
-  "pg_cluster"                          slist => { "10.68.171.81", "10.68.171.82", "10.68.171.83" };
+ #"pg_cluster"                          slist => { "10.68.171.81", "10.68.171.82", "10.68.171.83" };
+  "pg_cluster[10.68.171.81]"           string => "psqlpdcsw001";
+  "pg_cluster[10.68.171.82]"           string => "psqlpdcsw002";
+  "pg_cluster[10.68.171.83]"           string => "psqlpdcsw003";
+
+  "pg_cluster_index"                    slist => getindices($(pg_cluster));
  
   "https_repo[jts]"                    string => "https://download.jitsi.org";
   "https_repo[kea]"                    string => "https://dl.cloudsmith.io/public/isc/kea-1-6/deb/debian";
