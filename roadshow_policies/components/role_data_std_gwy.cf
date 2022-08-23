@@ -2,7 +2,7 @@ bundle agent role_data_std_gwy {
   
 vars:
 
-  "nic[service]"                      string => "$($(classify.organisation).nic[service])";
+  "nic[home]"                      string => "$($(classify.organisation).nic[home])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
@@ -11,9 +11,9 @@ vars:
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1", "2", "3" };
 
-  "ip_line[service]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[service])", noshell);
-  "ip_list[service]"                   slist => string_split($(ip_line[service]), "src ", 99);
-  "ip[service]"                       string => nth("ip_list[service]", "1");
+  "ip_line[home]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[home])", noshell);
+  "ip_list[home]"                      slist => string_split($(ip_line[home]), "src ", 99);
+  "ip[home]"                          string => nth("ip_list[home]", "1");
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
@@ -38,10 +38,10 @@ vars:
 
   "interface_index"                    slist => getindices("interface");
 
-  "ddns[service][ip]"                 string => "$(ip[service])";
-  "ddns[service][nic]"                string => "$(nic[service])";
-  "ddns[service][suffix]"             string => "-srv";
-  "ddns[service][vlan]"               string => "$($(classify.organisation).vlan[service])";
+  "ddns[home][ip]"                    string => "$(ip[home])";
+  "ddns[home][nic]"                   string => "$(nic[home])";
+  "ddns[home][suffix]"                string => "-srv";
+  "ddns[home][vlan]"                  string => "$($(classify.organisation).vlan[home])";
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
