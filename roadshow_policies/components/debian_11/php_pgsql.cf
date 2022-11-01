@@ -1,0 +1,24 @@
+bundle agent php_pgsql {
+
+vars:
+
+    "pkg[gettext]"	        	string => "*";
+    "pkg[php-dev]"                      string => "*";
+    "pkg[php-horde-crypt]"	       	string => "*";
+    "pkg[php-pgsql]"	        	string => "*";
+    "pkg[php-db-dataobject]"        	string => "*";
+    "pkg[php-dev]"	        	string => "*";
+    "pkg[php-mdb2-driver-pgsql]"       	string => "*";
+    "pkg[php-pear]"	        	string => "*";
+
+#    "ips_package_name"     slist  => getindices("pkg");
+
+methods:
+
+    "PHP module for Apache2"         usebundle => packages("php_pgsql.pkg");
+
+reports:
+
+  "${this.bundle}: ";
+
+}
