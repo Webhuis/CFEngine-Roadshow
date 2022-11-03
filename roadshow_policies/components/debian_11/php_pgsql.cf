@@ -5,7 +5,7 @@ vars:
     "pkg[gettext]"	        	string => "*";
     "pkg[php-dev]"                      string => "*";
     "pkg[php-horde-crypt]"	       	string => "*";
-    "pkg[php-pgsql]"	        	string => "*";
+    "pkg[php7.4-pgsql]"	        	string => "*";
     "pkg[php-pear]"	        	string => "*";
 
 #    "ips_package_name"     slist  => getindices("pkg");
