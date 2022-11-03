@@ -5,7 +5,7 @@ vars:
   "role_name"                         string => "Powerdns PostgreSQL Internet name server";
   "role_data"                         string => "role_data_wan";
 
-
+  "bundles[role_data]"                string => "$(role_data).cf";
   "bundles[php_pgsql]"                string => "${sys.flavor}/php_pgsql.cf";
   "bundles[pdns_server]"              string => "${sys.flavor}/pdns_server.cf";
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
