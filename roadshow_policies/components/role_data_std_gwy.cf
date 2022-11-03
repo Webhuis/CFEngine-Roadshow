@@ -31,10 +31,10 @@ vars:
   "interface[service][masked_ip]"     string => "$(ip[service])";
   "interface[support][dev]"           string => "$(nic[support])";
   "interface[support][masked_ip]"     string => "$(ip[support])";
-  "interface[admin][dev]"             string => "$(nic[support])";
-  "interface[admin][masked_ip]"       string => "$(ip[support])";
-  "interface[gw][dev]"                string => "$(nic[support])";
-  "interface[gw][masked_ip]"          string => "$(ip[support])";
+  "interface[admin][dev]"             string => "$(nic[admin])";
+  "interface[admin][masked_ip]"       string => "$(ip[admin])";
+  "interface[gw][dev]"                string => "$(nic[gw])";
+  "interface[gw][masked_ip]"          string => "$(ip[gw])";
 
   "interface_index"                    slist => getindices("interface");
 
