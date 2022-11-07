@@ -32,7 +32,7 @@ files:
 commands:
 
   restart_pdns::
-   "systemctl restart pdns.service";
+   "/usr/bin/systemctl restart pdns.service";
 
 }
 
