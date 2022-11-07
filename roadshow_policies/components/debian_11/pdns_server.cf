@@ -12,7 +12,7 @@ methods:
   "Check Ip Addresses first"     usebundle => check_ip("$($($classify.role).role_data).ddns[support][ip])");
 
   "We desire powerdns"           usebundle => packages("pdns_server.pkg");
-  "Configure powerdns for mysql" usebundle => get_template("pdns-mysql-ddns.conf.tmpl");
+  "Configure powerdns for mysql" usebundle => get_template("pdns-pgsql-ddns.conf.tmpl");
   "Configure powerdns server"    usebundle => pdns_conf;
 
 }
@@ -23,16 +23,16 @@ files:
 
  "/etc/powerdns/pdns.conf"
   comment                   => "pdns.conf door class_domain nameserver",
-  perms                     => mo("600","root"),
+  perms                     => mo("600","pdns"),
   create                    => "true",
   action                    => r_immediate,
-  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-mysql-ddns.conf.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdns-pgsql-ddns.conf.tmpl",
   classes                   => r_if_repaired("restart_pdns");
 
 commands:
 
   restart_pdns::
-   "/etc/init.d/pdns restart";
+   "systemctl restart pdns.service";
 
 }
 
