@@ -2,9 +2,9 @@ bundle agent role_data_wan {
 
 vars:
 
-  "nic[support]"                      string => "$($(sys.flavour).nic[support])";
-  "nic[admin]"                        string => "$($(sys.flavour).nic[admin])";
-  "nic[wan]"                          string => "$($(sys.flavour).nic[wan])";
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[wan]"                          string => "$($(classify.organisation).nic[wan])";
   "nic_index"                          slist => getindices("nic");
   "nic_values"                         slist => getvalues("nic");
   "nic_trick"                          slist => { "0", "1", "2" };
