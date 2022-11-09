@@ -2,7 +2,7 @@ bundle agent x2go_desktop (pam) {
 
 vars:
 
-  "pkg[chromium]"			string => "*";
+  "pkg[firefox-esr]"			string => "*";
   "pkg[git]"                            string => "*";
   "pkg[konsole]"                        string => "*";
   "pkg[unzip]"                          string => "*";
