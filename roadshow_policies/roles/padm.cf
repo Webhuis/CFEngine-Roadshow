@@ -1,0 +1,27 @@
+bundle agent padm {
+
+vars:
+
+  "role_name"                         string => "PowerdnsAdmin PostgreSQL Internet name servers";
+  "role_data"                         string => "role_data_std_sup";
+
+  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[php_pgsql]"                string => "${sys.flavor}/php_pgsql.cf";
+  "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
+  "bundles[apache_php]"               string => "${sys.flavor}/apache_php.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
+methods:
+
+  "PHP% for PostgreSQL server"  usebundle => "php_pgsql";
+  "The Apache2 webserver"       usebundle => "apache2";
+  "PHP for Apache2"             usebundle => "apache_php";
+
+reports:
+
+  "${this.bundle} app.inputs: ${inputs}";
+
+}
+
