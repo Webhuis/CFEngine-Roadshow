@@ -2,7 +2,7 @@ bundle agent padm {
 
 vars:
 
-  "role_name"                         string => "PowerdnsAdmin PostgreSQL Internet name servers";
+  "role_name"                         string => "PowerdnsAdmin PostgreSQL manager Internet name servers";
   "role_data"                         string => "role_data_std_sup";
 
   "bundles[role_data]"                string => "$(role_data).cf";
