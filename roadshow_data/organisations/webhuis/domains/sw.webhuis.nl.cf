@@ -22,7 +22,24 @@ vars:
   "pg_cluster[10.68.171.83]"           string => "psqlpdcsw003";
 
   "pg_cluster_index"                    slist => getindices($(pg_cluster));
- 
+
+  "local_slaves"                          slist => { "10.68.171.23", "10.10.117.23", "10.94.112.23" };
+  "local_resolvers"                       slist => { "10.68.171.24", "10.10.117.24", "10.94.112.24" };
+  "remote_resolvers"                      slist => { "208.67.222.123","208.67.220.123" };
+  "searchlist"                           string => "rs.webhuis.nl";
+  "domains_we_serve"                      slist => { "rg.webhuis.nl", "rs.webhuis.nl", "sw.webhuis.nl", "10.in-addr.arpa" };
+
+  "forward_zones"                        string => join(", ", local_slaves);
+
+  "zone[yoga-renkum.nl]"                 string => "$(forward_zones)";
+  "zone[webhuis.nl]"                     string => "$(forward_zones)";
+  "zone[rg.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[rs.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[sw.webhuis.nl]"                  string => "$(forward_zones)";
+  "zone[10.in-addr.arpa]"                string => "$(forward_zones)";
+
+  "zone_index"                            slist => getindices("zone");
+
   "https_repo[jts]"                    string => "https://download.jitsi.org";
   "https_repo[kea]"                    string => "https://dl.cloudsmith.io/public/isc/kea-1-6/deb/debian";
   "https_repo[one]"                    string => "https://downloads.opennebula.org/repo/6.0/Debian/10/";
