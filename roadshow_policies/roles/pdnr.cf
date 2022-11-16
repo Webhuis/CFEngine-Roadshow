@@ -3,7 +3,7 @@ bundle agent pdnr {
 vars:
 
   "role_name"                         string => "Powerdns Recursor";
-  "role_data"                         string => "role_data_wan";
+  "role_data"                         string => "role_data_std_sup";
 
   "bundles[role_data]"                string => "$(role_data).cf";
   "bundles[pdns_server]"              string => "${sys.flavor}/pdns_recursor.cf";
