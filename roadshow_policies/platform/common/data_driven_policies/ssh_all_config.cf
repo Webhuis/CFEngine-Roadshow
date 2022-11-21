@@ -29,7 +29,7 @@ vars:
    perms                     => mo("644","root"),
    create                    => "true",
    action                    => r_immediate,
-   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(role_data.role_sshd_config_tmplate)",
+   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(role_data.role_sshd_config_template)",
    classes                   => if_repaired("restart_sshd");
 
 methods:
