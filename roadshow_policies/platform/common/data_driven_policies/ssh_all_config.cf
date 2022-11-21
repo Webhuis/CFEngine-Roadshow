@@ -5,16 +5,6 @@ vars:
   "ssh_config"                              string => "/etc/ssh/ssh_config";
   "ssh[ServerAliveInterval]"                string => "60";
 
- files:
-
-  "$(sshd_config)"
-   comment                   => "sshd config",
-   perms                     => mo("644","root"),
-   create                    => "true",
-   action                    => r_immediate,
-   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/sshd_config.tmpl",
-   classes                   => if_repaired("restart_sshd");
-
 methods:
 
   "The sshd role based config"           usebundle => sshd_role_config;
@@ -57,13 +47,9 @@ commands:
   "/usr/sbin/service sshd restart"
     comment => "restarting sshd";
 
-methods:
-
-  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
-
 reports:
 
- "$(this.bundle): I am implementing safe ssh configuration common to all platforms";
+ "$(this.bundle): I am implementing sshd role based configuration";
 
 }
 
