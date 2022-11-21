@@ -9,8 +9,6 @@ vars:
 
 methods:
 
-  "Check Ip Addresses first"     usebundle => check_ip("$($($classify.role).role_data).ddns[support][ip])");
-
   "We desire powerdns"           usebundle => packages("pdns_server.pkg");
   "Configure powerdns for mysql" usebundle => get_template("pdns-pgsql-ddns.conf.tmpl");
   "Configure powerdns server"    usebundle => pdns_conf;

@@ -1,7 +1,8 @@
-bundle agent role_data_kvmh {
+bundle agent role_data {
   
 vars:
 
+  "role_data_real_name"               string => "role_data_kvmh";
   "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
   "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
   "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";

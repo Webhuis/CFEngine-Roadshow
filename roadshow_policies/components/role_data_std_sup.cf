@@ -2,7 +2,7 @@ bundle agent role_data {
   
 vars:
 
-  "role_data_real_name"               string => "role_data_std_sup ";
+  "role_data_real_name"               string => "role_data_std_sup";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic_index"                          slist => getindices("nic");

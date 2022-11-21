@@ -1,7 +1,8 @@
-bundle agent role_data_std_tpx {
+bundle agent role_data {
   
 vars:
 
+  "role_data_real_name"               string => "role_data_std_tpx";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";

@@ -9,9 +9,6 @@ vars:
 
 methods:
 
-  "Check Ip Addresses first"     usebundle => check_ip("$($($(classify.role).role_data).ddns[support][ip])");
-
- !bad_ip::
   "We desire powerdns"           usebundle => packages("pdns_recursor.pkg");
   "The recursor needs templates" usebundle => get_template("$(pdns_recursor_templates)");
   "Configure the recursor"       usebundle => recursor_conf;
