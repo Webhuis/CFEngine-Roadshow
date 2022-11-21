@@ -4,7 +4,7 @@
 #
 [%CFEngine any:: %]
 127.0.0.1       localhost $(sys.uqhost)
-$($($(classify.role).role_data).etc_hosts_nic)    $(sys.fqhost)      $(sys.uqhost)
+$(role_data.etc_hosts_nic)    $(sys.fqhost)      $(sys.uqhost)
 
 $($(sys.domain).pg_cluster_index) $($(sys.domain).pg_cluster[$($(sys.domain).pg_cluster_index]);
 
