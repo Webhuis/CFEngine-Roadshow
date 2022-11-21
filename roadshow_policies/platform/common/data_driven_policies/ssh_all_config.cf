@@ -21,7 +21,7 @@ bundle agent sshd_role_config {
 vars:
 
   "sshd_config"                             string => "/etc/ssh/sshd_config";
-  "sshd_config_template"                    string => "$($($(classify.role).role_data).sshd_role_config_tamplate)";
+  "sshd_config_template"                    string => "$($($(classify.role).role_data).sshd_role_config_template)";
 
  files:
 
@@ -49,6 +49,7 @@ commands:
 
 reports:
 
+ "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
 }
