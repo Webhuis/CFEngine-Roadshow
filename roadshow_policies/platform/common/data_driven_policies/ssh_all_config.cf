@@ -21,7 +21,6 @@ bundle agent sshd_role_config {
 vars:
 
   "sshd_config"                             string => "/etc/ssh/sshd_config";
-  "sshd_config_template"                    string => "$($($(classify.role).role_data).sshd_role_config_template)";
 
  files:
 
@@ -30,12 +29,12 @@ vars:
    perms                     => mo("644","root"),
    create                    => "true",
    action                    => r_immediate,
-   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(sshd_config_tmplate)",
+   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(role_data.role_sshd_config_tmplate)",
    classes                   => if_repaired("restart_sshd");
 
 methods:
 
-  "Get the sshd role tempate"            usebundle => get_template("$(sshd_config_template)");
+  "Get the sshd role tempate"            usebundle => get_template("$(role_data.role_sshd_config_template)");
 
 services:
 

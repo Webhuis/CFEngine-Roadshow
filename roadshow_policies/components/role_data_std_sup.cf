@@ -38,7 +38,7 @@ vars:
   "support_ip"                         slist => { "$(ddns[support][ip])" };
   "admin_nics"                         slist => { "$(ddns[admin][ip])" };
 
-  "sshd_role_config_template"         string => "std_sshd_config.tmpl";
+  "role_sshd_config_template"         string => "std_sshd_config.tmpl";
 
 methods:
 
