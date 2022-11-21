@@ -1,0 +1,32 @@
+# Webhuis template for std_sshd_config
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+Port 22
+ListenAddress $($($(classify.role).role_data).admin_nics)
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+SyslogFacility AUTH
+LogLevel INFO
+LoginGraceTime 120
+PermitRootLogin no
+StrictModes yes
+PubkeyAuthentication yes
+AuthorizedKeysFile	%h/.ssh/authorized_keys
+IgnoreRhosts yes
+HostbasedAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+X11Forwarding yes
+X11DisplayOffset 10
+AllowTcpForwarding yes
+MaxSessions 15
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes
+UseDNS no
+AcceptEnv LANG LC_*
+#Subsystem sftp /usr/lib/openssh/sftp-server
+UsePAM yes

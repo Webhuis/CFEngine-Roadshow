@@ -38,6 +38,8 @@ vars:
   "support_ip"                         slist => { "$(ddns[support][ip])" };
   "admin_nics"                         slist => { "$(ddns[admin][ip])" };
 
+  "sshd_role_config_tamplate"         string => "std_sshd_config.tmpl";
+
 methods:
 
   "We need predictable names"      usebundle => persistent_link($(nic_trick));

@@ -2,9 +2,7 @@ bundle agent ssh_all_config {
 
 vars:
 
-  "sshd_config"                             string => "/etc/ssh/sshd_config";
   "ssh_config"                              string => "/etc/ssh/ssh_config";
-
   "ssh[ServerAliveInterval]"                string => "60";
 
  files:
@@ -16,6 +14,38 @@ vars:
    action                    => r_immediate,
    edit_template             => "$(sys.workdir)/roadshow_inputs/templates/sshd_config.tmpl",
    classes                   => if_repaired("restart_sshd");
+
+methods:
+
+  "The sshd role based config"           usebundle => sshd_role_config;
+  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
+
+reports:
+
+ "$(this.bundle): I am implementing safe ssh configuration common to all platforms";
+
+}
+
+bundle agent sshd_role_config {
+
+vars:
+
+  "sshd_config"                             string => "/etc/ssh/sshd_config";
+  "sshd_config_template"                    string => "$($($(classify.role).role_data).sshd_role_config_tamplate)";
+
+ files:
+
+  "$(sshd_config)"
+   comment                   => "sshd config",
+   perms                     => mo("644","root"),
+   create                    => "true",
+   action                    => r_immediate,
+   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/$(sshd_config_tmplate)",
+   classes                   => if_repaired("restart_sshd");
+
+methods:
+
+  "Get the sshd role tempate"            usebundle => get_template("pam_ldap.conf.tmpl");
 
 services:
 
@@ -33,7 +63,7 @@ methods:
 
 reports:
 
- "${this.bundle}: I am implementing safe ssh configuration common to all platforms";
+ "$(this.bundle): I am implementing safe ssh configuration common to all platforms";
 
 }
 
