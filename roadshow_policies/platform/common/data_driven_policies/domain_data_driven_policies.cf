@@ -36,6 +36,7 @@ reports:
   "$(this.bundle) resolvers: $($(classify.location).resolvers)";
 
  !bad_ip::
+   "$(this.bundle): admin_nic! $(role_data.admin_nics)";
    "$(this.bundle): Valid IP Addresses!";
 
 }

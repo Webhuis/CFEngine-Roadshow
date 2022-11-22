@@ -8,6 +8,11 @@ methods:
 
   "Check one nic"                  usebundle => one_interface("$(var_nic_$(nic))");
 
+commands:
+
+ "one_interface.if_down"::
+  "/usr/bin/systemctl restart networking";
+
 reports:
 
  "$(this.bundle): I am checking nics and mac: $(nic).";
@@ -75,5 +80,29 @@ vars:
 reports:
 
  "$(this.bundle): I am setting class nic and mac: $(nic).";
+
+}
+
+bundle agent add_nic( nic ) {
+
+commands:
+ 
+  "/sbin/ip link set dev $(nic) up";
+
+reports:
+
+ "$(this.bundle): interface $(nic) added!";
+
+}
+
+bundle agent bring_nic_up( nic ) {
+
+commands:
+ 
+  "/sbin/ip link set dev $(nic) up";
+
+reports:
+
+ "$(this.bundle): interface $(interface).$(vlan) up!";
 
 }
