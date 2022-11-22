@@ -54,7 +54,7 @@ insert_lines:
 
 "key \"webhuis.nl.update\" {  
      algorithm hmac-md5;  
-     secret \"nqYw6UYdO9dizAwlpbwLcu5UQ+Zp+AQCHfnjaDhBI5U=\";
+     secret \"15rpUPD9mp5jA7B0WeYqOWyxtNfEnYBNUUYpIw2wbXYR93CrgMJvI775X4VWXu7YuVhh3KP6iJYc+iE0+gxxJA==\";
 };"; 
 
 }
