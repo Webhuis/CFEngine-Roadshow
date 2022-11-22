@@ -10,7 +10,7 @@ vars:
   "ldap_vip"                           string => host2ip("$(ldap_frontend)");
   "ldap_m[ldappdcsw001.sw.webhuis.nl]" string => "100";
   "ldap_m[ldappdcsw002.sw.webhuis.nl]" string => "101";
-  "mdns"                               string => "pdnmwhpdcsw1.sw.webhuis.nl";
+  "mdns"                               string => "powerdns.webhuis.nl";
   "mdns_key"                           string => "/etc/dhcp/webhuis.nl.update";
   "local_networks"                     string => "10.0.0.0/8 192.168.0.0/16 213.127.130.120/29";
 
