@@ -4,7 +4,7 @@ vars:
 
   "location_name"                   string => "Roadshow";
   "apt_cacher"                      string => "aptgwhpdcrs1.rs.webhuis.nl";
-  "resolvers"                       slist  => { "10.10.117.24", "10.68.171.24","10.94.112.24" };
+  "resolvers"                       slist  => { "10.10.117.24", "10.68.171.24" };
 
   "subnet[service]"                 string => "10.10.17.0";
   "subnet[support]"                 string => "10.10.117.0";

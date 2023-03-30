@@ -13,7 +13,7 @@ vars:
 
 methods:
 
-  "The PowerDNS server"         usebundle => "pdns_server";
+  "The PowerDNS server"            usebundle => "pdns_server";
 
 reports:
 
