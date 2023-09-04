@@ -17,9 +17,9 @@ vars:
   "ldap_base"                          string => "dc=sw,dc=webhuis,dc=nl";
   "ldap_admin"                         string => "cn=admin,${ldap_base}";
  #"pg_cluster"                          slist => { "10.68.171.81", "10.68.171.82", "10.68.171.83" };
-  "pg_cluster[10.68.171.81]"           string => "psqlpdcsw001";
-  "pg_cluster[10.68.171.82]"           string => "psqlpdcsw002";
-  "pg_cluster[10.68.171.83]"           string => "psqlpdcsw003";
+  "pg_cluster[10.68.171.81]"           string => "psqlpdcsw001.sw.webhuis.nl";
+  "pg_cluster[10.68.171.82]"           string => "psqlpdcsw002.sw.webhuis.nl";
+  "pg_cluster[10.68.171.83]"           string => "psqlpdcsw003.sw.webhuis.nl";
 
   "pg_cluster_index"                    slist => getindices($(pg_cluster));
 
