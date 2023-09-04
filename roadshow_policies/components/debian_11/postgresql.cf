@@ -73,10 +73,10 @@ reports:
 
   "$(this.bundle): Common kvm host stuff";
 
- cluster_variable_exists::
+ pg_cluster_values_exist::
   "$(this.bundle): Variable $($(classify.domain).pg_cluster) exists: \"$($(classify.domain).pg_cluster)\"..";
 
- !cluster_variable_exists::
+ !pg_cluster_values_exist::
    "$(this.bundle): Variable $($(classify.domain).pg_cluster) does not exist: \"$($(classify.domain).pg_cluster)\"..";
   
 }
