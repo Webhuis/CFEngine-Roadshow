@@ -21,7 +21,7 @@ vars:
   "pg_cluster[2]"                      string => "psqlpdcsw002.sw.webhuis.nl";
   "pg_cluster[3]"                      string => "psqlpdcsw003.sw.webhuis.nl";
 
-  "pg_cluster_index"                    slist => getindices($(pg_cluster));
+  "pg_cluster_index"                    slist => getindices("pg_cluster");
 
   "local_slaves"                          slist => { "10.68.171.23", "10.10.117.23", "10.94.112.23" };
   "local_resolvers"                       slist => { "10.68.171.24", "10.10.117.24", "10.94.112.24" };
