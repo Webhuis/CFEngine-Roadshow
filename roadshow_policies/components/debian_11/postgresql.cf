@@ -74,6 +74,7 @@ reports:
   "$(this.bundle): This is the PostgreSQL database server";
   "$(this.bundle): Variable $(postgresql.pg_cluster_index): \"$(postgresql.pg_cluster_index)\"..";
   "$(this.bundle): Variable $($(classify.domain).pg_cluster[$(postgresql.pg_cluster_index)]): \"$($(classify.domain).pg_cluster[$(postgresql.pg_cluster_index)])\"..";
+  "$(this.bundle): Variable $($(classify.domain).pg_cluster_index): \"$($(classify.domain).pg_cluster_index)\"..";
 
  pg_cluster_index_exists::
   "$(this.bundle): Variable $(pg_cluster_index) exist: \"$(pg_cluster_index)\"..";
