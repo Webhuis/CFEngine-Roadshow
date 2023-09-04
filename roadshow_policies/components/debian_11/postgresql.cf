@@ -11,7 +11,7 @@ vars:
   "pkg[postgresql-13]"	   	   	string => "*";
   "pkg[postgresql-client-13]"	   	string => "*";
 
-  "pg_cluster_values_exist"              slist => getvalues("($(classify.domain).pg_cluster)");
+  "pg_cluster_values"                    slist => getvalues("($(classify.domain).pg_cluster)");
 
   "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
 
@@ -73,11 +73,11 @@ reports:
 
   "$(this.bundle): Common kvm host stuff";
 
- pg_cluster_values_exist::
-  "$(this.bundle): Variable $($(classify.domain).pg_cluster) exists: \"$($(classify.domain).pg_cluster)\"..";
+ pg_cluster_values::
+  "$(this.bundle): Variable $(pg_cluster_values) exist: \"$(pg_clusteri_values)\"..";
 
- !pg_cluster_values_exist::
-   "$(this.bundle): Variable $($(classify.domain).pg_cluster) does not exist: \"$($(classify.domain).pg_cluster)\"..";
+ !pg_cluster_values::
+   "$(this.bundle): Variable $(pg_cluster_values) do not exist: \"$(pg_cluster_values)\"..";
   
 }
 
