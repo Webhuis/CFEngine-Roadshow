@@ -75,7 +75,8 @@ reports:
   "$(this.bundle): Variable $($(classify.domain).pg_cluster_index): \"$($(classify.domain).pg_cluster_index)\"..";
 
  pg_cluster_values_exist::
-  "$(this.bundle): Variable $(pg_cluster_index) exist: \"$(pg_cluster_index)\"..";
+  "$(this.bundle): Variable  exist: \"$(pg_cluster_index)\".. $(pg_cluster_index)";
+  "$(this.bundle): Variable  \"$(pg_cluster_index)\".. exists: $($(classify.domain).pg_cluster[$(pg_cluster_index)])";
 
  !pg_cluster_values_exist::
    "$(this.bundle): Variable $(pg_cluster_index) do not exist: \"$(pg_cluster_index)\"..";
