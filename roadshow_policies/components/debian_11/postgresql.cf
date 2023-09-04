@@ -2,7 +2,7 @@ bundle agent postgresql {
 
 classes:
 
-  "pg_cluster_values_exist"         expression => isvariable("pg_cluster_values");
+  "pg_cluster_index_exists"        expression => isvariable("pg_cluster_index");
 
 vars:
 
@@ -11,7 +11,7 @@ vars:
   "pkg[postgresql-13]"	   	   	string => "*";
   "pkg[postgresql-client-13]"	   	string => "*";
 
-  "pg_cluster_values"                    slist => getvalues("($(classify.domain).pg_cluster)");
+  "pg_cluster_index"                     slist => getindices("($(classify.domain).pg_cluster)");
 
   "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
 
@@ -46,7 +46,7 @@ files:
    edit_defaults     => no_backup,
    classes           => r_if_repaired("restart_patroni");
 
- pg_cluster_values_exist::
+ pg_cluster_index_exists::
   "/etc/postgresql/13/main/pg_hba.conf"
    perms             => mo("644","postgres"),
    create            => "true",
@@ -73,13 +73,13 @@ reports:
 
   "$(this.bundle): This is the PostgreSQL database server";
   "$(this.bundle): Variable: \"$($(classify.domain).pg_cluster))\".. $($(classify.domain).pg_cluster)";
-  "$(this.bundle): Variable $(pg_cluster_values): \"$(pg_cluster_values)\"..";
+  "$(this.bundle): Variable $(pg_cluster_index): \"$(pg_cluster_index)\"..";
 
- pg_cluster_values_exist::
-  "$(this.bundle): Variable $(pg_cluster_values) exist: \"$(pg_cluster_values)\"..";
+ pg_cluster_index_exists::
+  "$(this.bundle): Variable $(pg_cluster_index) exist: \"$(pg_cluster_index)\"..";
 
- !pg_cluster_values_exist::
-   "$(this.bundle): Variable $(pg_cluster_values) do not exist: \"$(pg_cluster_values)\"..";
+ !pg_cluster_index_exists::
+   "$(this.bundle): Variable $(pg_cluster_index) do not exist: \"$(pg_cluster_index)\"..";
   
 }
 
