@@ -1,5 +1,9 @@
 bundle agent postgresql {
 
+classes:
+
+  cluster_variable_exists           expression => isvariable($($(classify.domain).pg_cluster));
+
 vars:
 
   "pkg[etcd]"	        	   	string => "*";
@@ -11,13 +15,6 @@ vars:
   "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
 
 files:
-
-  "/etc/postgresql/13/main/pg_hba.conf"
-   perms             => mo("644","postgres"),
-   create            => "true",
-   action            => r_immediate,
-   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pg_hba.conf.tmpl",
-   classes           => r_if_repaired("restart_postgresql");
 
   "/etc/postgresql/13/main/postgresql.conf"
    perms             => mo("644","postgres"),
@@ -48,6 +45,14 @@ files:
    edit_defaults     => no_backup,
    classes           => r_if_repaired("restart_patroni");
 
+ cluster_variable_exists::
+  "/etc/postgresql/13/main/pg_hba.conf"
+   perms             => mo("644","postgres"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pg_hba.conf.tmpl",
+   classes           => r_if_repaired("restart_postgresql");
+
 methods:
  
   "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
@@ -62,6 +67,17 @@ commands:
  restart_patroni::
 
   "/etc/init.d/patroni restart";
+
+reports:
+
+  "$(this.bundle): Common kvm host stuff";
+
+ cluster_variable_exists::
+  "$(this.bundle): Variable $($(classify.domain).pg_cluster) exists: \"$($(classify.domain).pg_cluster)\"..";
+
+ !cluster_variable_exists::
+   "$(this.bundle): Variable $($(classify.domain).pg_cluster) does not exist: \"$($(classify.domain).pg_cluster)\"..";
+  
 }
 
 bundle edit_line  patroni_modules {
