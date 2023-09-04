@@ -72,6 +72,7 @@ commands:
 reports:
 
   "$(this.bundle): This is the PostgreSQL database server";
+  "$(this.bundle): Variable: \"$($(classify.domain).pg_cluster))\".. $($(classify.domain).pg_cluster)";
   "$(this.bundle): Variable $(pg_cluster_values): \"$(pg_cluster_values)\"..";
 
  pg_cluster_values_exist::
