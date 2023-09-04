@@ -2,7 +2,7 @@ bundle agent postgresql {
 
 classes:
 
-  "pg_cluster_values_exist"         expression => isvariable("pg_cluster_index");
+  "pg_cluster_values_exist"         expression => isvariable("pg_cluster_values");
 
 vars:
 
@@ -73,10 +73,10 @@ reports:
 
   "$(this.bundle): Common kvm host stuff";
 
- pg_cluster_values::
-  "$(this.bundle): Variable $(pg_cluster_values) exist: \"$(pg_clusteri_values)\"..";
+ pg_cluster_values_exist::
+  "$(this.bundle): Variable $(pg_cluster_values) exist: \"$(pg_cluster_values)\"..";
 
- !pg_cluster_values::
+ !pg_cluster_values_exist::
    "$(this.bundle): Variable $(pg_cluster_values) do not exist: \"$(pg_cluster_values)\"..";
   
 }
