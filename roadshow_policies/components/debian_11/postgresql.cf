@@ -2,7 +2,7 @@ bundle agent postgresql {
 
 classes:
 
-  "cluster_variable_exists"         expression => isvariable($($(classify.domain).pg_cluster));
+  "cluster_variable_exists"         expression => isvariable("($(classify.domain).pg_cluster)");
 
 vars:
 
