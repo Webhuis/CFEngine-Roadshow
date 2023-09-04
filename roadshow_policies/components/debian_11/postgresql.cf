@@ -72,14 +72,13 @@ commands:
 reports:
 
   "$(this.bundle): This is the PostgreSQL database server";
-  "$(this.bundle): Variable $($(classify.domain).pg_cluster_index): \"$($(classify.domain).pg_cluster_index)\"..";
 
  pg_cluster_values_exist::
-  "$(this.bundle): Variable  exist: \"$(pg_cluster_index)\".. $(pg_cluster_index)";
-  "$(this.bundle): Variable  \"$(pg_cluster_index)\".. exists: $($(classify.domain).pg_cluster[$(pg_cluster_index)])";
+  "$(this.bundle): Variable \"$($(classify.domain).pg_cluster_index)\".. exists: $($(classify.domain).pg_cluster_index)";
+  "$(this.bundle): Variable  \"$(pg_cluster_index)\".. exists: $($(classify.domain).pg_cluster[$($(classify.domain).pg_cluster_index)])";
 
  !pg_cluster_values_exist::
-   "$(this.bundle): Variable $(pg_cluster_index) do not exist: \"$(pg_cluster_index)\"..";
+  "$(this.bundle): Variable \"$($(classify.domain).pg_cluster_index)\".. does not exists: $($(classify.domain).pg_cluster_index)";
   
 }
 
