@@ -71,7 +71,8 @@ commands:
 
 reports:
 
-  "$(this.bundle): Common kvm host stuff";
+  "$(this.bundle): This is the PostgreSQL database server";
+  "$(this.bundle): Variable $(pg_cluster_values): \"$(pg_cluster_values)\"..";
 
  pg_cluster_values_exist::
   "$(this.bundle): Variable $(pg_cluster_values) exist: \"$(pg_cluster_values)\"..";
