@@ -2,7 +2,7 @@ bundle agent postgresql {
 
 classes:
 
-  "pg_cluster_values_exist"        expression => isvariable("($(classify.domain).pg_cluster_index");
+  "pg_cluster_values_exist"        expression => isvariable("pg_cluster_index");
 
 vars:
 
@@ -11,7 +11,7 @@ vars:
   "pkg[postgresql-13]"	   	   	string => "*";
   "pkg[postgresql-client-13]"	   	string => "*";
 
-  #"pg_cluster_index"                     slist => getindices("($(classify.domain).pg_cluster)");
+  "pg_cluster_index"                     slist => "$($(classify.domain).pg_cluster_index)";
 
   "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
 
