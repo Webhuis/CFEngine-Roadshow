@@ -2,7 +2,7 @@ bundle agent postgresql {
 
 classes:
 
-  "cluster_variable_exists"         expression => isvariable("($(classify.domain).pg_cluster)");
+  "pg_cluster_values_exist"         expression => isvariable("pg_cluster_index");
 
 vars:
 
@@ -11,6 +11,7 @@ vars:
   "pkg[postgresql-13]"	   	   	string => "*";
   "pkg[postgresql-client-13]"	   	string => "*";
 
+  "pg_cluster_values_exist"              slist => getvalues("($(classify.domain).pg_cluster)");
 
   "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
 
@@ -45,7 +46,7 @@ files:
    edit_defaults     => no_backup,
    classes           => r_if_repaired("restart_patroni");
 
- cluster_variable_exists::
+ pg_cluster_values_exist::
   "/etc/postgresql/13/main/pg_hba.conf"
    perms             => mo("644","postgres"),
    create            => "true",
