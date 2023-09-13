@@ -6,35 +6,46 @@ vars:
   "pkg[keepalived]"	   	   	string => "*";
   "pkg[pgbouncer]"	           	string => "*";
 
+  "my_keepalived_priority"              string => "$($(classify.domain).pg_keepalive_pear[$(role_data).ip[support]])";
+  "my_keepalived_peers"                  slist => filer( $(role_data).ip[support], $($(classify.domain).pg_keepalive_peers), "false", true", 999);
 
-  "templates"                            slist => { "haproxy.conf.tmpl", "keepalived.conf.tmpl", "pgbouncer.conf.tmpl" };
+  "templates"                            slist => { "haproxy.tmpl", "keepalived.conf.tmpl", "pgbouncer.conf.tmpl" };
 
 files:
 
-  "/etc/postgresql/13/main/pg_hba.conf"
-   perms             => mo("644","postgres"),
+  "/etc/keepalived/keepalived.conf"
+   perms             => mo("644","root"),
    create            => "true",
    action            => r_immediate,
-   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pg_hba.conf.tmpl",
-   classes           => r_if_repaired("restart_postgresql");
-
-  "/etc/postgresql/13/main/postgresql.conf"
-   perms             => mo("644","postgres"),
-   create            => "true",
-   action            => r_immediate,
-   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
-   classes           => r_if_repaired("restart_postgresql");
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/keepalived.conf.tmpl",
+   classes           => r_if_repaired("restart_keepalived");
 
 methods:
  
   "We desire postgresql HA cluster templates"  usebundle => get_template("$(templates)");
   "We desire the HA Postgresql cluster"        usebundle => packages("postgresql_proxy.pkg");
+  "We want to know our peers"                  usebundle => keepalived_peers;
 
 commands:
 
- restart_haproxy::
+ restart_keepalived::
 
-  "/etc/init.d/haproxy restart";
+  "/etc/init.d/keepalived restart";
+
+reports:
+
+  "$(this.bundle): Configure postgresql_proxy";
+  "$(this.bundle) Packages: $(pkg)";
+  "$(this.bundle) my_keepalived_priority: $(my_keepalived_priority)";
+  "$(this.bundle) my_keepalived_peers: $(my_keepalived_peers)";
+
+}
+
+bundle agent keepalived_peers {
+
+vars:
+
+  "pkg[haproxy]"                        string => "*";
 
 reports:
 
@@ -42,3 +53,4 @@ reports:
   "$(this.bundle) Packages: $(pkg)";
 
 }
+

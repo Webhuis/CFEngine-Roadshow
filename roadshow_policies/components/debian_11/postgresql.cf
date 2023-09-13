@@ -24,6 +24,13 @@ files:
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
    classes           => r_if_repaired("restart_postgresql");
 
+  "/etc/patroni/patroni.yaml"
+   perms             => mo("644","postgres"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
+   classes           => r_if_repaired("restart_patroni");
+
   "/etc/modules"
    perms             => mo("644","root"),
    create            => "true",
@@ -63,11 +70,11 @@ commands:
 
  restart_postgresql::
 
-  "/etc/init.d/postgresql restart";
+  "systemctl restart postgresql";
 
  restart_patroni::
 
-  "/etc/init.d/patroni restart";
+  "systemctl restart patroni";
 
 reports:
 
