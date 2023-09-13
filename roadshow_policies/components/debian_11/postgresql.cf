@@ -13,7 +13,7 @@ vars:
 
   "pg_cluster_index"                     slist => { "$($(classify.domain).pg_cluster_index)" };
 
-  "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl" };
+  "templates"                     slist => { "pg_hba.conf.tmpl", "postgresql.conf.tmpl", "patroni.conf.tmpl" };
 
 files:
 
@@ -28,7 +28,7 @@ files:
    perms             => mo("644","postgres"),
    create            => "true",
    action            => r_immediate,
-   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
+   edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/patroni.conf.tmpl",
    classes           => r_if_repaired("restart_patroni");
 
   "/etc/modules"
@@ -70,11 +70,11 @@ commands:
 
  restart_postgresql::
 
-  "systemctl restart postgresql";
+  "/usr/bin/systemctl restart postgresql";
 
  restart_patroni::
 
-  "systemctl restart patroni";
+  "/usr/bin/systemctl restart patroni";
 
 reports:
 
