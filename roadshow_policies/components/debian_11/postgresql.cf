@@ -24,7 +24,7 @@ files:
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
    classes           => r_if_repaired("restart_postgresql");
 
-  "/etc/patroni/config.yaml"
+  "/etc/patroni/config.yml"
    perms             => mo("644","postgres"),
    create            => "true",
    action            => r_immediate,
