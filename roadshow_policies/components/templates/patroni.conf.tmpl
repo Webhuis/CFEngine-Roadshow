@@ -8,8 +8,8 @@ namespace: /db/
 name: $(sys.uqhost)
 
 restapi:
-  listen: $(role_data.ip[support]:8008
-  connect_address: $(role_data.ip[support]:8008
+  listen: $(role_data.ip[support]):8008
+  connect_address: $(role_data.ip[support]):8008
 
 etcd:
   host: $(role_data.ip[support]:2379
@@ -40,8 +40,8 @@ bootstrap:
           - createdb
 
 postgresql:
-  listen: $(role_data.ip[support]:5432
-  connect_address: $(role_data.ip[support]:5432
+  listen: $(role_data.ip[support]):5432
+  connect_address: $(role_data.ip[support]):5432
   data_dir: /var/lib/postgresql/13/main/
   pgpass: /tmp/pgpass
   authentication:
