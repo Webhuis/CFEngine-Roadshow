@@ -42,7 +42,8 @@ bootstrap:
 postgresql:
   listen: $(role_data.ip[support]):5432
   connect_address: $(role_data.ip[support]):5432
-  data_dir: /var/lib/postgresql/13/main/
+  data_dir: /var/lib/postgresql/13/main
+  config_dir: /etc/postgresql/13/main
   pgpass: /tmp/pgpass
   authentication:
     replication:
