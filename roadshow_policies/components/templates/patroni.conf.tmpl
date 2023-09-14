@@ -29,7 +29,7 @@ bootstrap:
 
   pg_hba:
   - host replication replicator 127.0.0.1/32 md5
-  - host replication replicator $($(classify.domain).pg_cluster[$($(classify.domain).pg_cluster_index)])/32 md5
+  - host replication replicator $($(classify.domain).pg_cluster[$($(classify.domain).pg_cluster_index)]) md5
   - host all all 0.0.0.0/0 md5
 
   users:
