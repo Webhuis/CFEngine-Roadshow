@@ -24,7 +24,7 @@ files:
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/postgresql.conf.tmpl",
    classes           => r_if_repaired("restart_postgresql");
 
-  "/etc/systemd/system/multi-user.target.wants/patroni.service"
+  "/lib/systemd/system/patroni.service"
    action            => r_immediate,
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/patroni.unit.tmpl",
    classes           => r_if_repaired("daemon_reload");
