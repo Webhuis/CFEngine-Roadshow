@@ -27,7 +27,7 @@ files:
   "/etc/systemd/system/multi-user.target.wants/patroni.service"
    action            => r_immediate,
    edit_template     => "$(sys.workdir)/roadshow_dynamic_inputs/templates/patroni.unit.tmpl",
-   classes           => r_if_repaired("daemon-reload");
+   classes           => r_if_repaired("daemon_reload");
 
   "/etc/patroni/config.yml"
    perms             => mo("644","postgres"),
@@ -81,7 +81,7 @@ commands:
 
   "/usr/bin/systemctl restart patroni";
 
- daemon-reload::
+ daemon_reload::
 
   "/usr/bin/systemctl daemon-reload";
 
