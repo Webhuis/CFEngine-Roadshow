@@ -1,4 +1,4 @@
-# Webhuis template voor /etc/hosts
+# Webhuis template voor /etc/default/etcd
 #
 # Do not edit
 #
@@ -7,4 +7,13 @@
 $(role_data.etc_hosts_nic)    $(sys.fqhost)      $(sys.uqhost)
 
 $($(sys.domain).pg_cluster_index) $($(sys.domain).pg_cluster[$($(sys.domain).pg_cluster_index]);
-
+ETCD_NAME=$(sys.uqhost)
+ETCD_DATA_DIR="/var/lib/etcd/postgresql"
+ETCD_LISTEN_PEER_URLS="$(role_data.etc_hosts_nic):2380"
+ETCD_LISTEN_CLIENT_URLS="$(role_data.etc_hosts_nic):2379,http://localhost:2379"
+ETCD_INITIAL_CLUSTER="psqlpdcsw002=http://10.68.171.82:2380,psqlpdcsw003=http://10.68.171.83:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="webhuis_cluster1"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="$(role_data.etc_hosts_nic):2380"
+ETCD_ADVERTISE_CLIENT_URLS="$(role_data.etc_hosts_nic):2379"
+ETCD_ENABLE_V2="true"

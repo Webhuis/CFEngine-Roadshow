@@ -49,7 +49,7 @@ def insert_host_role ( uqhost, domain, role ):
   insert = "insert into host ( uqhost, domain_id, role_id ) values ( %s, %s, %s );"
   cur = conn.cursor()
   cur.execute(insert, data);
-#  if ok == 
+#  if ok ==
   promise = 8
 #  else
 #    promise = 1
@@ -110,7 +110,7 @@ def role_feed(content):
     promise = 9
   elif host_role_status == "no_host":
     role_status = check_role ( role )
-    if role_status == "no_role": 
+    if role_status == "no_role":
       promise = 1
     else:
       insert_host_role ( uqhost, domain_id, role )
@@ -125,7 +125,7 @@ def decompose_message(json_string):
   message_type = message["message"]
   query = message["query"]
   content = message["content"]
-  return ( message_type, query, content ) 
+  return ( message_type, query, content )
 
 def update_message_flow ( ts_id, promise ):
 

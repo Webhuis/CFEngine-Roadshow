@@ -17,7 +17,7 @@ vars:
 
 files:
 
-  "/etc/postgresql/13/main/postgresql.conf"
+  "/etc/postgresql/13/main/postgresql.base.conf"
    perms             => mo("644","postgres"),
    create            => "true",
    action            => r_immediate,

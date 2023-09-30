@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys
-import zmq
+import zmq as zmq
 
 context = zmq.Context()
 
@@ -9,7 +9,8 @@ context = zmq.Context()
 #print("Connecting to server...")
 socket = context.socket(zmq.REQ)
 socket.setsockopt(zmq.LINGER, 0)
-socket.connect("tcp://data.webhuis.nl:5309")
+#socket.connect("tcp://data.webhuis.nl:5309")
+socket.connect("tcp://10.68.171.110:5309")
 
 message = ''
 # sys.argv[0] is the program filename, slice it off
