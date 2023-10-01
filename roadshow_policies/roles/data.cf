@@ -1,0 +1,31 @@
+# role Data!
+bundle agent data {
+
+vars:
+
+  "role_name"                                     string => "We are Data!";
+  "role_data"                                     string => "role_data_std_sup";
+
+  "bundles[0mq]" 	                          string => "${sys.flavor}/0mq.cf";
+  "bundles[Data_common]"	                  string => "Data_common.cf";
+  "bundles[Data]"	                          string => "${sys.flavor}/Data.cf";
+
+  "sequence"                                       slist => getindices("bundles");
+  "inputs"                                         slist => getvalues("bundles");
+
+methods:
+
+  "Provide and maintain the 0mq"  	       usebundle => "0mq";
+  "We desire the Data application"	       usebundle => "Data_common";
+  "We are Data!"		  	       usebundle => "Data";
+
+reports:
+
+  "${this.bundle} nics: $(nic[$(nic_index)])";
+  "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";
+  "$(this.bundle) ddns nic: $(ddns[$(ddns_index)][nic])";
+  "$(this.bundle) nics: $(nic_index), $(nic[$(nic_index)])";
+  "${this.bundle} support_nic: $(etc_hosts_nic)";
+  "$(this.bundle) admin_nics: $(admin_nics)";
+
+}
