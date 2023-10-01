@@ -12,7 +12,7 @@ context = zmq.Context()
 socket = context.socket(zmq.REQ)
 socket.setsockopt(zmq.LINGER, 0)
 try:
-  socket.connect("tcp://10.68.171.110:5309")
+  socket.connect("tcp://10.68.171.111:5309")
   cf_message_log.write('Socket connect is Ok!\n')
 except Exception as e:
   cf_message_log.write('Fout in socket connect!\n')
