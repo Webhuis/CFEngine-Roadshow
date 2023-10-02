@@ -9,7 +9,7 @@ cf_messaged_log= open('/var/log/cf_messaged_log', 'a+')
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
-socket.bind("tcp://10.68.171.110:5309")
+socket.bind("tcp://10.68.171.111:5309")
 
 while True:
   try:
