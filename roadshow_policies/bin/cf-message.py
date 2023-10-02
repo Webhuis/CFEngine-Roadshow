@@ -30,7 +30,8 @@ except Exception as e:
   cf_message_log.write(message + '\n' + 'Error in socket send! ' + "".join(e.args) + '\n')
 
 try:
-  response = socket.recv()
+  b_response = socket.recv()
+  response = b_response.decode()
   cf_message_log.write(response + '\n' + 'Response is Ok!\n')
 except Exception as e:
   cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
