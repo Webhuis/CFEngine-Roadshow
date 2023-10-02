@@ -17,6 +17,7 @@ while True:
     message = b_message.decode()
     cf_messaged_log.write( 'Receiving: ' + message + '\n')
   except Exception as e:
+    print(e.args)
     cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
 
   response = 'Message processed' + '\n'
