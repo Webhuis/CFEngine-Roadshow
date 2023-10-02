@@ -20,6 +20,7 @@ while True:
     cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
 
   response = 'Message processed' + '\n'
+  b_response = message.encode('utf8')
   try:
     socket.send(response)
     cf_messaged_log.write( 'Sending: ' + response + '\n')
