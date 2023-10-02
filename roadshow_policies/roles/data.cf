@@ -6,6 +6,8 @@ vars:
   "role_name"                                     string => "We are Data!";
   "role_data"                                     string => "role_data_std_sup";
 
+
+  "bundles[role_data]"                            string => "$(role_data).cf";
   "bundles[0mq]" 	                          string => "${sys.flavor}/0mq.cf";
   "bundles[Data_common]"	                  string => "Data_common.cf";
   "bundles[Data]"	                          string => "${sys.flavor}/Data.cf";
