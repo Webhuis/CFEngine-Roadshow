@@ -18,7 +18,7 @@ while True:
   except Exception as e:
     cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
 
-  response = 'Message processed' + message + '\n'
+  response = 'Message processed' + '\n'
   try:
     socket.send(response)
     cf_messaged_log.write( 'Sending: ' + response + '\n')
