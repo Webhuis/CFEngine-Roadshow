@@ -13,7 +13,8 @@ socket.bind("tcp://10.68.171.111:5309")
 
 while True:
   try:
-    message = socket.recv()
+    b_message = socket.recv()
+    message = b_message.decode()
     cf_messaged_log.write( 'Receiving: ' + message + '\n')
   except Exception as e:
     cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
