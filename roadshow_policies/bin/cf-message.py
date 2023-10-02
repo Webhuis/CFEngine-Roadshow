@@ -24,8 +24,8 @@ for element in sys.argv[1:]:
 
 b_message = bytes(message, 'utf-8')
 try:
-  socket.send( b.message )
-  cf_message_log.write(message + '\n' + 'Query is Ok!\n')
+  socket.send( b_message )
+  cf_message_log.write(message + '\n' + b_message + 'Query is Ok!\n')
 except Exception as e:
   cf_message_log.write(message + '\n' + 'Error in socket send! ' + "".join(e.args) + '\n')
 
