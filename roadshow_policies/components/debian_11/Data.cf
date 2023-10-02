@@ -1,0 +1,25 @@
+bundle agent Data {
+
+vars:
+
+  "pkg[python3-psycopg2]"                string => "*";
+
+files:
+
+  "$(sys.workdir)/bin/cf-messaged.py"
+    handle => "update_Data_listener",
+    copy_from => r_rcp("/var/cfengine/roadshow_policies/components/debian_11/cf-messaged.py", ${sys.policy_hub}),
+    perms => mog("0755","root","root"),
+    action => r_immediate,
+    classes => r_if_repaired("update_report");
+
+methods:
+
+  "We desire the Data application"   usebundle => packages("Data.pkg");
+  "We daemonize cf-messaged"	usebundle => daemonize("/var/cfengine/bin/cf-messaged.py");
+
+reports:
+
+  "$(this.bundle): This is Data!";
+
+}

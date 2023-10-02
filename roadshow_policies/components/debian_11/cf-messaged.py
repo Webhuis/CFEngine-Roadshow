@@ -5,6 +5,26 @@ import psycopg2
 import datetime
 import zmq
 
+#!/usr/bin/python
+
+import datetime
+import zmq
+
+rep_server_log= open('/var/log/cf-messaged_log', 'a+')
+
+context = zmq.Context()
+socket = context.socket(zmq.REP)
+socket.bind("tcp://10.68.171.110:5309")
+
+while True:
+  message = socket.recv()
+  response = 'Message processed' + message + '\n'
+  socket.send(response)
+  rep_server_log.write( 'Sending: ' + response + '\n')
+conn.close()
+rep_server_log.close()
+
+'''
 def mnmutl( content ):
   uqhost = content["request_host"]
   domain_id = content["domain"]
@@ -104,3 +124,4 @@ while True:
     response = "This message is erroneous\n"
     socket.send(response)
 conn.close()
+'''
