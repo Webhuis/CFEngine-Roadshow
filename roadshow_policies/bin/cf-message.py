@@ -23,7 +23,6 @@ for element in sys.argv[1:]:
   message = message + element
 
 b_message = bytes(message, 'utf-8')
-cf_message_log.write(b_message)
 try:
   socket.send( b_message )
   cf_message_log.write(message + '\n' + 'Query is Ok!\n')
