@@ -2,35 +2,65 @@
 
 import json
 import psycopg2
-import datetime
 import zmq
+import subprocess as sp
+from threading import Thread   # currentThread is not used
+import multiprocessing as mp
+import loguru as log
+import os
+#import pymysql as pm
+import queue as q
+import time as t
+import datetime as dt
+import sys
 
-cf_messaged_log= open('/var/log/cf_messaged_log', 'a+')
+#import classes_data as D
+
+pool = mp.Pool(processes=4)
+queue_manager = mp.Manager()
+queues = queue_manager.Queue()
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://10.68.171.111:5309")
 
+log.logger.add('/var/log/Data_error.log', filter = lambda record: 'error' in record['extra'] )
+error_log = log.logger.bind(error = True)
+log.logger.add('/var/log/Data.log', filter = lambda record: 'data' in record['extra'] )
+data_log = log.logger.bind(data = True)
+log.logger.add('/var/log/Data_messages.log', filter = lambda record: 'messages' in record['extra'] )
+data_messages_log = log.logger.bind(data = True)
+
+date_time = str(dt.datetime.now())
+
+error_log.info(date_time)
+data_log.info('Start run Data')
+data_messages_log.info('Start run messaging')
+
 while True:
   try:
     b_message = socket.recv()
     message = b_message.decode()
-    cf_messaged_log.write( 'Receiving: ' + message + '\n')
+    data_messages_log.info('Receiving {}.'.format(message))
+    received = True
   except Exception as e:
-    cf_messaged_log.write( 'Error receiving message!\n' )
-    cf_messaged_log.write( e.args )
+    data_messages_log.info('Error receiving message {}'.format(e.args))
+    received = False
 
-  response = 'Message processed' + '\n'
-  b_response = message.encode('utf8')
-  try:
-    socket.send_string(response)
-    cf_messaged_log.write( 'Sending: ' + response + '\n')
-  except Exception as e:
-    cf_messaged_log.write( 'Error sending message!\n')
-    cf_messaged_log.write( e.args )
+  if received:
+    response = 'Message processed' + '\n'
+    b_response = message.encode('utf8')
+    try:
+      socket.send_string(response)
+      data_messages_log.info('Sending {}.'.format(response))
+    except Exception as e:
+      data_messages_log.info('Error sending message {}'.format(e.args))
 
-conn.close()
+socket.close()
 cf_messaged_log.close()
+
+#main()
+
 
 '''
 def mnmutl( content ):
