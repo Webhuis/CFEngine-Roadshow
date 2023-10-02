@@ -31,6 +31,7 @@ except Exception as e:
 
 try:
   response = socket.recv()
+  cf_message_log.write(response + '\n' + 'Response is Ok!\n')
 except Exception as e:
   cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
 else:
