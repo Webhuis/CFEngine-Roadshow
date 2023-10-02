@@ -17,16 +17,17 @@ while True:
     message = b_message.decode()
     cf_messaged_log.write( 'Receiving: ' + message + '\n')
   except Exception as e:
-    print(e.args)
-    cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
+    cf_messaged_log.write( 'Error receiving message!\n' )
+    cf_messaged_log.write( e.args )
 
   response = 'Message processed' + '\n'
   b_response = message.encode('utf8')
   try:
-    socket.send(response)
+    socket.send_string(response)
     cf_messaged_log.write( 'Sending: ' + response + '\n')
   except Exception as e:
-    cf_messaged_log.write( 'Error sending message!\n' + "".join(e.args) + '\n')
+    cf_messaged_log.write( 'Error sending message!\n')
+    cf_messaged_log.write( e.args )
 
 conn.close()
 cf_messaged_log.close()
