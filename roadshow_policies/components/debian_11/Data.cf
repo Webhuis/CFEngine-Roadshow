@@ -16,7 +16,7 @@ files:
 methods:
 
   "We desire the Data application"   usebundle => packages("Data.pkg");
-  "We daemonize cf-messaged"	usebundle => daemonize("/var/cfengine/bin/cf-messaged.py");
+  "We daemonize cf-messaged"	     usebundle => daemonize("/var/cfengine/bin/cf-messaged.py");
 
 reports:
 

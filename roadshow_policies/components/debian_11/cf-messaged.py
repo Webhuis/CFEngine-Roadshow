@@ -5,24 +5,28 @@ import psycopg2
 import datetime
 import zmq
 
-#!/usr/bin/python
-
-import datetime
-import zmq
-
-rep_server_log= open('/var/log/cf-messaged_log', 'a+')
+cf_messaged_log= open('/var/log/cf_messaged_log', 'a+')
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://10.68.171.110:5309")
 
 while True:
-  message = socket.recv()
+  try:
+    message = socket.recv()
+    cf_messaged_log.write( 'Receiving: ' + message + '\n')
+  except Exception as e:
+    cf_messaged_log.write( 'Error receiving message!\n' + "".join(e.args) + '\n')
+
   response = 'Message processed' + message + '\n'
-  socket.send(response)
-  rep_server_log.write( 'Sending: ' + response + '\n')
+  try:
+    socket.send(response)
+    cf_messaged_log.write( 'Sending: ' + response + '\n')
+  except Exception as e:
+    cf_messaged_log.write( 'Error sending message!\n' + "".join(e.args) + '\n')
+
 conn.close()
-rep_server_log.close()
+cf_messaged_log.close()
 
 '''
 def mnmutl( content ):
