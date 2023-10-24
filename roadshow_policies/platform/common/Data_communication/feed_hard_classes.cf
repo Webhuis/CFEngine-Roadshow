@@ -6,12 +6,12 @@ vars:
 #  "hash"                          string => readfile("${sys.workdir}/Data/request_role_view" , "0" );
       #{ "message": "feed", "query": "hard_classes", "content":
   "node_hard_classes"                data => parsejson('
-      ( "feeding_host": "$(sys.uqhost)", "domain": "$(sys.domain)",
+      { "feeding_host": "$(sys.uqhost)", "domain": "$(sys.domain)",
         "os": "$(sys.os)",
         "ostype": "$(sys.ostype)",
         "flavor": "$(sys.flavor)",
         "cpus": "$(sys.cpus)",
-        "arch": "$(sys.arch)" )');
+        "arch": "$(sys.arch)" )'};
 
   "node_hard_classes_feed"         string => storejson(node_hard_classes);
 
