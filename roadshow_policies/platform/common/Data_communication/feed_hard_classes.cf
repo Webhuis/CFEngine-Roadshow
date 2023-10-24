@@ -11,7 +11,7 @@ vars:
         "ostype": "$(sys.ostype)",
         "flavor": "$(sys.flavor)",
         "cpus": "$(sys.cpus)",
-        "arch": "$(sys.arch)" )'};
+        "arch": "$(sys.arch)" }');
 
   "node_hard_classes_feed"         string => storejson(node_hard_classes);
 
