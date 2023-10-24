@@ -7,7 +7,7 @@ commands:
 
 reports:
 
-  "$(this.bundle) request: ${request)";
+  "$(this.bundle) request: $(request)";
 
 }
 
