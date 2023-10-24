@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import json
-import psycopg2
 import zmq
 import subprocess as sp
 from threading import Thread   # currentThread is not used

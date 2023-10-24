@@ -2,12 +2,12 @@ bundle agent cf_message (request) {
 
 commands:
 
-  "/var/cfengine/bin/cf-message.py '${request}'"
+  "/var/cfengine/bin/cf-message.py '$(request)'"
             contain => python_connect_timeout;
 
 reports:
 
-  "${this.bundle} request: ${request}";
+  "$(this.bundle) request: ${request)";
 
 }
 
