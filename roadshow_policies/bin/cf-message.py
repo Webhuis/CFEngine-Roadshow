@@ -18,9 +18,9 @@ def message_Data(message):
   cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
-    cf_message_log.write(message + '\n' + 'Query is Ok!\n')
+    cf_message_log.write('Message sent!\n')
   except Exception as e:
-    cf_message_log.write(message + '\n' + 'Error in socket send! ' + "".join(e.args) + '\n')
+    cf_message_log.write('Error in socket send! ' + "".join(e.args) + '\n')
 
   try:
     b_response = socket.recv()
