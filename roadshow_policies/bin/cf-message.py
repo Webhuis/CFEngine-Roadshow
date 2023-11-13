@@ -11,8 +11,8 @@ def message_Data(message):
     cf_message_log.write('Error in socket connect! ' + "".join(e.args) + '\n')
 
   # sys.argv[0] is the program filename, slice it off
-  for element in sys.argv[1:]:
-    message = message + element
+  #for element in sys.argv[1:]:
+  #  message = message + element
 
   b_message = bytes(message, 'utf-8')
   try:
