@@ -15,8 +15,8 @@ vars:
 
   "node_hard_classes_feed"         string => storejson(node_hard_classes);
 
-  #"response"                       string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
-  "response"                       string => execresult("/var/cfengine/bin/Data-test.py '$(node_hard_classes_feed)'","noshell");
+  "response"                       string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
+  #"response"                       string => execresult("/var/cfengine/bin/Data-test.py '$(node_hard_classes_feed)'","noshell");
 
 #files:
 
