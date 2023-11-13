@@ -39,8 +39,7 @@ socket = context.socket(zmq.REQ)
 
 message = sys.argv[1:]
 print('message-in', message)
-response = message_Data(message)
 
 cf_message_log.close()
+response = message_Data(message)
 
-return response
