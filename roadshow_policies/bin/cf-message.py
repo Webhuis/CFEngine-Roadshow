@@ -23,6 +23,7 @@ def message_Data(message):
 
   try:
     b_response = socket.recv()
+    print(b_response)
     response = b_response.decode()
     cf_message_log.write(response + '\n' + 'Response is Ok!\n')
     print('resonse', resonse)
