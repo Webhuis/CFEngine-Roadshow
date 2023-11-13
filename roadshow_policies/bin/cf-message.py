@@ -15,6 +15,7 @@ def message_Data(message):
   #  message = message + element
 
   b_message = bytes(message, 'utf-8')
+  cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
     cf_message_log.write(message + '\n' + 'Query is Ok!\n')
@@ -40,7 +41,8 @@ context = zmq.Context()
 socket = context.socket(zmq.REQ)
 
 message = sys.argv[1:]
-print('message-in', message)
+cf_message_log.write('Message in\n{}'.format(message))
+#print('message-in', message)
 
 response = message_Data(message)
 cf_message_log.close()
