@@ -22,11 +22,12 @@ files:
 
 methods:
 
-  "Feed Data with Hard Classes"	usebundle => cf_message($(node_hard_classes_feed));
-#                               useresult => "response_role_information";
+  "Feed Data with Hard Classes"	usebundle => cf_message($(node_hard_classes_feed)),
+                                useresult => "response_role_information";
 
 reports:
 
   "$(this.bundle) node_hard_classes_feed: $(node_hard_classes_feed)";
+  "$(this.bundle) response_role_information: $(response_role_information)";
 
 }
