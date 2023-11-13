@@ -3,7 +3,8 @@ bundle agent psql {
 vars:
 
   "role_name"                                  string => "postgresql database cluster server";
-  "role_data"                                  string => "role_data_std_sup";
+  #"role_data"                                  string => "role_data_std_sup";
+  "role_data"                                  string => "role_data";
 
   "bundles[role_data]"                         string => "$(role_data).cf";
   "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
@@ -24,5 +25,8 @@ reports:
 
 }
 
+bundle agent role_data {
 
+reports:
 
+  "$(this.bundle): Dummy Old role_data)";
