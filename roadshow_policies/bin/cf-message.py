@@ -40,3 +40,5 @@ else:
 
 cf_message_log.close()
 
+return response
+
