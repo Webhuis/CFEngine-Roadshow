@@ -15,19 +15,21 @@ vars:
 
   "node_hard_classes_feed"         string => storejson(node_hard_classes);
 
-files:
+  "response"                       string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
 
-  "$(sys.workdir)/Data/request_role_view"
-    create => "true";
+#files:
 
-methods:
+#  "$(sys.workdir)/Data/request_role_view"
+#    create => "true";
 
-  "Feed Data with Hard Classes"	usebundle => cf_message($(node_hard_classes_feed)),
-                                useresult => "response_role_information";
+#methods:
+
+#  "Feed Data with Hard Classes"	usebundle => cf_message($(node_hard_classes_feed)),
+#                                useresult => "response_role_information";
 
 reports:
 
   "$(this.bundle) node_hard_classes_feed: $(node_hard_classes_feed)";
-  "$(this.bundle) response_role_information: $(response_role_information)";
+  "$(this.bundle) response: $(response)";
 
 }
