@@ -23,10 +23,11 @@ def message_Data(message):
 
   try:
     b_response = socket.recv()
-    print(b_response)
+    cf_message_log.write(b_response + '\n' + 'Query is Ok!\n')
+    #print(b_response)
     response = b_response.decode()
     cf_message_log.write(response + '\n' + 'Response is Ok!\n')
-    print('resonse', resonse)
+    print('response', response)
   except Exception as e:
     cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
   else:
