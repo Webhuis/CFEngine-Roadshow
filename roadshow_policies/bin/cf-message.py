@@ -33,6 +33,7 @@ try:
   b_response = socket.recv()
   response = b_response.decode()
   cf_message_log.write(response + '\n' + 'Response is Ok!\n')
+  return response
 except Exception as e:
   cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
 else:
@@ -40,5 +41,4 @@ else:
 
 cf_message_log.close()
 
-return response
 
