@@ -14,7 +14,7 @@ def message_Data(message):
   #for element in sys.argv[1:]:
   #  message = message + element
 
-  b_message = message.encode('utf-8')
+  b_message = message[0].encode('utf-8')
   cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
