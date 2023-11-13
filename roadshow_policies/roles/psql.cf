@@ -29,4 +29,6 @@ bundle agent role_data {
 
 reports:
 
-  "$(this.bundle): Dummy Old role_data)";
+  "$(this.bundle): Dummy Old role_data";
+
+}
