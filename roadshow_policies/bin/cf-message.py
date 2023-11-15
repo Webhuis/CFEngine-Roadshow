@@ -23,7 +23,7 @@ def message_Data(message):
   try:
     socket.send( b_message )
     cf_message_log.write('Message sent!\n')
-    if poller.poll(1000):
+    if poller.poll(10000):
       try:
         b_response = socket.recv()
         cf_message_log.write('Receive is Ok!\n')
