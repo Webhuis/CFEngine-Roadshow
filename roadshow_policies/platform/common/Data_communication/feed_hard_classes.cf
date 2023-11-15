@@ -35,7 +35,7 @@ vars:
 reports:
 
   "$(this.bundle) node_hard_classes_feed: $(node_hard_classes_feed)";
-  "$(this.bundle) response: $(feed_hard_classes.response)";
+  "$(this.bundle) response: '$(response)'";
  response_ok::
   "$(this.bundle) response bestaat)";
  !response_ok::
