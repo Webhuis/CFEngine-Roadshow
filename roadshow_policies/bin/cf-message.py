@@ -33,19 +33,16 @@ def message_Data(message):
     cf_message_log.write('Error in socket send! ' + "".join(e.args) + '\n')
     response = ('Error in socket send! ' + "".join(e.args))
 
-  if message_sent: 
-    try:
-      b_response = socket.recv()
-      cf_message_log.write('Receive is Ok!\n')
-      #print(b_response)
-      response = b_response.decode()
-      cf_message_log.write(response + '\n' + 'Response is Ok!\n')
-      #print('response', response)
-      #return response
-    except Exception as e:
-      cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
-      response = ('Error in response! ' + "".join(e.args))
-
+  try:
+    b_response = socket.recv()
+    #print(b_response)
+    response = b_response.decode()
+  except Exception as e:
+    cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
+    response = ('Error in response! ' + "".join(e.args))
+  else:
+    cf_message_log.write(response + '\n' + 'Response is Ok!\n')
+    print(response)
   return response
 
 cf_message_log = open('/var/log/cf_message_log', 'a+')
