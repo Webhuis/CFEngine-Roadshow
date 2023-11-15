@@ -24,3 +24,12 @@ reports:
   "$(this.bundle) role inputs: $(inputs)";
 
 }
+
+bundle agent role_data {
+
+reports:
+
+  "$(this.bundle): Dummy role_data)";
+
+}
+
