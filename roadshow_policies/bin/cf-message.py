@@ -18,11 +18,7 @@ def message_Data(message):
   cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
-    #if poller.poll(1000):
     cf_message_log.write('Message sent!\n')
-    #else:
-    #  cf_message_log.write(message + '\n' + 'Timeout in send!! ')
-    #  response = ('Error in send!')
   except Exception as e:
     cf_message_log.write('Error in socket send!\n{} '.format(e.args))
     response = ('Error in socket send!\n{}'.format(e.args))
@@ -30,10 +26,12 @@ def message_Data(message):
   try:
     b_response = socket.recv()
     response = b_response.decode()
-    cf_message_log.write(response + '\n' + 'Response is Ok!\n{}')
+    cf_message_log.write(response + '\n' + 'Response is Ok!\n')
   except Exception as e:
     cf_message_log.write(message + '\n' + 'Error in response!! '.format(e.args))
     response = ('Error in response!\n{}'.format(e.args))
+
+  cf_message_log.write(response + '\n' + 'Inhoud response voor return!\n')
 
   return response
 
@@ -47,5 +45,6 @@ cf_message_log.write('Message in\n{}'.format(message))
 #print('message-in', message)
 
 response = message_Data(message)
+cf_message_log.write(response + '\n' + 'Inhoud response na function call.\n')
 cf_message_log.close()
 
