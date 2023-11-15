@@ -40,8 +40,7 @@ def message_Data(message):
   except Exception as e:
     cf_message_log.write('Error in socket send! ' + "".join(e.args) + '\n')
     response = ('Error in socket send! ' + "".join(e.args))
-  else:
-    response = ("Timeout processing auth request!\n")
+
   return response
 
 cf_message_log = open('/var/log/cf_message_log', 'a+')
