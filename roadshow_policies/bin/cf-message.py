@@ -18,11 +18,11 @@ def message_Data(message):
   cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
-    if poller.poll(1000):
-      cf_message_log.write('Message sent!\n')
-    else:
-      cf_message_log.write(message + '\n' + 'Timeout in send!! ')
-      response = ('Error in send!')
+    #if poller.poll(1000):
+    cf_message_log.write('Message sent!\n')
+    #else:
+    #  cf_message_log.write(message + '\n' + 'Timeout in send!! ')
+    #  response = ('Error in send!')
   except Exception as e:
     cf_message_log.write('Error in socket send!\n{} '.format(e.args))
     response = ('Error in socket send!\n{}'.format(e.args))
