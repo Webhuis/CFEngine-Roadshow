@@ -6,7 +6,7 @@ import zmq as zmq
 def message_Data(message):
   try:
     socket.connect("tcp://10.68.171.111:5309")
-    socket.setsockopt(zmq.LINGER, 1000)
+    socket.setsockopt(zmq.LINGER, 0)
     cf_message_log.write('Socket connect is Ok!\n')
   except Exception as e:
     cf_message_log.write('Error in socket connect! ' + "".join(e.args) + '\n')
