@@ -34,7 +34,7 @@ def message_Data(message):
     cf_message_log.write(message + '\n' + 'Error in response!! '.format(e.args))
     response = ('Error in response!\n{}'.format(e.args))
   else:
-    cf_message_log.write(response + '\n' + 'Response is Ok!\n{}'.format(e.args))
+    cf_message_log.write(response + '\n' + 'Response is Ok!\n{}')
   return response
 
 cf_message_log = open('/var/log/cf_message_log', 'a+')
