@@ -6,7 +6,7 @@ vars:
   #"role_data"                                  string => "role_data_std_sup";
   "role_data"                                  string => "role_data";
 
-  "bundles[role_data]"                         string => "$(role_data).cf";
+  #"bundles[role_data]"                         string => "$(role_data).cf";
   "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
 
   "sequence"                                    slist => getindices("bundles");
