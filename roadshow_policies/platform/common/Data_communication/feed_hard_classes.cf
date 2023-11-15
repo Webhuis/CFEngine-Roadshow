@@ -1,5 +1,9 @@
 bundle agent feed_hard_classes {
 
+classes:
+
+  "response_ok"                expression => isvariable("response");
+
 vars:
 
 #  "hash"                          string => file_hash("${sys.workdir}/Data/request_role_view" , "md5" );
@@ -32,5 +36,9 @@ reports:
 
   "$(this.bundle) node_hard_classes_feed: $(node_hard_classes_feed)";
   "$(this.bundle) response: $(response)";
+ response_ok::
+  "$(this.bundle) response bestaat)";
+ !response_ok::
+  "$(this.bundle) response bestaat niet....)";
 
 }
