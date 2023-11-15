@@ -22,24 +22,29 @@ def message_Data(message):
   cf_message_log.write('b_message in\n{}'.format(b_message))
   try:
     socket.send( b_message )
-    cf_message_log.write('Message sent!\n')
-    if poller.poll(1000):
-      try:
-        b_response = socket.recv()
-        cf_message_log.write('Receive is Ok!\n')
-        #print(b_response)
-        response = b_response.decode()
-        cf_message_log.write(response + '\n' + 'Response is Ok!\n')
-        #print('response', response)
-      except Exception as e:
-        cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
-        response = ('Error in response! ' + "".join(e.args))
+    if poller.poll(10000):
+      cf_message_log.write('Message sent!\n')
+      message_sent = True
     else:
       cf_message_log.write(message + '\n' + 'Timeout in send!! ')
+      message_sent = False
       response = ('Error in send!')
   except Exception as e:
     cf_message_log.write('Error in socket send! ' + "".join(e.args) + '\n')
     response = ('Error in socket send! ' + "".join(e.args))
+
+  if message_sent: 
+    try:
+      b_response = socket.recv()
+      cf_message_log.write('Receive is Ok!\n')
+      #print(b_response)
+      response = b_response.decode()
+      cf_message_log.write(response + '\n' + 'Response is Ok!\n')
+      #print('response', response)
+      #return response
+    except Exception as e:
+      cf_message_log.write(message + '\n' + 'Error in response!! ' + "".join(e.args) + '\n')
+      response = ('Error in response! ' + "".join(e.args))
 
   return response
 
