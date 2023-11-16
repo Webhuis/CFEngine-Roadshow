@@ -20,7 +20,7 @@ def message_Data(message):
 
   try:
     b_response = socket.recv()
-    cf_message_log.write(b_response + '\n' + 'Query is Ok!\n')
+    cf_message_log.write('Query is Ok!\n')
     #print(b_response)
     response = b_response.decode()
     cf_message_log.write(response + '\n' + 'Response is Ok!\n')
