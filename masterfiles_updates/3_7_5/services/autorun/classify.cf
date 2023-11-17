@@ -59,6 +59,7 @@ methods:
 
 reports:
 
+  "$(this.bundle) respone: $(response)";
   "$(this.bundle) containers: $(containers)";
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) organisation: $(organisation)";
