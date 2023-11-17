@@ -22,8 +22,8 @@ vars:
   "node_hard_classes_feed"             string => storejson(node_hard_classes);
 
   "response"                           string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
-  "fqhost_config_view"                   data =>  parsejson('$(response)');
-  "containers"                          slist => getindices("fqhost_config_view");
+  #"fqhost_config_view"                   data =>  parsejson('$(response)');
+  #"containers"                          slist => getindices("fqhost_config_view");
     
   "role"                               string => "$(part[1])";
   "environment"                        string => "$(part[2])";
@@ -59,6 +59,7 @@ methods:
 
 reports:
 
+  "$(this.bundle) containers: $(containers)";
   "$(this.bundle) role: $(role) $(role_input)";
   "$(this.bundle) organisation: $(organisation)";
   "$(this.bundle) location: $(location) $($(location).location_name)";
@@ -89,7 +90,6 @@ vars:
 
 reports:
 
-  "$(this.bundle) containers: $(containers)";
   "$(this.bundle) ips: $(ips)";
   "$(this.bundle) interface: $(interface)";
  eth::
