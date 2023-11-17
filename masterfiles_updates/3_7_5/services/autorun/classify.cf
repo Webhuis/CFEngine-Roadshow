@@ -10,6 +10,20 @@ classes:
   "vmbr0"            expression => regcmp("^vlan", "$(current_device)");
 
 vars:
+
+  "node_hard_classes"                    data => parsejson('
+    {"uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)",
+     "os": "$(sys.os)",
+     "ostype": "$(sys.ostype)",
+     "flavor": "$(sys.flavor)",
+     "cpus": "$(sys.cpus)",
+     "arch": "$(sys.arch)" }');
+
+  "node_hard_classes_feed"             string => storejson(node_hard_classes);
+
+  "response"                           string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
+  "fqhosti_config_view"                  data =>  parsejson('${response}');
+  "containers"                          slist => getindices("mnmutl");
     
   "role"                               string => "$(part[1])";
   "environment"                        string => "$(part[2])";
@@ -75,6 +89,7 @@ vars:
 
 reports:
 
+  "$(this.bundle) containers: $(containers)";
   "$(this.bundle) ips: $(ips)";
   "$(this.bundle) interface: $(interface)";
  eth::
