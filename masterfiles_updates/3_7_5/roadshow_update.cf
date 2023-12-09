@@ -8,7 +8,7 @@
 bundle agent roadshow_update {
 
 classes:
-  "role_isvariable "    expression => isvariable("classify.role");
+  "role_isvariable"    expression => isvariable("classify.role");
 
 vars:
 
@@ -153,6 +153,7 @@ reports:
 
   "$(this.bundle) vendor: $(vendor)";
   "$(this.bundle) ecosystem variables: $(eco_vars)";
+  "$(this.bundle) role: $(role)";
 
 }
 
