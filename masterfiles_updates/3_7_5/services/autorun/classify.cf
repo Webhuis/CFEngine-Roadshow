@@ -5,11 +5,17 @@ classes:
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
-  "breth0"           expression => regcmp("^breth0", "$(current_device)");
+  "vmbr0"            expression => regcmp("^vmbr0", "$(current_device)");
   "eth"              expression => regcmp("^eth", "$(current_device)");
   "vmbr0"            expression => regcmp("^vlan", "$(current_device)");
 
 vars:
+
+  "role"                               string => "$(part[1])";
+  "environment"                        string => "$(part[2])";
+  "department"                         string => "$(part[3])";
+  "location"                           string => "$(part[4])";
+  "instance"                           string => "$(part[5])";
 
   "node_hard_classes"                    data => parsejson('
     {"uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)",
@@ -24,12 +30,6 @@ vars:
   "response"                           string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
   #"fqhost_config_view"                   data =>  parsejson('$(response)');
   #"containers"                          slist => getindices("fqhost_config_view");
-    
-  "role"                               string => "$(part[1])";
-  "environment"                        string => "$(part[2])";
-  "department"                         string => "$(part[3])";
-  "location"                           string => "$(part[4])";
-  "instance"                           string => "$(part[5])";
 
   "organisation"                       string => "$(org_part[2])";
 
