@@ -2,7 +2,7 @@ bundle agent classify {
 
 classes:
 
-  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.fqhost), "part");
+  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
   "vmbr"             expression => regcmp("^vmbr", "$(current_device)");
