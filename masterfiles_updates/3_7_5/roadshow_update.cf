@@ -7,6 +7,9 @@
 
 bundle agent roadshow_update {
 
+classes:
+  "role_isvariable "    expression => isvariable("classify.role");
+
 vars:
 
   "master_standard" string => "$(sys.workdir)/masterfiles";
@@ -132,6 +135,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+ "role_isvariable"::
   "$(roadshow_inputs)/role/$(role).cf"
      handle       => "update_files_inputs_roadshow_role",
      copy_from    => r_rcp("$(master_roadshow)/roles/$(role).cf", $(sys.policy_hub)),

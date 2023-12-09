@@ -33,6 +33,9 @@ def message_Data(message):
 cf_message_log = open('/var/log/cf_message_log', 'a+')
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
+socket.setsockopt(zmq.SNDTIMEO, 1000)
+socket.setsockopt(zmq.RCVTIMEO, 1000)
+
 message = sys.argv[1:]
 cf_message_log.write('Message in\n{}'.format(message))
 #print('message-in', message)
