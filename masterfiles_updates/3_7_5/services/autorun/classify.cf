@@ -5,9 +5,9 @@ classes:
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
-  "vmbr0"            expression => regcmp("^vmbr0", "$(current_device)");
+  "vmbr"             expression => regcmp("^vmbr", "$(current_device)");
   "eth"              expression => regcmp("^eth", "$(current_device)");
-  "vmbr0"            expression => regcmp("^vlan", "$(current_device)");
+  "vlan"             expression => regcmp("^vlan", "$(current_device)");
 
 vars:
 
@@ -72,7 +72,7 @@ bundle agent dev_type(ips) {
 
 classes:
 
-  "breth"            expression => regcmp(".*breth.*", "$(ips)");
+  "vmbr"             expression => regcmp(".*breth.*", "$(ips)");
   "eth"              expression => regcmp(".*eth.*", "$(ips)");
   "vmbr"             expression => regcmp(".*vlan.*", "$(ips)");
 
