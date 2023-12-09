@@ -2,7 +2,7 @@ bundle agent classify {
 
 classes:
 
-  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
+  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.fqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
   "vmbr"             expression => regcmp("^vmbr", "$(current_device)");
@@ -11,11 +11,11 @@ classes:
 
 vars:
 
-  "role"                               string => $(part[1]);
-  "environment"                        string => $(part[2]);
-  "department"                         string => $(part[3]);
-  "location"                           string => $(part[4]);
-  "instance"                           string => $(part[5]);
+  "role"                               string => "$(part[1])";
+  "environment"                        string => "$(part[2])";
+  "department"                         string => "$(part[3])";
+  "location"                           string => "$(part[4])";
+  "instance"                           string => "$(part[5])";
 
   "node_hard_classes"                    data => parsejson('
     {"uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)",
