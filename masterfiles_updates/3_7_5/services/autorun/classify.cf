@@ -11,11 +11,11 @@ classes:
 
 vars:
 
-  "role"                               string => "$(part[1])";
-  "environment"                        string => "$(part[2])";
-  "department"                         string => "$(part[3])";
-  "location"                           string => "$(part[4])";
-  "instance"                           string => "$(part[5])";
+  "role"                               string => $(part[1]);
+  "environment"                        string => $(part[2]);
+  "department"                         string => $(part[3]);
+  "location"                           string => $(part[4]);
+  "instance"                           string => $(part[5]);
 
   "node_hard_classes"                    data => parsejson('
     {"uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)",
