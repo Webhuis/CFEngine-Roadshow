@@ -104,6 +104,6 @@ reports:
 
 bundle common classify_global_classes {
 
-  "has_role"             is_variable => $(classify.role);
+  "has_role"             expression => is_variabler("classify.role");
 
 }
