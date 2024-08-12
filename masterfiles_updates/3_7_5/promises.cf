@@ -19,6 +19,7 @@ body common control
                           cfsketch_run,
 
                           # autorun system
+                          do_roadshow,
                           services_autorun,
                           @(services_autorun.bundles),
 
@@ -300,29 +301,28 @@ body classes u_kept_successful_command
 
 bundle common do_roadshow {
 
-  vars:
-      # List here the IP masks that we grant access to on the server
-      "acl"                      slist => { "10.*", "192.168.125.*", "62.45.247.173" };
-      "master_location"         string => "$(sys.masterdir)";
-      "master_dynamic"          string => "$(sys.workdir)/roadshow_policies";
-      "dir_bin"                 string => "$(sys.bindir)";
-      "dir_modules"             string => "$(sys.workdir)/bin";
-      "inputfiles"              string => "$(sys.inputdir)";
+vars:
+  # List here the IP masks that we grant access to on the server
+  "acl"                      slist => { "10.*", "192.168.125.*", "62.45.247.173" };
+  "master_location"         string => "$(sys.masterdir)";
+  "master_dynamic"          string => "$(sys.workdir)/roadshow_policies";
+  "dir_bin"                 string => "$(sys.bindir)";
+  "dir_modules"             string => "$(sys.workdir)/bin";
+  "inputfiles"              string => "$(sys.inputdir)";
 
-      "roadshow_policies"        slist => findfiles("$(sys.workdir)/roadshow_inputs/**/*.cf");
-      "roadshow_dynamic_inputs"  slist => findfiles("$(sys.workdir)/roadshow_dynamic_inputs/**/*.cf");
-      "inputs"                   slist => { @(roadshow_policies), @(roadshow_dynamic_inputs) };
+  "roadshow_policies"        slist => findfiles("$(sys.workdir)/roadshow_inputs/**/*.cf");
+  "roadshow_dynamic_inputs"  slist => findfiles("$(sys.workdir)/roadshow_dynamic_inputs/**/*.cf");
+  "inputs"                   slist => { @(roadshow_policies), @(roadshow_dynamic_inputs) };
 
-      "os"                      string => ${sys.flavor};
-      "class_domain"            string => canonify("$(sys.domain)");
-      "class_host"              string => canonify("$(sys.uqhost)");
+  "class_domain"            string => canonify("$(sys.domain)");
+  #"class_host"              string => canonify("$(sys.uqhost)");
 
-      "punt_komma"              string => ";";
+  "punt_komma"              string => ";";
 
 
-  reports:
+reports:
 
-      "${this.bundle}: ${class_domain}";
+  "${this.bundle}: ${acl}";
 
 }
 

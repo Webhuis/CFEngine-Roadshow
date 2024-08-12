@@ -5,9 +5,9 @@ classes:
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
   "parsed_fqdn"      expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
-  "vmbr"             expression => regcmp("^vmbr", "$(current_device)");
-  "eth"              expression => regcmp("^eth", "$(current_device)");
-  "vlan"             expression => regcmp("^vlan", "$(current_device)");
+  #"vmbr"             expression => regcmp("^vmbr", "$(current_device)");
+  #"eth"              expression => regcmp("^eth", "$(current_device)");
+  #"vlan"             expression => regcmp("^vlan", "$(current_device)");
 
 vars:
 
@@ -16,6 +16,8 @@ vars:
   "department"                         string => "$(part[3])";
   "location"                           string => "$(part[4])";
   "instance"                           string => "$(part[5])";
+
+  "organisation"                       string => "$(org_part[2])";
 
   "node_hard_classes"                    data => parsejson('
     {"uqhost": "$(sys.uqhost)", "domain": "$(sys.domain)",
@@ -30,8 +32,6 @@ vars:
   "response"                           string => execresult("/var/cfengine/bin/cf-message.py '$(node_hard_classes_feed)'","noshell");
   #"fqhost_config_view"                   data =>  parsejson('$(response)');
   #"containers"                          slist => getindices("fqhost_config_view");
-
-  "organisation"                       string => "$(org_part[2])";
 
   "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
 
@@ -50,8 +50,8 @@ vars:
 
   "ipv4_index"                          slist => getindices("sys.ipv4");
 
-  "interface"                          string => "$(dev_type.interface)";
-  "bridge"                             string => "$(dev_type.bridge)";
+  #"interface"                          string => "$(dev_type.interface)";
+  #"bridge"                             string => "$(dev_type.bridge)";
 
 methods:
 
@@ -102,3 +102,8 @@ reports:
 
 }
 
+bundle common classify_global_classes {
+
+  "has_role"             is_variable => $(classify.role);
+
+}
