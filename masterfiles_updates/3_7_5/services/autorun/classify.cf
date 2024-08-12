@@ -106,6 +106,9 @@ bundle common classify_global_classes {
 
 classes:
 
+  "has_organisation"     expression => isvariable("classify.organisation");
+  "has_domain"           expression => isvariable("classify.domain");
+  "has_vendor"           expression => isvariable("classify.vendor");
   "has_role"             expression => isvariable("classify.role");
 
 }
