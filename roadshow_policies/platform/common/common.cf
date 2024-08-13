@@ -47,6 +47,6 @@ bundle common platform_common_classes {
 classes:
 
   "has_role_nics"        expression => isvariable("role_data.nic[$(role_data.nic_index)])");
-  "has_role_ddns"        expression => isvariable("role_data.ddns");
+  "has_role_ddns"        expression => isvariable("role_data.ddns[$(role_data.ddns_index)][ip])");
 
 }
