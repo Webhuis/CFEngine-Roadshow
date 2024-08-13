@@ -14,6 +14,11 @@ vars:
 files:
 
  mac_ok::
+
+  "/etc/systemd/network/*"
+    file_select    => all,
+    delete         => tidy;
+
   "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
     comment                                => "one file per nic",
     create                                 => "true",

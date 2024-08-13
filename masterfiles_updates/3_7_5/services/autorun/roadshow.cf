@@ -16,15 +16,10 @@ meta:
 methods:
 
   "Determine role, organisation and geography"    usebundle => classify;
- has_organisation::
   "We require the organisation's information"     usebundle => $(classify.organisation);
- has_domain::
   "We require the domain information"             usebundle => $(classify.domain);
- has_role::
   "Request Data for machine information"          usebundle => request_role_information;
- has_vendor::
   "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
- has_role::
   "What purpose do we have in life"               usebundle => $(classify.role);
 
 reports:

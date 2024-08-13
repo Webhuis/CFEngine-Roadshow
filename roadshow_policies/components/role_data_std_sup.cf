@@ -41,11 +41,6 @@ vars:
 
   "role_sshd_config_template"         string => "std_sshd_config.tmpl";
 
-methods:
-
-  "We need predictable names"      usebundle => persistent_link($(nic_trick));
-  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values));
-
 reports:
 
   "$(this.bundle) nic: $(nic[$(nic_index)])";
