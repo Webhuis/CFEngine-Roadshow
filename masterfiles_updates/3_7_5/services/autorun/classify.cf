@@ -33,8 +33,6 @@ vars:
   #"fqhost_config_view"                   data =>  parsejson('$(response)');
   #"containers"                          slist => getindices("fqhost_config_view");
 
-  "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
-
   "domain"                             string => canonify($(sys.domain));
   "vendor"                             string => $(inventory_linux.id_array[1]);
 
@@ -52,6 +50,9 @@ vars:
 
   #"interface"                          string => "$(dev_type.interface)";
   #"bridge"                             string => "$(dev_type.bridge)";
+
+ has_role::
+  "role_input"                         string => "$(sys.workdir)/roadshow_inputs/role/$(role).cf";
 
 methods:
 
