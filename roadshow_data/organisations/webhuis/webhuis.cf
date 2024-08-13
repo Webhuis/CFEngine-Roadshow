@@ -1,4 +1,4 @@
-bundle common webhuis {
+bundle agent webhuis {
 
 vars:
 

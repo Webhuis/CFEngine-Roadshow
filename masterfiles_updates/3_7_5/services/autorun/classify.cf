@@ -102,7 +102,7 @@ reports:
 
 }
 
-bundle common classify_global_classes {
+bundle common classify_classes {
 
 classes:
 

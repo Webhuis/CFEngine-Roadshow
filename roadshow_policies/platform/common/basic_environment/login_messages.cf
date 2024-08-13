@@ -12,17 +12,15 @@ bundle agent issue {
 
   vars:
     "issue" string => 
-    "Welkom op ${sys.fqhost}
+    "Welkom op $(sys.fqhost)
 
 Let op: Alleen geautoriseerde login is toegestaan op dit systeem in beheer bij Webhuis.
 
-W                 W EEEEEEE BBBBBB   H      H U      U IIIII  SSSSSS
- W               W  E       B     B  H      H U      U   I   S
-  W             W   E       B     B  H      H U      U   I   S
-   W     W     W    EEEEEE  BBBBBB   HHHHHHHH U      U   I    SSSSS
-    W   W W   W     E       B      B H      H U      U   I         S
-     W W   W W      E       B      B H      H U      U   I         S
-      W     W       EEEEEEE BBBBBBB  H      H  UUUUUU  IIIII SSSSSS
+WW     WW EEEEEE BBBBBB  HH   HH UU    UU IIIIII SSSSSSS
+WW     WW EE     BB   BB HH   HH UU    UU   II   SS
+WW  W  WW EEEE   BBBBBB  HHHHHHH UU    UU   II   SSSSSSS
+WW WWW WW EE     BB   BB HH   HH UU    UU   II        SS
+ WWW WWW  EEEEEE BBBBBB  HH   HH  UUUUUU  IIIIII SSSSSSS
                           
  http://webhuis.nl/login ";
 
