@@ -38,11 +38,6 @@ vars:
   "support_ip"                        slist  => { "$(ddns[support][ip])" };
   "admin_nics"                        slist  => { "$(ddns[support][ip])", "$(ddns[life][ip])" };
 
-#methods:
-#
-# "Check interfaces and bridges are up"    usebundle => check_vswitch( "$(vlan[$(vlan_index)])" ),
-#                                          comment   => "This is a layer I and II check on the virtual switch";
-
 reports:
 
   "$(this.bundle) ddns: $(ddns_index), $(ddns[$(ddns_index)])";

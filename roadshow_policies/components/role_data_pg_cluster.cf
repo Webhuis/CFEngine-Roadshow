@@ -39,11 +39,6 @@ vars:
   "support_ip"                         slist => { "$(ddns[support][ip])" };
   "admin_nics"                         slist => { "$(ddns[admin][ip])" };
 
-methods:
-
-  "We need predictable names"      usebundle => persistent_link($(nic_trick));
-  "Interfaces predictable names"   usebundle => nic_mac_map($(nic_values));
-
 reports:
 
   "$(this.bundle) nic: $(nic[$(nic_index)])";
