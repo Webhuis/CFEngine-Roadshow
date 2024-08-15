@@ -1,4 +1,4 @@
-bundle agent role_data {
+bundle common role_data {
 
 vars:
 

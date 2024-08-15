@@ -18,7 +18,7 @@ methods:
   "Determine role, organisation and geography"    usebundle => classify;
   "We require the organisation's information"     usebundle => $(classify.organisation);
   "We require the domain information"             usebundle => $(classify.domain);
-  "Request Data for machine information"          usebundle => request_role_information;
+  #"Request Data for machine information"          usebundle => request_role_information;
   "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
   "What purpose do we have in life"               usebundle => $(classify.role);
 
