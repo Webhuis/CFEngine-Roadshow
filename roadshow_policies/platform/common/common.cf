@@ -7,6 +7,7 @@ methods:
  has_nic_values::
   "Interfaces predictable names"            usebundle => nic_mac_map($(role_data.nic_values));
 
+ any::
   "We desire a clean house"                 usebundle => housekeeping;
   "Basic environment stuff"                 usebundle => basic_environment;
   "We use LDAP Authentication"              usebundle => authentication;

@@ -1,7 +1,12 @@
 bundle agent nic_mac_map (nic) {
 
+classes:
+
+  "kvm"                          expression => strcmp("$(classify.role)", "kvm.");
+
 methods:
 
+ !kvm::
   "l0 source interfaces.d"        usebundle => l0_interface;
   "map nics and macs"             usebundle => configure_interfaces($(nic));
 
