@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-bundle agent sw_webhuis_nl {
+bundle common sw_webhuis_nl {
 
 vars:
 
