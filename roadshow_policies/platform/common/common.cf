@@ -55,10 +55,6 @@ bundle common platform_common_classes {
 
 classes:
 
-  "has_nic_sequence"     expression => isvariable("role_data.nic[$(role_data.nic_trick)])");
-  "has_nic_values"       expression => isvariable("role_data.nic[$(role_data.nic_values)])");
-  "has_role_nics"        expression => isvariable("role_data.nic[$(role_data.nic_index)])");
-  "has_role_ddns"        expression => isvariable("role_data.ddns[$(role_data.ddns_index)][ip])");
   "has_sudoer_rules"     expression => isvariable("common_users.sudoer_rules");
 
 }
