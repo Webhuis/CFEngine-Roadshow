@@ -1,8 +1,16 @@
 bundle common role_data {
-  
+
+classes:
+
+  "has_nic_sequence"     expression => isvariable("nic_trick");
+  #"has_nic_values"       expression => isvariable("nic_values");
+  "has_role_nics"        expression => isvariable("nic_index");
+  "has_role_ddns"        expression => isvariable("ddns_index");
+  "has_admin_nics"       expression => isvariable("admin_nics");
+
 vars:
 
-  "role_data_real_name"               string => "role_data_kvmh";
+  "role_data_real_name"               string => "role_data_kvmp";
   "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
   "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
   "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";
