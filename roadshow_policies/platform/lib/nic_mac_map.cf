@@ -1,9 +1,5 @@
 bundle agent nic_mac_map (nic) {
 
-classes:
-
-  "kvm"                          expression => strcmp("$(classify.role)", "kvm.");
-
 methods:
 
  !kvm::

@@ -2,11 +2,12 @@ bundle common role_data {
 
 classes:
 
-  "has_nic_sequence"     expression => isvariable("nic_trick");
-  #"has_nic_values"       expression => isvariable("nic_values");
-  "has_role_nics"        expression => isvariable("nic_index");
-  "has_role_ddns"        expression => isvariable("ddns_index");
-  "has_admin_nics"       expression => isvariable("admin_nics");
+  "kvm"                          expression => strcmp("$(classify.role)", "kvm.");
+  "has_nic_sequence"             expression => isvariable("nic_trick");
+  #"has_nic_values"               expression => isvariable("nic_values");
+  "has_role_nics"                expression => isvariable("nic_index");
+  "has_role_ddns"                expression => isvariable("ddns_index");
+  "has_admin_nics"               expression => isvariable("admin_nics");
 
 vars:
 
@@ -29,6 +30,7 @@ vars:
   "nic[life]"                         string => "$(dev_type.interface)$(vlan[life])";
   "nic[roadshow]"                     string => "$(dev_type.interface)$(vlan[roadshow])";
   "nic_index"                          slist => getindices("nic");
+  "nic_values"                         slist => { "eth0" };
   "nic_trick"                          slist => { "0" };
 
   "ddns[support][ip]"                 string => "$(sys.ipv4[$(nic[support])])";
