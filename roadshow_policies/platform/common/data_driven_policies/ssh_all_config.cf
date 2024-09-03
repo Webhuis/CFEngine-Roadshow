@@ -18,12 +18,22 @@ reports:
 
 bundle agent sshd_role_config {
 
+classes:
+
+ "valid_admin_ip"                          comment    => "Process the IP Addresses.",
+                                           expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(admin_ip)"
+            );
+
 vars:
 
-  "sshd_config"                             string => "/etc/ssh/sshd_config";
+  "admin_ip"                                   string => "$(role_data.admin_ip)";
+
+  "sshd_config"                                string => "/etc/ssh/sshd_config";
 
  files:
 
+ valid_admin_ip::
   "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
@@ -50,6 +60,12 @@ reports:
 
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
+
+ valid_admin_ip::
+  "$(this.bundle) etc_hosts_nic: $(admin_ip)";
+
+ !valid_admin_ip::
+   "$(this.bundle): bad admin_ip! $(admin_ip)";
 
 }
 

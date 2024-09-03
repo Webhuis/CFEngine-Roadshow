@@ -1,18 +1,12 @@
 bundle common role_data {
 
-classes:
-
-  "has_nic_sequence"     expression => isvariable("nic_trick");
-  "has_nic_values"       expression => isvariable("nic_values");
-  "has_role_nics"        expression => isvariable("nic_index");
-  "has_role_ddns"        expression => isvariable("ddns_index");
-  "has_admin_nics"       expression => isvariable("admin_nics");
-  
 vars:
 
   "role_data_real_name"               string => "role_data_std_sup";
+
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+
   "nic_index"                          slist => getindices("nic");
   "nic_values"                         slist => getvalues("nic");
   "nic_trick"                          slist => { "0", "1" };
@@ -25,13 +19,6 @@ vars:
   "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
   "ip[admin]"                         string => nth("ip_list[admin]", "1");
 
-  "interface[support][dev]"           string => "$(nic[support])";
-  "interface[support][masked_ip]"     string => "$(ip[support])";
-  "interface[admin][dev]"             string => "$(nic[support])";
-  "interface[admin][masked_ip]"       string => "$(ip[support])";
-
-  "interface_index"                    slist => getindices("interface");
-
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -43,11 +30,17 @@ vars:
 
   "ddns_index"                         slist => getindices("ddns");
 
-  "etc_hosts_nic"                      slist => { "$(ddns[support][ip])" };
-  "support_ip"                         slist => { "$(ddns[support][ip])" };
-  "admin_nics"                         slist => { "$(ddns[admin][ip])" };
+  "hosts_ip"                          string => "$(ip[support])" };
+  "admin_ip"                          string => "$(ip[admin])" };
 
   "role_sshd_config_template"         string => "std_sshd_config.tmpl";
+
+ #"interface[support][dev]"           string => "$(nic[support])";
+ #"interface[support][masked_ip]"     string => "$(ip[support])";
+ #"interface[admin][dev]"             string => "$(nic[support])";
+ #"interface[admin][masked_ip]"       string => "$(ip[support])";
+
+ #"interface_index"                    slist => getindices("interface");
 
 reports:
 

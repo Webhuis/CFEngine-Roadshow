@@ -1,7 +1,18 @@
 bundle agent etc_hosts {
 
+classes:
+
+ "valid_hosts_ip"                          comment    => "Process the IP Addresses.",
+                                           expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(hosts_ip)"
+            );
+vars:
+
+  "hosts_ip"                                   string => "$(role_data.hosts_ip)";
+
 files:
 
+ valid_hosts_ip::
   "/etc/hosts"
   comment                   => "/etc/hosts voor elke host",
   create                    => "true",
@@ -11,6 +22,10 @@ files:
 
 reports:
 
- "${this.bundle}: My DNS is not perfect yet";
+ hosts_ip::
+  "$(this.bundle) etc_hosts_nic: $(hosts_ip)";
+
+ !hosts_ip::
+   "$(this.bundle): etc_hosts_nic bad hosts_ip! $(hosts_ip)";
 
 }

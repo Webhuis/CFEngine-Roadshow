@@ -1,0 +1,27 @@
+bundle agent host_data_driven_policies {
+
+methods:
+
+ has_hosts_var::
+  "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
+
+ has_admin_var::
+  "openssh server and client"               usebundle => ssh_all_config;
+
+reports:
+
+  "$(this.bundle): I am doing host driven policies";
+
+ has_hosts_var::
+  "$(this.bundle) supply etc_hosts with a valid IP";
+
+ has_admin_var::
+  "$(this.bundle) openssh server and client";
+
+ !has_hosts_var::
+  "$(this.bundle) no valid etc_hosts variable";
+
+ !has_admin_var::
+  "$(this.bundle) no valid admin variable";
+
+}

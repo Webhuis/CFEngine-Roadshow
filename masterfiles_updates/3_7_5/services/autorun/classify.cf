@@ -107,9 +107,32 @@ bundle common classify_classes {
 
 classes:
 
-  "has_organisation"     expression => isvariable("classify.organisation");
-  "has_domain"           expression => isvariable("classify.domain");
-  "has_vendor"           expression => isvariable("classify.vendor");
-  "has_role"             expression => isvariable("classify.role");
+  "has_organisation"               expression => isvariable("classify.organisation");
+  "has_domain"                     expression => isvariable("classify.domain");
+  "has_vendor"                     expression => isvariable("classify.vendor");
+  "has_role"                       expression => isvariable("classify.role");
 
 }
+
+bundle common role_classes {
+
+classes:
+
+  "has_nic_sequence"               expression => isvariable("nic_trick");
+  "has_nic_values"                 expression => isvariable("nic_values");
+  "has_nic_index"                  expression => isvariable("nic_index");
+  "has_ddns_index"                 expression => isvariable("ddns_index");
+  "has_hosts_var"                  expression => isvariable("hosts_var");
+  "has_admin_var"                  expression => isvariable("admin_var");
+
+vars:
+
+  "nic_sequence"                       string => "$(role_data.nic_trick)";
+  "nic_values"                         string => "$(role_data.nic_values)";
+  "nic_index"                          string => "$(role_data.nic_index)";
+  "ddns_index"                         string => "$(role_data.ddns_index)";
+  "hosts_var"                          string => "$(role_data.hosts_ip)";
+  "admin_var"                          string => "$(role_data.admin_ip)";
+
+}
+
