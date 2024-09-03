@@ -22,10 +22,10 @@ files:
 
 reports:
 
- hosts_ip::
+ valid_hosts_ip::
   "$(this.bundle) etc_hosts_nic: $(hosts_ip)";
 
- !hosts_ip::
+ !valid_hosts_ip::
    "$(this.bundle): etc_hosts_nic bad hosts_ip! $(hosts_ip)";
 
 }
