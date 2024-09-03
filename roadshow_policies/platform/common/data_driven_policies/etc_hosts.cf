@@ -14,18 +14,18 @@ files:
 
  valid_hosts_ip::
   "/etc/hosts"
-  comment                   => "/etc/hosts voor elke host",
+  comment                   => "/etc/hosts voor elke hosti, let op voor de uitzondering etcd moet de template naam een role gerelateerde variabele zijn",
   create                    => "true",
   perms                     => mo("644","root"),
-  edit_template             => "$(sys.workdir)/roadshow_inputs/templates/etc_hosts.tmpl",
+  edit_template             => "$(sys.workdir)/roadshow_inputs/components/templates/etc_hosts.tmpl",
   action                    => r_immediate;
 
 reports:
 
  valid_hosts_ip::
-  "$(this.bundle) etc_hosts_nic: $(hosts_ip)";
+  "$(this.bundle) etc_hosts_ip: $(hosts_ip)";
 
  !valid_hosts_ip::
-   "$(this.bundle): etc_hosts_nic bad hosts_ip! $(hosts_ip)";
+   "$(this.bundle): etc_hosts_ip bad hosts_ip! $(hosts_ip)";
 
 }
