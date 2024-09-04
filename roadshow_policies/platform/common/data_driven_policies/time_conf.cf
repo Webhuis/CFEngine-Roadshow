@@ -75,10 +75,10 @@ reports:
 
   "$(this.bundle) ntp_servers list: $(ntp_servers)";
 
- valid_ntp_severs::
+ valid_ntp_servers::
   "$(this.bundle) ntp_servers: $(ntp_servers)";
 
- !valid_ntp_severs::
+ !valid_ntp_servers::
    "$(this.bundle): invalid ntp_servers! $(ntp_servers)";
    "$(this.bundle): invalid ntp_servers list! @(ntp_servers)";
 
