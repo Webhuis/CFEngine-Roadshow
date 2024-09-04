@@ -6,7 +6,7 @@ methods:
   "We require hostname resolution"          usebundle => resolv_conf("$($(classify.location).resolvers)");
 
  has_ntp_servers::
-  "Accurate time is impostant"              usebundle => time_conf("$($(classify.domain).ntp_servers)");
+  "Accurate time is important"              usebundle => time_conf("$($(classify.domain).ntp_servers)");
 
 reports:
 
