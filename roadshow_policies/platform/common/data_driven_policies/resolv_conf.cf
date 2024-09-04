@@ -1,4 +1,12 @@
-bundle agent resolv_conf {
+bundle agent resolv_conf(resolvers) {
+
+classes:
+
+ "valid_resolvers"                         comment    => "Oh, the horror! Process the list of IP Addresses.",
+                                           expression => every(
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
+            $(resolvers)
+            );
 
  files:
 
@@ -11,6 +19,12 @@ bundle agent resolv_conf {
 
 reports:
 
-  "${this.bundle}: I am doing standardized resolv.conf setup with: $($(classify.location).resolvers)";
+  "$(this.bundle): My mission is standardized resolv.conf setup with: $(resolvers)";
+
+ valid_resolvers::
+  "$(this.bundle) resolvers: $(resolvers)";
+
+ !valid_resolvers::
+   "$(this.bundle): invalid resolvers!";
 
 }

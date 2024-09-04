@@ -1,12 +1,20 @@
-bundle agent time_conf {
+bundle agent time_conf(ntp_servers) {
+
+classes:
+
+ "valid_ntp_servers"                       comment    => "Oh, the horror! Process the list of IP Addresses.",
+                                           expression => every(
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
+            $(ntp_servers)
+            );
 
 vars:
 
   "ntp_conf"                        string => "/etc/ntp.conf";
   "ntp_default"                     string => "/etc/default/ntpdate";
-  "timezone"                        string => "GMT";
+  "timezone"                        string => "UTC";
   "localtime"                       string => "/etc/localtime";
-  "gmt"                             string => "/usr/share/zoneinfo/$(timezone)";
+  "utc"                             string => "/usr/share/zoneinfo/$(timezone)";
 
   "pkg[ntp]"                        string => "*";
   "pkg[ntpdate]"                    string => "*";
@@ -20,7 +28,7 @@ files:
     comment             => "Set the right localtime (GMT), for once and forever.",
     action              => immediate,
     move_obstructions   => "true",
-    link_from           => ln_s("$(gmt)");
+    link_from           => ln_s("$(utc)");
 
   "/etc/timezone"
     comment             => "Set the right timezone (GMT), for once and forever.",
@@ -29,20 +37,47 @@ files:
     action              => r_immediate,
     edit_line           => edit_timezone($(timezone));
 
+  "/etc/default/ntp"
+    create              => "true",
+    perms               => mog("644","root","root"),
+    edit_line           => default_ntp_conf,
+    classes             => if_repaired("restart_ntp");
+
+ valid_ntp_servers::
+  
+  "/etc/ntp.conf"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ntp_client.conf.tmpl",
+    classes        => if_repaired("restart_ntp");
+
 methods:
 
   "Time packages we need"                   usebundle => packages("time_conf.pkg");
   "Time packages we do not need"            usebundle => nopackages("time_conf.nopkg");
 
-  "A VM is an ntp client"                   usebundle => ntp_client;
-
 services:
 
   "ntp"                                service_policy => "start";
 
+commands:
+
+  "/sbin/hwclock -w";
+
+ restart_ntp::
+
+  "service ntpd restart"
+   comment => "restarting ntpd"; 
+
 reports:
 
- "$(this.bundle): I am doing time configuration common to all platforms";
+ "$(this.bundle): My mission is time configuration common to all platforms";
+
+ valid_ntp_severs::
+  "$(this.bundle) ntp_servers: $(ntp_servers)";
+
+ !valid_ntp_severs::
+   "$(this.bundle): invalid ntp_servers!";
 
 }
 
@@ -55,5 +90,17 @@ delete_lines:
  insert_lines:
 
 "${string}";
+
+}
+
+bundle edit_line  default_ntp_conf {
+
+delete_lines:
+
+  ".*";
+
+insert_lines:
+
+"NTPD_OPTS='-4 -g'";
 
 }

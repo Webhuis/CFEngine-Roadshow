@@ -5,4 +5,4 @@
 [%CFEngine any:: %]
 domain $(sys.domain)
 search $(sys.domain)
-nameserver $($(classify.location).resolvers)
+nameserver $(resolv_conf.resolvers)

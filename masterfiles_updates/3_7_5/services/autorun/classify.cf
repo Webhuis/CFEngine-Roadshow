@@ -136,3 +136,17 @@ vars:
 
 }
 
+bundle common domain_classes {
+
+classes:
+
+  "has_resolvers"                  expression => isvariable("resolvers");
+  "has_ntp_servers"                expression => isvariable("ntp_servers");
+
+vars:
+
+  "resolvers"                           slist => { "$($(classify.location).resolvers)" };
+  "ntp_servers"                        string => { "$($(classify.domain).ntp_servers)" };
+
+}
+

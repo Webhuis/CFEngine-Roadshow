@@ -1,4 +1,4 @@
-bundle agent ntp_client {
+bundle agent ntp_client(ntp_servers) {
 
 files:
 

@@ -51,7 +51,7 @@ vars:
   "https_repo[one]"                    string => "https://downloads.opennebula.org/repo/6.0/Debian/10/";
 
 # "ntp_server"                         string => "inuc-01.webhuis.nl";
-  "ntp_server"                          slist => { "ntp.time.nl" };
+  "ntp_servers"                         slist => { "94.198.159.10", "94.198.159.14" };
   "nfs_host"                           string => "ntp.time.nl";
   "nfs_webapps"                        string => "/var/local/webapps";
   "export_network"                     string => "10.0.0.0/8";

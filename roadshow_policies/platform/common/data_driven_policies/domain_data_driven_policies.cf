@@ -1,45 +1,27 @@
 bundle agent domain_data_driven_policies {
 
-classes:
-
- "valid_resolvers"                         comment    => "Oh, the horror! Process the list of IP Addresses.",
-                                           expression => every(
-"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(resolvers)
-            );
-
- "valid_ntp_servers"                       comment    => "Oh, the horror! Process the list of IP Addresses.",
-                                           expression => every(
-"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(ntp_servers)
-            );
-
-vars:
-
-  "resolvers"                                   slist => { "$($(classify.location).resolvers)" };
-  "ntp_servers"                                 slist => { "$($(classify.domain).ntp_server)" };
-
 methods:
 
- valid_resolvers::
-  "Standardize resolv.conf setup"           usebundle => resolv_conf;
+ has_resolvers::
+  "We require hostname resolution"          usebundle => resolv_conf($($(classify.location).resolvers));
 
- ntp_servers::
-  "Configure all time settings"             usebundle => time_conf;
+ has_ntp_servers::
+  "Accurate time is impostant"              usebundle => time_conf($($(classify.domain).ntp_servers));
 
 reports:
 
-  "$(this.bundle): I am doing data driven policies and my verdict is as folows";
+  "$(this.bundle): I am doing host driven policies";
 
- valid_resolvers::
-  "$(this.bundle) resolvers: $($(classify.location).resolvers)";
+ has_resolvers::
+  "$(this.bundle): resolvers $($(classify.location).resolvers)";
 
- valid_ntp_severs::
-  "$(this.bundle) ntp_servers: $($(classify.domain).ntp_server)";
+ has_ntp_servers::
+  "$(this.bundle) openssh server and client";
 
- !valid_resolvers::
-   "$(this.bundle): invalid resolvers!";
- !valid_ntp_severs::
-   "$(this.bundle): invalid ntp_server!";
+ !has_resolvers::
+  "$(this.bundle) no resolvers!";
+
+ !has_ntp_servers::
+  "$(this.bundle) no ntp servers";
 
 }
