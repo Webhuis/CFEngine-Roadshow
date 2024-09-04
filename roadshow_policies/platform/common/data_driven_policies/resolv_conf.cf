@@ -8,6 +8,7 @@ classes:
 
  files:
 
+ valid_resolvers::
   "/etc/resolv.conf"
   comment                   => "Domain resolv.conf door class_domain",
   create                    => "true",
@@ -23,6 +24,6 @@ reports:
   "$(this.bundle) resolvers: $(resolvers)";
 
  !valid_resolvers::
-   "$(this.bundle): invalid resolvers!";
+   "$(this.bundle): invalid resolvers! @(resolvers)";
 
 }
