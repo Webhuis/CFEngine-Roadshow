@@ -71,7 +71,9 @@ commands:
 
 reports:
 
- "$(this.bundle): My mission is time configuration common to all platforms";
+  "$(this.bundle): My mission is time configuration common to all platforms";
+
+  "$(this.bundle) ntp_servers list: $(ntp_servers)";
 
  valid_ntp_severs::
   "$(this.bundle) ntp_servers: $(ntp_servers)";
