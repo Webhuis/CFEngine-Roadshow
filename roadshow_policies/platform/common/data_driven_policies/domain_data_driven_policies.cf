@@ -3,10 +3,10 @@ bundle agent domain_data_driven_policies {
 methods:
 
  has_resolvers::
-  "We require hostname resolution"          usebundle => resolv_conf("$($(classify.location).resolvers)");
+  "We require hostname resolution"          usebundle => resolv_conf;
 
  has_ntp_servers::
-  "Accurate time is important"              usebundle => time_conf("$($(classify.domain).ntp_servers)");
+  "Accurate time is important"              usebundle => time_conf;
 
 reports:
 

@@ -1,26 +1,26 @@
-bundle agent time_conf(ntp_servers) {
+bundle agent time_conf {
 
 classes:
 
- "valid_ntp_servers"                       comment    => "Oh, the horror! Process the list of IP Addresses.",
-                                           expression => every(
-"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})",
-            $(ntp_servers)
-            );
+ "valid_ntp_servers"                       comment    => "Process the ntp IP Addresses.",
+                                           expression => reglist( @(ntp_servers),
+"(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\.](25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})");
 
 vars:
 
-  "ntp_conf"                        string => "/etc/ntp.conf";
-  "ntp_default"                     string => "/etc/default/ntpdate";
-  "timezone"                        string => "UTC";
-  "localtime"                       string => "/etc/localtime";
-  "utc"                             string => "/usr/share/zoneinfo/$(timezone)";
+  "ntp_conf"                                   string => "/etc/ntp.conf";
+  "ntp_default"                                string => "/etc/default/ntpdate";
+  "timezone"                                   string => "UTC";
+  "localtime"                                  string => "/etc/localtime";
+  "utc"                                        string => "/usr/share/zoneinfo/$(timezone)";
 
-  "pkg[ntp]"                        string => "*";
-  "pkg[ntpdate]"                    string => "*";
+  "ntp_servers"                                 slist => { "$($(classify.domain).ntp_servers)" };
 
-  "nopkg[hobbit-plugins]"           string => "*";
-  "nopkg[openntpd]"                 string => "*";
+  "pkg[ntp]"                                   string => "*";
+  "pkg[ntpdate]"                               string => "*";
+
+  "nopkg[hobbit-plugins]"                      string => "*";
+  "nopkg[openntpd]"                            string => "*";
 
 files:
 

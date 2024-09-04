@@ -1,4 +1,4 @@
-bundle agent resolv_conf(resolvers) {
+bundle agent resolv_conf {
 
 classes:
 
@@ -6,7 +6,11 @@ classes:
                                            expression => reglist( @(resolvers),
 "(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])");
 
- files:
+vars:
+
+  "resolvers"                                   slist => { "$($(classify.location).resolvers)" };
+
+files:
 
  valid_resolvers::
   "/etc/resolv.conf"
