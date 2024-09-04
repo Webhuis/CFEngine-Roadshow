@@ -6,7 +6,7 @@
 driftfile /var/lib/ntp/ntp.drift
 statsdir /var/log/ntpstats/
 
-server $(tme_conf.ntp_servers) prefer iburst
+server $(time_conf.ntp_servers) prefer iburst
 
 restrict default kodi limited nomodify notrap nopeer noquery
 restrict 127.0.0.1
