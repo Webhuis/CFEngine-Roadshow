@@ -14,7 +14,7 @@ vars:
   "localtime"                                  string => "/etc/localtime";
   "utc"                                        string => "/usr/share/zoneinfo/$(timezone)";
 
-  "ntp_servers"                                 slist => { @($(classify.domain).ntp_servers) };
+  "ntp_servers"                                 slist => { "@($(classify.domain).ntp_servers)" };
 
   "pkg[ntp]"                                   string => "*";
   "pkg[ntpdate]"                               string => "*";
