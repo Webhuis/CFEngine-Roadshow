@@ -146,7 +146,7 @@ classes:
 vars:
 
   "resolvers"                           slist => { "$($(classify.location).resolvers)" };
-  "ntp_servers"                        string => { "$($(classify.domain).ntp_servers)" };
+  "ntp_servers"                         slist => { "$($(classify.domain).ntp_servers)" };
 
 }
 
