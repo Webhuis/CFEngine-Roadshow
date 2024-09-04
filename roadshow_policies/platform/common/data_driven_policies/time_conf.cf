@@ -77,7 +77,8 @@ reports:
   "$(this.bundle) ntp_servers: $(ntp_servers)";
 
  !valid_ntp_severs::
-   "$(this.bundle): invalid ntp_servers!";
+   "$(this.bundle): invalid ntp_servers! $(ntp_servers)";
+   "$(this.bundle): invalid ntp_servers list! @(ntp_servers)";
 
 }
 
