@@ -29,15 +29,15 @@ reports:
 
 }
 
-bundle edit_line  default_ntp_conf {
+#bundle edit_line  default_ntp_conf {
 
-delete_lines:
+#delete_lines:
 
-  ".*";
+#  ".*";
 
-insert_lines:
+#insert_lines:
 
-"NTPD_OPTS='-4 -g'";
+#"NTPD_OPTS='-4 -g'";
 
-}
+#}
 
