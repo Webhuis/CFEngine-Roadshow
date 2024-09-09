@@ -1,0 +1,42 @@
+bundle agent pdsp_server {
+
+vars:
+
+    "pkg[gettext]"                      string => "*";
+    "pkg[pdns-backend-pgsql]"           string => "*";
+    "pkg[pdns-server]"                  string => "*";
+    "pkg[php-dev]"                      string => "*";
+    "pkg[php-horde-crypt]"              string => "*";
+    "pkg[php7.4-pgsql]"                 string => "*";
+    "pkg[php-pear]"                     string => "*";
+
+
+    "pdsp_package_name"             slist  => getindices("pkg");
+
+methods:
+
+  "We desire powerdns"           usebundle => packages("pdsp_server.pkg");
+  "Configure powerdns for pgsql" usebundle => get_template("pdsp-pgsql-ddns.conf.tmpl");
+  "Configure powerdns server"    usebundle => pdns_conf;
+
+}
+
+bundle agent pdns_conf {
+
+files:
+
+ "/etc/powerdns/pdns.conf"
+  comment                   => "pdns.conf door class_domain nameserver",
+  perms                     => mo("600","pdns"),
+  create                    => "true",
+  action                    => r_immediate,
+  edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/pdsp-pgsql-ddns.conf.tmpl",
+  classes                   => r_if_repaired("restart_pdns");
+
+commands:
+
+  restart_pdns::
+   "/usr/bin/systemctl restart pdsp.service";
+
+}
+

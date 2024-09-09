@@ -122,8 +122,19 @@ classes:
   "has_nic_values"                 expression => isvariable("nic_values");
   "has_nic_index"                  expression => isvariable("nic_index");
   "has_ddns_index"                 expression => isvariable("ddns_index");
-  "has_hosts_var"                  expression => isvariable("hosts_var");
-  "has_admin_var"                  expression => isvariable("admin_var");
+  "has_hosts_var"                  expression => isvariable("hosts_ip");
+  "has_admin_var"                  expression => isvariable("admin_ip");
+
+ has_hosts_var::
+  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(hosts_ip)"
+            );
+ has_admin_var::
+  "valid_admin_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(admin_ip)"
+            );
 
 vars:
 
@@ -131,8 +142,8 @@ vars:
   "nic_values"                         string => "$(role_data.nic_values)";
   "nic_index"                          string => "$(role_data.nic_index)";
   "ddns_index"                         string => "$(role_data.ddns_index)";
-  "hosts_var"                          string => "$(role_data.hosts_ip)";
-  "admin_var"                          string => "$(role_data.admin_ip)";
+  "hosts_ip"                           string => "$(role_data.hosts_ip)";
+  "admin_ip"                           string => "$(role_data.admin_ip)";
 
 }
 
