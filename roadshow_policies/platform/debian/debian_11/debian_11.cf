@@ -9,7 +9,7 @@ vars:
   "name"                                    string => "bullseye";
   "updates"                                 string => " bullseye-security"; # The space is intentional
 
-  "ip_cmd"                                  string => "/usr/bin/ip";
+  "ip_cmd"                                  string => "/usr/sbin/ip";
 
 methods:
 
