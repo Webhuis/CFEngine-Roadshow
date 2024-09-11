@@ -1,0 +1,11 @@
+bundle agent life_gwy {
+
+vars:
+
+  "life_gwy"                     string => "I am The gateway to Life"; 
+
+reports:
+
+  "${this.bundle}: $(life_gwy)";
+
+}

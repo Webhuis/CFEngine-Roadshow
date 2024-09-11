@@ -1,0 +1,28 @@
+# Webhuis template voor pdns.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+allow-axfr-ips=10.68.171.23, 10.10.117.23
+config-dir=/etc/powerdns
+local-address=$(role_data.hosts_ip]
+local-port=53
+disable-axfr=no
+launch=gpgsql
+loglevel=9
+master=no
+superslave=yes
+slave=yes
+api=yes
+api-key=789456123741852963
+webserver=yes
+webserver-address=$(role_data.hosts_ip)
+webserver-allow-from=0.0.0.0/0,::/0
+webserver-port=8081
+#include-dir=/etc/powerdns/pdns.d
+gpgsql-host=10.68.171.80
+gpgsql-port=5432
+gpgsql-dbname=pdns
+gpgsql-user=webhuis_secondary_sw_intern_app
+gpgsql-password=webhuis_secondary_sw_intern_@pp
+

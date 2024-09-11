@@ -2,14 +2,15 @@ bundle common role_data {
 
 vars:
 
-  "role_data_real_name"               string => "role_data_std_sup";
+  "role_data_real_name"               string => "role_data_life";
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
 
   "nic_index"                          slist => getindices("nic");
   "nic_values"                         slist => getvalues("nic");
-  "nic_trick"                          slist => { "0", "1" };
+  "nic_trick"                          slist => { "0", "1", "3" };
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
@@ -19,6 +20,10 @@ vars:
   "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
   "ip[admin]"                         string => nth("ip_list[admin]", "1");
 
+  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[life])", noshell);
+  "ip_list[life]"                      slist => string_split($(ip_line[life]), "src ", 99);
+  "ip[life]"                          string => nth("ip_list[life]", "1");
+
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
@@ -27,20 +32,18 @@ vars:
   "ddns[admin][nic]"                  string => "$(nic[admin])";
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
+  "ddns[life][ip]"                    string => "$(ip[life])";
+  "ddns[life][nic]"                   string => "$(nic[life])";
+  "ddns[life][suffix]"                string => "-ssh";
+  "ddns[life][vlan]"                  string => "$($(classify.organisation).vlan[life])";
 
   "ddns_index"                         slist => getindices("ddns");
 
   "hosts_ip"                          string => "$(ip[support])";
   "admin_ip"                          string => "$(ip[admin])";
+  "life_ip"                           string => "$(ip[life])";
 
   "role_sshd_config_template"         string => "std_sshd_config.tmpl";
-
- #"interface[support][dev]"           string => "$(nic[support])";
- #"interface[support][masked_ip]"     string => "$(ip[support])";
- #"interface[admin][dev]"             string => "$(nic[support])";
- #"interface[admin][masked_ip]"       string => "$(ip[support])";
-
- #"interface_index"                    slist => getindices("interface");
 
 reports:
 
@@ -49,6 +52,7 @@ reports:
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
+  "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
 
 }
