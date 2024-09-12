@@ -8,9 +8,7 @@ methods:
 
 reports:
 
-  "$(this.bundle) nics: $(nic)";
-  "$(this.bundle) ip: $(ip)";
-  "$(this.bundle) nic_trick: $(nic_trick)";
+  "$(this.bundle) nic: $(nic)";
 
 }
 
@@ -29,7 +27,7 @@ files:
 
 reports:
 
-  "$(this.bundle): source interface.d";
+  "$(this.bundle): loopback interface";
 
 }
 

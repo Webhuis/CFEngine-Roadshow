@@ -63,6 +63,8 @@ reports:
   "$(this.bundle) respone: $(response)";
   "$(this.bundle) containers: $(containers)";
   "$(this.bundle) role: $(role) $(role_input)";
+  "$(this.bundle) ipr: $(ipr)";
+  "$(this.bundle) ips: $(ips)";
   "$(this.bundle) macs: $(macs)";
   "$(this.bundle) organisation: $(organisation)";
   "$(this.bundle) location: $(location) $($(location).location_name)";
