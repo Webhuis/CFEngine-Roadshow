@@ -35,7 +35,7 @@ commands:
 
 reports:
 
-  "$(this.bundle) nic_values: $(role_data.nic_values)";
+  "$(this.bundle) nic: $(nic)";
   "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
  
 }
