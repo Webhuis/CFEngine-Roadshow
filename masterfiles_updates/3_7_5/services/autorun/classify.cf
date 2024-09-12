@@ -118,7 +118,7 @@ bundle common role_classes {
 
 classes:
 
-  "has_nic_sequence"               expression => isvariable("nic_trick");
+  "has_nic_sequence"               expression => isvariable("nic_sequence");
   "has_nic_values"                 expression => isvariable("nic_values");
   "has_nic_index"                  expression => isvariable("nic_index");
   "has_ddns_index"                 expression => isvariable("ddns_index");
