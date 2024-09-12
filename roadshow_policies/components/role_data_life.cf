@@ -20,7 +20,7 @@ vars:
 
   "nic_index"                          slist => getindices("nic");
   "nic_values"                         slist => getvalues("nic");
-  "nic_trick"                          slist => { "0", "1", "3" };
+  "nic_trick"                          slist => { "0", "1", "2" };
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
