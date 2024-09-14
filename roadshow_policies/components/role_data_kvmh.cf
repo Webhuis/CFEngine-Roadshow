@@ -1,4 +1,4 @@
-bundle common role_data {
+bundle common role_profile {
 
 classes:
 
@@ -11,7 +11,7 @@ classes:
 
 vars:
 
-  "role_data_real_name"               string => "role_data_kvmp";
+  "role_profile_real_name"               string => "role_profile_kvmp";
   "vlan[service]"                     string => "$($(classify.organisation).vlan[service])";
   "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
   "vlan[admin]"                       string => "$($(classify.organisation).vlan[admin])";

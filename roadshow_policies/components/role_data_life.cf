@@ -1,4 +1,4 @@
-bundle common role_data {
+bundle common role_profile {
 
 classes:
 
@@ -12,7 +12,7 @@ classes:
 
 vars:
 
-  "role_data_real_name"               string => "role_data_life";
+  "role_profile_real_name"               string => "role_profile_life";
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";

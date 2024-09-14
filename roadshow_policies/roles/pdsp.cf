@@ -3,9 +3,9 @@ bundle agent pdsp {
 vars:
 
   "role_name"                         string => "Powerdns PostgreSQL Internet name server slave";
-  "role_data"                         string => "role_data_std_sup";
+  "role_profile"                         string => "role_profile_std_sup";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[pdsp_server]"              string => "${sys.flavor}/pdsp_server.cf";
 
   "sequence"                           slist => getindices("bundles");

@@ -3,9 +3,9 @@ bundle agent w3ca {
 vars:
 
   "role_name"                         string => "HTTP HTTPS w3c compliant Webserver";
-  "role_data"                         string => "role_data_dmz";
+  "role_profile"                         string => "role_profile_dmz";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
   "bundles[nginx]"                    string => "${sys.flavor}/nginx.cf";
 
@@ -20,7 +20,7 @@ methods:
 reports:
 
   "${this.bundle} role name: $(role-name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }

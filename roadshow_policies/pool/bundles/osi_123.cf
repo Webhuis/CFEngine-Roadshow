@@ -3,13 +3,13 @@ bundle agent osi_123 {
 methods:
 
  has_nic_sequence::
-  "We need predictable names"               usebundle => persistent_link($(role_data.nic_trick));
+  "We need predictable names"               usebundle => persistent_link($(role_profile.nic_trick));
 
  has_nic_values::
-  "Interfaces predictable names"            usebundle => nic_mac_map($(role_data.nic_values));
+  "Interfaces predictable names"            usebundle => nic_mac_map($(role_profile.nic_values));
 
  has_nic_index::
-  "Check the interfaces"                    usebundle => check_interfaces("$(role_data.nic[$(role_data.nic_index)])"),
+  "Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
                                               comment => "OSI Layers one and two";
 
  any::
@@ -18,15 +18,15 @@ methods:
 
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
 
-                                                                     "$(role_data.ddns[$(role_data.ddns_index)][ip])");
+                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 
 reports:
 
-  "$(this.bundle) nic index: $(role_data.nic_index)";
-  "$(this.bundle) nic values: $(role_data.nic_values)";
-  "$(this.bundle) ip list: $(role_data.ip_list)";
+  "$(this.bundle) nic index: $(role_profile.nic_index)";
+  "$(this.bundle) nic values: $(role_profile.nic_values)";
+  "$(this.bundle) ip list: $(role_profile.ip_list)";
 
-  "$(this.bundle): I am checking basic interface stuff first, $(role_data.nic[$(role_data.nic_index)]).";
+  "$(this.bundle): I am checking basic interface stuff first, $(role_profile.nic[$(role_profile.nic_index)]).";
   "$(this.bundle): I am doing common and data driven policies.";
 
  !bad_ip::

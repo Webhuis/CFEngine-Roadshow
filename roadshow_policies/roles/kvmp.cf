@@ -3,9 +3,9 @@ bundle agent kvmp {
 vars:
 
   "role_name"                                 string => "kvm hypervisor proxmox";
-  "role_data"                                 string => "role_data_kvmh";
+  "role_profile"                                 string => "role_profile_kvmh";
 
-  "bundles[role_data]"                        string => "$(role_data).cf";
+  "bundles[role_profile]"                        string => "$(role_profile).cf";
   "bundles[proxmox_node]"                     string => "$(sys.flavor)/proxmox_node.cf";
   "bundles[kvm_host]"                         string => "$(sys.flavor)/kvm_host.cf";
 
@@ -20,7 +20,7 @@ reports:
 
   "$(this.bundle): $(classify.role)";
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $(inputs)";
 
 }

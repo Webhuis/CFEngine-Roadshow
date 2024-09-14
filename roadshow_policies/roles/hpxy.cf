@@ -3,9 +3,9 @@ bundle agent hpxy {
 vars:
 
   "role_name"                         string => "HTTP / HTTPS reverse Proxy";
-  "role_data"                         string => "role_data_wan";
+  "role_profile"                         string => "role_profile_wan";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[h_proxy]"                  string => "${sys.flavor}/h_proxy.cf";
   "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 

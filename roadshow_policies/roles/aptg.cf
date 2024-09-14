@@ -3,9 +3,9 @@ bundle agent aptg {
 vars:
 
   "role_name"                         string => "apt-cache-ng common cacher for Debian and rpm packages";
-  "role_data"                         string => "role_data_std_sup";
+  "role_profile"                         string => "role_profile_std_sup";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[apt_cacher_ng]"            string => "$(sys.flavor)/apt_cacher_ng.cf";
 
   "sequence"                           slist => getindices("bundles");
@@ -18,7 +18,7 @@ methods:
 reports:
 
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }

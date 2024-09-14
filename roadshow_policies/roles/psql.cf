@@ -4,13 +4,14 @@ vars:
 
   "role_name"                                  string => "postgresql database cluster server";
 
-  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[role_profile]"                         string => "$(role_profile).cf";
   "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql.cf";
-  "pool_bundles"                                slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
+  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_profile.cf" };
+  "pool_role_bundles"                           slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
 
 
   "sequence"                                    slist => getindices("bundles");
-  "inputs"                                      slist => { getvalues("bundles", @(pool_bundles), "$(sys.workdir)/pool/bundles/role_date.cf");
+  "inputs"                                      slist => { getvalues("bundles", @(pool_bundles), @(pool_role_bundles)) };
 
 methods:
 

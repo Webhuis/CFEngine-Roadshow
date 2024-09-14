@@ -1,8 +1,8 @@
-bundle common role_data {
+bundle common role_profile {
   
 vars:
 
-  "role_data_real_name"               string => "role_data_dmz_app";
+  "role_profile_real_name"               string => "role_profile_dmz_app";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[apps]"                         string => "$($(classify.organisation).nic[apps])";

@@ -3,9 +3,9 @@ bundle agent ppgh {
 vars:
 
   "role_name"                                  string => "pgbouncer haproxy keepalived for postgresql database cluster server";
-  "role_data"                                  string => "role_data_std_sup";
+  "role_profile"                                  string => "role_profile_std_sup";
 
-  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[role_profile]"                         string => "$(role_profile).cf";
   "bundles[postgresql]"                        string => "$(sys.flavor)/postgresql_proxy.cf";
 
   "sequence"                                    slist => getindices("bundles");
@@ -19,7 +19,7 @@ reports:
 
   "$(this.bundle): $(classify.role)";
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $(inputs)";
 
 }

@@ -3,9 +3,9 @@ bundle agent tpxy {
 vars:
 
   "role_name"                         string => "Transparant Proxy";
-  "role_data"                         string => "role_data_std_tpx";
+  "role_profile"                         string => "role_profile_std_tpx";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[t_proxy]"                  string => "${sys.flavor}/t_proxy.cf";
   "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
@@ -20,7 +20,7 @@ methods:
 reports:
 
   "${this.bundle} role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }

@@ -1,8 +1,8 @@
-bundle common role_data {
+bundle common role_profile {
   
 vars:
 
-  "role_data_real_name"               string => "role_data_pg_cluster";
+  "role_profile_real_name"               string => "role_profile_pg_cluster";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic_index"                          slist => getindices("nic");

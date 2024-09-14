@@ -6,8 +6,8 @@ vars:
   "pkg[keepalived]"	   	   	string => "*";
   "pkg[pgbouncer]"	           	string => "*";
 
-  "my_keepalived_priority"              string => "$($(classify.domain).pg_keepalive_pear[$(role_data).ip[support]])";
-  "my_keepalived_peers"                  slist => filer( $(role_data).ip[support], $($(classify.domain).pg_keepalive_peers), "false", true", 999);
+  "my_keepalived_priority"              string => "$($(classify.domain).pg_keepalive_pear[$(role_profile).ip[support]])";
+  "my_keepalived_peers"                  slist => filer( $(role_profile).ip[support], $($(classify.domain).pg_keepalive_peers), "false", true", 999);
 
   "templates"                            slist => { "haproxy.tmpl", "keepalived.conf.tmpl", "pgbouncer.conf.tmpl" };
 

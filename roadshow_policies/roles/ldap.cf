@@ -4,10 +4,10 @@ vars:
 
   "role_name"                                  string => "The HA LDAP cluster server";
 
-  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[role_profile]"                         string => "$(role_profile).cf";
   "bundles[openldap_server]"                   string => "$(sys.flavor)/openldap_server.cf";
   "bundles[openldap_proxy]"                    string => "$(sys.flavor)/openldap_proxy.cf";
-  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_data.cf" };
+  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_profile.cf" };
   "pool_role_bundles"                           slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
 
   "sequence"                                    slist => getindices("bundles");
@@ -21,7 +21,7 @@ methods:
 reports:
 
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_data)";
+  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $(inputs)";
 
 }

@@ -3,9 +3,9 @@ bundle agent padm {
 vars:
 
   "role_name"                         string => "PowerdnsAdmin PostgreSQL manager Internet name servers";
-  "role_data"                         string => "role_data_std_sup";
+  "role_profile"                         string => "role_profile_std_sup";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
+  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[php_pgsql]"                string => "${sys.flavor}/php_pgsql.cf";
   "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
   "bundles[apache_php]"               string => "${sys.flavor}/apache_php.cf";

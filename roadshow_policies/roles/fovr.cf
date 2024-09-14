@@ -28,7 +28,7 @@ reports:
 
 }
 
-bundle agent role_data {
+bundle agent role_profile {
   
 vars:
 
