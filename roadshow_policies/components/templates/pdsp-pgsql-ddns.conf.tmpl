@@ -5,7 +5,7 @@
 [%CFEngine any:: %]
 config-dir=/etc/powerdns
 allow-dnsupdate-from=10.0.0.0/8
-local-address=$(role_data.ip[support])
+local-address=$(role_profile.ip[support])
 local-port=53
 #default-soa-name=$(sys.fqhost)
 disable-axfr=no
@@ -18,7 +18,7 @@ master=no
 superslave=yes
 slave=yes
 webserver=yes
-webserver-address=$(role_data.ip[support])
+webserver-address=$(role_profile.ip[support])
 webserver-allow-from=0.0.0.0/0,::/0
 webserver-port=8081
 include-dir=/etc/powerdns/pdns.d

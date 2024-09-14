@@ -5,7 +5,7 @@
 [%CFEngine any:: %]
 allow-axfr-ips=10.68.171.23, 10.10.117.23
 config-dir=/etc/powerdns
-local-address=$(role_data.hosts_ip]
+local-address=$(role_profile.hosts_ip]
 local-port=53
 disable-axfr=no
 launch=gpgsql
@@ -16,7 +16,7 @@ slave=yes
 api=yes
 api-key=789456123741852963
 webserver=yes
-webserver-address=$(role_data.hosts_ip)
+webserver-address=$(role_profile.hosts_ip)
 webserver-allow-from=0.0.0.0/0,::/0
 webserver-port=8081
 #include-dir=/etc/powerdns/pdns.d

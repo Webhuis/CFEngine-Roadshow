@@ -2,20 +2,21 @@ bundle agent w3ci {
 
 vars:
 
-  "role_name"                         string => "HTTP HTTPS w3c compliant internal Webserver";
-  "role_data"                         string => "role_data_std_sup";
+  "role_name"                                  string => "HTTP HTTPS w3c compliant internal Webserver";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
-  "bundles[apache2]"                  string => "${sys.flavor}/apache2.cf";
-  "bundles[nginx]"                    string => "${sys.flavor}/nginx.cf";
+  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[apache2]"                           string => "${sys.flavor}/apache2.cf";
+  "bundles[nginx]"                             string => "${sys.flavor}/nginx.cf";
+  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_data.cf" };
+  "pool_role_bundles"                           slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
 
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => { getvalues("bundles", @(pool_bundles), @(pool_role_bundles)) };
 
 methods:
 
-  "We need the Apache Webserver"   usebundle => "apache2";
-  "We need nginx serving https"    usebundle => "nginx";
+  "We need the Apache Webserver"            usebundle => "apache2";
+  "We need nginx serving https"             usebundle => "nginx";
 
 reports:
 

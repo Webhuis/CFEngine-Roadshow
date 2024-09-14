@@ -2,20 +2,21 @@ bundle agent ldap {
 
 vars:
 
-  "role_name"                         string => "The HA LDAP cluster server";
-  "role_data"                         string => "role_data_std_sup";
+  "role_name"                                  string => "The HA LDAP cluster server";
 
-  "bundles[role_data]"                string => "$(role_data).cf";
-  "bundles[openldap_server]"          string => "$(sys.flavor)/openldap_server.cf";
-  "bundles[openldap_proxy]"           string => "$(sys.flavor)/openldap_proxy.cf";
+  "bundles[role_data]"                         string => "$(role_data).cf";
+  "bundles[openldap_server]"                   string => "$(sys.flavor)/openldap_server.cf";
+  "bundles[openldap_proxy]"                    string => "$(sys.flavor)/openldap_proxy.cf";
+  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_data.cf" };
+  "pool_role_bundles"                           slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
 
-  "sequence"                           slist => getindices("bundles");
-  "inputs"                             slist => getvalues("bundles");
+  "sequence"                                    slist => getindices("bundles");
+  "inputs"                                      slist => { getvalues("bundles", @(pool_bundles), @(pool_role_bundles)) };
 
 methods:
 
-  "We are an openLDAP server"      usebundle => "openldap_server";
-  "We are an openLDAP server"      usebundle => "openldap_proxy";
+  "We are an openLDAP server"               usebundle => "openldap_server";
+  "We are an openLDAP server"               usebundle => "openldap_proxy";
 
 reports:
 
@@ -24,3 +25,5 @@ reports:
   "$(this.bundle) role inputs: $(inputs)";
 
 }
+
+

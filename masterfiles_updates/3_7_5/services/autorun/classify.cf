@@ -127,6 +127,7 @@ classes:
   "has_ddns_index"                 expression => isvariable("ddns_index");
   "has_hosts_var"                  expression => isvariable("hosts_ip");
   "has_admin_var"                  expression => isvariable("admin_ip");
+  "available_nic_$(nic)"           expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_nic_$(nic))","noshell");
 
  has_hosts_var::
   "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
@@ -147,6 +148,7 @@ vars:
   "ddns_index"                         string => "$(role_data.ddns_index)";
   "hosts_ip"                           string => "$(role_data.hosts_ip)";
   "admin_ip"                           string => "$(role_data.admin_ip)";
+  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $($(role_data.nic_index)","noshell");
 
 }
 
