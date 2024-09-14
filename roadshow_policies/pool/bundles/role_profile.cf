@@ -2,8 +2,6 @@ bundle common role_profile {
 
 vars:
 
-  "role_profile_real_name"               string => "role_profile_std_sup";
-
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
 
@@ -34,13 +32,6 @@ vars:
   "admin_ip"                          string => "$(ip[admin])";
 
   "role_sshd_config_template"         string => "std_sshd_config.tmpl";
-
- #"interface[support][dev]"           string => "$(nic[support])";
- #"interface[support][masked_ip]"     string => "$(ip[support])";
- #"interface[admin][dev]"             string => "$(nic[support])";
- #"interface[admin][masked_ip]"       string => "$(ip[support])";
-
- #"interface_index"                    slist => getindices("interface");
 
 reports:
 
