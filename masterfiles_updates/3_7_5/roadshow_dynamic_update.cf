@@ -52,7 +52,7 @@ files:
 
 #methods:
 
-# "We desire the role name"    usebundle => classify;
+  "We desire the role inputs"  usebundle => $(role);
 
 reports:
 
@@ -60,6 +60,7 @@ reports:
   "$(this.bundle): $(roadshow_inputs)";
   "$(this.bundle): $(master_profile)";
   "$(this.bundle): $(role)";
+  "$(this.bundle): $(role.inputs)";
 
 }
 
