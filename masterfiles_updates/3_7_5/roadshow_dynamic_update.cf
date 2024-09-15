@@ -10,7 +10,7 @@ bundle agent roadshow_dynamic_update {
 vars:
 
   "master_roadshow"           string => "$(sys.workdir)/roadshow_policies";
-  "master_pool"               string => "$(master_roadshow)/pool";``
+  "master_pool"               string => "$(master_roadshow)/pool";
 
 files:
 
