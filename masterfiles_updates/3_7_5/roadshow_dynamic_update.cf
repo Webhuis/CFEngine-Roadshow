@@ -55,6 +55,9 @@ files:
 
 reports:
 
+  "$(this.bundle): $(master_roadshow)";
+  "$(this.bundle): $(roadshow_inputs)";
+  "$(this.bundle): $(master_profile)";
   "$(this.bundle): $(role)";
 
 }
