@@ -11,7 +11,7 @@ vars:
 
   "master_roadshow"           string => "$(sys.workdir)/roadshow_policies";
   "roadshow_inputs"           string => "$(sys.workdir)/roadshow_inputs";
-  "master_pool"               string => "$(master_roadshow)/pool";
+  "master_profile"            string => "$(master_roadshow)/profile";
 
 files:
 
