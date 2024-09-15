@@ -9,19 +9,38 @@ bundle agent roadshow_dynamic_update {
 
 vars:
 
-  "master_policies" string => "$(sys.workdir)/roadshow_policies";
+  "master_roadshow"           string => "$(sys.workdir)/roadshow_policies";
+  "master_pool"               string => "$(master_roadshow)/pool";``
 
 files:
 
  has_role::
   "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role).inputs)"
       handle       => "update_files_inputs_roadshow_components",
-      copy_from    => r_rcp("${master_policies}/components/$($(classify.role).inputs)", $(sys.policy_hub)),
+      copy_from    => r_rcp("${master_roadshow}/components/$($(classify.role).inputs)", $(sys.policy_hub)),
      #depth_search => r_recurse("inf"),
       file_select  => r_policies,
       action       => r_immediate,
       create       => "true",
       classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/profile"
+     handle       => "update_files_inputs_profile_policies",
+     depth_search => r_recurse("inf"),
+     copy_from    => r_rcp("$(master_pool)/$(classify.role)/role_profile/bundles", $(sys.policy_hub)),
+     file_select  => r_templates,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/templates"
+     handle       => "update_files_inputs_profile_templates",
+     depth_search => r_recurse("inf"),
+     copy_from    => r_rcp("$(master_pool)/$(classify.role)/role_profile/templates", $(sys.policy_hub)),
+     file_select  => r_templates,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
 
 #methods:
 

@@ -31,8 +31,6 @@ vars:
   "hosts_ip"                          string => "$(ip[support])";
   "admin_ip"                          string => "$(ip[admin])";
 
-  "role_sshd_config_template"         string => "std_sshd_config.tmpl";
-
 reports:
 
   "$(this.bundle) nic: $(nic[$(nic_index)])";

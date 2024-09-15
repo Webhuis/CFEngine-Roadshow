@@ -9,17 +9,18 @@ bundle agent roadshow_update {
 
 vars:
 
-  "master_standard" string => "$(sys.workdir)/masterfiles";
-  "master_roadshow" string => "$(sys.workdir)/roadshow_policies";
-  "master_data"     string => "$(sys.workdir)/roadshow_data";
-  "roadshow_inputs" string => "$(sys.workdir)/roadshow_inputs";
-  "organisation"    string => "$(classify.organisation)";
-  "environment"     string => "$(classify.environment)";
-  "department"      string => "$(classify.department)";
-  "location"        string => "$(classify.location)";
-  "role"            string => "$(classify.role)";
-  "eco_vars"        string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
-  "vendor"          string => "$(vendor.vendor)";
+  "master_standard"           string => "$(sys.workdir)/masterfiles";
+  "master_roadshow"           string => "$(sys.workdir)/roadshow_policies";
+  "master_pool"               string => "$(master_roadshow)/pool";
+  "master_data"               string => "$(sys.workdir)/roadshow_data";
+  "roadshow_inputs"           string => "$(sys.workdir)/roadshow_inputs";
+  "organisation"              string => "$(classify.organisation)";
+  "environment"               string => "$(classify.environment)";
+  "department"                string => "$(classify.department)";
+  "location"                  string => "$(classify.location)";
+  "role"                      string => "$(classify.role)";
+  "eco_vars"                  string => "$(classify.organisation)$(classify.environment)$(classify.department)$(classify.location)";
+  "vendor"                    string => "$(vendor.vendor)";
 
 files:
 
@@ -83,14 +84,14 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/templates"
-     handle       => "update_files_inputs_roadshow_templates",
-     depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
-     file_select  => r_templates,
-     action       => r_immediate,
-     create       => "true",
-     classes      => r_if_repaired("update_report");
+# "$(roadshow_inputs)/templates"
+#    handle       => "update_files_inputs_roadshow_templates",
+#    depth_search => r_recurse("inf"),
+#    copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
+#    file_select  => r_templates,
+#    action       => r_immediate,
+#    create       => "true",
+#    classes      => r_if_repaired("update_report");
 
  has_domain::
   "$(roadshow_inputs)/domain/$(sys.domain).cf"
@@ -137,6 +138,14 @@ files:
   "$(roadshow_inputs)/role/$(role).cf"
      handle       => "update_files_inputs_roadshow_role",
      copy_from    => r_rcp("$(master_roadshow)/roles/$(role).cf", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "$(roadshow_inputs)/role/role_profile_update.cf"
+     handle       => "update_files_inputs_role_profile_update",
+     copy_from    => r_rcp("$(master_pool)/$(role)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
