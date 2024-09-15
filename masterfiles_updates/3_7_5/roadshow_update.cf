@@ -10,6 +10,7 @@ bundle agent roadshow_update {
 classes:
 
   "parsed_uqdn"           expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
+  "parsed_fqdn"           expression => regextract("^(.*)\.([a-z0-9][a-z0-9]*)\.([a-z0-9][a-z0-9]*)", $(sys.fqhost), "org_part");
 
 vars:
 
@@ -24,11 +25,8 @@ vars:
   "master_profile"            string => "$(master_roadshow)/profile";
   "master_data"               string => "$(sys.workdir)/roadshow_data";
   "roadshow_inputs"           string => "$(sys.workdir)/roadshow_inputs";
-  "organisation"              string => "$(organisation)";
-  "environment"               string => "$(environment)";
-  "department"                string => "$(department)";
-  "location"                  string => "$(location)";
-  "role"                      string => "$(role)";
+  "organisation"              string => "$(org_part[2])";
+
   "eco_vars"                  string => "$(organisation)$(environment)$(department)$(location)";
   "vendor"                    string => "$(vendor.vendor)";
 
