@@ -19,8 +19,8 @@ rm -rf /var/cfengine/roadshow_policies
 cp -a ${policy_dir}/masterfiles/3_7_5/* /var/cfengine/masterfiles
 cp -a ${policy_dir}/masterfiles_updates/3_7_5/* /var/cfengine/masterfiles
 
-cp -al ${policy_dir}/roadshow_data /var/cfengine
-cp -al ${policy_dir}/roadshow_policies /var/cfengine
+cp -rl ${policy_dir}/roadshow_data /var/cfengine
+cp -rl ${policy_dir}/roadshow_policies /var/cfengine
 
 rm /var/cfengine/masterfiles/cf_promises_validated
 rm /var/cfengine/masterfiles/services/autorun/hello.cf
