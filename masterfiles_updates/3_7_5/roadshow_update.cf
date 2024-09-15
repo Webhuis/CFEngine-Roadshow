@@ -11,7 +11,7 @@ vars:
 
   "master_standard"           string => "$(sys.workdir)/masterfiles";
   "master_roadshow"           string => "$(sys.workdir)/roadshow_policies";
-  "master_pool"               string => "$(master_roadshow)/pool";
+  "master_profile"            string => "$(master_roadshow)/profile";
   "master_data"               string => "$(sys.workdir)/roadshow_data";
   "roadshow_inputs"           string => "$(sys.workdir)/roadshow_inputs";
   "organisation"              string => "$(classify.organisation)";
@@ -145,7 +145,7 @@ files:
 
   "$(roadshow_inputs)/role/role_profile_update.cf"
      handle       => "update_files_inputs_role_profile_update",
-     copy_from    => r_rcp("$(master_pool)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_profile)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
