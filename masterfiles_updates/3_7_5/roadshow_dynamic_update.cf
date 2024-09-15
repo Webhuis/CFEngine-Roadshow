@@ -50,7 +50,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-#methods:
+methods:
 
   "We desire the role inputs"  usebundle => $(role);
 
