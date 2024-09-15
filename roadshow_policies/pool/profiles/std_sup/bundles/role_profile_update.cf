@@ -8,7 +8,7 @@ files:
 
  has_role::
   "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role).inputs)"
-      handle       => "update_files_inputs_roadshow_components",
+      handle       => "update_files_inputs_roadshow_profile",
       copy_from    => r_rcp("${master_policies}/components/$($(classify.role).inputs)", $(sys.policy_hub)),
      #depth_search => r_recurse("inf"),
       file_select  => r_policies,
