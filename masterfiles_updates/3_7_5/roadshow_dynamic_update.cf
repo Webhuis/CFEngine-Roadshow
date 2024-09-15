@@ -63,6 +63,14 @@ reports:
 
 }
 
+bundle common roadshow_role {
+
+vars:
+
+      "role"        slist => findfiles("$(sys.workdir)/roadshow_inputs/role/*.cf");
+
+}
+
 body common control {
 
   bundlesequence => {
