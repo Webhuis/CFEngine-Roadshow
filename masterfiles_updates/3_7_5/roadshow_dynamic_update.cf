@@ -10,6 +10,7 @@ bundle agent roadshow_dynamic_update {
 classes:
 
   "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
+  "has_role"         expression => isvariable("role");
 
 vars:
 
