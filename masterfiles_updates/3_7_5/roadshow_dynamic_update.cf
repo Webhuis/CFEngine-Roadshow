@@ -90,7 +90,7 @@ body common control {
 
   };
 
-  ignore_missing_bundles => "false";
+  ignore_missing_bundles => "true";
 
       # Uncomment to connect to the hub using latest protocol.
       #protocol_version => "latest";
