@@ -145,7 +145,7 @@ files:
 
   "$(roadshow_inputs)/role/role_profile_update.cf"
      handle       => "update_files_inputs_role_profile_update",
-     copy_from    => r_rcp("$(master_pool)/$(role)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_pool)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
