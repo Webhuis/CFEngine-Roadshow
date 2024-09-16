@@ -29,7 +29,7 @@ files:
      handle       => "update_files_inputs_profile_policies",
      depth_search => r_recurse("inf"),
      copy_from    => r_rcp("$(master_profile)/$(classify.role)/role_profile/bundles", $(sys.policy_hub)),
-     file_select  => r_templates,
+     file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
@@ -48,7 +48,7 @@ reports:
   "$(this.bundle): $(master_roadshow)";
   "$(this.bundle): $(roadshow_inputs)";
   "$(this.bundle): $(master_profile)";
-  "$(this.bundle): $($(classify.role))";
+  "$(this.bundle): $(classify.role)";
   "$(this.bundle): $($(classify.role).inputs)";
 
 }
