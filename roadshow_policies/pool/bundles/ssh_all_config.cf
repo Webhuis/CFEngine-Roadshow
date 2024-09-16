@@ -7,7 +7,7 @@ vars:
 
 methods:
 
-  "The sshd role based config"           usebundle => sshd_role_config;
+  "The sshd role based config"           usebundle => sshd_config;
   "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
 
 reports:
@@ -16,13 +16,13 @@ reports:
 
 }
 
-bundle agent sshd_role_config {
+bundle agent sshd_config {
 
 vars:
 
   "sshd_config"                                string => "/etc/ssh/sshd_config";
 
- files:
+files:
 
  valid_admin_ip::
   "$(sshd_config)"
@@ -30,12 +30,12 @@ vars:
    perms                     => mo("644","root"),
    create                    => "true",
    action                    => r_immediate,
-   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/$(role_profile.role_sshd_config_template)",
+   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/sshd_config.tmpl)",
    classes                   => if_repaired("restart_sshd");
 
-methods:
-
-  "Get the sshd role tempate"            usebundle => get_template("$(role_profile.role_sshd_config_template)");
+#methods:
+#
+# "Get the sshd role tempate"            usebundle => get_template("$(role_profile.role_sshd_config_template)");
 
 services:
 
@@ -62,10 +62,10 @@ reports:
 
 bundle agent edit_ssh(file,params) {
 
-  files:
-      "$(file)"
-       handle                => "edit_ssh",
-       comment               => "Set desired ssh_config parameters",
-       edit_line             => set_config_values("$(params)");
+files:
+  "$(file)"
+  handle                => "edit_ssh",
+  comment               => "Set desired ssh_config parameters",
+  edit_line             => set_config_values("$(params)");
 
 }
