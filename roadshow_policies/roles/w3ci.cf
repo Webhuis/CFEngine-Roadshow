@@ -4,14 +4,10 @@ vars:
 
   "role_name"                                  string => "HTTP HTTPS w3c compliant internal Webserver";
 
-  "bundles[role_profile]"                         string => "$(role_profile).cf";
   "bundles[apache2]"                           string => "${sys.flavor}/apache2.cf";
   "bundles[nginx]"                             string => "${sys.flavor}/nginx.cf";
-  "pool_bundles"                                slist => { "$(sys.workdir)/pool/bundles/role_profile.cf" };
-  "pool_role_bundles"                           slist => findfiles("$(sys.workdir)/pool/bundles/$(this)/*.cf");
 
-  "sequence"                                    slist => getindices("bundles");
-  "inputs"                                      slist => { getvalues("bundles", @(pool_bundles), @(pool_role_bundles)) };
+  "inputs"                                      slist => getvalues("bundles");
 
 methods:
 
@@ -21,7 +17,6 @@ methods:
 reports:
 
   "${this.bundle} role name: $(role-name)";
-  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }
