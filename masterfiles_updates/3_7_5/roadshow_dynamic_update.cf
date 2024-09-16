@@ -7,14 +7,7 @@
 
 bundle agent roadshow_dynamic_update {
 
-classes:
-
-  "parsed_uqdn"      expression => regextract("^(....)(.)(..)(..)(...).*", $(sys.uqhost), "part");
-  "has_role"         expression => isvariable("role");
-
 vars:
-
-  "role"                               string => "$(part[1])";
 
   "master_roadshow"                    string => "$(sys.workdir)/roadshow_policies";
   "roadshow_inputs"                    string => "$(sys.workdir)/roadshow_inputs";
@@ -23,9 +16,9 @@ vars:
 files:
 
  has_role::
-  "$(sys.workdir)/roadshow_dynamic_inputs/components/$(role.inputs)"
+  "$(sys.workdir)/roadshow_dynamic_inputs/components/$($(classify.role.inputs)"
       handle       => "update_files_inputs_roadshow_components",
-      copy_from    => r_rcp("${master_roadshow}/components/$(role.inputs)", $(sys.policy_hub)),
+      copy_from    => r_rcp("${master_roadshow}/components/$($(classify.role.inputs)", $(sys.policy_hub)),
      #depth_search => r_recurse("inf"),
       file_select  => r_policies,
       action       => r_immediate,
@@ -35,7 +28,7 @@ files:
   "$(roadshow_inputs)/profile"
      handle       => "update_files_inputs_profile_policies",
      depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("$(master_profile)/$(role)/role_profile/bundles", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_profile)/$($(classify.role)/role_profile/bundles", $(sys.policy_hub)),
      file_select  => r_templates,
      action       => r_immediate,
      create       => "true",
@@ -44,23 +37,19 @@ files:
   "$(roadshow_inputs)/templates"
      handle       => "update_files_inputs_profile_templates",
      depth_search => r_recurse("inf"),
-     copy_from    => r_rcp("$(master_profile)/$(role)/role_profile/templates", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_profile)/$($(classify.role)/role_profile/templates", $(sys.policy_hub)),
      file_select  => r_templates,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
-
-methods:
-
-  "We desire the role inputs"  usebundle => $(role);
 
 reports:
 
   "$(this.bundle): $(master_roadshow)";
   "$(this.bundle): $(roadshow_inputs)";
   "$(this.bundle): $(master_profile)";
-  "$(this.bundle): $(role)";
-  "$(this.bundle): $(role.inputs)";
+  "$(this.bundle): $($(classify.role)";
+  "$(this.bundle): $($(classify.role.inputs)";
 
 }
 
@@ -84,9 +73,10 @@ body common control {
 
       # Roadshow policy update body values
 
-                  "roadshow_dynamic_update.cf",
+                  "services/autorun/classify.cf",
                   @(roadshow_role.role),
                   "roadshow_update_policy.cf"
+                  "roadshow_dynamic_update.cf",
 
   };
 
