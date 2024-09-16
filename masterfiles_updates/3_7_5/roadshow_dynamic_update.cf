@@ -75,8 +75,8 @@ body common control {
 
                   "services/autorun/classify.cf",
                   @(roadshow_role.role),
-                  "roadshow_update_policy.cf"
-                  "roadshow_dynamic_update.cf",
+                  "roadshow_update_policy.cf",
+                  "roadshow_dynamic_update.cf"
 
   };
 
