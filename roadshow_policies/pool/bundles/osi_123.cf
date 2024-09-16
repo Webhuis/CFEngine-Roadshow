@@ -18,7 +18,6 @@ methods:
 
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
 
-                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 
 reports:
 
