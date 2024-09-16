@@ -65,6 +65,7 @@ body common control {
 
   bundlesequence => {
 
+                          "classify"
                           "roadshow_dynamic_update"
 
   };
