@@ -1,17 +1,3 @@
-bundle agent nic_mac_map (nic) {
-
-methods:
-
- !kvm::
-  "l0 source interfaces.d"        usebundle => l0_interface;
-  "map nics and macs"             usebundle => configure_interfaces($(nic));
-
-reports:
-
-  "$(this.bundle) nic: $(nic)";
-
-}
-
 bundle agent l0_interface {
 
 files:

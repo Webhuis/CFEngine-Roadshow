@@ -2,7 +2,16 @@ bundle agent life_gwy {
 
 vars:
 
-  "life_gwy"                     string => "I am The gateway to Life"; 
+  "life_gwy"                           string => "I am The gateway to Life"; 
+
+  "pkg[arp-scan]"                      string => "*";
+  "pkg[array-info]"                    string => "*";
+  "pkg[parted]"                        string => "*";
+  "pkg[tigervnc-viewer]"               string => "*";
+
+Methods:
+
+  "We are the gateway to life"      usebundle => packages("life_gwy.pkg");
 
 reports:
 

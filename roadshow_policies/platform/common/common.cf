@@ -8,17 +8,9 @@ methods:
  has_sudoer_rules::
   "Prepare for users"                       usebundle => manage_users( "common_users.users",  $(common_users.sudoer_rules) );
 
- has_nic_sequence::
-  "We need predictable names"               usebundle => persistent_link($(role_profile.nic_trick));
-
- has_nic_index::
-  "Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
-                                              comment => "OSI Layers one and two";
-
- has_nic_values::
-  "Interfaces predictable names"            usebundle => nic_mac_map($(role_profile.nic_values));
-
  any::
+
+  "We require configured osi layers 1-2-3"  usebundle => osi_123;
 
   "Host data driven policies go here"       usebundle => host_data_driven_policies;
 
