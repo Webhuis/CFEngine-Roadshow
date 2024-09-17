@@ -9,7 +9,7 @@ vars:
   "pkg[parted]"                        string => "*";
   "pkg[tigervnc-viewer]"               string => "*";
 
-Methods:
+methods:
 
   "We are the gateway to life"      usebundle => packages("life_gwy.pkg");
 
