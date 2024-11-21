@@ -67,14 +67,6 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/common_data"
-     comment      => "Copy data bundles that are common",
-     copy_from    => r_rcp("$(master_data)/common", $(sys.policy_hub)),
-     depth_search => r_recurse("inf"),
-     action       => r_immediate,
-     create       => "true",
-     classes      => r_if_repaired("validated_updates_ready");
-
   "$(roadshow_inputs)/platform/$(vendor)_common"
      handle       => "update_files_inputs_roadshow_platform_components",
      copy_from    => r_rcp("$(master_roadshow)/platform/$(vendor)/$(vendor)_common/", $(sys.policy_hub)),
@@ -84,14 +76,13 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-# "$(roadshow_inputs)/templates"
-#    handle       => "update_files_inputs_roadshow_templates",
-#    depth_search => r_recurse("inf"),
-#    copy_from    => r_rcp("$(master_roadshow)/templates", $(sys.policy_hub)),
-#    file_select  => r_templates,
-#    action       => r_immediate,
-#    create       => "true",
-#    classes      => r_if_repaired("update_report");
+  "$(roadshow_inputs)/common_data"
+     comment      => "Copy data bundles that are common",
+     copy_from    => r_rcp("$(master_data)/common", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("validated_updates_ready");
 
  has_domain::
   "$(roadshow_inputs)/domain/$(sys.domain).cf"
@@ -135,21 +126,24 @@ files:
      classes      => r_if_repaired("update_report");
 
  has_role::
-  "$(roadshow_inputs)/role/$(role).cf"
+  "$(roadshow_inputs)/role/"
      handle       => "update_files_inputs_roadshow_role",
-     copy_from    => r_rcp("$(master_roadshow)/roles/$(role).cf", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_roadshow)/roles/$(role)", $(sys.policy_hub)),
+     depth_search => r_recurse("inf"),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
 
-  "$(roadshow_inputs)/role/role_profile_update.cf"
-     handle       => "update_files_inputs_role_profile_update",
-     copy_from    => r_rcp("$(master_profile)/$(role)/role_profile/bundles/role_profile_update.cf", $(sys.policy_hub)),
-     file_select  => r_policies,
-     action       => r_immediate,
-     create       => "true",
-     classes      => r_if_repaired("update_report");
+  "$(roadshow_inputs)/components/"
+      handle       => "update_files_inputs_roadshow_components",
+      copy_from    => r_rcp("${master_roadshow}/components/$(sys.flavor)/$($(classify.role)/", $(sys.policy_hub)),
+      depth_search => r_recurse("inf"),
+      file_select  => r_policies,
+      action       => r_immediate,
+      create       => "true",
+      classes      => r_if_repaired("update_report");
+
 
 methods:
 

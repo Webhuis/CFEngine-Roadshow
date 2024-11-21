@@ -4,7 +4,7 @@ files:
 
  valid_hosts_ip::
   "/etc/hosts"
-  comment                   => "/etc/hosts voor elke hosti, let op voor de uitzondering etcd moet de template naam een role gerelateerde variabele zijn",
+  comment                   => "/etc/hosts for main stream hosts"
   create                    => "true",
   perms                     => mo("644","root"),
   edit_template             => "$(sys.workdir)/roadshow_inputs/templates/etc_hosts.tmpl",
