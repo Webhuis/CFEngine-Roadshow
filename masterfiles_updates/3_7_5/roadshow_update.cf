@@ -130,7 +130,7 @@ files:
      handle       => "update_files_inputs_roadshow_role",
      copy_from    => r_rcp("$(master_roadshow)/roles/$(role)", $(sys.policy_hub)),
      depth_search => r_recurse("inf"),
-     file_select  => r_policies,
+     file_select  => r_dynamic,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
@@ -139,7 +139,7 @@ files:
       handle       => "update_files_inputs_roadshow_components",
       copy_from    => r_rcp("${master_roadshow}/components/$(sys.flavor)/$(role)/", $(sys.policy_hub)),
       depth_search => r_recurse("inf"),
-      file_select  => r_policies,
+      file_select  => r_dynamic,
       action       => r_immediate,
       create       => "true",
       classes      => r_if_repaired("update_report");

@@ -203,3 +203,12 @@ body file_select r_templates {
 
 }
 
+#########################################################
+
+body file_select r_dynamic {
+
+      leaf_name => { ".*.cf", ".*.tmpl" };
+      file_result => "leaf_name";
+
+}
+
