@@ -19,8 +19,8 @@ rm -rf /var/cfengine/roadshow_policies
 cp -a ${policy_dir}/masterfiles/3_7_5/* /var/cfengine/masterfiles
 cp -a ${policy_dir}/masterfiles_updates/3_7_5/* /var/cfengine/masterfiles
 
-cp -rs ${policy_dir}/roadshow_data /var/cfengine
-cp -rs ${policy_dir}/roadshow_policies /var/cfengine
+cp -rL ${policy_dir}/roadshow_data /var/cfengine
+cp -rL ${policy_dir}/roadshow_policies /var/cfengine
 #mv /var/cfengine/roadshow_policies/pool /var/cfengine/roadshow_policies/profile
 
 rm /var/cfengine/masterfiles/cf_promises_validated
