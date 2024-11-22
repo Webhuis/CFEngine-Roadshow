@@ -15,13 +15,13 @@ files:
     create         => "true",
     perms          => mo("644","root"),
     edit_defaults  => no_backup,
-    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/apt_periodic.tmpl";
+    edit_template  => "$(sys.workdir)/role/templates/apt_periodic.tmpl";
 
   "$(apt_unattended_upgrades)"
     create         => "true",
     perms          => mo("644","root"),
     edit_defaults  => no_backup,
-    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/apt_unattended_upgrades.tmpl";
+    edit_template  => "$(sys.workdir)/role/templates/apt_unattended_upgrades.tmpl";
 
   "$(apt_listchanges)"
     create         => "true",

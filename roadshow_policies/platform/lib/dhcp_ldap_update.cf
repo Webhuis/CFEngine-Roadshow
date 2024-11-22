@@ -23,7 +23,7 @@ files:
   "/etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_template  => "$(sys.workdir)/roadshow_inputs/templates/ldap_host.tmpl";
+    edit_template  => "$(sys.workdir)/role/templates/ldap_host.tmpl";
 
 methods:
 
