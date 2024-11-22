@@ -27,11 +27,13 @@ files:
   "$(sys.workdir)/$(roadshow_inputs)/templates"
      depth_search => r_recurse("inf"),
      delete       => r_tidy,
+     file_select  => r_dynamic,
      classes      => r_if_repaired("templates_removed");
 
   "$(sys.workdir)/roadshow_dynamic_inputs"
      depth_search => r_recurse("inf"),
      delete       => r_tidy,
+     file_select  => r_dynamic,
      classes      => r_if_repaired("dynamic_inputs_removed");
 
   "$(sys.workdir)/bin/cf-message.py"
