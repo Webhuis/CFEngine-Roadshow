@@ -8,7 +8,7 @@ files:
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces.tmpl",
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/interfaces.tmpl",
     classes                                => if_repaired("reboot");
 
 reports:

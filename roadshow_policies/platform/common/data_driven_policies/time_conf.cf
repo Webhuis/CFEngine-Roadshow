@@ -48,7 +48,7 @@ files:
   "/etc/ntp.conf"
     create         => "true",
     perms          => mog("644","root","root"),
-    edit_template  => "$(sys.workdir)/role/templates/ntp_client.conf.tmpl",
+    edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ntp_client.conf.tmpl",
     classes        => if_repaired("restart_ntp");
 
 methods:

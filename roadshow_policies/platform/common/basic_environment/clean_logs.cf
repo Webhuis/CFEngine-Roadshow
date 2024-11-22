@@ -7,7 +7,7 @@ files:
     perms                     => mo("644","root"),
     action                    => r_immediate,
     classes                   => if_repaired("restart_rsyslogd"),
-    edit_template             => "$(sys.workdir)/roadshow_inputs/templates/rsyslog.conf.tmpl";
+    edit_template             => "$(sys.workdir)/roadshow_inputs/role/templates/rsyslog.conf.tmpl";
 
 services:
 
