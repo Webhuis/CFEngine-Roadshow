@@ -25,12 +25,12 @@ vars:
 files:
 
   "$(sys.workdir)/$(roadshow_inputs)/templates"
-     depth_search => r_recurse("inf");
+     depth_search => r_recurse("inf"),
      delete       => r_tidy,
      classes      => if_repaired("templates_removed");
 
   "$(sys.workdir)/roadshow_dynamic_inputs"
-     depth_search => r_recurse("inf");
+     depth_search => r_recurse("inf"),
      delete       => r_tidy,
      classes      => if_repaired("dynamic_inputs_removed");
 
