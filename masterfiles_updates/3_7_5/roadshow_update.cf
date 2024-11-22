@@ -30,6 +30,12 @@ files:
      file_select  => r_dynamic,
      classes      => r_if_repaired("templates_removed");
 
+  "$(sys.workdir)/$(roadshow_inputs)/profile"
+     depth_search => r_recurse("inf"),
+     delete       => r_tidy,
+     file_select  => r_dynamic,
+     classes      => r_if_repaired("profile_removed");
+
   "$(sys.workdir)/roadshow_dynamic_inputs"
      depth_search => r_recurse("inf"),
      delete       => r_tidy,
