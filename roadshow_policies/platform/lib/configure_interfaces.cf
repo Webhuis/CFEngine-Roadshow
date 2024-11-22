@@ -25,7 +25,7 @@ files:
     perms                                  => mo("644", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/templates/interfaces_eth.tmpl",
+    edit_template                          => "$(sys.workdir)/role/templates/interfaces_eth.tmpl",
     classes                                => if_repaired("restart_network");
 
 commands:
