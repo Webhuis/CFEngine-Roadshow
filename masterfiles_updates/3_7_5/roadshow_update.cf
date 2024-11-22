@@ -26,13 +26,13 @@ files:
 
   "$(sys.workdir)/$(roadshow_inputs)/templates"
      depth_search => r_recurse("inf");
-#    delete       => tidy,
-#    classes      => if_repaired("templates_removed");
+     delete       => r_tidy,
+     classes      => if_repaired("templates_removed");
 
   "$(sys.workdir)/roadshow_dynamic_inputs"
      depth_search => r_recurse("inf");
-#    delete       => tidy,
-#    classes      => if_repaired("dynamic_inputs_removed");
+     delete       => r_tidy,
+     classes      => if_repaired("dynamic_inputs_removed");
 
   "$(sys.workdir)/bin/cf-message.py"
      handle       => "update_bin_roadshow",
