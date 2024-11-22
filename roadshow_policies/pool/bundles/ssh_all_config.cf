@@ -30,7 +30,7 @@ files:
    perms                     => mo("644","root"),
    create                    => "true",
    action                    => r_immediate,
-   edit_template             => "$(sys.workdir)/roadshow_dynamic_inputs/templates/sshd_config.tmpl)",
+   edit_template             => "$(sys.workdir)/role/templates/sshd_config.tmpl)",
    classes                   => if_repaired("restart_sshd");
 
 #methods:
