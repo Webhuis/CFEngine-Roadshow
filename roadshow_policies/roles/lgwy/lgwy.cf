@@ -11,6 +11,5 @@ methods:
 reports:
 
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }

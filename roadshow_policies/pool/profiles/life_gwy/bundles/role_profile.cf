@@ -4,6 +4,7 @@ vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[life]"                        string => "$($(classify.organisation).nic[life])";
 
   "nic_index"                          slist => getindices("nic");
   "nic_values"                         slist => getvalues("nic");
