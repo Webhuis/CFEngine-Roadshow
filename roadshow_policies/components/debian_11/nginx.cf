@@ -2,9 +2,9 @@ bundle agent nginx {
 
 vars:
 
-    "pkg[certbot]"                         string => "*";
+   #"pkg[certbot]"                         string => "*";
     "pkg[nginx]"                           string => "*";
-    "pkg[python-certbot-nginx]"            string => "*";
+   #"pkg[python-certbot-nginx]"            string => "*";
 
 methods:
 
