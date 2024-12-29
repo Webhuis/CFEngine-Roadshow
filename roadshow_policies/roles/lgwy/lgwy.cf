@@ -4,10 +4,6 @@ vars:
 
   "role_name"                         string => "Life gateway";
 
-  "bundles[life_gwy]"                 string => "life_gwy.cf";
-
-  "inputs"                             slist => getvalues("bundles");
-
 methods:
 
   "We are the gateway to life"     usebundle => "life_gwy";
