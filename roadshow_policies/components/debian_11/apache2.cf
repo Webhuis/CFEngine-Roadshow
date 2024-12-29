@@ -26,7 +26,6 @@ files:
 
 methods:
 
-  "any" usebundle => get_template("$(000_default)");
   "any" usebundle => packages("apache2.pkg");
 
 commands:

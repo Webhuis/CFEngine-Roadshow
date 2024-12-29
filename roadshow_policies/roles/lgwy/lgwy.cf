@@ -3,22 +3,18 @@ bundle agent lgwy {
 vars:
 
   "role_name"                         string => "Life gateway";
-  "role_profile"                         string => "role_profile_life";
 
-  "bundles[role_profile]"                string => "$(role_profile).cf";
   "bundles[life_gwy]"                 string => "life_gwy.cf";
 
-  "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
 methods:
 
-  "We are the CFEngine policy Hub" usebundle => "life_gwy";
+  "We are the gateway to life"     usebundle => "life_gwy";
 
 reports:
 
   "$(this.bundle) role name: $(role_name)";
-  "$(this.bundle) role data: $(role_profile)";
   "$(this.bundle) role inputs: $($(classify.role).inputs)";
 
 }
