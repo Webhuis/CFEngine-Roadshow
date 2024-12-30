@@ -25,6 +25,7 @@ reports:
   "$(this.bundle) nic index: $(role_profile.nic_index)";
   "$(this.bundle) nic values: $(role_profile.nic_values)";
   "$(this.bundle) ip list: $(role_profile.ip_list)";
+  "$(this.bundle) ips: $(classify.ips)";
 
   "$(this.bundle): I am checking basic interface stuff first, $(role_profile.nic[$(role_profile.nic_index)]).";
   "$(this.bundle): I am doing common and data driven policies.";
