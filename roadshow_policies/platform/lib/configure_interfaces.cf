@@ -3,7 +3,7 @@ bundle agent configure_interfaces (ips) {
 classes:
 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
-  "configure_interface"         expression => strcmp($(ips), $(current_device));
+ #"configure_interface"         expression => strcmp($(ips), $(current_device));
 
 vars:
 
@@ -18,7 +18,7 @@ vars:
 
 files:
 
- configure_interface::
+ #configure_interface::
   "/etc/network/interfaces.d/$(current_device)"
     comment                                => "one file per nic",
     create                                 => "true",
@@ -37,7 +37,6 @@ commands:
 reports:
 
   "$(this.bundle) current_device: $(current_device)";
-  "$(this.bundle) default_device_list $(default_device_list)";
   "$(this.bundle) ips $(ips)";
 
  configure_interface::
