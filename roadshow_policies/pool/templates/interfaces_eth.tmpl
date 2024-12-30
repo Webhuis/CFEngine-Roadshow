@@ -7,7 +7,7 @@
 [%CFEngine any:: %]
 
 allow-hotplug $(configure_interfaces.current_device)
-iface $(configure_interfaces.configure_interfaces) inet static
+iface $(configure_interfaces.current_device) inet static
   address $(configure_interfaces.current_ip)
 [%CFEngine gateway:: %]
   gateway $(configure_interfaces.gateway_ip)
