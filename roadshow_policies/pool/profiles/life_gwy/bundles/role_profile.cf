@@ -4,10 +4,11 @@ vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
-  "nic[life]"                        string => "$($(classify.organisation).nic[life])";
+  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
 
   "nic_index"                          slist => getindices("nic");
-  "nic_values"                         slist => getvalues("nic");
+  "nic_values_unsorted"                slist => getvalues("nic");
+  "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1", "2" };
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
@@ -32,7 +33,7 @@ vars:
   "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
   "ddns[life][ip]"                    string => "$(ip[life])";
   "ddns[life][nic]"                   string => "$(nic[life])";
-  "ddns[life][suffix]"                string => "-ssh";
+  "ddns[life][suffix]"                string => "-life";
   "ddns[life][vlan]"                  string => "$($(classify.organisation).vlan[life])";
 
   "ddns_index"                         slist => getindices("ddns");

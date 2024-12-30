@@ -134,7 +134,7 @@ bundle agent create_sudoer(user, sudoers_rules) {
 files:
 
   "/etc/sudoers.d/$(user)"
-     comment                => "ESP sudoers_config",
+     comment                => "Webhuis sudoers_config",
      create                 => "true",
      perms                  => mog("0440","root","root"),
      edit_defaults          => no_backup,
