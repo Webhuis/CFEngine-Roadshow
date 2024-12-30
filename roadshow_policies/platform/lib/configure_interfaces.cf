@@ -37,6 +37,7 @@ commands:
 reports:
 
   "$(this.bundle) current_device: $(current_device)";
+  "$(this.bundle) ips $(ips)";
 
  configure_interface::
   "$(this.bundle) current_ip : $(current_ip)";
