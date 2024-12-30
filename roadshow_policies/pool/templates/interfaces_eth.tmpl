@@ -6,8 +6,8 @@
 #
 [%CFEngine any:: %]
 
-allow-hotplug $(configure_interfaces.nic)
-iface $(configure_interfaces.nic) inet static
-  address $(match_nic_ips.current_ip)
+allow-hotplug $(configure_interfaces.current_device)
+iface $(configure_interfaces.current_device) inet static
+  address $(current_device.current_ip)
 [%CFEngine gateway:: %]
-  gateway $(match_nic_ips.gateway_ip)
+  gateway $(current_device.gateway_ip)
