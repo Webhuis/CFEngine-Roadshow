@@ -1,0 +1,23 @@
+bundle agent debian_12 {
+
+vars:
+
+  "pkg[autofs]"                             string => "*";
+  "pkg[autofs-ldap]"                        string => "*";
+  "pkg[python3-zmq]"                        string => "*";
+
+  "name"                                    string => "bookworm";
+  "updates"                                 string => " bookworm-security"; # The space is intentional
+
+  "ip_cmd"                                  string => "/usr/sbin/ip";
+
+methods:
+
+  "We desire bookworm packages"          usebundle => packages("debian_12.pkg");
+
+reports:
+
+  "$(this.bundle):";
+
+}
+
