@@ -1,0 +1,13 @@
+bundle agent kvm_host {
+  
+vars:
+
+  "templates"                           slist => { "debootstrap.config.sdx.tmpl", "modules.tmpl" };
+  "modules"                             slist => { "8021q" };
+
+reports:
+
+  "$(this.bundle): Common kvm host stuff";
+
+}
+
