@@ -1,0 +1,34 @@
+bundle agent support_interface(vlan_support) {
+
+vars:
+
+  "vlan"                            string => $(vlan_support);
+
+  "default_route"                   string => nth("classify.ipr", 0);
+  "default_device_list"              slist => splitstring( $(default_route), " ", "20");
+  "gateway_ip"                      string => nth("default_device_list", "2");
+
+files:
+
+  "/etc/network/interfaces.d/vlan$(vlan)"
+    comment                                => "vlan support interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/support_interface.tmpl",
+    classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network::
+
+  "/usr/bin/systemctl restart networking";
+
+
+reports:
+
+  "$(this.bundle): vlan support interface vlan$(vlan)";
+
+}
+

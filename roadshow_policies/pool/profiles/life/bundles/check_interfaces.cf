@@ -1,0 +1,11 @@
+bundle agent check_interfaces(vlan) {
+
+commands:
+ 
+  "/sbin/ip link set dev $(vlan) up";
+
+reports:
+
+ "$(this.bundle): I am bringing vlans up: $(vlan).";
+
+}

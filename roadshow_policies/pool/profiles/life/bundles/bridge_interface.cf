@@ -1,0 +1,19 @@
+bundle agent bridge_interface {
+
+files:
+
+  "/etc/network/interfaces"
+    comment                                => "bridge interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/bridge_interface.tmpl",
+    classes                                => if_repaired("reboot");
+
+reports:
+
+  "$(this.bundle): bridge interface standard part";
+
+}
+

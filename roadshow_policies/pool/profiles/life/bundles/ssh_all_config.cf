@@ -5,13 +5,6 @@ vars:
   "ssh_config"                              string => "/etc/ssh/ssh_config";
   "ssh[ServerAliveInterval]"                string => "60";
 
-files:
-
-  "/root/.ssh/"
-    file_select    => all,
-    depth_search   => recurse(inf),
-    delete         => tidy;
-
 methods:
 
   "The sshd role based config"           usebundle => sshd_config;
@@ -31,7 +24,7 @@ vars:
 
 files:
 
- valid_admin_ip::
+ valid_life_ip::
   "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
@@ -55,11 +48,11 @@ reports:
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
- valid_admin_ip::
-  "$(this.bundle) etc_hosts_nic: $(admin_ip)";
+ valid_hosts_ip::
+  "$(this.bundle) etc_hosts_nic: $(hosts_ip)";
 
- !valid_admin_ip::
-   "$(this.bundle): bad admin_ip! $(admin_ip)";
+ !valid_life_ip::
+   "$(this.bundle): bad life_ip! $(life_ip)";
 
 }
 

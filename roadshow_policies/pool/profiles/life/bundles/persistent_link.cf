@@ -1,0 +1,38 @@
+bundle agent persistent_link {
+ 
+classes:
+
+  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("classify.macs", "0"), "part"); 
+
+vars:
+
+ mac_ok::
+  "mac_address"                     string => "$(part[1])";
+
+files:
+
+ mac_ok::
+
+  "/etc/systemd/network/*"
+    file_select    => all,
+    delete         => tidy;
+
+  "/etc/systemd/network/10_eth0_persistent.link"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
+    classes                                => if_repaired("reboot");
+
+commands:
+
+ reboot:: 
+  "/usr/sbin/shutdown -r 3";
+
+reports:
+
+  "$(this.bundle) mac eth0: $(mac_address)";
+ 
+}

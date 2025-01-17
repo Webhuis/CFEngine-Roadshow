@@ -4,7 +4,16 @@ vars:
 
   "pkg[autofs]"                             string => "*";
   "pkg[autofs-ldap]"                        string => "*";
+  "pkg[debian-goodies]"                     string => "*";
+  "pkg[dnsutils]"                           string => "*";
+  "pkg[ldap-utils]"                         string => "*";
+  "pkg[libpam-ldap]"                        string => "*";
+  "pkg[libnss-ldap]"                        string => "*";
+  "pkg[libpam-cracklib]"                    string => "*";
+  "pkg[locales-all]"                        string => "*";
+  "pkg[openssh-server]"                     string => "*";
   "pkg[python3-zmq]"                        string => "*";
+  "pkg[smbclient]"                          string => "*";
 
   "name"                                    string => "bullseye";
   "updates"                                 string => " bullseye-security"; # The space is intentional

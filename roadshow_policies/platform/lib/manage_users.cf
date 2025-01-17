@@ -4,13 +4,6 @@ vars:
 
   "index"                           slist => getindices( $(users) );
 
-files:
-
-  "/root/.ssh/"
-    file_select    => all,
-    depth_search   => recurse(inf),
-    delete         => tidy;
-
 methods:
 
   "We desire groups"            usebundle => create_group( "$(index)", "$($(users)[$(index)][gname])", "$($(users)[$(index)][gid])" ),

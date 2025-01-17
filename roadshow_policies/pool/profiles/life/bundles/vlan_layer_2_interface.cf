@@ -1,0 +1,37 @@
+bundle agent vlan_layer_2_interface(vlan_layer_2) {
+
+vars:
+
+  "vlan"                            string => $(vlan_layer_2);
+
+files:
+
+  "/etc/network/interfaces.d/vlan$(vlan)"
+    comment                                => "vlan layer 2 only interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/vlan_layer_2_interface.tmpl",
+    classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network::
+
+  "/usr/bin/systemctl restart networking";
+
+
+commands:
+
+ restart_network::
+
+  "/usr/sbin/service networking restart";
+
+
+reports:
+
+  "$(this.bundle): vlan layer 2 interface vlan$(vlan)";
+
+}
+

@@ -9,15 +9,8 @@ vars:
 
  any::
 
-  "pkg[debian-goodies]"                 string => "*";
-  "pkg[dnsutils]"                       string => "*";
   "pkg[openssh-server]"                 string => "*";
-  "pkg[libpam-ldap]"                    string => "*";
-  "pkg[libnss-ldap]"                    string => "*";
-  "pkg[libpam-cracklib]"                string => "*";
-  "pkg[ldap-utils]"                     string => "*";
   "pkg[locales-all]"                    string => "*";
-  "pkg[smbclient]"                      string => "*";
   "pkg[vim]"                            string => "*";
   "pkg[wget]"                           string => "*";
 

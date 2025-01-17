@@ -1,29 +1,62 @@
 bundle common role_profile {
 
+classes:
+
+  "has_ovs_ports"                  expression => isvariable("ovs_ports");
+  "has_layer_2"                    expression => isvariable("layer_2");
+  "has_layer_2"                    expression => isvariable("layer_2");
+  "has_ddns_index"                 expression => isvariable("ddns_index");
+  "has_hosts_var"                  expression => isvariable("hosts_ip");
+  "has_life_var"                   expression => isvariable("life_ip");
+  "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
+
+ has_ovs_ports::
+  "no_device_$(ovs_ports)"         expression => regcmp( ".*does not exist.*",
+                                                        "$(var_$(ovs_ports))");
+  "if_down_$(ovs_ports)"           expression => regcmp( ".*DOWN.*",
+                                                        "$(var_$(ovs_ports))");
+ 
+  "interface_up"              
+ has_hosts_var::
+  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(hosts_ip)"
+            );
+ has_life_var::
+  "valid_life_ip"                  comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(life_ip)"
+            );
+
 vars:
 
-  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
+  "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
+  "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
 
-  "nic_index"                          slist => getindices("nic");
-  "nic_values_unsorted"                slist => getvalues("nic");
-  "nic_values"                         slist => sort("nic_values_unsorted", "lex");
-  "nic_trick"                          slist => { "0", "1" };
+  "vlan_numbers"                       slist => getvalues("$(classify.organisation).vlan");
+  "layer_3"                            slist => { "42", "123" };
+  "layer_2_step_1"                     slist => filter("42", "vlan_numbers", "true", "true", 99);
+  "layer_2"                            slist => filter("123", "layer_2_step_1", "true", "true", 99);
+  "vlans_sorted"                       slist => sort("vlan_numbers", "int");
+  "ovs_ports_raw"                     string => join(" vlan", vlans_sorted);
+  "ovs_ports"                         string => concat("eth0 vlan", "$(ovs_ports_raw)");
 
-  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
+  "var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
+
+  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(vlan[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
   "ip[support]"                       string => nth("ip_list[support]", "1");
 
-  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[life])", noshell);
+  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(vlan[life])", noshell);
   "ip_list[life]"                      slist => string_split($(ip_line[life]), "src ", 99);
   "ip[life]"                          string => nth("ip_list[life]", "1");
 
   "ddns[support][ip]"                 string => "$(ip[support])";
-  "ddns[support][nic]"                string => "$(nic[support])";
+  "ddns[support][vlan]"               string => "$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
   "ddns[life][ip]"                    string => "$(ip[life])";
-  "ddns[life][nic]"                   string => "$(nic[life])";
+  "ddns[life][vlan]"                  string => "$(vlan[life])";
   "ddns[life][suffix]"                string => "-ssh";
   "ddns[life][vlan]"                  string => "$($(classify.organisation).vlan[life])";
 
@@ -34,9 +67,7 @@ vars:
 
 reports:
 
-  "$(this.bundle) nic: $(nic[$(nic_index)])";
-  "$(this.bundle) nic_index: $(nic_index)";
-  "$(this.bundle) nic_values: $(nic_values)";
+  "$(this.bundle) vlans: $(vlan[$(vlan_index)])";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";

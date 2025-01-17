@@ -1,0 +1,30 @@
+bundle agent life_interface(vlan_life) {
+
+vars:
+
+  "vlan"                            string => $(vlan_life);
+
+files:
+
+  "/etc/network/interfaces.d/vlan$(vlan)"
+    comment                                => "vlan life interface",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/life_interface.tmpl",
+    classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network::
+
+  "/usr/bin/systemctl restart networking";
+
+
+reports:
+
+  "$(this.bundle): vlan life interface vlan$(vlan)";
+
+}
+

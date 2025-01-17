@@ -3,7 +3,7 @@ bundle agent configure_interfaces (ips) {
 classes:
 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
- #"configure_interface"         expression => strcmp($(ips), $(current_device));
+  "configure_interface"         expression => strcmp($(ips), $(current_device));
 
 vars:
 
@@ -19,7 +19,7 @@ vars:
 
 files:
 
- #configure_interface::
+  configure_interface::
   "/etc/network/interfaces.d/$(current_device)"
     comment                                => "one file per nic",
     create                                 => "true",
@@ -33,7 +33,7 @@ commands:
 
  restart_network::
 
-  "/usr/sbin/service networking restart";
+  "/usr/bin/systemctl restart networking";
 
 reports:
 
