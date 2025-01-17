@@ -3,7 +3,7 @@ bundle agent osi_123 (ovs_ports) {
 methods:
 
   "We need the eth0 predictable interface"  usebundle => persistent_link;
- no_device_$ovs_ports)::
+ no_device_$(ovs_ports)::
   "We need the bridge"                      usebundle => bidge_interface;
   "The vlan support interface"              usebundle => support_interface($(role_profile.vlan[support]));
   "The vlan life interface"                 usebundle => life_interface($(role_profile.vlan[life]));
