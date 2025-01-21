@@ -5,10 +5,10 @@ vars:
   "templates"                           slist => { "debootstrap.config.sdx.tmpl", "modules.tmpl" };
   "modules"                             slist => { "8021q" };
 
-  "apt_repo[proxmox]"                  string => "deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription";
-  "apt_repo[proxmox_ceph]"             string => "deb http://download.proxmox.com/debian/ceph-pacific bullseye main";
+  "apt_repo[proxmox]"                  string => "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription";
+  "apt_repo[proxmox_ceph]"             string => "deb http://download.proxmox.com/debian/ceph-pacific bookworm main";
 
-  "apt_key"                            string => "proxmox-release-bullseye.gpg";
+  "apt_key"                            string => "proxmox-release-bookworm.gpg";
 
   "pkg[arp-scan]"                      string => "*";
   "pkg[array-info]"                    string => "*";
@@ -29,10 +29,10 @@ vars:
 
 files:
 
-  "/var/cache/apt/proxmox-release-bullseye.gpg"
+  "/var/cache/apt/proxmox-release-bookworm.gpg"
     comment      => "Prepare grml debootstrap environment",
     perms        => mo("644","root"),
-    copy_from    => local_cp("/tmp/proxmox-release-bullseye.gpg"),
+    copy_from    => local_cp("/tmp/proxmox-release-bookworm.gpg"),
     create       => "true",
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
