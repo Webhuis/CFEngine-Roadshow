@@ -66,8 +66,9 @@ vars:
 
 reports:
 
-  "$(this.bundle) vlans: $(vlan[$(vlan_index)])";
-  "$(this.bundle) var ovs ports: $(var_$(ovs_ports)";
+  "$(this.bundle) vlans: $(vlans_sorted)";
+  "$(this.bundle) ovs ports: $(ovs_ports)";
+  "$(this.bundle) var ovs ports: $(var_$(ovs_ports))";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
