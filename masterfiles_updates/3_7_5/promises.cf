@@ -20,6 +20,7 @@ body common control
 
                           # autorun system
                           do_roadshow,
+                          role_profile,
                           services_autorun,
                           @(services_autorun.bundles),
 
