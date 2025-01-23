@@ -39,8 +39,8 @@ vars:
   "vlans_sorted"                       slist => sort("vlan_numbers", "int");
   "ovs_ports_raw"                     string => join(" vlan", vlans_sorted);
   "ovs_vlans"                         string => concat("vlan", "$(ovs_ports_raw)");
-  "ovs_ports"                         string => concat("eth0 ", "$(ovs_ports_vlans)");
-  "ovs_interfaces"                    string => concat("vmbr0 ", "$(ovs_ports)");
+  "ovs_ports"                         string => join("eth0 vlan", "$(ovs_ports_raw)");
+  "ovs_interfaces"                    string => concat("eth0 vmbr0 vlan", "$(ovs_ports_raw)");
 
   #"var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
 
