@@ -6,7 +6,8 @@ vars:
 
 files:
 
-  "/etc/network/interfaces.d/vlan$(vlan)"
+ has_life_var::
+  "/etc/network/interfaces.d/$(vlan)"
     comment                                => "vlan life interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),
