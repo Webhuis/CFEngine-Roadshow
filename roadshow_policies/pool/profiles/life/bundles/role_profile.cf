@@ -38,9 +38,11 @@ vars:
   "layer_2"                            slist => filter("123", "layer_2_step_1", "true", "true", 99);
   "vlans_sorted"                       slist => sort("vlan_numbers", "int");
   "ovs_ports_raw"                     string => join(" vlan", vlans_sorted);
-  "ovs_ports"                         string => concat("eth0 vlan", "$(ovs_ports_raw)");
+  "ovs_vlans"                         string => concat("vlan", "$(ovs_ports_raw)");
+  "ovs_ports"                         string => concat("eth0 ", "$(ovs_ports_vlans)");
+  "ovs_interfaces"                    string => concat("vmbr0 ", "$(ovs_ports)");
 
-  "var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
+  #"var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(vlan[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
@@ -66,9 +68,9 @@ vars:
 
 reports:
 
-  "$(this.bundle) vlans: $(vlans_sorted)";
+  "$(this.bundle) ovs vlans: $(ovs_vlans)";
   "$(this.bundle) ovs ports: $(ovs_ports)";
-  "$(this.bundle) var ovs ports: $(var_$(ovs_ports))";
+  "$(this.bundle) ovs interfaces: $(ovs_interfaces)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
