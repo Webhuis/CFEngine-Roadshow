@@ -15,7 +15,7 @@ vars:
   "pkg[sudo]"                            string => "*";
 
   "nopkg[NetworkManager]"                string => "*";
-  "nopkg[nano]"                          string => "*";
+ #"nopkg[nano]"                          string => "*";
   "nopkg[nscd]"                          string => "*";
 
 methods:
