@@ -4,7 +4,7 @@ classes:
 
   "has_ovs_ports"                  expression => isvariable("ovs_ports");
   "has_layer_2"                    expression => isvariable("layer_2");
-  "has_layer_2"                    expression => isvariable("layer_2");
+  "has_layer_3"                    expression => isvariable("layer_3");
   "has_ddns_index"                 expression => isvariable("ddns_index");
   "has_hosts_var"                  expression => isvariable("hosts_ip");
   "has_life_var"                   expression => isvariable("life_ip");
@@ -41,6 +41,8 @@ vars:
   "ovs_vlans"                         string => concat("vlan", "$(ovs_ports_raw)");
   "ovs_ports"                         string => concat("eth0 vlan", "$(ovs_ports_raw)");
   "ovs_interfaces"                    string => concat("eth0 vmbr0 vlan", "$(ovs_ports_raw)");
+  "vlan_life"                         string => concat("vlan", "$(vlan[life])");
+  "vlan_support"                      string => concat("vlan", "$(vlan[support])");
 
   #"var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
 
