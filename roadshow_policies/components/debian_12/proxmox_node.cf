@@ -23,7 +23,7 @@ vars:
   "pkg[parted]"                        string => "*";
   "pkg[postfix]"                       string => "*";
   "pkg[proxmox-ve]"                    string => "*";
-  "pkg[raidutils]"                     string => "*";
+ #"pkg[raidutils]"                     string => "*";
   "pkg[smartmontools]"                 string => "*";
   "pkg[tigervnc-viewer]"               string => "*";
 
