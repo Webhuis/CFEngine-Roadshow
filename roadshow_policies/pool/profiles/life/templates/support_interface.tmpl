@@ -8,7 +8,7 @@
 
 auto $(support_interface.vlan)
 iface $(support_interface.vlan) inet static
-  address $(role_profile.hosts_ip)/24
+  address $(role_profile.ip[support])/24
   gateway $(support_interface.gateway_ip)
   ovs_type OVSIntPort
   ovs_bridge vmbr0

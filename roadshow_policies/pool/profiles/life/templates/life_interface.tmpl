@@ -8,7 +8,7 @@
 
 auto vlan$(role_profile.vlan[life])
 iface vlan$(role_profile.vlan[life]) inet static
-  address $(role_profile.life_ip])
+  address $(role_profile.ip[life])
   ovs_type OVSIntPort
   ovs_bridge vmbr0
   ovs_options tag=$(role_profile.vlan[life])
