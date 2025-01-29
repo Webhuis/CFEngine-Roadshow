@@ -6,7 +6,7 @@
 #
 [%CFEngine any:: %]
 
-allow-hotplug vlan$(role_profile.vlan[life])
-auto vlan$(role_profile.vlan[life])
-iface vlan$(role_profile.vlan[life]) inet static
+allow-hotplug $(role_profile.vlan_life)
+auto $(role_profile.vlan_life)
+iface $(role_profile.vlan_life) inet static
   address $(role_profile.life_ip)
