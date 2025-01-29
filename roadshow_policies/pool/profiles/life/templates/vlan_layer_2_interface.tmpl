@@ -1,12 +1,12 @@
-# Webhuis template for vlan_layer_2_interface
+# Webhuis template for role_profile.vlan_layer_2_interface
 #
 # Do not edit
 #
 [%CFEngine any:: %]
 
-auto vlan$(vlan_layer_2_interface)
-iface vlan$(vlan_layer_2_interface) inet manual
+auto vlan$(role_profile.vlan_layer_2_interface)
+iface vlan$(role_profile.vlan_layer_2_interface) inet manual
   ovs_type OVSIntPort
   ovs_bridge vmbr0
-  ovs_options tag=$(vlan_layer_2_interface)
+  ovs_options tag=$(role_profile.vlan_layer_2_interface)
   ovs_mtu 1500
