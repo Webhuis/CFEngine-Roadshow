@@ -6,7 +6,6 @@
 #
 [%CFEngine any:: %]
 
-allow-hotplug vlan$(role_profile.vlan[support])
 auto vlan$(role_profile.vlan[support])
 iface vlan$(role_profile.vlan[support]) inet static
   address $(role_profile.hosts_ip)/24
