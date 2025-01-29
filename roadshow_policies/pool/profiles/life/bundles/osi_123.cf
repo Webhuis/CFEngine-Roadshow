@@ -5,8 +5,8 @@ methods:
   "We need the eth0 predictable interface"  usebundle => persistent_link;
 
   "We need the bridge"                      usebundle => bridge_interface;
-  "The vlan support interface"              usebundle => support_interface($(role_profile.vlan_support));
-  "The vlan life interface"                 usebundle => life_interface($(role_profile.vlan_life));
+  "The vlan support interface"              usebundle => support_interface($(role_profile.vlan[support]));
+  "The vlan life interface"                 usebundle => life_interface($(role_profile.vlan[life]));
   "The vlan layer 2 only interfaces"        usebundle => vlan_layer_2_interface($(role_profile.layer_2));
 
   "Check the interfaces"                    usebundle => check_interfaces("$(ovs_interfaces)");
