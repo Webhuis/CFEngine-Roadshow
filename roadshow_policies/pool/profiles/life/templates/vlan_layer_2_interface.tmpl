@@ -8,5 +8,5 @@ auto vlan$(vlan_layer_2_interface.vlan)
 iface vlan$(vlan_layer_2_interface.vlan) inet manual
   ovs_type OVSIntPort
   ovs_bridge vmbr0
-  ovs_options tag=$(role_profilevlan_layer_2_interface.vlan)
+  ovs_options tag=$(vlan_layer_2_interface.vlan)
   ovs_mtu 1500
