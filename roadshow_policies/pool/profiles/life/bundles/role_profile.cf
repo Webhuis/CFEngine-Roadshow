@@ -41,6 +41,7 @@ vars:
   "ovs_vlans"                         string => concat("vlan", "$(ovs_ports_raw)");
   "ovs_ports"                         string => concat("eth0 vlan", "$(ovs_ports_raw)");
   "ovs_interfaces"                    string => concat("eth0 vmbr0 vlan", "$(ovs_ports_raw)");
+  "ovs_interfaces_list"                slist => string_split("ovs_interfaces", " ", "20");
   "vlan_life"                         string => concat("vlan", "$(vlan[life])");
   "vlan_support"                      string => concat("vlan", "$(vlan[support])");
 
