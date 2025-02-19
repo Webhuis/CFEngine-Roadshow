@@ -74,6 +74,7 @@ reports:
   "$(this.bundle) ovs vlans: $(ovs_vlans)";
   "$(this.bundle) ovs ports: $(ovs_ports)";
   "$(this.bundle) ovs interfaces: $(ovs_interfaces)";
+  "$(this.bundle) ovs interfaces_list: $(ovs_interfaces_list)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
