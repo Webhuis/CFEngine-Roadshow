@@ -9,7 +9,7 @@ methods:
   "The vlan life interface"                 usebundle => life_interface($(role_profile.vlan[life]));
   "The vlan layer 2 only interfaces"        usebundle => vlan_layer_2_interface($(role_profile.layer_2));
 
-  "Check the interfaces"                    usebundle => check_interfaces($(ovs_interfaces));
+  "Check the interfaces"                    usebundle => check_interfaces($(role_profile.ovs_interfaces));
 
  any::
 
