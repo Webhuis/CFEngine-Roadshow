@@ -46,11 +46,11 @@ vars:
 
   #"var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
 
-  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(vlan[support])", noshell);
+  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev vlan$(vlan[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
   "ip[support]"                       string => nth("ip_list[support]", "1");
 
-  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev $(vlan[life])", noshell);
+  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev vlan$(vlan[life])", noshell);
   "ip_list[life]"                      slist => string_split($(ip_line[life]), "src ", 99);
   "ip[life]"                          string => nth("ip_list[life]", "1");
 
