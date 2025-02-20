@@ -4,7 +4,14 @@ vars:
 
   "pkg[autofs]"                             string => "*";
   "pkg[autofs-ldap]"                        string => "*";
+  "pkg[dnsutils]"                           string => "*";
+  "pkg[ldap-utils]"                         string => "*";
+  "pkg[libpam-ldapd]"                       string => "*";
+  "pkg[libnss-ldapd]"                       string => "*";
+  "pkg[locales-all]"                        string => "*";
+  "pkg[openssh-server]"                     string => "*";
   "pkg[python3-zmq]"                        string => "*";
+  "pkg[smbclient]"                          string => "*";
 
   "name"                                    string => "bookworm";
   "updates"                                 string => " bookworm-security"; # The space is intentional
@@ -20,4 +27,3 @@ reports:
   "$(this.bundle):";
 
 }
-
