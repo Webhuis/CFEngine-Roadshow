@@ -12,6 +12,6 @@ iface $(support_interface.vlan) inet static
   gateway $(support_interface.gateway_ip)
   ovs_type OVSIntPort
   ovs_bridge vmbr0
-  ovs_options tag=$(role_profile.vlan[support])
   ovs_mtu 1500
+  ovs_options tag=$(role_profile.vlan[support])
 

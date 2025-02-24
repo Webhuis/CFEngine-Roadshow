@@ -11,6 +11,6 @@ iface vlan$(role_profile.vlan[life]) inet static
   address $(role_profile.ip[life])/24
   ovs_type OVSIntPort
   ovs_bridge vmbr0
-  ovs_options tag=$(role_profile.vlan[life])
   ovs_mtu 9000
+  ovs_options tag=$(role_profile.vlan[life])
 
