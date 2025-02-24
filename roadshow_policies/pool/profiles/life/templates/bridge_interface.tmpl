@@ -18,12 +18,6 @@
 auto lo
 iface lo inet loopback
 
-auto vmbr0
-iface vmbr0 inet manual
-  ovs_type OVSBridge
-  ovs_ports $(role_profile.ovs_ports)
-  ovs_mtu 9000
-
 auto eth0
 iface eth0 inet manual
   ovs_bridge vmbr0
@@ -32,6 +26,12 @@ iface eth0 inet manual
   offload-tx  off
   offload-sg  off
   offload-tso off
+
+auto vmbr0
+iface vmbr0 inet manual
+  ovs_type OVSBridge
+  ovs_ports $(role_profile.ovs_ports)
+  ovs_mtu 9000
 
 source /etc/network/interfaces.d/*
 
