@@ -10,8 +10,4 @@ auto $(support_interface.vlan)
 iface $(support_interface.vlan) inet static
   address $(role_profile.ip[support])/24
   gateway $(support_interface.gateway_ip)
-  ovs_type OVSIntPort
-  ovs_bridge vmbr0
-  ovs_mtu 1500
-  ovs_options tag=$(role_profile.vlan[support])
-
+  vlan-raw-device eth0
