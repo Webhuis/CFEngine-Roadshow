@@ -27,11 +27,6 @@ classes:
             "$(life_ip)"
             );
 
-  "hosts_ip"                           string => "$(role_profile.hosts_ip)";
-  "admin_ip"                           string => "$(role_profile.admin_ip)";
-  "life_ip"                            string => "$(role_profile.life_ip)";
-  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
-
 vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
@@ -42,6 +37,8 @@ vars:
   "nic_values_unsorted"                slist => getvalues("nic");
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1", "2" };
+
+  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
