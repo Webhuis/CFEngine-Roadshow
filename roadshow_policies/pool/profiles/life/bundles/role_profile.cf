@@ -2,7 +2,7 @@ bundle common role_profile {
 
 classes:
 
-  "has_ovs_ports"                  expression => isvariable("ovs_ports");
+  "has_bridge_ports"                  expression => isvariable("bridge_ports");
   "has_layer_2"                    expression => isvariable("layer_2");
   "has_layer_3"                    expression => isvariable("layer_3");
   "has_ddns_index"                 expression => isvariable("ddns_index");
@@ -10,11 +10,11 @@ classes:
   "has_life_var"                   expression => isvariable("life_ip");
   "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
 
- has_ovs_ports::
-  "no_device_$(ovs_ports)"         expression => regcmp( ".*does not exist.*",
-                                                        "$(var_$(ovs_ports))");
-  "if_down_$(ovs_ports)"           expression => regcmp( ".*DOWN.*",
-                                                        "$(var_$(ovs_ports))");
+ has_bridge_ports::
+  "no_device_$(bridge_ports)"         expression => regcmp( ".*does not exist.*",
+                                                        "$(var_$(bridge_ports))");
+  "if_down_$(bridge_ports)"           expression => regcmp( ".*DOWN.*",
+                                                        "$(var_$(bridge_ports))");
  
  has_hosts_var::
   "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
@@ -37,15 +37,15 @@ vars:
   "layer_2_step_1"                     slist => filter("42", "vlan_numbers", "true", "true", 99);
   "layer_2"                            slist => filter("123", "layer_2_step_1", "true", "true", 99);
   "vlans_sorted"                       slist => sort("vlan_numbers", "int");
-  "ovs_ports_raw"                     string => join(" vlan", vlans_sorted);
-  "ovs_vlans"                         string => concat("vlan", "$(ovs_ports_raw)");
-  "ovs_ports"                         string => concat("eth0 vlan", "$(ovs_ports_raw)");
-  "ovs_interfaces"                    string => concat("eth0 vmbr0 vlan", "$(ovs_ports_raw)");
-  "ovs_interfaces_list"                slist => string_split($(ovs_interfaces), " ", "20");
+  "bridge_ports_raw"                  string => join(" vlan", vlans_sorted);
+  "bridge_vlans"                      string => concat("vlan", "$(bridge_ports_raw)");
+  "bridge_ports"                      string => concat("eth0 vlan", "$(bridge_ports_raw)");
+  "bridge_interfaces"                 string => concat("eth0 vmbr0 vlan", "$(bridge_ports_raw)");
+  "bridge_interfaces_list"             slist => string_split($(bridge_interfaces), " ", "20");
   "vlan_life"                         string => concat("vlan", "$(vlan[life])");
   "vlan_support"                      string => concat("vlan", "$(vlan[support])");
 
-  #"var_$(ovs_ports)"                  string => execresult("$($(sys.flavor).ip_cmd) link show dev $(ovs_ports)","noshell");
+  #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
   "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev vlan$(vlan[support])", noshell);
   "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
@@ -71,10 +71,10 @@ vars:
 
 reports:
 
-  "$(this.bundle) ovs vlans: $(ovs_vlans)";
-  "$(this.bundle) ovs ports: $(ovs_ports)";
-  "$(this.bundle) ovs interfaces: $(ovs_interfaces)";
-  "$(this.bundle) ovs interfaces_list: $(ovs_interfaces_list)";
+  "$(this.bundle) bridge vlans: $(bridge_vlans)";
+  "$(this.bundle) bridge ports: $(bridge_ports)";
+  "$(this.bundle) bridge interfaces: $(bridge_interfaces)";
+  "$(this.bundle) bridge interfaces_list: $(bridge_interfaces_list)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) life_ip: $(life_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
