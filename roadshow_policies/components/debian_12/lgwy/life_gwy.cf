@@ -1,0 +1,20 @@
+bundle agent life_gwy {
+
+vars:
+
+  "pkg[firefox-esr]"                    string => "*";
+  "pkg[git]"                            string => "*";
+  "pkg[konsole]"                        string => "*";
+  "pkg[unzip]"                          string => "*";
+  "pkg[zip]"                            string => "*";
+
+methods:
+
+  "provide desktop packages"         usebundle => packages("life_gwy.pkg");
+
+reports:
+
+  "${this.bundle}: role";
+
+}
+
