@@ -38,12 +38,12 @@ vars:
   "layer_2"                            slist => filter("123", "layer_2_step_1", "true", "true", 99);
   "vlans_sorted"                       slist => sort("vlan_numbers", "int");
   "bridge_ports_raw"                  string => join(" vlan", vlans_sorted);
-  "bridge_vlans"                      string => concat("vlan", "$(bridge_ports_raw)");
-  "bridge_ports"                      string => concat("eth0 vlan", "$(bridge_ports_raw)");
-  "bridge_interfaces"                 string => concat("eth0 vmbr0 vlan", "$(bridge_ports_raw)");
+  "bridge_vlans"                      string => concat("vmbr0.", "$(bridge_ports_raw)");
+  "bridge_ports"                      string => concat("eth0 vmbr0", "$(bridge_ports_raw)");
+  "bridge_interfaces"                 string => concat("eth0 vmbr0 vmbr0.", "$(bridge_ports_raw)");
   "bridge_interfaces_list"             slist => string_split($(bridge_interfaces), " ", "20");
-  "vlan_life"                         string => concat("vlan", "$(vlan[life])");
-  "vlan_support"                      string => concat("vlan", "$(vlan[support])");
+  "vlan_life"                         string => concat("vmbr0.", "$(vlan[life])");
+  "vlan_support"                      string => concat("vmbr0.", "$(vlan[support])");
 
   #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
