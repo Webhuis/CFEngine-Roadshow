@@ -31,7 +31,7 @@ commands:
 
 reports:
 
-  "$(this.bundle): vlan layer 2 interface vlan$(vlan)";
+  "$(this.bundle): vlan layer 2 interface vmbr0.$(vlan)";
 
 }
 
