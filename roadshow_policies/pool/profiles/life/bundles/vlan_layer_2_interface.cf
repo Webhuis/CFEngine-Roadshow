@@ -6,7 +6,7 @@ vars:
 
 files:
 
-  "/etc/network/interfaces.d/vvmbr0.$(vlan)"
+  "/etc/network/interfaces.d/vmbr0.$(vlan)"
     comment                                => "vlan layer 2 only interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),
