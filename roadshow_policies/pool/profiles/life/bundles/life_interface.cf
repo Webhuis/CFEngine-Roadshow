@@ -2,7 +2,7 @@ bundle agent life_interface(vlan_life) {
 
 vars:
 
-  "vlan"                            string => concat("vlan", "$(vlan_life)");
+  "vlan"                            string => concat("vmbr0.", "$(vlan_life)");
 
 files:
 

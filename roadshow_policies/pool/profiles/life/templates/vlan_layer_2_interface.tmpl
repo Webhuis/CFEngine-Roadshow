@@ -4,9 +4,5 @@
 #
 [%CFEngine any:: %]
 
-auto vlan$(vlan_layer_2_interface.vlan)
-iface vlan$(vlan_layer_2_interface.vlan) inet manual
-  ovs_type OVSIntPort
-  ovs_bridge vmbr0
-  ovs_mtu 1500
-  ovs_options tag=$(vlan_layer_2_interface.vlan)
+auto vvmbr0$(vlan_layer_2_interface.vlan)
+iface vmbr0$(vlan_layer_2_interface.vlan) inet manual

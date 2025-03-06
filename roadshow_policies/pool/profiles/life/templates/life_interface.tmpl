@@ -6,9 +6,8 @@
 #
 [%CFEngine any:: %]
 
-auto vlan$(role_profile.vlan[life])
-iface vlan$(role_profile.vlan[life]) inet static
+auto vmbr0$(role_profile.vlan[life])
+iface vmbr0$(role_profile.vlan[life]) inet static
   address $(role_profile.ip[life])/24
-  mtu 9000
-  vlan-raw-device eth0
+  mtu 8996
 

@@ -2,7 +2,7 @@ bundle agent support_interface(vlan_support) {
 
 vars:
 
-  "vlan"                            string => concat("vlan", "$(vlan_support)");
+  "vlan"                            string => concat("vmbr0.", "$(vlan_support)");
 
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20");
