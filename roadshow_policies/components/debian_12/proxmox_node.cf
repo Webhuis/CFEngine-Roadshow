@@ -35,12 +35,10 @@ files:
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
 
-  "/etc/modules"
-         comment => "Modules for vlans",
-           perms => mo("644","root"),
-          create => "true",
+  "/sys/class/net/vmbr0/bridge/multicast_snooping"
+         comment => "This node want to be able to join a cluster",
           action => r_immediate,
-   edit_template => "$(sys.workdir)/roadshow_inputs/components/templates/modules.tmpl";
+       edit_line => multicast_snooping;
 
 methods:
 
@@ -55,5 +53,18 @@ methods:
 reports:
 
   "$(this.bundle): Repo and software install";
+
+}
+
+bundle edit_line multicast_snooping {
+
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+  "0";
 
 }
