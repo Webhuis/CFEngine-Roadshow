@@ -20,16 +20,16 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet manual
-        mtu 9000
+        mtu 8192
 
 auto vmbr0
-iface vmbr0 inet static
+iface vmbr0 inet manual
         bridge-ports eth0
         bridge-stp off
         bridge-fd 0
         bridge-vlan-aware yes
         bridge-vids 2-4094
-        mtu 9000
+        mtu 8192
 
 source /etc/network/interfaces.d/*
 

@@ -1,1 +1,38 @@
-../../../bundles/osi_123.cf
+bundle agent osi_123 (bridge_ports) {
+
+methods:
+
+  "We need the eth0 predictable interface"  usebundle => persistent_link;
+
+  "We need the bridge"                      usebundle => bridge_interface;
+  "The vlan support interface"              usebundle => support_interface($(role_profile.vlan[support]));
+  "The vlan life interface"                 usebundle => life_interface($(role_profile.vlan[life]));
+  "The vlan layer 2 only interfaces"        usebundle => vlan_layer_2_interface($(role_profile.layer_2));
+
+  "Check the interfaces"                    usebundle => check_interfaces($(role_profile.bridge_interfaces_list));
+
+ any::
+
+  "Host data driven policies go here"       usebundle => host_data_driven_policies;
+
+  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+
+
+reports:
+
+  "$(this.bundle) vlan support: $(role_profile.ip[support]), $(role_profile.vlap[support])";
+  "$(this.bundle) vlan life: $(role_profile.ip[life]), $(role_profile.vlap[life])";
+  "$(this.bundle) nic values: $(role_profile.nic_values)";
+  "$(this.bundle) ip list: $(role_profile.ip_list)";
+  "$(this.bundle) ips: $(classify.ips)";
+
+  "$(this.bundle): I am checking basic interface stuff first, $(role_profile.nic[$(role_profile.nic_index)]).";
+  "$(this.bundle): I am doing common and data driven policies.";
+
+ !bad_ip::
+  "$(this.bundle) The soft ip addresses supplied are Ok.";
+
+ bad_ip::
+  "$(this.bundle) Invalid soft ip addresses are being supplied, no processing of soft ip address policies is going to take place.";
+
+}

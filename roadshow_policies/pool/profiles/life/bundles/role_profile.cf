@@ -2,7 +2,7 @@ bundle common role_profile {
 
 classes:
 
-  "has_bridge_ports"                  expression => isvariable("bridge_ports");
+  "has_bridge_ports"               expression => isvariable("bridge_ports");
   "has_layer_2"                    expression => isvariable("layer_2");
   "has_layer_3"                    expression => isvariable("layer_3");
   "has_ddns_index"                 expression => isvariable("ddns_index");
@@ -11,10 +11,10 @@ classes:
   "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
 
  has_bridge_ports::
-  "no_device_$(bridge_ports)"         expression => regcmp( ".*does not exist.*",
-                                                        "$(var_$(bridge_ports))");
-  "if_down_$(bridge_ports)"           expression => regcmp( ".*DOWN.*",
-                                                        "$(var_$(bridge_ports))");
+  "no_device_$(bridge_ports)"      expression => regcmp( ".*does not exist.*",
+                                                         "$(var_$(bridge_ports))");
+  "if_down_$(bridge_ports)"        expression => regcmp( ".*DOWN.*",
+                                                         "$(var_$(bridge_ports))");
  
  has_hosts_var::
   "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
@@ -71,6 +71,8 @@ vars:
 
 reports:
 
+  "$(this.bundle) vlan support: $(vlan[support])";
+  "$(this.bundle) vlan life: $(vlan[life])";
   "$(this.bundle) bridge vlans: $(bridge_vlans)";
   "$(this.bundle) bridge ports: $(bridge_ports)";
   "$(this.bundle) bridge interfaces: $(bridge_interfaces)";
