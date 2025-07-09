@@ -1,0 +1,84 @@
+bundle common role_profile {
+
+classes:
+
+  "has_nic_sequence"               expression => isvariable("nic_trick");
+  "has_nic_values"                 expression => isvariable("nic_values");
+  "has_nic_index"                  expression => isvariable("nic_index");
+  "has_ddns_index"                 expression => isvariable("ddns_index");
+  "has_hosts_var"                  expression => isvariable("hosts_ip");
+  "has_admin_var"                  expression => isvariable("admin_ip");
+  "has_gw_var"                     expression => isvariable("gw_ip");
+  "available_nic_$(nic)"           expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_nic_$(nic))","noshell");
+
+ has_hosts_var::
+  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(hosts_ip)"
+            );
+ has_admin_var::
+  "valid_admin_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(admin_ip)"
+            );
+ has_gw_var::
+  "valid_gw_ip"                    comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(gw_ip)"
+            );
+
+vars:
+
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
+
+  "nic_index"                          slist => getindices("nic");
+  "nic_values_unsorted"                slist => getvalues("nic");
+  "nic_values"                         slist => sort("nic_values_unsorted", "lex");
+  "nic_trick"                          slist => { "0", "1", "2" };
+
+  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
+
+  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
+  "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
+  "ip[support]"                       string => nth("ip_list[support]", "1");
+
+  "ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
+  "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
+  "ip[admin]"                         string => nth("ip_list[admin]", "1");
+
+  "ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
+  "ip_list[gw]"                        slist => string_split($(ip_line[gw]), "src ", 99);
+  "ip[gw]"                            string => nth("ip_list[gw]", "1");
+
+  "ddns[support][ip]"                 string => "$(ip[support])";
+  "ddns[support][nic]"                string => "$(nic[support])";
+  "ddns[support][suffix]"             string => "";
+  "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
+  "ddns[admin][ip]"                   string => "$(ip[admin])";
+  "ddns[admin][nic]"                  string => "$(nic[admin])";
+  "ddns[admin][suffix]"               string => "-ssh";
+  "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
+  "ddns[gw][ip]"                      string => "$(ip[gw])";
+  "ddns[gw][nic]"                     string => "$(nic[gw])";
+  "ddns[gw][suffix]"                  string => "-gw";
+  "ddns[gw][vlan]"                    string => "$($(classify.organisation).vlan[gw])";
+
+  "ddns_index"                         slist => getindices("ddns");
+
+  "hosts_ip"                          string => "$(ip[support])";
+  "admin_ip"                          string => "$(ip[admin])";
+  "gw_ip"                             string => "$(ip[gw])";
+
+reports:
+
+  "$(this.bundle) nic: $(nic[$(nic_index)])";
+  "$(this.bundle) nic_index: $(nic_index)";
+  "$(this.bundle) nic_values: $(nic_values)";
+  "$(this.bundle) hosts_ip: $(hosts_ip)";
+  "$(this.bundle) admin_ip: $(admin_ip)";
+  "$(this.bundle) gw_ip: $(gw_ip)";
+  "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
+
+}

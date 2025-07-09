@@ -1,0 +1,17 @@
+bundle agent ggxy {
+
+vars:
+
+  "role_name"                         string => "The gateway gateway";
+
+methods:
+
+  "We are the gateway of all"      usebundle => "gateway_gwy";
+
+reports:
+
+  "${this.bundle} role name: $(role_name)";
+  "$(this.bundle) role data: $(role_profile)";
+  "$(this.bundle) role inputs: $($(classify.role).inputs)";
+
+}

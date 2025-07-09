@@ -17,7 +17,6 @@ vars:
   "pkg[mdadm]"                         string => "*";
   "pkg[minicom]"                       string => "*";
   "pkg[nfs-common]"                    string => "*";
-  "pkg[open-iscsi]"                    string => "*";
   "pkg[parted]"                        string => "*";
   "pkg[postfix]"                       string => "*";
   "pkg[proxmox-ve]"                    string => "*";
