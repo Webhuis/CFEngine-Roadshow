@@ -1,0 +1,53 @@
+bundle agent keepalive {
+
+vars:
+
+  "pkg[keepalived]"	   	   	string => "*";
+
+  "my_keepalived_priority"              string => "$($(classify.domain).pg_keepalive_pear[$(role_profile).ip[support]])";
+  "my_keepalived_peers"                  slist => filer( $(role_profile).ip[support], $($(classify.domain).pg_keepalive_peers), "false", true", 999);
+
+  "templates"                            slist => { "keepalived.conf.tmpl" };
+
+files:
+
+  "/etc/keepalived/keepalived.conf"
+   perms             => mo("644","root"),
+   create            => "true",
+   action            => r_immediate,
+   edit_template     => "$(sys.workdir)/roadshow_inputs/components/templates/keepalived.conf.tmpl",
+   classes           => r_if_repaired("restart_keepalived");
+
+methods:
+ 
+  "We desire the HA Postgresql cluster"        usebundle => packages("keepalive.pkg");
+  "We want to know our peers"                  usebundle => keepalived_peers;
+
+commands:
+
+ restart_keepalived::
+
+  "/etc/init.d/keepalived restart";
+
+reports:
+
+  "$(this.bundle): Configure postgresql_proxy";
+  "$(this.bundle) Packages: $(pkg)";
+  "$(this.bundle) my_keepalived_priority: $(my_keepalived_priority)";
+  "$(this.bundle) my_keepalived_peers: $(my_keepalived_peers)";
+
+}
+
+bundle agent keepalived_peers {
+
+vars:
+
+  "pkg[haproxy]"                        string => "*";
+
+reports:
+
+  "$(this.bundle): Configure postgresql_proxy";
+  "$(this.bundle) Packages: $(pkg)";
+
+}
+
