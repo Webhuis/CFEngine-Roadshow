@@ -30,7 +30,7 @@ vars:
   "nic[home]"                          string => "eth0";
   "nic[support]"                       string => "eth1";
   "nic[admin]"                         string => "eth2";
-  "nic[wam]"                           string => "eth3";
+  "nic[wan]"                           string => "eth3";
   "nic[gw]"                            string => "eth4";
   "nic[life]"                          string => "eth5";
   "nic[apps]"                          string => "eth6";
