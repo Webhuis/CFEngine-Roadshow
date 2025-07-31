@@ -32,6 +32,7 @@ vars:
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
   "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
+  "keepalive_nic"                     string => "$(nic[gw])";
 
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
@@ -51,6 +52,7 @@ vars:
   "ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
   "ip_list[gw]"                        slist => string_split($(ip_line[gw]), "src ", 99);
   "ip[gw]"                            string => nth("ip_list[gw]", "1");
+  "keepalive_rank"                    string => lastnode($(ip[gw]),".");
 
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
@@ -79,6 +81,8 @@ reports:
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
   "$(this.bundle) gw_ip: $(gw_ip)";
+  "$(this.bundle) keepalive_nic: $(keepalive_nic)";
+  "$(this.bundle) keepalive_rank: $(keepalive_rank)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
 
 }
