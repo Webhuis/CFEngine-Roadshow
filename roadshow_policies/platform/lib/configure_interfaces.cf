@@ -19,7 +19,7 @@ vars:
 
 files:
 
-  configure_interface::
+ #configure_interface::
   "/etc/network/interfaces.d/$(current_device)"
     comment                                => "one file per nic",
     create                                 => "true",
