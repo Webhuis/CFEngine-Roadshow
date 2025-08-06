@@ -6,7 +6,7 @@ vars:
 
 methods:
 
-  "We are the gateway of all"      usebundle => "gateway_gateway";
+  "We are the gateway of all"      usebundle => "gateways_gateway";
 
 reports:
 
