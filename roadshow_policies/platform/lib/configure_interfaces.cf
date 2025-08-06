@@ -3,7 +3,7 @@ bundle agent configure_interfaces (ips) {
 classes:
 
   "gateway"                     expression => strcmp($(default_device), $(current_device));
-  "configure_interface"         expression => strcmp($(ips), $(current_device));
+ #"configure_interface"         expression => strcmp($(ips), $(current_device));
 
 vars:
 
@@ -42,7 +42,7 @@ reports:
  #"$(this.bundle) current_ip: $(current_ip)";
   "$(this.bundle) ips $(ips)";
 
- configure_interface::
+#configure_interface::
   "$(this.bundle) current_ip : $(current_ip)";
 
  gateway::
