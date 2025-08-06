@@ -1,1 +1,40 @@
-../../../bundles/l0_interface.cf
+bundle agent l0_interface {
+
+files:
+
+  "/etc/network/interfaces"
+    comment                                => "loopback interface with pre-up trick to circumvent the nasty eth0 issue",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/interfaces.tmpl",
+    classes                                => if_repaired("reboot");
+
+  "/etc/network/if-pre-up.d/persistent.sh"
+    comment                                => "Script to circumvent the nasty eth0 issue",
+    create                                 => "true",
+    perms                                  => mo("750", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_line                              => persistent_eth,
+    classes                                => if_repaired("reboot");
+
+reports:
+
+  "$(this.bundle): loopback interface";
+
+}
+
+bundle edit_line persistent_eth {
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+  "/usr/sbin/ip link set eth1 name eth2";
+  "/usr/sbin/ip link set eth0 name eth1";
+
+}
