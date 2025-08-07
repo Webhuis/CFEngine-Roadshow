@@ -20,7 +20,7 @@ commands:
 
  restart_keepalived::
 
-  "/etc/init.d/keepalived restart";
+  "systemctl restart keepalived";
 
 reports:
 
