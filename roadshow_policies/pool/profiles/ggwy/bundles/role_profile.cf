@@ -87,7 +87,7 @@ reports:
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
   "$(this.bundle) ip[gw]: $(ip[gw])";
-  "$(this.bundle) ipv4: $(ipv4)";
+  "$(this.bundle) ipv4_list: $(ipv4_list)";
   "$(this.bundle) ipv4_len: $(ipv4_len)";
   "$(this.bundle) gw_ip: $(gw_ip)";
   "$(this.bundle) keepalive_vlan: $(keepalive_vlan)";
