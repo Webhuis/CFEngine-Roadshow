@@ -57,7 +57,7 @@ vars:
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
   "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
   "keepalive_nic"                     string => "$(nic[gw])";
-  "keepalive_ipv4_4"                  string => nth("ipv4", "length");
+  "keepalive_ipv4_4"                  string => nth("ipv4", "ipv4_len");
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
@@ -86,7 +86,8 @@ reports:
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
-  "$(this.bundle) ipv4_4: $(ipv4)";
+  "$(this.bundle) ipv4: $(ipv4)";
+  "$(this.bundle) ipv4_len: $(ipv4_len)";
   "$(this.bundle) gw_ip: $(gw_ip)";
   "$(this.bundle) keepalive_vlan: $(keepalive_vlan)";
   "$(this.bundle) keepalive_vip: $(keepalive_vip)";
