@@ -13,6 +13,9 @@ files:
    edit_template     => "$(sys.workdir)/roadshow_inputs/components/templates/keepalived.conf.tmpl",
    classes           => r_if_repaired("restart_keepalived");
 
+methods:
+
+  "We are a keepalive peer"         usebundle => packages("keepalived.pkg");
 commands:
 
  restart_keepalived::

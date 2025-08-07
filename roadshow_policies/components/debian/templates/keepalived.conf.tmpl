@@ -27,6 +27,6 @@ vrrp_instance $(role_profile.keepalive_vlan) {
     $(role_profile.keepalive_vip)
   }
   virtual_routes {
-    $(role_profile.keepalive_subnet) via $(role_profile.keepalive_via) dev $(role_profile.keepalive_dev)
+    $($(classify.domain).ggwy_index) via $($clasify_domain.ggwy_routes)) dev $(role_profile.keepalive_nic)
   }
 }
