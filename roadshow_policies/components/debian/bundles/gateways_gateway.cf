@@ -3,8 +3,6 @@ bundle agent gateways_gateway {
 vars:
 
   "gateways_gateway.cf"     string => "I am the Gateway of Gateways";
-  "templates"                slist => { "internal_routes.tmpl", "ggwy-rules.tmpl", "local-ipv6-rules.tmpl" };
-  "gateway_index"            slist => getindices("$(do_roadshow.class_domain).internal_routes");
 
 files:
 
@@ -34,7 +32,7 @@ files:
 
 methods:
 
-  "Get gateway templates"  usebundle => get_template("$(templates)");
+  "We needs our peers to do the job"  usebundle => keepalive;
 
 commands:
 
