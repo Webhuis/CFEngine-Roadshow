@@ -52,7 +52,7 @@ vars:
   "ip_list[gw]"                        slist => string_split($(ip_line[gw]), "src ", 99);
   "ip[gw]"                            string => nth("ip_list[gw]", "1");
   "ipv4"                               slist => string_split($(ip[gw]), ".", 9);
-  "ipv4_len"                           slist => length(role_profile.ipv4);
+  "ipv4_len"                           slist => length(ipv4);
 
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
   "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
