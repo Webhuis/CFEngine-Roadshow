@@ -51,7 +51,7 @@ vars:
   "ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
   "ip_list[gw]"                        slist => string_split($(ip_line[gw]), "src ", 99);
   "ip[gw]"                            string => nth("ip_list[gw]", "1");
-  "ipv4"                               slist => string_split($(ip[gw]), ".", 99);
+  "ipv4"                               slist => string_split("ip[gw]", ".", "99");
   "ipv4_len"                             int => length("ipv4");
 
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
@@ -86,6 +86,7 @@ reports:
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
+  "$(this.bundle) ip[gw]: $(ip[gw])";
   "$(this.bundle) ipv4: $(ipv4)";
   "$(this.bundle) ipv4_len: $(ipv4_len)";
   "$(this.bundle) gw_ip: $(gw_ip)";
