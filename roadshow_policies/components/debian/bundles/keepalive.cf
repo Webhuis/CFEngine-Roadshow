@@ -4,8 +4,6 @@ vars:
 
   "pkg[keepalived]"	   	   	string => "*";
 
-  "templates"                            slist => { "keepalived.conf.tmpl" };
-
 files:
 
   "/etc/keepalived/keepalived.conf"
@@ -14,10 +12,6 @@ files:
    action            => r_immediate,
    edit_template     => "$(sys.workdir)/roadshow_inputs/components/templates/keepalived.conf.tmpl",
    classes           => r_if_repaired("restart_keepalived");
-
-methods:
- 
-  "We want to know our peers"                  usebundle => keepalived_peers;
 
 commands:
 
@@ -28,20 +22,5 @@ commands:
 reports:
 
   "$(this.bundle) Packages: $(pkg)";
- #$(this.bundle) my_keepalived_priority: $(my_keepalived_priority)";
- #"$(this.bundle) my_keepalived_peers: $(my_keepalived_peers)";
 
 }
-
-bundle agent keepalived_peers {
-
-vars:
-
-  "pkg[haproxy]"                        string => "*";
-
-reports:
-
-  "$(this.bundle): Configure gateway";
-
-}
-
