@@ -85,9 +85,13 @@ reports:
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
+  "$(this.bundle) ipv4_4: $(ipv4)";
   "$(this.bundle) gw_ip: $(gw_ip)";
+  "$(this.bundle) keepalive_vlan: $(keepalive_vlan)";
+  "$(this.bundle) keepalive_vip: $(keepalive_vip)";
   "$(this.bundle) keepalive_nic: $(keepalive_nic)";
-  "$(this.bundle) keepalive_rank: $(keepalive_rank)";
+  "$(this.bundle) keepalive_ipv4_4: $(keepalive_ipv4_4)";
+  "$(this.bundle) keepalive_routes: $(keepalive_routes)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
 
 }
