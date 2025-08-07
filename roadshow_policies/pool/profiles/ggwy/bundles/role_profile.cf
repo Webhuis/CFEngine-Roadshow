@@ -57,7 +57,7 @@ vars:
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
   "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
   "keepalive_nic"                     string => "$(nic[gw])";
-  "keepalive_ipv4_4"                  string => nth("$(ipv4_list)", "$(ipv4_len)");
+  "keepalive_ipv4_4"                  string => "$(ipv4_list)[$(ipv4_len)]");
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
