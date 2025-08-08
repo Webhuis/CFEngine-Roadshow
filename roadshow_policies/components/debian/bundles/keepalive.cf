@@ -20,7 +20,7 @@ commands:
 
  restart_keepalived::
 
-  "systemctl restart keepalived";
+  "/usr/bin/systemctl restart keepalived";
 
 reports:
 
