@@ -5,6 +5,7 @@ vars:
   "pkg[autofs]"                             string => "*";
   "pkg[autofs-ldap]"                        string => "*";
   "pkg[dnsutils]"                           string => "*";
+  "pkg[firewalld]"                          string => "*";
   "pkg[ldap-utils]"                         string => "*";
   "pkg[libpam-ldapd]"                       string => "*";
   "pkg[libnss-ldapd]"                       string => "*";
