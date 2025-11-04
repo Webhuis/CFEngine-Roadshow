@@ -10,6 +10,7 @@ vars:
   "pkg[libpam-ldapd]"                       string => "*";
   "pkg[libnss-ldapd]"                       string => "*";
   "pkg[locales-all]"                        string => "*";
+  "pkg[localehelper]"                       string => "*";
   "pkg[openssh-server]"                     string => "*";
   "pkg[python3-zmq]"                        string => "*";
   "pkg[smbclient]"                          string => "*";
