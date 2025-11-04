@@ -12,6 +12,7 @@ vars:
 files:
   "/etc/locale.gen"
     edit_line => enable_locales(@(locales.locales)),
+    create    => "true",
     classes   => if_repaired("regenerate_locales"),
     comment   => "Enable locales, trigger locale-gen if needed" ;
 
