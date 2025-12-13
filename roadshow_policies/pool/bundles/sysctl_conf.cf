@@ -1,0 +1,16 @@
+bundle agent sysctl_conf {
+
+files:
+
+  "/etc/sysctl.conf"
+  comment                   => "/etc/sysctl.conf for gateways and routers",
+  create                    => "true",
+  perms                     => mo("644","root"),
+  edit_template             => "$(sys.workdir)/roadshow_inputs/templates/sysctl_conf.tmpl",
+  action                    => r_immediate;
+
+reports:
+
+  "$(this.bundle) ip_forward = 1";
+
+}
