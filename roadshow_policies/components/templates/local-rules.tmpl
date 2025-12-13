@@ -7,8 +7,6 @@
 [%CFEngine any:: %]
 #       Postrouting, van binnen naar buiten
 
-echo 1 > /proc/sys/net/ipv4/ip_forward 
-
 IPTABLES="/sbin/iptables"
 
 $IPTABLES -F
