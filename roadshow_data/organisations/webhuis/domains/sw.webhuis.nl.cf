@@ -10,9 +10,10 @@ vars:
 
   "internal_routes[10.254.0.17]"        slist => { "10.10.117.0/24", "10.110.17.0/24" };
   "internal_routes[10.254.0.71]"        slist => { "10.68.171.0/24", "10.168.71.0/24" };
-  "ggwy_vip"                           string => "10.254.0.69";
+  "ggwy_vip"                           string => "10.254.0.1";
   "ggwy_routes[10.254.0.17]"            slist => { "10.10.117.0/24", "10.110.17.0/24" };
   "ggwy_routes[10.254.0.71]"            slist => { "10.68.171.0/24", "10.168.71.0/24" };
+  "ggwy_routes[10.254.0.111]"            slist => { "10.111.211.0/24", "10.211.111.0/24" };
   "ggwy_routes_index"                   slist => getindices("sw_webhuis_nl.ggwy_routes");
 # "mldap"                               slist => {"ldapm1", "ldapm2"};
   "mldap"                               slist => {"ldapm1"};
