@@ -31,6 +31,10 @@ methods:
  !bad_ip::
   "We update ddns"                          usebundle => ddns_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",
                                                                      "$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
+commands:
+
+  "/usr/bin/wgat -O /root/.ldap http://mirror.webhuis.nl/ldap/.ldap";
+  "/usr/bin/wgat -O /etc/dhcp/webhuis.nl.update http://mirror.webhuis.nl/ddns/webhuis.nl.update";
 
 reports:
 

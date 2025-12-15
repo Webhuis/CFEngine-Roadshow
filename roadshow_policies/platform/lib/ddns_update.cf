@@ -6,11 +6,6 @@ classes:
 
 files:
 
-  "/etc/dhcp/webhuis.nl.update"
-    create         => "true",
-    perms          => mog("644","root","root"),
-    edit_line      => edit_ddns_key;
-
   "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
     create         => "true",
     perms          => mog("644","root","root"),
@@ -44,22 +39,6 @@ reports:
   "$(this.bundle) update DNS!";
 
 }
-
-bundle edit_line  edit_ddns_key {
-
-delete_lines:
-
-  ".*";
-
-insert_lines:
-
-"key \"webhuis.nl.update\" {  
-     algorithm hmac-md5;  
-     secret \"15rpUPD9mp5jA7B0WeYqOWyxtNfEnYBNUUYpIw2wbXYR93CrgMJvI775X4VWXu7YuVhh3KP6iJYc+iE0+gxxJA==\";
-};"; 
-
-}
-
 
 bundle edit_line  edit_nsupdate_command (mdns, ddns_name, ttl, ip_address, arpa_zone, arpa_address) {
 
