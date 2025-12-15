@@ -26,5 +26,6 @@ commands:
 reports:
 
   "$(this.bundle) Packages: $(pkg)";
+  "$(this.bundle) Priority: $(classify.ipv4_4)";
 
 }
