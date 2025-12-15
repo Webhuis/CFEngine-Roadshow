@@ -11,7 +11,7 @@ files:
            perms  => mog("755","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_inputs/templates/igwy-rules.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common-gateway-rules.tmpl",
          classes  => r_if_repaired("restart_firewall");
 
   "/usr/local/bin/local-ipv6-rules.sh"
@@ -19,7 +19,7 @@ files:
            perms  => mog("755","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_inputs/templates/local-ipv6-rules.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/local-ipv6-rules.tmpl",
          classes  => r_if_repaired("restart_firewall");
 
 methods:
