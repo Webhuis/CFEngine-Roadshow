@@ -33,8 +33,8 @@ methods:
                                                                      "$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 commands:
 
-  "/usr/bin/wgat -O /root/.ldap http://mirror.webhuis.nl/ldap/.ldap";
-  "/usr/bin/wgat -O /etc/dhcp/webhuis.nl.update http://mirror.webhuis.nl/ddns/webhuis.nl.update";
+  "/usr/bin/wget -O /root/.ldap http://mirror.webhuis.nl/ldap/.ldap";
+  "/usr/bin/wget -O /etc/dhcp/webhuis.nl.update http://mirror.webhuis.nl/ddns/webhuis.nl.update";
 
 reports:
 
