@@ -17,7 +17,7 @@ vars:
   "ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
   "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
   "ip[admin]"                         string => nth("ip_list[admin]", "1");
-
+s
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
