@@ -38,7 +38,7 @@ commands:
 
 reports:
 
-  "$(this.bundle) nic index: $(role_profile.nic_index)";
+  "$(this.bundle) ddns variable from cmmon bundle: $(ddns[ddns_index])";
   "$(this.bundle) nic values: $(role_profile.nic_values)";
   "$(this.bundle) ip list: $(role_profile.ip_list)";
 
