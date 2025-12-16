@@ -5,16 +5,16 @@ classes:
   "$(nic)a_record"                           expression => strcmp("$(dns_host)", "$(host).");
   "$(nic)ptr_record"                         expression => strcmp("$(dns_ip)", "$(ip_address)");
 
-#!($(nic)a_record)|!($(nic)ptr_record)::
-# "$(nic)ddns_update"                        expression => "any";
-
- "$(nic)a_record"."$(nic)ptr_record"::
-  "$(nic)ddns_exist"                         expression => "any";
-
 vars:
 
   "dns_ip"                                       string => execresult("/usr/bin/dig +short $(host)", "noshell");
   "dns_host"                                     string => execresult("/usr/bin/dig +short -x $(ip_address)", "noshell");
+
+ !($(nic)a_record)|!($(nic)ptr_record)::
+  "$(nic)ddns_update"                        expression => "any";
+
+ "$(nic)a_record"."$(nic)ptr_record"::
+  "$(nic)ddns_exist"                         expression => "any";
 
 reports:
 
