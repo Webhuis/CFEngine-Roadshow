@@ -17,7 +17,7 @@ global_defs {
 vrrp_instance $(role_profile.keepalive_vlan) {
   interface $(role_profile.keepalive_nic)
   virtual_router_id $(role_profile.keepalive_vlan)
-  priority $(classify.ipv4_4)
+  priority $(role_profile.ipv4_4)
   advert_int 1
   authentication {
     auth_type PASS
