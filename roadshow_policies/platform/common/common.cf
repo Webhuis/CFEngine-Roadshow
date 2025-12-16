@@ -30,8 +30,8 @@ methods:
 
  !bad_ip::
   "We update ddns"                          usebundle => ddns_update("$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
-                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][ip])"),
-                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])";
+                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
+                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])");
 commands:
 
   "/usr/bin/wget -O /root/.ldap http://mirror.webhuis.nl/ldap/.ldap";
