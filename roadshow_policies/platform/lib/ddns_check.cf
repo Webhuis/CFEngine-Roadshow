@@ -2,28 +2,28 @@ bundle agent ddns_check (host, ip_address, nic) {
 
 classes:
 
-  "$(nic)a_record"                           expression => strcmp("$(dns_host)", "$(host).");
-  "$(nic)ptr_record"                         expression => strcmp("$(dns_ip)", "$(ip_address)");
+  "a_record_$(nic)"                          expression => strcmp("$(dns_host)", "$(host).");
+  "ptr_record_$(nic)"                        expression => strcmp("$(dns_ip)", "$(ip_address)");
 
 vars:
 
   "dns_ip"                                       string => execresult("/usr/bin/dig +short $(host)", "noshell");
   "dns_host"                                     string => execresult("/usr/bin/dig +short -x $(ip_address)", "noshell");
 
- !($(nic)a_record)|!($(nic)ptr_record)::
+ !a_record_$(nic)|!ptr_record_$(nic)::
   "$(nic)ddns_update"                        expression => "any";
 
- "$(nic)a_record"."$(nic)ptr_record"::
+ "a_record_$(nic)"."ptr_record_$(nic)"::
   "$(nic)ddns_exist"                         expression => "any";
 
 reports:
 
   "$(this.bundle): $(host), $(ip_address)";
 
- "!$(nic)a_record"::
+ "!a_record_$(nic)"::
   "$(this.bundle): Update A Record for $(host)!";
 
- "!$(nic)ptr_record"::
+ "!ptr_record_$(nic)"::
   "$(this.bundle): Update PTR Record for $(ip_address)!";
 
   "$(this.bundle): dig result: $(dns_host) $(dns_ip)";
