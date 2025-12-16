@@ -14,7 +14,7 @@ vars:
   "vlan"                               string => "Vlan-$(vlan_number)";
 
  mac_ok.mac_again::
-  "mac_address_$(nic)                  string => "$(mac[1])";
+  "mac_address_$(nic)"                 string => "$(mac[1])";
 
 files:
 
