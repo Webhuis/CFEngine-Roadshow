@@ -13,7 +13,7 @@ vars:
 #!a_record_$(nic)|!ptr_record_$(nic)::
 # "$(nic)ddns_update"                        expression => "any";
 
- a_record_$(nic).ptr_record_$(nic)::
+ "a_record_$(nic)"."ptr_record_$(nic)"::
   "$(nic)ddns_exist"                         expression => "any";
 
 reports:
