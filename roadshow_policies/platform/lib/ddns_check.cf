@@ -1,4 +1,4 @@
-bundle agent ddns_check (host, ip_address, nic) {
+bundle common ddns_check (host, ip_address, nic) {
 
 classes:
 
@@ -10,11 +10,11 @@ vars:
   "dns_ip"                                       string => execresult("/usr/bin/dig +short $(host)", "noshell");
   "dns_host"                                     string => execresult("/usr/bin/dig +short -x $(ip_address)", "noshell");
 
-#!a_record_$(nic)|!ptr_record_$(nic)::
-# "$(nic)ddns_update"                        expression => "any";
+ #"!a_record_$(nic)|!ptr_record_$(nic)"::
+ #"ddns_update_$(nic)"                           string => "nsupdate_$(nic)";
 
-  "a_record_$(nic).ptr_record_$(nic)"::
-  "ddns_exist_$(nic)"                        expression => "any";
+ #"a_record_$(nic).ptr_record_$(nic)"::
+ #"ddns_exist_$(nic)"                            string => "dns_$(nic)";
 
 reports:
 
