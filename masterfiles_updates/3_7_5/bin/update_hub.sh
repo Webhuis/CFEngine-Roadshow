@@ -26,12 +26,12 @@ cp -rL ${policy_dir}/roadshow_policies /var/cfengine
 rm /var/cfengine/masterfiles/cf_promises_validated
 rm /var/cfengine/masterfiles/services/autorun/hello.cf
 
-cp -p /var/cfengine/inputs/cf_promises_release_id /var/cfengine/masterfiles
-
 find /var/cfengine/masterfiles -type f -exec chmod -R 600 {} \;
 find /var/cfengine/roadshow_policies -type f -exec chmod -R 600 {} \;
 chmod +x /var/cfengine/roadshow_policies/bin/*.py
 
 cf-agent -B ${policy_hub}
+
+cp -p /var/cfengine/inputs/cf_promises_release_id /var/cfengine/masterfiles
 
 echo `date`
