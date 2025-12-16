@@ -5,10 +5,10 @@ classes:
   "$(nic)a_record"                           expression => strcmp("$(dns_host)", "$(host).");
   "$(nic)ptr_record"                         expression => strcmp("$(dns_ip)", "$(ip_address)");
 
- !(($nic)a_record)|!($(nic)ptr_record)::
+ !$(nic)a_recordx|!$(nic)ptr_record::
   "$(nic)ddns_update"                        expression => "any";
 
- ($(nic)a_record).($(nic)ptr_record)::
+ $(nic)a_record.$(nic)ptr_record::
   "$(nic)ddns_exist"                         expression => "any";
 
 vars:
