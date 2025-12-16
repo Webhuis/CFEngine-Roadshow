@@ -36,12 +36,6 @@ files:
      file_select  => r_dynamic,
      classes      => r_if_repaired("profile_removed");
 
-  "$(sys.workdir)/roadshow_dynamic_inputs"
-     depth_search => r_recurse("inf"),
-     delete       => r_tidy,
-     file_select  => r_dynamic,
-     classes      => r_if_repaired("dynamic_inputs_removed");
-
   "$(sys.workdir)/bin/cf-message.py"
      handle       => "update_bin_roadshow",
      copy_from    => r_rcp("$(master_roadshow)/bin/cf-message.py", $(sys.policy_hub)),
