@@ -46,12 +46,6 @@ vars:
  #"ips_all"                            string => execresult("/usr/sbin/ip a | grep 'brd' | grep 'scope global' ", useshell);
   "ips"                                 slist => string_split($(ips_all), "\n", 99);
 
-  "ipv4_can"                           string => canonify( "$(ipv4)" );
-  "ipv4_list"                           slist => string_split("$(ipv4_can)", "_", "99");
-  "ipv4_4"                             string => lastnode( "$(ipv4_list)", "_" );
-
-  "ipv4_index"                          slist => getindices("ipv4_list");
-
   #"interface"                          string => "$(dev_type.interface)";
   #"bridge"                             string => "$(dev_type.bridge)";
 
