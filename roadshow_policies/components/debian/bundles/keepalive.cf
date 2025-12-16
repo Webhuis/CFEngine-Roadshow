@@ -26,6 +26,6 @@ commands:
 reports:
 
   "$(this.bundle) Packages: $(pkg)";
-  "$(this.bundle) Priority: $(classify.ipv4_4)";
+  "$(this.bundle) Priority: $($(role_profile.keepalive_ipv4_4)";
 
 }

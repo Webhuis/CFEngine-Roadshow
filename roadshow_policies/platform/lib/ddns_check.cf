@@ -1,4 +1,4 @@
-bundle common ddns_check (host, ip_address, nic) {
+bundle agent ddns_check (host, ip_address, nic) {
 
 classes:
 

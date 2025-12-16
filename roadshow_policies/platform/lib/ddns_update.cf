@@ -26,7 +26,7 @@ methods:
 
 commands:
 
- !(a_record.ptr_record)::
+ !(a_record_$(nic).ptr_record_$(nic))::
   "/usr/bin/nsupdate -v -k $(mdns_key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
