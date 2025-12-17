@@ -12,7 +12,8 @@ vars:
   "internal_routes[10.254.0.17]"        slist => { "10.10.117.0/24", "10.110.17.0/24" };
   "internal_routes[10.254.0.111]"       slist => { "10.111.211.0/24", "10.211.111.0/24" };
 
-  "ggwy_vip"                           string => "10.254.0.1";
+  "ggwy_vip"                           string => "10.254.0.1/24";
+  "ggwy_routes[10.254.0.125]"           slist => { "0.0.0.0/0" };
   "ggwy_routes[10.254.0.17]"            slist => { "10.10.117.0/24", "10.110.17.0/24" };
  #"ggwy_routes[10.254.0.71]"            slist => { "10.68.171.0/24", "10.168.71.0/24" };
   "ggwy_routes[10.254.0.111]"           slist => { "10.111.211.0/24", "10.211.111.0/24" };
@@ -26,8 +27,6 @@ vars:
   "pg_cluster[1]"                      string => "psqlpdcsw001.sw.webhuis.nl";
   "pg_cluster[2]"                      string => "psqlpdcsw002.sw.webhuis.nl";
   "pg_cluster[3]"                      string => "psqlpdcsw003.sw.webhuis.nl";
-
-  "ggwy_vip"                           string => "10.254.0.1";
 
   "pg_cluster_index"                    slist => getindices("pg_cluster");
   "pg_keepalive_peer[10.68.171.80]"    string => "100";
