@@ -35,6 +35,7 @@ methods:
   "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",
                                                                           "$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
                                                                           "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
+                                                                          "$(role_profile.ddns[$(role_profile.ddns_index)][mac])",
                                                                           "$(role_profile.ddns[$(role_profile.ddns_index)][vlan])");
 
  !bad_ip::

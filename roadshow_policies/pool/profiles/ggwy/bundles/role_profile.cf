@@ -40,20 +40,17 @@ vars:
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
 
-  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
-  "ip_list[support]"                   slist => string_split("$(ip_line[support])", "src ", 99);
-  "ip[support]"                       string => nth("ip_list[support]", "1");
+ #"ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
+ #"ip_list[support]"                   slist => string_split("$(ip_line[support])", "src ", 99);
+  "ip[support]"                       string => "$(sys.ipv4[$(nic[support])])";
 
-  "ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
-  "ip_list[admin]"                     slist => string_split("$(ip_line[admin])", "src ", 99);
-  "ip[admin]"                         string => nth("ip_list[admin]", "1");
+ #"ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
+ #"ip_list[admin]"                     slist => string_split("$(ip_line[admin])", "src ", 99);
+  "ip[admin]"                         string => "$(sys.ipv4[$(nic[admin])])";
 
-  "ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
-  "ip_list[gw]"                        slist => string_split("$(ip_line[gw])", "src ", 99);
-  "ip[gw]"                            string => nth("ip_list[gw]", "1");
-
-  "ipv4_can"                          string => canonify("$(ip[gw])");
-  "ipv4_list"                          slist => string_split("$(ipv4_can)", "_", "99");
+ #"ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
+ #"ip_list[gw]"                        slist => string_split("$(ip_line[gw])", "src ", 99);
+  "ip[gw]"                            string => "$(sys.ipv4[$(nic[gw])])";
 
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
   "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
@@ -61,15 +58,19 @@ vars:
   "keepalive_ipv4_4"                  string => lastnode("$(ipv4_list)", "_" );
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
 
-  "ddns[support][ip]"                 string => "$(ip[support])";
+  "ddns[support][ip]"                 string => "$(sys.ipv4[$(ip[support])])";
+  "ddns[support][mac]"                string => "$(sys.hardware_address[$(ip[support])])";
   "ddns[support][nic]"                string => "$(nic[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
-  "ddns[admin][ip]"                   string => "$(ip[admin])";
+  "ddns[admin][ip]"                   string => "$(sys.ipv4[$(ip[admin])])";
+  "ddns[admin][mac]"                  string => "$(sys.hardware_address[$(ip[admin])])";
   "ddns[admin][nic]"                  string => "$(nic[admin])";
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
   "ddns[gw][ip]"                      string => "$(ip[gw])";
+  "ddns[gw][ip]"                      string => "$(sys.ipv4[$(ip[gw])])";
+  "ddns[gw][mac]"                     string => "$(sys.hardware_address[$(ip[gw])])";
   "ddns[gw][nic]"                     string => "$(nic[gw])";
   "ddns[gw][suffix]"                  string => "-gw";
   "ddns[gw][vlan]"                    string => "$($(classify.organisation).vlan[gw])";
