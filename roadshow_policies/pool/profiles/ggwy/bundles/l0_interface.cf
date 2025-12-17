@@ -54,6 +54,7 @@ insert_lines:
   "/usr/sbin/ip link set eth1 name eth2";
   "/usr/sbin/ip link set eth0 name eth1";
 
+}
 
 bundle edit_line firewall_sh {
 
