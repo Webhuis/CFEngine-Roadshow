@@ -23,10 +23,10 @@ files:
 commands:
 
  restart::
-  "/usr/bin/systemctl restart networking"  
+  "/usr/bin/systemctl restart networking"; 
 
  reboot::
-  "/usr/sbin/reboot"  
+  "/usr/sbin/reboot";  
 
 reports:
 
