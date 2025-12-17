@@ -20,6 +20,14 @@ files:
     edit_line                              => persistent_eth,
     classes                                => if_repaired("reboot");
 
+  "/etc/network/if-up.d/firewall.sh"
+    comment                                => "Script to start firewall",
+    create                                 => "true",
+    perms                                  => mo("750", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_line                              => firewall_sh;
+
 commands:
 
  restart::
@@ -42,7 +50,20 @@ delete_lines:
 
 insert_lines:
 
+  "#!/bin/bash";
   "/usr/sbin/ip link set eth1 name eth2";
   "/usr/sbin/ip link set eth0 name eth1";
+
+
+bundle edit_line firewall_sh {
+
+delete_lines:
+
+    ".*";
+
+insert_lines:
+
+  "#!/bin/bash"
+  "/usr/local/bin/local-rules.sh";
 
 }
