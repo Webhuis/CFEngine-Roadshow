@@ -26,7 +26,8 @@ files:
     perms                                  => mo("750", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_line                              => firewall_sh;
+    edit_line                              => firewall_sh,
+    classes                                => if_repaired("restart");
 
 commands:
 
