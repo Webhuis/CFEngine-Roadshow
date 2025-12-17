@@ -8,6 +8,7 @@
 
 # The loopback network interface
 auto lo
+allow-hotplug lo
 iface lo inet loopback
   pre-up /etc/network/if-pre-up.d/persistent.sh
   up /usr/local/bin/local-rules.sh
