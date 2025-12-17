@@ -40,16 +40,8 @@ vars:
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
 
- #"ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
- #"ip_list[support]"                   slist => string_split("$(ip_line[support])", "src ", 99);
   "ip[support]"                       string => "$(sys.ipv4[$(nic[support])])";
-
- #"ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
- #"ip_list[admin]"                     slist => string_split("$(ip_line[admin])", "src ", 99);
   "ip[admin]"                         string => "$(sys.ipv4[$(nic[admin])])";
-
- #"ip_line[gw]"                       string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[gw])", noshell);
- #"ip_list[gw]"                        slist => string_split("$(ip_line[gw])", "src ", 99);
   "ip[gw]"                            string => "$(sys.ipv4[$(nic[gw])])";
 
   "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
