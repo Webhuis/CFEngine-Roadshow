@@ -9,25 +9,24 @@ global_defs {
   notification_email {
     martin@webhuis.nl
   }
-  notification_email_from ldap@$(sys.fqhost)
+  notification_email_from keepalived@$(sys.fqhost)
   smtp_server mailsw.webhuis.nl
   smtp_connect_timeout 30
 }
 
-vrrp_instance VI_1 {
-  state MASTER
-  interface eth1
-  virtual_router_id 101
-  priority $(postgresql_proxy.keepalive_priority)
+vrrp_instance $(role_profile.keepalive_vlan) {
+  interface $(role_profile.keepalive_nic)
+  virtual_router_id $(role_profile.keepalive_vlan)
+  priority $(role_profile.keepalive_ipv4_4)
   advert_int 1
   authentication {
     auth_type PASS
       auth_pass 1111
   }
-  unicast_peer {
-    $(postgresql_proxy.pg_keepalive_peers)
-  }
   virtual_ipaddress {
-    $($(classify.domain).postgres_vip)
+    $(role_profile.keepalive_vip)
+  }
+  virtual_routes {
+    $($(classify.domain).ggwy_routes[$($(classify.domain).ggwy_routes_index)]) via $($(classify.domain).ggwy_routes_index) dev $(role_profile.keepalive_nic)
   }
 }
