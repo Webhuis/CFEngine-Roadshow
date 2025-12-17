@@ -64,7 +64,7 @@ delete_lines:
 
 insert_lines:
 
-  "#!/bin/bash"
+  "#!/bin/bash";
   "/usr/local/bin/local-rules.sh";
 
 }
