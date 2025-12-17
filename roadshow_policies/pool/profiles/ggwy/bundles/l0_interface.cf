@@ -9,7 +9,7 @@ files:
     action                                 => immediate,
     edit_defaults                          => no_backup,
     edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/interfaces.tmpl",
-    classes                                => if_repaired("reboot");
+    classes                                => if_repaired("restart");
 
   "/etc/network/if-pre-up.d/persistent.sh"
     comment                                => "Script to circumvent the nasty eth0 issue",
@@ -19,6 +19,14 @@ files:
     edit_defaults                          => no_backup,
     edit_line                              => persistent_eth,
     classes                                => if_repaired("reboot");
+
+commands:
+
+ restart::
+  "/usr/bin/systemctl restart networking"  
+
+ reboot::
+  "/usr/sbin/reboot"  
 
 reports:
 

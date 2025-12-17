@@ -10,6 +10,6 @@
 auto lo
 iface lo inet loopback
   pre-up /etc/network/if-pre-up.d/persistent.sh
-  post-up /usr/local/bin/local-rules.sh
+  up /usr/local/bin/local-rules.sh
 
 source /etc/network/interfaces.d/*
