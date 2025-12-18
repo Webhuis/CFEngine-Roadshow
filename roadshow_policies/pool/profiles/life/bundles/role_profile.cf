@@ -47,21 +47,18 @@ vars:
 
   #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
-  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev vmbr0.$(vlan[support])", noshell);
-  "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
-  "ip[support]"                       string => nth("ip_list[support]", "1");
-
-  "ip_line[life]"                     string => execresult("$($(sys.flavor).ip_cmd) r show dev vmbr0.$(vlan[life])", noshell);
-  "ip_list[life]"                      slist => string_split($(ip_line[life]), "src ", 99);
-  "ip[life]"                          string => nth("ip_list[life]", "1");
+  "ip[support]"                       string => "$(sys.ipv4[$(nic[support])])";
+  "ip[life]"                          string => "$(sys.ipv4[$(nic[life])])";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
+  "ddns[support][mac]"                string => "$(sys.hardware_address[$(ip[support])])";
   "ddns[support][vlan]"               string => "$(vlan[support])";
   "ddns[support][suffix]"             string => "";
   "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
   "ddns[life][ip]"                    string => "$(ip[life])";
+  "ddns[life][mac]"                   string => "$(sys.hardware_address[$(ip[life])])";
   "ddns[life][vlan]"                  string => "$(vlan[life])";
-  "ddns[life][suffix]"                string => "-ssh";
+  "ddns[life][suffix]"                string => "-life";
   "ddns[life][vlan]"                  string => "$($(classify.organisation).vlan[life])";
 
   "ddns_index"                         slist => getindices("ddns");

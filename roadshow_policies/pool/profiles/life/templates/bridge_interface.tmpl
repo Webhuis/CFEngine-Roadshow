@@ -23,7 +23,7 @@ iface eth0 inet manual
         mtu 8192
 
 auto vmbr0
-iface vmbr0 inet manual
+iface vmbr0 inet static
         bridge-ports eth0
         bridge-stp off
         bridge-fd 0
