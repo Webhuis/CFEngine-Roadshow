@@ -11,6 +11,9 @@ files:
     edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/bridge_interface.tmpl",
     classes                                => if_repaired("reboot");
 
+methods:
+
+  "ethtool for interface values" usebundle => ethtool_rx_tx;
 reports:
 
   "$(this.bundle): bridge interface standard part";
