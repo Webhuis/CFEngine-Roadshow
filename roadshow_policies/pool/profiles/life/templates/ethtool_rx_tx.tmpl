@@ -1,0 +1,12 @@
+# Webhuis template for persistent links in /etc/systemd/network
+# Overcomes the issues with the very unpredictable predictable interface names.
+# Interface names are hard linked to mac addresses on vlans
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+[Match]
+#!/bin/bash
+
+/usr/sbin/ethtool -K eth0 rx off tx off
+
