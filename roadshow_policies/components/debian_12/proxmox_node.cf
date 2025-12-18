@@ -35,9 +35,10 @@ files:
     classes      => r_if_repaired("new_repo_key");
 
   "/sys/class/net/vmbr0/bridge/multicast_snooping"
-         comment => "This node want to be able to join a cluster",
-          action => r_immediate,
-       edit_line => multicast_snooping;
+           comment => "This node want to be able to join a cluster",
+            action => r_immediate,
+     edit_defaults => no_backup,
+         edit_line => multicast_snooping;
 
 methods:
 
