@@ -4,7 +4,7 @@ vars:
 
   "vlan"                            string => concat("vmbr0.", "$(vlan_support)");
   "vlan_can"                        string => canonify($(vlan));
-  "vlan_ip"                         string => "$(sys.ipv4[($(vlan_can))])";
+  "vlan_ip"                         string => "$(sys.ipv4[$(vlan_can)])";
 
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20");
