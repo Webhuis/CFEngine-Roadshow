@@ -3,6 +3,7 @@ bundle agent support_interface(vlan_support) {
 vars:
 
   "vlan"                            string => concat("vmbr0.", "$(vlan_support)");
+  "vlan_can"                        string => canonify($(vlan));
 
   "default_route"                   string => nth("classify.ipr", 0);
   "default_device_list"              slist => splitstring( $(default_route), " ", "20");
@@ -11,7 +12,7 @@ vars:
 files:
 
  has_hosts_var::
-  "/etc/network/interfaces.d/$(vlan)"
+  "/etc/network/interfaces.d/$(vlan_can)"
     comment                                => "vlan support interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),

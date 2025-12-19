@@ -3,11 +3,12 @@ bundle agent life_interface(vlan_life) {
 vars:
 
   "vlan"                            string => concat("vmbr0.", "$(vlan_life)");
+  "vlan_can"                        string => canonify($(vlan));
 
 files:
 
  has_life_var::
-  "/etc/network/interfaces.d/$(vlan)"
+  "/etc/network/interfaces.d/$(vlan_can)"
     comment                                => "vlan life interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),
