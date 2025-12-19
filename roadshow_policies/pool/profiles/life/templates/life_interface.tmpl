@@ -8,6 +8,6 @@
 
 auto vmbr0.$(role_profile.vlan[life])
 iface vmbr0.$(role_profile.vlan[life]) inet static
-  address $(role_profile.ip[life])/24
+  address $(life_interface.vlan_ip)/24
   mtu 8192
 

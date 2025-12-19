@@ -12,7 +12,7 @@ vars:
 files:
 
  has_hosts_var::
-  "/etc/network/interfaces.d/$(vlan_can)"
+  "/etc/network/interfaces.d/$(vlan)"
     comment                                => "vlan support interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),

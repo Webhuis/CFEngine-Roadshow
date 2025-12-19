@@ -4,11 +4,12 @@ vars:
 
   "vlan"                            string => concat("vmbr0.", "$(vlan_life)");
   "vlan_can"                        string => canonify($(vlan));
+  "vlan_ip"                         string => "$(sys.ipv4[($(vlan_can))]);
 
 files:
 
  has_life_var::
-  "/etc/network/interfaces.d/$(vlan_can)"
+  "/etc/network/interfaces.d/$(vlan)"
     comment                                => "vlan life interface",
     create                                 => "true",
     perms                                  => mo("644", "root"),
