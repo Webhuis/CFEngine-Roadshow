@@ -32,6 +32,9 @@ vars:
   "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
   "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
 
+  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
+  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
+
   "vlan_numbers"                       slist => getvalues("$(classify.organisation).vlan");
   "layer_3"                            slist => { "42", "123" };
   "layer_2_step_1"                     slist => filter("42", "vlan_numbers", "true", "true", 99);
