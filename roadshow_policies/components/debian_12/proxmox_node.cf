@@ -46,7 +46,7 @@ methods:
 
 commands:
 
-  "echo 0 > /sys/class/net/vmbr0/bridge/multicast_snooping";
+  "/bin/echo 0 > /sys/class/net/vmbr0/bridge/multicast_snooping";
 
 reports:
 
