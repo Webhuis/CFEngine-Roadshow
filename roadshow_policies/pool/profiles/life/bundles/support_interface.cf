@@ -10,7 +10,7 @@ vars:
 
 files:
 
- has_life_var::
+ has_hosts_var::
   "/etc/network/interfaces.d/$(vlan)"
     comment                                => "vlan support interface",
     create                                 => "true",
