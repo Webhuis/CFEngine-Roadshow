@@ -28,6 +28,8 @@ commands:
 reports:
 
   "$(this.bundle): vlan life interface $(vlan)";
+  "$(this.bundle): vlan life can $(vlan_can)";
+  "$(this.bundle): vlan life ip_address $(vlan_ip)";
 
 }
 
