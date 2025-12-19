@@ -32,9 +32,6 @@ vars:
   "vlan[support]"                     string => "$($(classify.organisation).vlan[support])";
   "vlan[life]"                        string => "$($(classify.organisation).vlan[life])";
 
-  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nic[life]"                         string => "$($(classify.organisation).nic[life])";
-
   "vlan_numbers"                       slist => getvalues("$(classify.organisation).vlan");
   "layer_3"                            slist => { "42", "123" };
   "layer_2_step_1"                     slist => filter("42", "vlan_numbers", "true", "true", 99);
@@ -50,8 +47,8 @@ vars:
 
   #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
-  "ip[support]"                       string => "$(sys.ipv4[$(nic[support])])";
-  "ip[life]"                          string => "$(sys.ipv4[$(nic[life])])";
+  "ip[support]"                       string => "$(sys.ipv4[$(vlan[support])])";
+  "ip[life]"                          string => "$(sys.ipv4[$(vlan[life])])";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][mac]"                string => "$(sys.hardware_address[$(ip[support])])";
