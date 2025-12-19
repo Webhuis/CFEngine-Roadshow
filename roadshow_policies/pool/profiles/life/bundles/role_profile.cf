@@ -47,19 +47,19 @@ vars:
 
   #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
-  "ip[support]"                       string => "$(sys.ipv4[$(vlan[support])])";
-  "ip[life]"                          string => "$(sys.ipv4[$(vlan[life])])";
+  "ip[support]"                       string => "$(sys.ipv4[$(vlan_support)])";
+  "ip[life]"                          string => "$(sys.ipv4[$(vlan_life)])";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
-  "ddns[support][mac]"                string => "$(sys.hardware_address[$(ip[support])])";
+  "ddns[support][mac]"                string => "$(sys.hardware_address[$(vlan_support)])";
   "ddns[support][vlan]"               string => "$(vlan[support])";
   "ddns[support][suffix]"             string => "";
-  "ddns[support][vlan]"               string => "$($(classify.organisation).vlan[support])";
+  "ddns[support][vlan]"               string => "$(vlan_support)";
   "ddns[life][ip]"                    string => "$(ip[life])";
   "ddns[life][mac]"                   string => "$(sys.hardware_address[$(ip[life])])";
   "ddns[life][vlan]"                  string => "$(vlan[life])";
   "ddns[life][suffix]"                string => "-life";
-  "ddns[life][vlan]"                  string => "$($(classify.organisation).vlan[life])";
+  "ddns[life][vlan]"                  string => "$(vlan_life)";
 
   "ddns_index"                         slist => getindices("ddns");
 
