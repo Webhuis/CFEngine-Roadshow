@@ -34,12 +34,6 @@ files:
     action       => r_immediate,
     classes      => r_if_repaired("new_repo_key");
 
-  "/sys/class/net/vmbr0/bridge/multicast_snooping"
-           comment => "This node want to be able to join a cluster",
-            action => r_immediate,
-     edit_defaults => r_no_backup,
-         edit_line => multicast_snooping;
-
 methods:
 
   "We desire the Proxmox key"       usebundle => get_apt_repo_key( "$(apt_key)");
@@ -49,6 +43,10 @@ methods:
   "Common kvm host stuff"           usebundle => kvm_host;
 
   "We are a Proxmox client"         usebundle => packages("proxmox_node.pkg");
+
+commands:
+
+  "echo 0 > /sys/class/net/vmbr0/bridge/multicast_snooping";
 
 reports:
 
