@@ -20,8 +20,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) vlan support: $(role_profile.ip[support]), $(role_profile.vlap[support])";
-  "$(this.bundle) vlan life: $(role_profile.ip[life]), $(role_profile.vlap[life])";
+  "$(this.bundle) vlan support: $(role_profile.ip[support]), $(role_profile.vlan[support])";
+  "$(this.bundle) vlan life: $(role_profile.ip[life]), $(role_profile.vlan[life])";
   "$(this.bundle) bridge_interfaces_list: $(role_profile.bridge_interfaces_list)";
   "$(this.bundle) nic values: $(role_profile.nic_values)";
   "$(this.bundle) ip list: $(role_profile.ip_list)";
