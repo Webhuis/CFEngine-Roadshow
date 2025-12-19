@@ -64,6 +64,14 @@ body copy_from r_cp(from)
 
 #########################################################
 
+body edit_defaults r_no_backup
+# @brief Don't make a backup of the file before editing
+{
+      edit_backup => "false";
+}
+
+#########################################################
+
 body copy_from r_cp_nobck(from)
 {
       source      => "$(from)";
