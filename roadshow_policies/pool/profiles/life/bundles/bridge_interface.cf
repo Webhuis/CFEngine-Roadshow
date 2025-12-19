@@ -14,6 +14,7 @@ files:
 methods:
 
   "ethtool for interface values" usebundle => ethtool_rx_tx;
+
 reports:
 
   "$(this.bundle): bridge interface standard part";

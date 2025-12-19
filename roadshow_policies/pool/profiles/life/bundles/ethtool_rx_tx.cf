@@ -6,8 +6,6 @@ vars:
 
 files:
 
- mac_ok::
-
   "/etc/systemd/network/*"
     file_select    => all,
     delete         => tidy;
