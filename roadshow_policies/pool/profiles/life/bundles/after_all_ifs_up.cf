@@ -1,4 +1,4 @@
-bundle agent after-all-ifs-up {
+bundle agent after_all_ifs_up {
 
 vars:
 
