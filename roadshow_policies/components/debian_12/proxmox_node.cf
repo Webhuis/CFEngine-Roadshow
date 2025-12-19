@@ -10,6 +10,8 @@ vars:
 
   "apt_key"                            string => "proxmox-release-bookworm.gpg";
 
+  "snooping"                           string => "0";
+
   "pkg[arp-scan]"                      string => "*";
   "pkg[array-info]"                    string => "*";
   "pkg[libpve-network-perl]"           string => "*";
@@ -46,7 +48,7 @@ methods:
 
 commands:
 
-  "/bin/echo 0 > /sys/class/net/vmbr0/bridge/multicast_snooping";
+  "/bin/echo $(snooping) > /sys/class/net/vmbr0/bridge/multicast_snooping";
 
 reports:
 
