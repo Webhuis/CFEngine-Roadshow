@@ -13,7 +13,7 @@ files:
 
 methods:
 
-  "ethtool for interface values" usebundle => ethtool_rx_tx;
+  "ethtool and snooping"         usebundle => after_all_ifs_up;
 
 reports:
 

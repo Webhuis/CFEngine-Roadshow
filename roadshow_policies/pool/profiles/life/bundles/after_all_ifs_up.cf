@@ -1,4 +1,4 @@
-bundle agent ethtool_rx_tx {
+bundle agent after-all-ifs-up {
 
 vars:
 
@@ -10,13 +10,13 @@ files:
     file_select    => all,
     delete         => tidy;
 
-  "/etc/network/if-pre-up.d/ethtool-rx-tx.sh"
+  "/etc/network/after-all-ips-up"
     comment                                => "one file per nic",
     create                                 => "true",
     perms                                  => mo("755", "root"),
     action                                 => immediate,
     edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/ethtool_rx_tx.tmpl",
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/after_all_ifs_up.tmpl",
     classes                                => if_repaired("reboot");
 
 commands:

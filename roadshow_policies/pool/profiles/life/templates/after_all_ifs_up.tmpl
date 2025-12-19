@@ -10,3 +10,5 @@
 
 /usr/sbin/ethtool -K eth0 rx off tx off
 
+/bin/echo 0 > /sys/class/net/vmbr0/bridge/multicast_snooping
+
