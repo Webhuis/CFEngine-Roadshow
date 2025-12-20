@@ -18,6 +18,7 @@ methods:
   "Determine role, organisation and geography"    usebundle => classify,
                                                   comment   => "reads external host data from Data,
                                                                 common bundles provide data related to hard classes";
+  "We need the reports from this common bundle"   usebundle => role_profle;
   "Carry out the platform specific policies"      usebundle => platform($(classify.vendor));
   "What purpose do we have in life"               usebundle => $(classify.role);
 
