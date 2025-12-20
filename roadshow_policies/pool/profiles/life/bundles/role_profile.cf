@@ -6,8 +6,8 @@ classes:
   "has_layer_2"                    expression => isvariable("layer_2");
   "has_layer_3"                    expression => isvariable("layer_3");
   "has_ddns_index"                 expression => isvariable("ddns_index");
-  "has_hosts_var"                  expression => isvariable("hosts_ip");
-  "has_life_var"                   expression => isvariable("life_ip");
+  "has_hosts_var"                  expression => isvariable("ip[support]");
+  "has_life_var"                   expression => isvariable("ip[life]");
   "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
 
  has_bridge_ports::
@@ -19,12 +19,12 @@ classes:
  has_hosts_var::
   "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
                                    expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
-            "$(hosts_ip)"
+            "$(ip[support])"
             );
  has_life_var::
   "valid_life_ip"                  comment    => "Process the IP Addresses.",
                                    expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
-            "$(life_ip)"
+            "$(ip[life])"
             );
 
 vars:
@@ -55,12 +55,12 @@ vars:
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][mac]"                string => "$(sys.hardware_address[$(vlan_support)])";
   "ddns[support][vlan]"               string => "$(vlan[support])";
-  "ddns[support][suffix]"             string => "";
+  "ddns[support][suffix]"             string => "-support";
   "ddns[support][vlan]"               string => "$(vlan_support)";
   "ddns[life][ip]"                    string => "$(ip[life])";
   "ddns[life][mac]"                   string => "$(sys.hardware_address[$(ip[life])])";
   "ddns[life][vlan]"                  string => "$(vlan[life])";
-  "ddns[life][suffix]"                string => "-life";
+  "ddns[life][suffix]"                string => "";
   "ddns[life][vlan]"                  string => "$(vlan_life)";
 
   "ddns_index"                         slist => getindices("ddns");

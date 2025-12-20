@@ -1,5 +1,22 @@
 bundle common role_profile {
 
+classes:
+
+  "has_ddns_index"                 expression => isvariable("ddns_index");
+  "has_hosts_var"                  expression => isvariable("ip[support]");
+  "has_admin_var"                  expression => isvariable("ip[admin]");
+  "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
+
+ has_hosts_var::
+  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(ip[support])"
+
+ has_admin_var::
+  "valid_admin_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(ip[admin])"
+
 vars:
 
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
@@ -10,13 +27,8 @@ vars:
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1" };
 
-  "ip_line[support]"                  string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[support])", noshell);
-  "ip_list[support]"                   slist => string_split($(ip_line[support]), "src ", 99);
-  "ip[support]"                       string => nth("ip_list[support]", "1");
-
-  "ip_line[admin]"                    string => execresult("$($(sys.flavor).ip_cmd) r show dev $(nic[admin])", noshell);
-  "ip_list[admin]"                     slist => string_split($(ip_line[admin]), "src ", 99);
-  "ip[admin]"                         string => nth("ip_list[admin]", "1");
+  "ip[support]"                       string => "$(sys.ipv4[$(nic[support])])";
+  "ip[admin]"                         string => "$(sys.ipv4[$(nic[admin])])";
 
   "ddns[support][ip]"                 string => "$(ip[support])";
   "ddns[support][nic]"                string => "$(nic[support])";
