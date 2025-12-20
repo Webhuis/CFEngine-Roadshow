@@ -8,7 +8,6 @@ vars:
 
   "ip_link_$(vlan)"                 string => expression( "/usr/sbin/ip link show canonify($(vlan))"; 
 
-
 commands:
  
  !up_$(vlan)::
