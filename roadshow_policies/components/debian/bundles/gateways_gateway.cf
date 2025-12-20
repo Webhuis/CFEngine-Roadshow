@@ -2,35 +2,41 @@ bundle agent gateways_gateway {
 
 vars:
 
-  "gateways_gateway.cf"     string => "I am the Gateway of Gateways";
+  "gateways_gateway.cf"                  string => "I am the Gateway of Gateways";
+  "pkg[iptables-persistent]"	   	 string => "*";
 
 files:
 
-  "/usr/local/bin/local-rules.sh"
-         comment  => "local firewall config",
-           perms  => mog("755","root","root"),
+  "/etc/iptables/rules.v4"
+         comment  => "firewall ipv4 config",
+           perms  => mog("644","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common_gateway_rules.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common_gateway_rules.v4.tmpl",
          classes  => r_if_repaired("restart_firewall");
 
-  "/usr/local/bin/local-ipv6-rules.sh"
-         comment  => "disable ipv6",
-           perms  => mog("755","root","root"),
+  "/etc/iptables/rules.v6"
+         comment  => "firewall ipv4 config",
+           perms  => mog("644","root","root"),
           create  => "true",
           action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/local-ipv6-rules.tmpl",
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common_gateway_rules.v6.tmpl",
          classes  => r_if_repaired("restart_firewall");
 
 methods:
 
+  "We need firewall packages"         usebundle => packages("gateways_gateway.pkg");
   "We ip_forwarding enables"          usebundle => sysctl_conf;
   "We needs our peers to do the job"  usebundle => keepalive;
+
+services:
+
+  "iptables"                     service_policy => "start";
 
 commands:
 
  restart_firewall::
-  "/usr/local/bin/local-rules.sh";
+  "/usr/bin/systemctl restart iptables";
 
 reports:
 
