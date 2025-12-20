@@ -45,7 +45,7 @@ vars:
   "vlan_life"                         string => concat("vmbr0.", "$(vlan[life])");
   "vlan_life_can"                     string => canonify($(vlan_life));
   "vlan_support"                      string => concat("vmbr0.", "$(vlan[support])");
-  "vlan_support_can"                  string => canonify($(vlan_support_can));
+  "vlan_support_can"                  string => canonify($(vlan_support));
 
   #"var_$(bridge_ports)"              string => execresult("$($(sys.flavor).ip_cmd) link show dev $(bridge_ports)","noshell");
 
