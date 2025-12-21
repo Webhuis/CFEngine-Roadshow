@@ -24,13 +24,13 @@ files:
    edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/igwy-rules.tmpl",
          classes  => r_if_repaired("restart_firewall");
 
-  "/usr/local/bin/local-ipv6-rules.sh"
-         comment  => "disable ipv6",
-           perms  => mog("755","root","root"),
-          create  => "true",
-          action  => r_immediate,
-   edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-ipv6-rules.tmpl",
-         classes  => r_if_repaired("restart_firewall");
+ #"/usr/local/bin/local-ipv6-rules.sh"
+ #       comment  => "disable ipv6",
+ #         perms  => mog("755","root","root"),
+ #        create  => "true",
+ #        action  => r_immediate,
+ # edit_template  => "$(sys.workdir)/roadshow_dynamic_inputs/templates/local-ipv6-rules.tmpl",
+ #       classes  => r_if_repaired("restart_firewall");
 
 methods:
 
