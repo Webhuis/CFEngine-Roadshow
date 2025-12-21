@@ -2,7 +2,8 @@ bundle agent check_interfaces(vlan) {
 
 classes:
 
-  "up_$(vlan)"                  expression => regextract( "UP", "ip_link_$(vlan) "); 
+  "up_$(vlan)"                  expression => regextract( "UP", "ip_link_$(vlan)", "part"); 
+  "down_$(vlan)"                expression => regextract( "DOWN", "ip_link_$(vlan)", "part"); 
 
 vars:
 
@@ -10,7 +11,7 @@ vars:
 
 commands:
  
- "!up_$(vlan)"::
+ "up_$(vlan)"::
   "/sbin/ip link set dev $(vlan) up";
 
 reports:
@@ -18,7 +19,7 @@ reports:
  "up_$(vlan)"::
   "$(this.bundle): vlan is up: $(vlan)!";
 
- "!up_$(vlan)"::
+ "!down_$(vlan)"::
   "$(this.bundle): I am bringing vlans up: $(vlan).";
 
 }
