@@ -10,7 +10,7 @@ vars:
 
 commands:
  
- !up_$(vlan)::
+ "!up_$(vlan)"::
   "/sbin/ip link set dev $(vlan) up";
 
 reports:
@@ -18,7 +18,7 @@ reports:
  up_$(vlan)::
   "$(this.bundle): vlan is up: $(vlan)!";
 
- up_$(vlan)::
+ "!up_$(vlan)"::
   "$(this.bundle): I am bringing vlans up: $(vlan).";
 
 }
