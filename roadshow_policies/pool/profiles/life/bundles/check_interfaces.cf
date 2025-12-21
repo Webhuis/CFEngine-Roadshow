@@ -1,6 +1,6 @@
 bundle agent check_interfaces(vlan) {
 
-classas:
+classes:
 
   "up_$(vlan)"                  expression => regex ( "UP", "ip_link_$(vlan)")); 
 
