@@ -2,11 +2,11 @@ bundle agent check_interfaces(vlan) {
 
 classes:
 
-  "up_$(vlan)"                  expression => regex ( "UP", "ip_link_$(vlan) "); 
+  "up_$(vlan)"                  expression => regextract( "UP", "ip_link_$(vlan) "); 
 
 vars:
 
-  "ip_link_$(vlan)"                 string => expression( "/usr/sbin/ip link show canonify($(vlan))"; 
+  "ip_link_$(vlan)"                 string => expression( "/usr/sbin/ip link show $(vlan))"; 
 
 commands:
  
