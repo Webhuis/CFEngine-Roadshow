@@ -49,7 +49,7 @@ reports:
  "$(this.bundle): I am implementing sshd role based configuration";
 
  valid_life_ip::
-  "$(this.bundle) life ip : $(ip{life])";
+  "$(this.bundle) life ip : $(ip[life])";
 
  !valid_life_ip::
    "$(this.bundle): bad life_ip!";
