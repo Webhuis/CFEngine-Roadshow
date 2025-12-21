@@ -15,7 +15,7 @@ commands:
 
 reports:
 
- up_$(vlan)::
+ "up_$(vlan)"::
   "$(this.bundle): vlan is up: $(vlan)!";
 
  "!up_$(vlan)"::
