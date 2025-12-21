@@ -8,6 +8,7 @@ classes:
   "has_ddns_index"                 expression => isvariable("ddns_index");
   "has_hosts_var"                  expression => isvariable("ip[support]");
   "has_life_var"                   expression => isvariable("ip[life]");
+  "has_admin_var"                  expression => isvariable("ip[life]");
   "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
 
  has_bridge_ports::
