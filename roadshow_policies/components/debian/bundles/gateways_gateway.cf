@@ -2,7 +2,6 @@ bundle agent gateways_gateway {
 
 vars:
 
-  "gateways_gateway.cf"                  string => "I am the Gateway of Gateways";
   "pkg[iptables-persistent]"	   	 string => "*";
 
 files:

@@ -2,7 +2,7 @@ bundle agent ggwy {
 
 vars:
 
-  "role_name"                         string => "The gateway gateway";
+  "role_name"                         string => "I am the Gateway of Gateways";
 
 methods:
 
