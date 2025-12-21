@@ -6,7 +6,7 @@ classes:
 
 vars:
 
-  "ip_link_$(vlan)"                 string => expression( "/usr/sbin/ip link show $(vlan)"); 
+  "ip_link_$(vlan)"             execresult =>( "/usr/sbin/ip link show $(vlan)"); 
 
 commands:
  
