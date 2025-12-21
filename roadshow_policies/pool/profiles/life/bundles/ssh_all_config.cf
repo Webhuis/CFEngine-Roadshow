@@ -48,11 +48,11 @@ reports:
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
- valid_hosts_ip::
-  "$(this.bundle) etc_hosts_nic: $(hosts_ip)";
+ valid_life_ip::
+  "$(this.bundle) life ip : $(ip{life])";
 
  !valid_life_ip::
-   "$(this.bundle): bad life_ip! $(life_ip)";
+   "$(this.bundle): bad life_ip!";
 
 }
 
