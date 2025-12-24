@@ -5,7 +5,6 @@ methods:
   "Install common packages"              usebundle => pkg_base_common;
   "Set locales to UTF 8"                 usebundle => locales;
   "Standardise issue setup"              usebundle => login_messages;
-  "Standardise ssh client settings"      usebundle => ssh_config;
  #"We desire log rotation"               usebundle => log_rotation;
 
 reports:

@@ -1,4 +1,4 @@
-bundle agent ssh_all_config {
+bundle agent ssh_config {
 
 vars:
 
