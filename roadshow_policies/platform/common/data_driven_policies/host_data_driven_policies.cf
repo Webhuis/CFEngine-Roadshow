@@ -6,7 +6,7 @@ methods:
   "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
 
  has_admin_var::
-  "openssh server and client"               usebundle => ssh_all_config;
+  "openssh server and client"               usebundle => sshd_config;
 
 reports:
 

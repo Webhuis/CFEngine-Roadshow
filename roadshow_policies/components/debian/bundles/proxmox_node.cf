@@ -46,10 +46,6 @@ methods:
 
   "We are a Proxmox client"         usebundle => packages("proxmox_node.pkg");
 
-commands:
-
-  "/bin/echo $(snooping) > /sys/class/net/vmbr0/bridge/multicast_snooping";
-
 reports:
 
   "$(this.bundle): Repo and software install";

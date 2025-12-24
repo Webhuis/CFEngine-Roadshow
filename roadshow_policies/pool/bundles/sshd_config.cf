@@ -1,28 +1,3 @@
-bundle agent ssh_all_config {
-
-vars:
-
-  "ssh_config"                              string => "/etc/ssh/ssh_config";
-  "ssh[ServerAliveInterval]"                string => "60";
-
-files:
-
-  "/root/.ssh/"
-    file_select    => all,
-    depth_search   => recurse(inf),
-    delete         => tidy;
-
-methods:
-
-  "The sshd role based config"           usebundle => sshd_config;
-  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
-
-reports:
-
- "$(this.bundle): I am implementing safe ssh configuration common to all platforms";
-
-}
-
 bundle agent sshd_config {
 
 vars:
@@ -60,15 +35,5 @@ reports:
 
  !valid_admin_ip::
    "$(this.bundle): bad admin_ip! $(admin_ip)";
-
-}
-
-bundle agent edit_ssh(file,params) {
-
-files:
-  "$(file)"
-  handle                => "edit_ssh",
-  comment               => "Set desired ssh_config parameters",
-  edit_line             => set_config_values("$(params)");
 
 }
