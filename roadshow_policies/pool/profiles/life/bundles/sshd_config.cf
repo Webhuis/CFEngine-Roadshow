@@ -1,0 +1,39 @@
+bundle agent sshd_config {
+
+vars:
+
+  "sshd_config"                                string => "/etc/ssh/sshd_config";
+
+files:
+
+ valid_life_ip::
+  "$(sshd_config)"
+   comment                   => "sshd config",
+   perms                     => mo("644","root"),
+   create                    => "true",
+   action                    => r_immediate,
+   edit_template             => "$(sys.workdir)/roadshow_inputs/role/templates/sshd_config.tmpl",
+   classes                   => if_repaired("restart_sshd");
+
+services:
+
+  "sshd"                    service_policy => "start";
+
+commands:
+
+ restart_sshd::
+  "/usr/sbin/service sshd restart"
+    comment => "restarting sshd";
+
+reports:
+
+ "$(this.bundle): template $(sshd_config_template)";
+ "$(this.bundle): I am implementing sshd role based configuration";
+
+ valid_life_ip::
+  "$(this.bundle) etc_hosts_nic: $(admin_ip)";
+
+ !valid_life_ip::
+   "$(this.bundle): bad admin_ip! $(admin_ip)";
+
+}
