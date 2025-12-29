@@ -5,6 +5,7 @@ vars:
   # packages are defined in the following form:
   # "pkg[<pkg-name>]" string => "<pkg-version>";
 
+  "pkg[dig]"                             string => "*";
   "pkg[git]"                             string => "*";
   "pkg[gzip]"                            string => "*";
   "pkg[less]"                            string => "*";
