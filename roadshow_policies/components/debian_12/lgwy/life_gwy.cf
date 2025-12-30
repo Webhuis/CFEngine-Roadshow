@@ -4,6 +4,7 @@ vars:
 
   "pkg[firefox-esr]"                    string => "*";
   "pkg[git]"                            string => "*";
+  "pkg[iptabes]"                        string => "*";
   "pkg[konsole]"                        string => "*";
   "pkg[unzip]"                          string => "*";
   "pkg[zip]"                            string => "*";
