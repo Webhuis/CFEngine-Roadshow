@@ -8,7 +8,7 @@ vars:
 
 methods:
 
-  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_all_config.ssh");
+  "The ssh client keeps the connection"  usebundle => edit_ssh("$(ssh_config)", "ssh_config.ssh");
 
 reports:
 
