@@ -4,6 +4,9 @@ vars:
 
   "pkg[iptables-persistent]"	   	 string => "*";
 
+  "nopkg[firewalld]"	   	         string => "*";
+  "nopkg[nftables]"	           	 string => "*";
+
 files:
 
   "/etc/iptables/rules.v4"
@@ -25,6 +28,7 @@ files:
 methods:
 
   "We need firewall packages"         usebundle => packages("gateways_gateway.pkg");
+  "We need firewall packages"         usebundle => nopackages("gateways_gateway.nopkg");
   "We nedd ip_forwarding enabled"     usebundle => sysctl_conf;
   "We needs our peers to do the job"  usebundle => keepalive;
 
