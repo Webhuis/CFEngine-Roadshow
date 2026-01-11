@@ -30,7 +30,7 @@ methods:
 
 services:
 
-  "netfilter-persisent"          service_policy => "start";
+  "netfilter-persistent"         service_policy => "start";
 
 commands:
 
