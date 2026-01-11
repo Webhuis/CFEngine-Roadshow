@@ -1,0 +1,35 @@
+bundle agent configure_interfaces (ips) {
+
+vars:
+
+  "current_device_list"              slist => splitstring( $(ips), " ", "20");
+  "current_interface"                slist => splitstring( $(ips), "global ", "20");
+  "current_ip"                      string => nth("current_device_list", "5");
+  "current_device"                  string => nth("current_interface", "1");
+
+files:
+
+ #configure_interface::
+  "/etc/network/interfaces.d/$(current_device)"
+    comment                                => "one file per nic",
+    create                                 => "true",
+    perms                                  => mo("644", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/interfaces_eth.tmpl",
+    classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network::
+
+  "/usr/bin/systemctl restart networking";
+
+reports:
+
+  "$(this.bundle) current_device_list: $(current_device_list)";
+  "$(this.bundle) current_device: $(current_device)";
+  "$(this.bundle) ips $(ips)";
+  "$(this.bundle) current_ip : $(current_ip)";
+ 
+}
