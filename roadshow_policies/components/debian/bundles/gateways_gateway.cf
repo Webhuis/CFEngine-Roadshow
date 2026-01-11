@@ -25,17 +25,17 @@ files:
 methods:
 
   "We need firewall packages"         usebundle => packages("gateways_gateway.pkg");
-  "We ip_forwarding enables"          usebundle => sysctl_conf;
+  "We nedd ip_forwarding enabled"     usebundle => sysctl_conf;
   "We needs our peers to do the job"  usebundle => keepalive;
 
 services:
 
-  "iptables"                     service_policy => "start";
+  "netfilter-persisent"          service_policy => "start";
 
 commands:
 
  restart_firewall::
-  "/usr/bin/systemctl restart iptables";
+  "/usr/bin/systemctl restart netfilter-persisent";
 
 reports:
 
