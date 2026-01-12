@@ -3,18 +3,16 @@ bundle agent igwy {
 vars:
 
   "role_name"                         string => "Internal gateway";
-  "role_profile"                         string => "role_profile_std_gwy";
 
-  "bundles[role_profile]"                string => "$(role_profile).cf";
-  "bundles[local_gateway]"         string => "${sys.flavor}/local_gateway.cf";
-  "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
+ #"bundles[local_gateway]"         string => "${sys.flavor}/local_gateway.cf";
+ #"bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
   "sequence"                           slist => getindices("bundles");
   "inputs"                             slist => getvalues("bundles");
 
 methods:
 
-  "We are an internal gateway"     usebundle => "internal_gateway";
+  "We are an internal gateway"     usebundle => "local_gateway";
   "We desire gateway tooling"      usebundle => "gateway_tools";
 
 reports:

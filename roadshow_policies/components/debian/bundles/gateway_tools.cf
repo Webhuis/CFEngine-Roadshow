@@ -1,0 +1,31 @@
+bundle agent gateway_tools {
+
+vars:
+
+  "gateway_tools"           string => "I provide gateway tools"; 
+
+  "pkg[ethtool]"            string => "*";
+  "pkg[iftop]"              string => "*";
+  "pkg[iperf3]"             string => "*";
+  "pkg[iptables]"           string => "*";
+  "pkg[iputils-arping]"     string => "*";
+  "pkg[iputils-clockdiff]"  string => "*";
+  "pkg[iputils-ping]"       string => "*";
+  "pkg[iputils-tracepath]"  string => "*";
+  "pkg[lsm]"                string => "*";
+  "pkg[netdiag]"            string => "*";
+  "pkg[netcat-openbsd]"     string => "*";
+  "pkg[netdiag]"            string => "*";
+  "pkg[nmap]"               string => "*";
+  "pkg[tcpdump]"            string => "*";
+  "pkg[traceroute]"         string => "*";
+
+methods:
+
+  "We desire tools"      usebundle => packages("gateway_tools.pkg");
+
+reports:
+
+  "$(this.bundle): $(gateway_tools)";
+
+}
