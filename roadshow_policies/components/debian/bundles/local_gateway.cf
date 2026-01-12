@@ -1,0 +1,48 @@
+bundle agent local_gateway {
+
+vars:
+
+  "pkg[iptables-persistent]"	   	 string => "*";
+
+  "nopkg[firewalld]"	   	         string => "*";
+  "nopkg[nftables]"	           	 string => "*";
+
+files:
+
+  "/etc/iptables/rules.v4"
+         comment  => "firewall ipv4 config",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common_gateway_rules.v4.tmpl",
+         classes  => r_if_repaired("restart_firewall");
+
+  "/etc/iptables/rules.v6"
+         comment  => "firewall ipv4 config",
+           perms  => mog("644","root","root"),
+          create  => "true",
+          action  => r_immediate,
+   edit_template  => "$(sys.workdir)/roadshow_inputs/components/templates/common_gateway_rules.v6.tmpl",
+         classes  => r_if_repaired("restart_firewall");
+
+methods:
+
+  "We need firewall packages"         usebundle => packages("local_gateway.pkg");
+  "We need firewall packages"         usebundle => nopackages("local_gateway.nopkg");
+  "We nedd ip_forwarding enabled"     usebundle => sysctl_conf;
+  "We needs our peers to do the job"  usebundle => keepalive;
+
+services:
+
+  "netfilter-persistent"         service_policy => "start";
+
+commands:
+
+ restart_firewall::
+  "/usr/bin/systemctl restart netfilter-persisent";
+
+reports:
+
+  "${this.bundle}: ";
+
+}

@@ -6,7 +6,7 @@ vars:
   "role_profile"                         string => "role_profile_std_gwy";
 
   "bundles[role_profile]"                string => "$(role_profile).cf";
-  "bundles[internal_gateway]"         string => "${sys.flavor}/internal_gateway.cf";
+  "bundles[local_gateway]"         string => "${sys.flavor}/local_gateway.cf";
   "bundles[gateway_tools]"            string => "${sys.flavor}/gateway_tools.cf";
 
   "sequence"                           slist => getindices("bundles");
