@@ -1,1 +1,60 @@
-../../../templates/keepalived.conf.tmpl
+# Webhuis template voor igwy keepalived.conf
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+! Configuration File for keepalived
+
+global_defs {
+  notification_email {
+    martin@webhuis.nl
+  }
+  notification_email_from keepalived@$(sys.fqhost)
+  smtp_server mailsw.webhuis.nl
+  smtp_connect_timeout 30
+}
+
+vrrp_instance $(role_profile.keepalive_vlan[home]) {
+  interface $(role_profile.keepalive_nic[home])
+  virtual_router_id $(role_profile.keepalive_vlan[gw])
+  priority $(role_profile.keepalive_ipv4_4)
+  advert_int 1
+  authentication {
+    auth_type PASS
+      auth_pass 1111
+  }
+  virtual_ipaddress {
+    $(role_profile.keepalive_vip[home])
+  }
+}
+
+vrrp_instance $(role_profile.keepalive_vlan[support]) {
+  interface $(role_profile.keepalive_nic[support])
+  virtual_router_id $(role_profile.keepalive_vlan[gw])
+  priority $(role_profile.keepalive_ipv4_4)
+  advert_int 1
+  authentication {
+    auth_type PASS
+      auth_pass 1111
+  }
+  virtual_ipaddress {
+    $(role_profile.keepalive_vip[support])
+  }
+}
+
+vrrp_instance $(role_profile.keepalive_vlan[gw]) {
+  interface $(role_profile.keepalive_nic[gw])
+  virtual_router_id $(role_profile.keepalive_vlan[gw])
+  priority $(role_profile.keepalive_ipv4_4)
+  advert_int 1
+  authentication {
+    auth_type PASS
+      auth_pass 1111
+  }
+  virtual_ipaddress {
+    $(role_profile.keepalive_vip[gw])
+  }
+  virtual_routes {
+    $($(classify.domain).igwy_routes[$($(classify.domain).igwy_routes_index)]) via $($(classify.domain).igwy_routes_index) dev $(role_profile.keepalive_nic[gw])
+  }
+}

@@ -46,13 +46,19 @@ vars:
   "ip[admin]"                         string => "$(sys.ipv4[$(nic[admin])])";
   "ip[gw]"                            string => "$(sys.ipv4[$(nic[gw])])";
 
-  "keepalive_vlan"                    string => "$($(classify.organisation).vlan[gw])";
-  "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
-  "keepalive_nic"                     string => "$(nic[gw])";
+  "keepalive_vlan[home]"              string => "$($(classify.organisation).vlan[home])";
+  "keepalive_vip[home]"               string => "$($(classify.domain).igwy_vip[home])";
+  "keepalive_nic[home]"               string => "$(nic[home])";
+  "keepalive_vlan[support]"           string => "$($(classify.organisation).vlan[support])";
+  "keepalive_vip[support]"            string => "$($(classify.domain).igwy_vip[support])";
+  "keepalive_nic[support]"            string => "$(nic[support])";
+  "keepalive_vlan[gw]"                string => "$($(classify.organisation).vlan[gw])";
+  "keepalive_vip[gw]"                 string => "$($(classify.domain).igwy_vip[gw])";
+  "keepalive_nic[gw]"                 string => "$(nic[gw])";
   "ip_can"                            string => canonify("$(ip[gw])");
   "ip_list"                            slist => string_split("$(ip_can)", "src ", 99);
   "keepalive_ipv4_4"                  string => lastnode("$(ip_list)", "_" );
-  "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
+  "keepalive_routes"                  string => "$($(classify.domain).igwy_routes)";
 
   "ddns[home][ip]"                    string => "$(sys.ipv4[$(ip[home])])";
   "ddns[home][mac]"                   string => "$(sys.hardware_mac[$(ip[home])])";
