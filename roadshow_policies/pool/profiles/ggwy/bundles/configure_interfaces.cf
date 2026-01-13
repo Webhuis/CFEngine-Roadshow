@@ -1,8 +1,8 @@
 bundle agent configure_interfaces (ips) {
 
-classes:
+#classes:
 
-  "primary_device_$(current_device)" expression => regcmp( "^eth", "$(current_device)" );
+# "primary_device_$(current_device)" expression => regcmp( "^eth", "$(current_device)" );
 vars:
 
   "current_device_list"              slist => splitstring( $(ips), " ", "20");
@@ -12,7 +12,7 @@ vars:
 
 files:
 
- "primary_device_$(current_device)"::
+#"primary_device_$(current_device)"::
   "/etc/network/interfaces.d/$(current_device)"
     comment                                => "one file per nic",
     create                                 => "true",
