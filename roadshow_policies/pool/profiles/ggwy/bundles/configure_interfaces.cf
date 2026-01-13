@@ -7,7 +7,7 @@ classes:
 vars:
 
   "current_device_list"              slist => splitstring( $(ips), " ", "20");
-  "current_interface"                slist => splitstring( $(ips), "global eth", "20");
+  "current_interface"                slist => splitstring( $(ips), "global ", "20");
   "current_ip"                      string => nth("current_device_list", "5");
   "current_device"                  string => nth("current_interface", "1");
 
