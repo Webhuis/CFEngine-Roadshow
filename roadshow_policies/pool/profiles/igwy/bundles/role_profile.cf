@@ -37,7 +37,7 @@ vars:
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
-  "nic_trick"                          slist => { "0", "1", "2" };
+  "nic_trick"                          slist => { "0", "1", "2", "3" };
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
 
