@@ -1,15 +1,19 @@
 bundle agent configure_interfaces (ips) {
 
+classes:
+
+  "primary_device_$(current_device)" 
+                                expression => regcmp( "^eth', "$(current_device)" );
 vars:
 
   "current_device_list"              slist => splitstring( $(ips), " ", "20");
-  "current_interface"                slist => splitstring( $(ips), "global ", "20");
+  "current_interface"                slist => splitstring( $(ips), "global eth", "20");
   "current_ip"                      string => nth("current_device_list", "5");
   "current_device"                  string => nth("current_interface", "1");
 
 files:
 
- #configure_interface::
+ "primary_device_$(current_device)"::
   "/etc/network/interfaces.d/$(current_device)"
     comment                                => "one file per nic",
     create                                 => "true",
