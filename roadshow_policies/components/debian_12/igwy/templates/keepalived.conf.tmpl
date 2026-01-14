@@ -16,7 +16,7 @@ global_defs {
 
 vrrp_instance $(role_profile.keepalive_vlan[home]) {
   interface $(role_profile.keepalive_nic[home])
-  virtual_router_id $(role_profile.keepalive_vlan[gw])
+  virtual_router_id 1
   priority $(role_profile.keepalive_ipv4_4)
   advert_int 1
   authentication {
@@ -30,7 +30,7 @@ vrrp_instance $(role_profile.keepalive_vlan[home]) {
 
 vrrp_instance $(role_profile.keepalive_vlan[support]) {
   interface $(role_profile.keepalive_nic[support])
-  virtual_router_id $(role_profile.keepalive_vlan[gw])
+  virtual_router_id $(role_profile.keepalive_vlan[support])
   priority $(role_profile.keepalive_ipv4_4)
   advert_int 1
   authentication {
