@@ -41,10 +41,10 @@ vars:
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
 
-  "ip[home]"                          string => "$(ip_array.ip_array[$(nic[home])])";
-  "ip[support]"                       string => "$(ip_array.ip_array[$(nic[support])])";
-  "ip[admin]"                         string => "$(ip_array.ip_array[$(nic[admin])])";
-  "ip[gw]"                            string => "$(ip_array.ip_array[$(nic[gw])])";
+  "ip[home]"                          string => "$($(classify.ip_array).ip_array[$(nic[home])])";
+  "ip[support]"                       string => "$($(classify.ip_array).ip_array[$(nic[support])])";
+  "ip[admin]"                         string => "$($(classify.ip_array).ip_array[$(nic[admin])])";
+  "ip[gw]"                            string => "$($(classify.ip_array).ip_array[$(nic[gw])])";
   "ip_can_prio"                       string => canonify("$(ip[gw])");
   "ip_list_prio"                       slist => string_split("$(ip_can_prio)", "src ", 99);
   "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
