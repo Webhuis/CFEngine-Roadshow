@@ -76,16 +76,18 @@ bundle agent ip_array(ip_line) {
 
 vars:
 
-  "ip_line_split"                  slist => splitstring($(ip_line), " ", "20");
+  "ip_line_split"                  slist => splitstring("$(ip_line)", " ", "20");
   "ip_line_cidr"                  string => nth("ip_line_split", "5");
-  "ip_line_cidr_split"             slist => splitstring($(ip_line_cidr), "/", "3");
-  "ip_address"                    string => nth(line_ip_cidr), "1");
+  "ip_line_cidr_split"             slist => splitstring("$(ip_line_cidr)", "/", "3");
+  "ip_address"                    string => nth("line_ip_cidr", "1");
   "ip_device"                     string => nth("ip_line_split", "10");
   "ip_array[$(ip_device)]"        string => "$(ip_address)";  
   "ip_index"                       slist => getindices(ip_array);
 
 reports:
 
+  "$(this.bundle) ip_address: $(ip_address)";
+  "$(this.bundle) ip_device: $(ip_device)";
   "$(this.bundle) ip_array: $(ip_index), $(ip_array[$(ip_index)])";
  
 }
