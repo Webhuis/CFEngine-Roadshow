@@ -86,6 +86,11 @@ vars:
 
 reports:
 
+  "$(this.bundle) ip_line: $(ip_line)";
+  "$(this.bundle) ip_line_split: $(ip_line_split)";
+  "$(this.bundle) ip_address: $(ip_address)";
+  "$(this.bundle) ip_address: $(ip_address)";
+  "$(this.bundle) ip_address: $(ip_address)";
   "$(this.bundle) ip_address: $(ip_address)";
   "$(this.bundle) ip_device: $(ip_device)";
   "$(this.bundle) ip_array: $(ip_index), $(ip_array[$(ip_index)])";
