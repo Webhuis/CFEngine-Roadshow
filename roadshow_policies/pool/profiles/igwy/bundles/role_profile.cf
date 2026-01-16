@@ -93,12 +93,12 @@ reports:
   "$(this.bundle) nic: $(nic[$(nic_index)])";
   "$(this.bundle) nic_index: $(nic_index)";
   "$(this.bundle) nic_values: $(nic_values)";
-  "$(this.bundle) hosts_ip: $(hosts_ip)";
+  "$(this.bundle) home_ip: $(home_ip)";
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
   "$(this.bundle) gw_ip: $(gw_ip)";
   "$(this.bundle) ip[gw]: $(ip[gw])";
-  "$(this.bundle) keepalive_vip: $(keepalive_vip)";
+  "$(this.bundle) keepalive_vip: $(keepalive_vip[$(vip_index)])";
   "$(this.bundle) keepalive_nic: $(keepalive_nic)";
   "$(this.bundle) keepalive_prio: $(keepalive_prio)";
   "$(this.bundle) keepalive_routes: $(keepalive_routes)";
