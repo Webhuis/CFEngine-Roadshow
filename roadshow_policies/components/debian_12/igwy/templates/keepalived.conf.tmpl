@@ -16,7 +16,7 @@ global_defs {
 
 vrrp_instance $(role_profile.keepalive_nic) {
   interface $(role_profile.keepalive_nic)
-  virtual_router_id $(role_profile.keepalive_vid)
+  virtual_router_id $(role_profile.keepalive_vrid)
   priority $(role_profile.keepalive_prio)
   advert_int 1
   authentication {
