@@ -52,8 +52,8 @@ vars:
   "keepalive_vip[$(nic[home])]"       string => "$($(classify.domain).igwy_vip[home])";
   "keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).igwy_vip[support])";
   "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).igwy_vip[gw])";
-
   "vip_index"                          slist => getindices(keepalive_vip);
+
   "keepalive_nic"                     string => "$(nic[gw])";
   "ip_can_vrid"                       string => canonify("$($(classify.domain).igwy.vip[gw])");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
@@ -98,6 +98,10 @@ reports:
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
   "$(this.bundle) gw_ip: $(gw_ip)";
+  "$(this.bundle) ip_can_prio: $(ip_can_prio)";
+  "$(this.bundle) ip_list_prio: $(ip_list_prio)";
+  "$(this.bundle) ip_can_vrid: $(ip_can_vrid)";
+  "$(this.bundle) ip_list_vrid: $(ip_list_vrid)";
   "$(this.bundle) ip[gw]: $(ip[gw])";
   "$(this.bundle) keepalive_vip: $(keepalive_vip[$(vip_index)])";
   "$(this.bundle) keepalive_nic: $(keepalive_nic)";
