@@ -15,7 +15,7 @@ global_defs {
 }
 
 vrrp_instance $(role_profile.keepalive_nic) {
-  interface $(role_profile.keepalive_nic]
+  interface $(role_profile.keepalive_nic)
   virtual_router_id $(role_profile.keepalive_vid)
   priority $(role_profile.keepalive_prio)
   advert_int 1
@@ -27,6 +27,6 @@ vrrp_instance $(role_profile.keepalive_nic) {
     $(role_profile.keepalive_vip[$(role_profile.vip_index)]) dev $(role_profile.vip_index)
   }
   virtual_routes {
-    $($(classify.domain).igwy_routes[$($(classify.domain).igwy_routes_index)]) via $($(classify.domain).igwy_routes_index) dev $(role_profile.keepalive_nic[gw])
+    $($(classify.domain).igwy_routes[$($(classify.domain).igwy_routes_index)]) via $($(classify.domain).igwy_routes_index) dev $(role_profile.keepalive_nic)
   }
 }
