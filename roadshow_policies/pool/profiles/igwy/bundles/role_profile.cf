@@ -31,7 +31,7 @@ vars:
 
   "nic[home]"                         string => "$($(classify.organisation).nic[home])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nis[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
 
   "nic_index"                          slist => getindices("nic");
@@ -55,7 +55,7 @@ vars:
 
   "vip_index"                          slist => getindices(keepalive_vip);
   "keepalive_nic"                     string => "$(nic[gw])";
-  "ip_can_vrid"                       string => canonify("$($(classify.domain).igwy_vip[gw])");
+  "ip_can_vrid"                       string => canonify("$($(classify.domain).igwy.vip[gw])");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
   "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
   "keepalive_routes"                  string => "$($(classify.domain).igwy_routes)";
