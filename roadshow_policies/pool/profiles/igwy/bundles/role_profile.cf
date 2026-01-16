@@ -49,9 +49,9 @@ vars:
  #"keepalive_vlan[home]"              string => "$($(classify.organisation).vlan[home])";
  #"keepalive_vlan[support]"           string => "$($(classify.organisation).vlan[support])";
  #"keepalive_vlan[gw]"                string => "$($(classify.organisation).vlan[gw])";
-  "keepalive_vip[$(nic[home])]"       string => "$($(ip_array.ip_array[$(nic[home])]";
-  "keepalive_vip[$(nic[support])]"    string => "$($(ip_array.ip_array[$(nic[support])]";
-  "keepalive_vip[$(nic[gw])]"         string => "$($(ip_array.ip_array[$(nic[gw])]";
+  "keepalive_vip[$(nic[home])]"       string => "$(ip_array.ip_array[$(nic[home])])";
+  "keepalive_vip[$(nic[support])]"    string => "$(ip_array.ip_array[$(nic[support])])";
+  "keepalive_vip[$(nic[gw])]"         string => "$(ip_array.ip_array[$(nic[gw])])";
   "vip_index"                          slist => getindices(keepalive_vip);
   "keepalive_nic"                     string => "$(nic[gw])";
   "ip_can"                            string => canonify("$(ip[gw])");
@@ -80,7 +80,7 @@ vars:
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
   "ddns[gw][ip]"                      string => "$(ip[gw])";
-  "ddns[gw][ip]"                      string => "$([gw_ip)";
+  "ddns[gw][ip]"                      string => "$(gw_ip)";
   "ddns[gw][mac]"                     string => "$(sys.hardware_mac[$(ip[gw])])";
   "ddns[gw][nic]"                     string => "$(nic[gw])";
   "ddns[gw][suffix]"                  string => "-gw";

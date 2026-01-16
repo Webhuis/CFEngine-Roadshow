@@ -8,9 +8,6 @@ bundle common sw_webhuis_nl {
 
 vars:
 
-  "igwy_routes[10.254.0.1]"             slist => { "0.0.0.0/0" };
-  "igwy_routes_index"                   slist => getindices("sw_webhuis_nl.igwy_routes");
-
   "ggwy_vip"                           string => "10.254.0.1/24";
   "ggwy_routes[10.254.0.125]"           slist => { "0.0.0.0/0" };
   "ggwy_routes[10.254.0.17]"            slist => { "10.10.117.0/24", "10.110.17.0/24" };
@@ -22,6 +19,8 @@ vars:
   "igwy_vip[support]"                  string => "10.68.171.1/24";
   "igwy_vip[gw]"                       string => "10.254.0.71/24";
   "igwy_routes[10.254.0.1]"             slist => { "0.0.0.0/0" };
+  "igwy_routes_index"                   slist => getindices("sw_webhuis_nl.igwy_routes");
+
  #"mldap"                               slist => {"ldapm1", "ldapm2"};
   "mldap"                               slist => {"ldapm1"};
   "ldap"                                slist => {"ldap1", "ldap2"};
