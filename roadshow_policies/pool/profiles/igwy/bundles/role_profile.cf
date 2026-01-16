@@ -46,9 +46,9 @@ vars:
   "ip[admin]"                         string => "$(ip_array.ip_array[$(nic[admin])])";
   "ip[gw]"                            string => "$(ip_array.ip_array[$(nic[gw])])";
 
-  "keepalive_vip[$(nic[home])]"       string => "$($(classify.organisation).igwy_vip[home]";
-  "keepalive_vip[$(nic[support])]"    string => "$($(classify.organisation).igwy_vip[support]";
-  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.organisation).igwy_vip[gw]";
+  "keepalive_vip[$(nic[home])]"       string => "$($(classify.domain).igwy_vip[home])";
+  "keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).igwy_vip[support])";
+  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).igwy_vip[gw])";
 
   "vip_index"                          slist => getindices(keepalive_vip);
   "keepalive_nic"                     string => "$(nic[gw])";
