@@ -39,12 +39,15 @@ vars:
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1", "2", "3" };
 
-  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_index)","noshell");
+  "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_values)","noshell");
 
   "ip[home]"                          string => "$(ip_array.ip_array[$(nic[home])])";
   "ip[support]"                       string => "$(ip_array.ip_array[$(nic[support])])";
   "ip[admin]"                         string => "$(ip_array.ip_array[$(nic[admin])])";
   "ip[gw]"                            string => "$(ip_array.ip_array[$(nic[gw])])";
+
+  "ip_index"                           slist => getindices("ip");
+
   "ip_can_prio"                       string => canonify("$(ip[gw])");
   "ip_list_prio"                       slist => string_split("$(ip_can_prio)", "src ", 99);
   "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
@@ -91,18 +94,12 @@ vars:
 
 reports:
 
-  "$(this.bundle) nic: $(nic[$(nic_index)])";
-  "$(this.bundle) nic_index: $(nic_index)";
-  "$(this.bundle) nic_values: $(nic_values)";
-  "$(this.bundle) home_ip: $(home_ip)";
-  "$(this.bundle) hosts_ip: $(hosts_ip)";
-  "$(this.bundle) admin_ip: $(admin_ip)";
-  "$(this.bundle) gw_ip: $(gw_ip)";
+  "$(this.bundle) nic_values: $(nic[$(nic_values)])";
+  "$(this.bundle) ip: $(ip[$(ip_index)])";
   "$(this.bundle) ip_can_prio: $(ip_can_prio)";
   "$(this.bundle) ip_list_prio: $(ip_list_prio)";
   "$(this.bundle) ip_can_vrid: $(ip_can_vrid)";
   "$(this.bundle) ip_list_vrid: $(ip_list_vrid)";
-  "$(this.bundle) ip[gw]: $(ip[gw])";
   "$(this.bundle) keepalive_vip: $(keepalive_vip[$(vip_index)])";
   "$(this.bundle) keepalive_nic: $(keepalive_nic)";
   "$(this.bundle) keepalive_prio: $(keepalive_prio)";
