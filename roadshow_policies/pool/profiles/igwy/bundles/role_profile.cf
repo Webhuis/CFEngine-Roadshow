@@ -31,7 +31,7 @@ vars:
 
   "nic[home]"                         string => "$($(classify.organisation).nic[home])";
   "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nis[admin]"                        string => "$($(classify.organisation).nic[admin])";
+  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
   "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
 
   "nic_index"                          slist => getindices("nic");
