@@ -29,10 +29,10 @@ classes:
 
 vars:
 
-  "nic[home]"                         string => "$($(classify.organisation).nic[home])";
-  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
-  "nic[gw]"                           string => "$($(classify.organisation).nic[gw])";
+  "nic_home"                          string => "$($(classify.organisation).nic[home])";
+  "nic_support"                       string => "$($(classify.organisation).nic[support])";
+  "nic_admin"                         string => "$($(classify.organisation).nic[admin])";
+  "nic_gw"                            string => "$($(classify.organisation).nic[gw])";
 
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
@@ -41,10 +41,10 @@ vars:
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_values)","noshell");
 
-  "ip[home]"                          string => "$(ip_array.ip_array[$(nic[home])])";
-  "ip[support]"                       string => "$(ip_array.ip_array[$(nic[support])])";
-  "ip[admin]"                         string => "$(ip_array.ip_array[$(nic[admin])])";
-  "ip[gw]"                            string => "$(ip_array.ip_array[$(nic[gw])])";
+  "ip[home]"                          string => "$(ip_array.ip_array[$(nic_home)])";
+  "ip[support]"                       string => "$(ip_array.ip_array[$(nic_support)])";
+  "ip[admin]"                         string => "$(ip_array.ip_array[$(nic_admin)])";
+  "ip[gw]"                            string => "$(ip_array.ip_array[$(nic_gw)])";
 
   "ip_index"                           slist => getindices("ip");
 
@@ -94,8 +94,8 @@ vars:
 
 reports:
 
-  "$(this.bundle) nic_values: $(nic[$(nic_values)])";
-  "$(this.bundle) ip: $(ip[$(ip_index)])";
+  "$(this.bundle) nic_values: $(nic_values)";
+  "$(this.bundle) ip: $(ip_index)";
   "$(this.bundle) ip_can_prio: $(ip_can_prio)";
   "$(this.bundle) ip_list_prio: $(ip_list_prio)";
   "$(this.bundle) ip_can_vrid: $(ip_can_vrid)";
