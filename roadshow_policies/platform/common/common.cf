@@ -8,6 +8,8 @@ files:
   "/etc/dhcp/webhuis.nl.update"
     perms          => mog("400","root","root");
 
+  "/etc/network/if-up.d/avahi-autopid"
+    delete => tidy;
 
 methods:
 
