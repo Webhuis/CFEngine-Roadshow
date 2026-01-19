@@ -10,7 +10,7 @@ files:
 
   "/etc/network/if-up.d/avahi-autopid"
     delete => tidy;
-
+ 
 methods:
 
   "We desire a clean house"                 usebundle => housekeeping,
