@@ -103,7 +103,8 @@ vars:
 reports:
 
   "$(this.bundle) nic_values: $(nic_values)";
-  "$(this.bundle) ip: $(ip_index)";
+  "$(this.bundle) ip_index: $(ip_index)";
+  "$(this.bundle) ip: $(ip[$(ip_index)])";
   "$(this.bundle) ip_can_prio: $(ip_can_prio)";
   "$(this.bundle) ip_list_prio: $(ip_list_prio)";
   "$(this.bundle) ip_can_vrid: $(ip_can_vrid)";
