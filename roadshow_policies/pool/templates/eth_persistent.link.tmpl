@@ -7,6 +7,7 @@
 [%CFEngine any:: %]
 [Match]
 MACAddress=$(persistent_link.mac_address)
+Type=ether
 
 [Link]
 Name=$(persistent_link.nic)

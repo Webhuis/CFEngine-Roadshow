@@ -41,10 +41,18 @@ vars:
 
   "var_nic_$(nic)"                     string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic_values)","noshell");
 
-  "ip[home]"                          string => "$(ip_array.ip_array[$(nic_home)])";
-  "ip[support]"                       string => "$(ip_array.ip_array[$(nic_support)])";
-  "ip[admin]"                         string => "$(ip_array.ip_array[$(nic_admin)])";
-  "ip[gw]"                            string => "$(ip_array.ip_array[$(nic_gw)])";
+  "ip_home_raw"                       string => execresult("/usr/sbin/ip r show dev $(nic[home])","noshell");
+  "ip_home_list"                       slist => string_split("$(ip_home_raw)", "src ", 9);
+  "ip[home]"                          string => lastnode("$(ip_home_list)", " " );
+  "ip_support_raw"                    string => execresult("/usr/sbin/ip r show dev $(nic[support])","noshell");
+  "ip_support_list"                    slist => string_split("$(ip_support_raw)", "src ", 9);
+  "ip[support]"                       string => lastnode("$(ip_support_list)", " " );
+  "ip_admin_raw"                      string => execresult("/usr/sbin/ip r show dev $(nic[admin])","noshell");
+  "ip_admin_list"                      slist => string_split("$(ip_admin_raw)", "src ", 9);
+  "ip[admin]"                         string => lastnode("$(ip_admin_list)", " " );
+  "ip_gw_raw"                         string => execresult("/usr/sbin/ip r show dev $(nic[gw])","noshell");
+  "ip_gw_list"                         slist => string_split("$(ip_gw_raw)", "src ", 9);
+  "ip[gw]"                            string => lastnode("$(ip_gw_list)", " " );
 
   "ip_index"                           slist => getindices("ip");
 
