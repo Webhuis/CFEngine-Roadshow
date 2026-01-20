@@ -6,10 +6,17 @@ classes:
   "has_nic_values"                 expression => isvariable("nic_values");
   "has_nic_index"                  expression => isvariable("nic_index");
   "has_ddns_index"                 expression => isvariable("ddns_index");
+  "has_home_var"                   expression => isvariable("home_ip");
   "has_hosts_var"                  expression => isvariable("hosts_ip");
   "has_admin_var"                  expression => isvariable("admin_ip");
   "has_gw_var"                     expression => isvariable("gw_ip");
   "available_nic_$(nic)"           expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_nic_$(nic))","noshell");
+
+ has_home_var::
+  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
+                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
+            "$(home_ip)"
+            );
 
  has_hosts_var::
   "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
@@ -105,6 +112,10 @@ reports:
   "$(this.bundle) nic_values: $(nic_values)";
   "$(this.bundle) ip_index: $(ip_index)";
   "$(this.bundle) ip: $(ip[$(ip_index)])";
+  "$(this.bundle) home_ip: $(home_ip)";
+  "$(this.bundle) hosts_ip: $(hosts_ip)";
+  "$(this.bundle) admin_ip: $(admin_ip)";
+  "$(this.bundle) gw_ip: $(gw_ip)";
   "$(this.bundle) ip_can_prio: $(ip_can_prio)";
   "$(this.bundle) ip_list_prio: $(ip_list_prio)";
   "$(this.bundle) ip_can_vrid: $(ip_can_vrid)";
