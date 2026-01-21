@@ -115,7 +115,7 @@ files:
 
   "/root/.ldap"
      handle       => "update_ldap"
-     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
+     copy_from    => r_cp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
@@ -123,7 +123,7 @@ files:
 
   "/etc/dhcp/webhuis.nl.update"
      handle       => "update_ddns",
-     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
+     copy_from    => r_cp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
