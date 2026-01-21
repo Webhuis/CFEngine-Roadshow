@@ -14,7 +14,7 @@ files:
     edit_line                 => edit_avahi_default,
     classes                   => if_repaired("reboot");
 
-  "/etc/network/if-up.d/avahi-autopid"
+  "/etc/network/if-up.d/avahi-autoipd"
     delete => tidy;
  
 methods:
