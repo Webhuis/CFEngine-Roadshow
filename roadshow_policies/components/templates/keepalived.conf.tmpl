@@ -1,4 +1,4 @@
-# Webhuis template voor keepalived.conf
+# Webhuis template voor ggwy keepalived.conf
 #
 # Do not edit
 #
@@ -14,17 +14,17 @@ global_defs {
   smtp_connect_timeout 30
 }
 
-vrrp_instance $(role_profile.keepalive_vlan) {
+vrrp_instance $(role_profile.keepalive_nic) {
   interface $(role_profile.keepalive_nic)
-  virtual_router_id $(role_profile.keepalive_vlan)
-  priority $(role_profile.keepalive_ipv4_4)
+  virtual_router_id $(role_profile.keepalive_vrid)
+  priority $(role_profile.keepalive_prio)
   advert_int 1
   authentication {
     auth_type PASS
       auth_pass 1111
   }
   virtual_ipaddress {
-    $(role_profile.keepalive_vip)
+    $(role_profile.keepalive_vip[$(role_profile.vip_index)])
   }
   virtual_routes {
     $($(classify.domain).ggwy_routes[$($(classify.domain).ggwy_routes_index)]) via $($(classify.domain).ggwy_routes_index) dev $(role_profile.keepalive_nic)

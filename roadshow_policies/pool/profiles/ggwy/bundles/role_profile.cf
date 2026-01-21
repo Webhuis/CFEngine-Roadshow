@@ -46,11 +46,16 @@ vars:
 
   "ip_index"                           slist => getindices("ip");
 
+  "keepalive_vip[$(nic[home])]"       string => "$($(classify.domain).ggwy_vip[home])";
+  "keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).ggwy_vip[support])";
+  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip[gw])";
+  "vip_index"                          slist => getindices(keepalive_vip);
+
   "keepalive_nic"                     string => "$(nic[gw])";
-  "ip_can_vrid"                       string => canonify("$($(classify.domain).igwy_vip[gw])");
+  "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip[gw])");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
   "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
-  "keepalive_routes"                  string => "$($(classify.domain).igwy_routes)";
+  "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
 
   "ddns[support][ip]"                 string => "$(hosts_ip)";
   "ddns[support][mac]"                string => "$(sys.hardware_mac[$(nic[support])])";
