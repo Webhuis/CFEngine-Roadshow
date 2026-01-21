@@ -23,8 +23,8 @@ cp -rL ${policy_dir}/roadshow_data /var/cfengine
 cp -rL ${policy_dir}/roadshow_policies /var/cfengine
 #mv /var/cfengine/roadshow_policies/pool /var/cfengine/roadshow_policies/profile
 
-/usr/bin/wget http://mirror.webhuis.nl/mirror/ldap/.ldap -O /root/.ldap
-/usr/bin/wget http://mirror.webhuis.nl/mirror/ddns/ -O /etc/dhcp/webhuis.nl.update
+/usr/bin/wget http://mirror.webhuis.nl/ldap/.ldap -O /root/.ldap
+/usr/bin/wget http://mirror.webhuis.nl/ddns/ -O /etc/dhcp/webhuis.nl.update
 
 rm /var/cfengine/masterfiles/cf_promises_validated
 rm /var/cfengine/masterfiles/services/autorun/hello.cf
