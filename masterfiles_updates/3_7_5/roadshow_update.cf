@@ -115,15 +115,21 @@ files:
 
   "/root/.ldap"
      handle       => "update_ldap",
-     copy_from    => r_cp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
     #file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
      classes      => r_if_repaired("update_report");
+     # "$(sys.workdir)/policy_server.dat"
+     #comment => "Copy policy_server.dat file from server",
+     #handle => "cfe_internal_update_ha_policy_server",
+     #copy_from => u_rcp("$(sys.workdir)/state/master_hub.dat", @(update_def.policy_servers)),
+     #action => u_immediate,
+     #classes => u_if_repaired("replica_failover");  # not needed ?
 
   "/etc/dhcp/webhuis.nl.update"
      handle       => "update_ddns",
-     copy_from    => r_cp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
     #file_select  => r_policies,
      action       => r_immediate,
      create       => "true",
