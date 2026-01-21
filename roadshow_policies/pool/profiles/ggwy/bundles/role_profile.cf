@@ -47,7 +47,7 @@ vars:
   "ip_index"                           slist => getindices("ip");
 
  #"keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).ggwy_vip[support])";
-  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip[gw])";
+  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip)";
   "vip_index"                          slist => getindices(keepalive_vip);
 
   "ip_can_prio"                       string => canonify("$(ip[gw])");
@@ -55,7 +55,7 @@ vars:
   "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
 
   "keepalive_nic"                     string => "$(nic[gw])";
-  "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip[gw])");
+  "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip)");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
   "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
