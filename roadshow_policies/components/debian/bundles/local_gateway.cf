@@ -4,7 +4,7 @@ vars:
 
   "pkg[iptables-persistent]"	   	 string => "*";
 
-  "nopkg[firewalld]"	   	         string => "*";
+ #"nopkg[firewalld]"	   	         string => "*";
   "nopkg[nftables]"	           	 string => "*";
 
 files:
@@ -34,6 +34,7 @@ methods:
 
 services:
 
+  "firewalld"                    service_policy => "stop";
   "netfilter-persistent"         service_policy => "start";
 
 commands:
