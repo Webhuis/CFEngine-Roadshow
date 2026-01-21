@@ -114,7 +114,7 @@ files:
      classes      => r_if_repaired("update_report");
 
   "/root/.ldap"
-     handle       => "update_ldap"
+     handle       => "update_ldap",
      copy_from    => r_cp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
