@@ -12,7 +12,7 @@ vars:
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "vlan"                               string => "Vlan-$(vlan_number)";
 
-  "mac_address_$(nic)"                 string => "$(mac)";
+  "mac_address"                        string => "$(mac)";
 
 files:
 
