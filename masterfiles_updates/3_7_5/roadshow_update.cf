@@ -113,6 +113,22 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+  "/root/.ldap"
+     handle       => "update_files_inputs_roadshow_organisation",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
+  "/etc/dhcp/webhuis.nl.update"
+     handle       => "update_files_inputs_roadshow_organisation",
+     copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
+     file_select  => r_policies,
+     action       => r_immediate,
+     create       => "true",
+     classes      => r_if_repaired("update_report");
+
   "$(roadshow_inputs)/department/$(department).cf"
      handle       => "update_files_inputs_roadshow_department",
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/departments/$(department).cf", $(sys.policy_hub)),
