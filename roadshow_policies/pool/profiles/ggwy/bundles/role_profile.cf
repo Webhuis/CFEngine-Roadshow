@@ -51,11 +51,19 @@ vars:
   "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip[gw])";
   "vip_index"                          slist => getindices(keepalive_vip);
 
+  "ip_can_prio"                       string => canonify("$(ip[gw])");
+  "ip_list_prio"                       slist => string_split("$(ip_can_prio)", "src ", 99);
+  "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
+
   "keepalive_nic"                     string => "$(nic[gw])";
   "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip[gw])");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
   "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
+
+  "hosts_ip"                          string => "$(ip[support])";
+  "admin_ip"                          string => "$(ip[admin])";
+  "gw_ip"                             string => "$(ip[gw])";
 
   "ddns[support][ip]"                 string => "$(hosts_ip)";
   "ddns[support][mac]"                string => "$(sys.hardware_mac[$(nic[support])])";
@@ -68,17 +76,12 @@ vars:
   "ddns[admin][suffix]"               string => "-ssh";
   "ddns[admin][vlan]"                 string => "$($(classify.organisation).vlan[admin])";
   "ddns[gw][ip]"                      string => "$(nic[gw])";
-  "ddns[gw][ip]"                      string => "$(sys.ipv4[$(nic[gw])])";
   "ddns[gw][mac]"                     string => "$(sys.hardware_mac[$(nic[gw])])";
   "ddns[gw][nic]"                     string => "$(nic[gw])";
   "ddns[gw][suffix]"                  string => "-gw";
   "ddns[gw][vlan]"                    string => "$($(classify.organisation).vlan[gw])";
 
   "ddns_index"                         slist => getindices("ddns");
-
-  "hosts_ip"                          string => "$(ip[support])";
-  "admin_ip"                          string => "$(ip[admin])";
-  "gw_ip"                             string => "$(ip[gw])";
 
 reports:
 
