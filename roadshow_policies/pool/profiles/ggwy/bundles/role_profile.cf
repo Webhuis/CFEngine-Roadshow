@@ -46,8 +46,7 @@ vars:
 
   "ip_index"                           slist => getindices("ip");
 
-  "keepalive_vip[$(nic[home])]"       string => "$($(classify.domain).ggwy_vip[home])";
-  "keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).ggwy_vip[support])";
+ #"keepalive_vip[$(nic[support])]"    string => "$($(classify.domain).ggwy_vip[support])";
   "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip[gw])";
   "vip_index"                          slist => getindices(keepalive_vip);
 
