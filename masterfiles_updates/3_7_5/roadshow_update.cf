@@ -114,7 +114,7 @@ files:
      classes      => r_if_repaired("update_report");
 
   "/root/.ldap"
-     handle       => "update_files_inputs_roadshow_organisation",
+     handle       => "update_ldap"
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
@@ -122,7 +122,7 @@ files:
      classes      => r_if_repaired("update_report");
 
   "/etc/dhcp/webhuis.nl.update"
-     handle       => "update_files_inputs_roadshow_organisation",
+     handle       => "update_ddns",
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/webhuis.nl.update", $(sys.policy_hub)),
      file_select  => r_policies,
      action       => r_immediate,
