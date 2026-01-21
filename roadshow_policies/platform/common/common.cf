@@ -82,23 +82,6 @@ classes:
 
 }
 
-  "$(apt_proxy)"
-
-  "/etc/apt/apt.conf"
-    delete => tidy,
-    classes                   => if_repaired("update_apt");
-
-methods:
-
- update_apt::
-  "Update the apt cache" usebundle => update_apt_repo;
-
-reports:
-
- "${this.bundle}: ${mirror}";
-
-}
-
 bundle edit_line edit_avahi_default {
 
 delete_lines:
