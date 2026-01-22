@@ -59,7 +59,7 @@ reports:
 
 }
 
-bundle agent ldap_command (ddns_name, subnet, vlan, ip_address, mac_address, ) {
+bundle agent ldap_command (ddns_name, subnet, vlan, ip_address, mac_address) {
 
 files:
 
