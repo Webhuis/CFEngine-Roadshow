@@ -15,7 +15,8 @@ vars:
 
   "ldap_search_$(nic)"                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name_$(nic)),cn=fixed,cn=$(subnet_$(nic)),cn=$(vlan_$(nic)),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
-  "result_$(nic)"                      string => execresult("$(ldap_search_$(nic)) -w $(ldap_passwd)", "noshell");
+  "result_$(nic)"                      string => execresult("$(ldap_search_$(nic)) -w $(ldap_passwd) | grep -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
+  "ldap_result_lines_$(nic)"            slist => string_split($(result_$(nic)), "\n", 99);
 
   "dev_$(nic)"                         string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
 
