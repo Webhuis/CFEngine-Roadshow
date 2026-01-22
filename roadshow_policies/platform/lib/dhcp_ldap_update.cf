@@ -41,13 +41,13 @@ files:
 
 commands:
 
- "!ip_ldap_$(nic).!hw_ldap_$(nic)":: 
+ "!ip_ldap.!hw_ldap":: 
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
- "ip_ldap_$(nic).!hw_ldap_$(nic)"::
+ "ip_ldap.!hw_ldap"::
   "/usr/bin/echo ldap: ldapmodify needed!";   
 
- "!ip_ldap_$(nic).hw_ldap_$(nic)"::
+ "!ip_ldap.hw_ldap"::
   "/usr/bin/echo ldap: ldapmodify needed!";   
 
 reports:
