@@ -26,14 +26,6 @@ files:
     perms          => mog("644","root","root"),
     edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
 
-methods:
-
- #"Check host entry in dhcp_ldap"   usebundle => set_ldap_class;
- in_ldap::
-  "$(this.bundle): $(ddns_name) in ldap: $(result)";
- !in_ldap::
-  "$(this.bundle): $(ddns_name) not in ldap: $(result)";
-
 commands:
 
  "!in_ldap"::
@@ -48,5 +40,10 @@ reports:
   "$(this.bundle) vlan  : $(vlan_number)";
   "$(this.bundle) subnet: $(subnet)";
   "$(this.bundle) mac   : $(mac_address)";
+
+ in_ldap::
+  "$(this.bundle): $(ddns_name) in ldap: $(result)";
+ !in_ldap::
+  "$(this.bundle): $(ddns_name) not in ldap: $(result)";
 
 }
