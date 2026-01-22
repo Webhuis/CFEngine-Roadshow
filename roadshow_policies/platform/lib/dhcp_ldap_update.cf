@@ -20,7 +20,7 @@ vars:
   "result_$(nic)"                      string => execresult("$(ldap_search_$(nic)) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
   "ldap_result_lines_$(nic)"            slist => string_split("result_$(nic)", "\n", 99);
   "ldap_cn_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[1])", " ", 9);
-  "ldap_cn_$(nic)"                     string => lastnode("$(ldap_cn_l_$(nic))", " "9);
+  "ldap_cn_$(nic)"                     string => lastnode("$(ldap_cn_l_$(nic))", " ");
   "ldap_ip_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[2])", " ", 9);
   "ldap_ip_$(nic)"                     string => lastnode("$(ldap_ip_l_$(nic))", " ");
   "ldap_hw_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[3])", " ", 9);
