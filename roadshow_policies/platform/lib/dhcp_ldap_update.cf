@@ -31,7 +31,7 @@ vars:
 methods:
 
  "!ip_ldap_$(nic).!hw_ldap_$(nic)":: 
-  "We need to add the ldap object"  usebundle => ldap_command("ddns_name_$(nic)", "subnet_$(nic)", "vlan_$(nic)", "ip_address_$(nic)", "mac_address_$(nic)" );
+  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name_$(nic))", "$(subnet_$(nic))", "$(vlan_$(nic))", "$(ip_address_$(nic))", "$(mac_address_$(nic))");
 
 commands:
 
