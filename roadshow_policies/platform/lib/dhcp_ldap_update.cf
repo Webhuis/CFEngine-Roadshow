@@ -70,11 +70,13 @@ reports:
   "$(this.bundle) ldap_ip: $(ldap_ip)";
   "$(this.bundle) ldap_hw: $(ldap_hw)";
 
+  "$(this.bundle): $(ddns_name) not in ldap: $(ldap_cn), ip $(ip_addres), ldap_ip $(ldap_ip) mac $(mac_address) ldap_hw $(ldap_hw)";
+
  "ip_ldap"::
   "$(this.bundle): $(ip_address) in ldap";
  "mac_ldap"::
   "$(this.bundle): $(mac_address) in ldap";
  "!ip_ldap.!hw_ldap"::
-  "$(this.bundle): $(ddns_name) not in ldap: $(result)";
+  "$(this.bundle): $(ddns_name) not in ldap: $(ldap_cn), ip $(ip_addres), ldap_ip $(ldap_ip) mac $(mac_address) ldap_hw $(ldap_hw)";
 
 }
