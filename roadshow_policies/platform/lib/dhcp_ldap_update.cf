@@ -35,11 +35,11 @@ commands:
 
 reports:
 
-  "$(this.bundle) dev   : $(dev_nic)";
-  "$(this.bundle) ldap  : $(ddns_name)";
-  "$(this.bundle) vlan  : $(vlan_number)";
-  "$(this.bundle) subnet: $(subnet)";
-  "$(this.bundle) mac   : $(mac_address)";
+  "$(this.bundle) dev   : $(dev_$(nic))";
+  "$(this.bundle) ldap  : $(ddns_name_$(nic))";
+  "$(this.bundle) vlan  : $(vlan_number_$(nic))";
+  "$(this.bundle) subnet: $(subnet_$(nic))";
+  "$(this.bundle) mac   : $(mac_address_$(nic))";
   "$(this.bundle) ldap_search_$(nic)   : $(ldap_search_$(nic))";
 
  "in_ldap_$(nic)"::
