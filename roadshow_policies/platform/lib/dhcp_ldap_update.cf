@@ -40,6 +40,7 @@ reports:
   "$(this.bundle) vlan  : $(vlan_number)";
   "$(this.bundle) subnet: $(subnet)";
   "$(this.bundle) mac   : $(mac_address)";
+  "$(this.bundle) ldap_search_$(nic)   : $(ldap_search_$(nic))";
 
  "in_ldap_$(nic)"::
   "$(this.bundle): $(ddns_name_$(nic)) in ldap: $(result_$(nic))";
