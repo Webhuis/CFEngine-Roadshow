@@ -11,7 +11,7 @@ vars:
   "ddns_name"                          string => "$(sys.uqhost)$(suffix)";
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "vlan"                               string => "Vlan-$(vlan_number)";
-  "ip_address"                         string => "$(ip_address)";
+ #"ip_address"                         string => "$(ip_address)";
   "mac_address"                        string => "$(mac)";
   "ldap_passwd"                        string => "M@rkBurge55";
 
