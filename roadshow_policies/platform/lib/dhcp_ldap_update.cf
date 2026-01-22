@@ -57,6 +57,7 @@ reports:
   "$(this.bundle) vlan  : $(vlan_number)";
   "$(this.bundle) subnet: $(subnet)";
   "$(this.bundle) ip_address : $(ip_address)";
+  "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
   "$(this.bundle) ldap_ip: $(ldap_ip)";
   "$(this.bundle) mac   : $(mac_address)";
   "$(this.bundle) ldap_hw: $(ldap_hw)";
