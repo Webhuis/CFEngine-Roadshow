@@ -2,38 +2,47 @@ bundle agent dhcp_ldap_update (suffix, nic, ip_address, mac, vlan_number) {
 
 classes:
 
-  "parsed_ip_$(nic)"               expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", "$(ip_address)", "part");
-  "ip_ldap_$(nic)"                 expression => regcmp("$(ip_address_$(nic))", "$(ldap_ip_$(nic)).");
-  "hw_ldap_$(nic)"                 expression => regcmp("$(mac_address_$(nic))", "$(ldap_hw_$(nic)).");
+  "parsed_ip"                      expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", "$(ip_address)", "part");
+  "ip_ldap"                        expression => regcmp("$(ip_address)", "$(ldap_ip).");
+  "hw_ldap"                        expression => regcmp("$(mac_address)", "$(ldap_hw).");
 
 vars:
 
-  "ddns_name_$(nic)"                   string => "$(sys.uqhost)$(suffix)";
-  "subnet_$(nic)"                      string => "$(part[1]).$(part[2]).$(part[3]).0";
-  "vlan_$(nic)"                        string => "Vlan-$(vlan_number)";
-  "ip_address_$(nic)"                  string => "$(ip_address)";
-  "mac_address_$(nic)"                 string => "$(mac)";
+  "ddns_name"                          string => "$(sys.uqhost)$(suffix)";
+  "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
+  "vlan"                               string => "Vlan-$(vlan_number)";
+  "ip_address"                         string => "$(ip_address)";
+  "mac_address"                        string => "$(mac)";
   "ldap_passwd"                        string => "M@rkBurge55";
 
-  "ldap_search_$(nic)"                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name_$(nic)),cn=fixed,cn=$(subnet_$(nic)),cn=$(vlan_$(nic)),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
+  "ldap_search"                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
-  "result_$(nic)"                      string => execresult("$(ldap_search_$(nic)) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
-  "ldap_result_lines_$(nic)"            slist => string_split("result_$(nic)", "\n", 99);
-  "ldap_cn_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[1])", " ", 9);
-  "ldap_cn_$(nic)"                     string => lastnode("$(ldap_cn_l_$(nic))", " ");
-  "ldap_ip_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[2])", " ", 9);
-  "ldap_ip_$(nic)"                     string => lastnode("$(ldap_ip_l_$(nic))", " ");
-  "ldap_hw_l_$(nic)"                    slist => string_split("$(ldap_result_lines_$(nic)[3])", " ", 9);
-  "ldap_hw_$(nic)"                     string => lastnode("$(ldap_hw_l_$(nic))", " ");
+  "result"                             string => execresult("$(ldap_search) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
+  "ldap_result_lines"                   slist => string_split("result", "\n", 99);
+  "ldap_cn_l"                           slist => string_split("$(ldap_result_lines[1])", " ", 9);
+  "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
+  "ldap_ip_l"                           slist => string_split("$(ldap_result_lines[2])", " ", 9);
+  "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
+  "ldap_hw_l"                           slist => string_split("$(ldap_result_lines[3])", " ", 9);
+  "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
 
  #"dev_$(nic)"                         string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
 
-methods:
+files:
 
- "!ip_ldap_$(nic).!hw_ldap_$(nic)":: 
-  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name_$(nic))", "$(subnet_$(nic))", "$(vlan_$(nic))", "$(ip_address_$(nic))", "$(mac_address_$(nic))");
+  "/etc/ldap/$(ddns_name_$(nic)).$(sys.domain).ldapadd.command"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
+
+#methods:
+
+#  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)", "$(subnet)", "$(vlan)", "$(ip_address)", "$(mac_address)");
 
 commands:
+
+ "!ip_ldap_$(nic).!hw_ldap_$(nic)":: 
+  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
  "ip_ldap_$(nic).!hw_ldap_$(nic)"::
   "/usr/bin/echo ldap: ldapmodify needed!";   
@@ -44,34 +53,17 @@ commands:
 reports:
 
  #"$(this.bundle) dev   : $(dev_$(nic))";
-  "$(this.bundle) ldap  : $(ddns_name_$(nic))";
-  "$(this.bundle) vlan  : $(vlan_number_$(nic))";
-  "$(this.bundle) subnet: $(subnet_$(nic))";
-  "$(this.bundle) mac   : $(mac_address_$(nic))";
-  "$(this.bundle) ldap_search result_$(nic): $(result_$(nic))";
+  "$(this.bundle) ldap  : $(ddns_name)";
+  "$(this.bundle) vlan  : $(vlan_number)";
+  "$(this.bundle) subnet: $(subnet)";
+  "$(this.bundle) mac   : $(mac_address)";
+  "$(this.bundle) ldap_search result: $(result)";
 
- "ip_ldap_$(nic)"::
-  "$(this.bundle): $(ip_address_$(nic)) in ldap";
- "mac_ldap_$(nic)"::
-  "$(this.bundle): $(mac_address_$(nic)) in ldap";
- "!ip_ldap_$(nic).!hw_ldap_$(nic)"::
-  "$(this.bundle): $(ddns_name_$(nic)) not in ldap: $(result_$(nic))";
-
-}
-
-bundle agent ldap_command (ddns_name, subnet, vlan, ip_address, mac_address) {
-
-files:
-
-  "/etc/ldap/$(ddns_name_$(nic)).$(sys.domain).ldapadd.command"
-    create         => "true",
-    perms          => mog("644","root","root"),
-    edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
-
-commands:
-
-  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
- # "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -y /root/.ldap -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
- # -y /root/.ldap does not work, dropping back to hardcoded password
+ "ip_ldap"::
+  "$(this.bundle): $(ip_address) in ldap";
+ "mac_ldap"::
+  "$(this.bundle): $(mac_address) in ldap";
+ "!ip_ldap.!hw_ldap"::
+  "$(this.bundle): $(ddns_name) not in ldap: $(result)";
 
 }
