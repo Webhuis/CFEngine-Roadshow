@@ -12,6 +12,7 @@ vars:
   "vlan"                               string => "Vlan-$(vlan_number)";
   "mac_address"                        string => "$(mac)";
   "ldap_passwd"                        string => "M@rkBurge55";
+
   "ldap_search"                        string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
   "result"                             string => execresult("$(ldap_search) -w $(ldap_passwd)", "noshell");
@@ -29,9 +30,9 @@ methods:
 
  #"Check host entry in dhcp_ldap"   usebundle => set_ldap_class;
  in_ldap::
-  "$(this.bundle): $(dhcp_ldap_update.ddns_name) in ldap: $(result)";
+  "$(this.bundle): $(ddns_name) in ldap: $(result)";
  !in_ldap::
-  "$(this.bundle): $(dhcp_ldap_update.ddns_name) not in ldap: $(result)";
+  "$(this.bundle): $(ddns_name) not in ldap: $(result)";
 
 commands:
 
