@@ -27,7 +27,7 @@ files:
 
 methods:
 
-  "Check host entry in dhcp_ldap"   usebundle => set_ldap_class;
+ #"Check host entry in dhcp_ldap"   usebundle => set_ldap_class;
  in_ldap::
   "$(this.bundle): $(dhcp_ldap_update.ddns_name) in ldap: $(result)";
  !in_ldap::
