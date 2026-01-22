@@ -18,13 +18,20 @@ vars:
   "ldap_search"                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
   "result"                             string => execresult("$(ldap_search) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
-  "ldap_result_lines"                   slist => string_split("result", "\n", 99);
-  "ldap_cn_l"                           slist => string_split("$(ldap_result_lines[1])", " ", 9);
+  "ldap_result_lines"                   slist => string_split("$(result)", "\n", 99);
+  "cn_line"                             slist => sublist("ldap_result_lines", "head", 1);
+  "hw_2"                                slist => sublist("ldap_result_lines", "tail", 2);
+  "hw_line"                             slist => sublist("hw_2", "head", 1);
+  "ip_line"                             slist => sublist("ldap_result_lines", "tail", 1);
+  "result_index"                        slist => getindices("ldap_result_lines");
+  "result_values"                       slist => getvalues("ldap_result_lines");
+  "ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
   "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
-  "ldap_ip_l"                           slist => string_split("$(ldap_result_lines[2])", " ", 9);
+  "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
   "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
-  "ldap_hw_l"                           slist => string_split("$(ldap_result_lines[3])", " ", 9);
+  "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
   "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
+
 
  #"dev_$(nic)"                         string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
 
@@ -57,11 +64,11 @@ reports:
   "$(this.bundle) vlan  : $(vlan_number)";
   "$(this.bundle) subnet: $(subnet)";
   "$(this.bundle) ip_address : $(ip_address)";
+  "$(this.bundle) result : $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
+  "$(this.bundle) ldap_cn: $(ldap_cn)";
   "$(this.bundle) ldap_ip: $(ldap_ip)";
-  "$(this.bundle) mac   : $(mac_address)";
   "$(this.bundle) ldap_hw: $(ldap_hw)";
-  "$(this.bundle) ldap_search result: $(result)";
 
  "ip_ldap"::
   "$(this.bundle): $(ip_address) in ldap";
