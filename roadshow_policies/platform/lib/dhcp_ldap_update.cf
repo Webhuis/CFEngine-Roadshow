@@ -16,13 +16,13 @@ vars:
   "mac_address"                        string => "$(mac)";
   "ldap_passwd"                        string => "M@rkBurge55";
 
-  "ldap_search"                 string => "/usr/bin/ldapsearch -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
+  "ldap_search"                 string => "/usr/bin/ldapsearch -x -w M@rkBurge55 -H ldap://mihrwhpdcsw1.sw.webhuis.nl/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
-  "result"                             string => execresult("$(ldap_search) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
+  "result"                             string => execresult("$(ldap_search) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
   "ldap_result_lines"                   slist => string_split("$(result)", "\n", 99);
-  "cn_line"                             slist => filter("cn: ", "ldap_result_lines", "true", "true", 1);
-  "hw_line"                             slist => filter("dhcpHWAddress: ethernet ", "ldap_result_lines", "true", "true", 2);
-  "ip_line"                             slist => filter("dhcpStatements: fixed-address ", "ldap_result_lines", "true", "true", 3);
+  "cn_line"                             slist => filter("cn: ", "ldap_result_lines", "true", "true", 1); 
+  "hw_line"                             slist => filter("dhcpHWAddress: ethernet ", "ldap_result_lines", "true", "true", 2); 
+  "ip_line"                             slist => filter("dhcpStatements: fixed-address ", "ldap_result_lines", "true", "true", 3); 
   "ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
   "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
   "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
@@ -34,9 +34,6 @@ vars:
   "ldap_hw_can"                        string => canonify("$(ldap_hw)");
   "mac_address_can"                    string => canonify("$(mac_address)");
 
-
- #"dev_$(nic)"                         string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
-
 files:
 
   "/etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command"
@@ -44,10 +41,25 @@ files:
     perms          => mog("644","root","root"),
     edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
 
-methods:
+#methods:
+# !cn_ldap:: 
+#  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)");
 
- !cn_ldap:: 
-  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)");
+commands:
+
+  "/usr/bin/echo ldap commands section";
+
+ cn_ldap::
+  "/usr/bin/echo ldap ddns_name exists: check ldapmodify!";
+
+ !cn_ldap::
+
+  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+
+ !(ip_ldap.hw_ldap).cn_ldap::
+
+  "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+
 
 reports:
 
@@ -82,21 +94,5 @@ reports:
 
  !(ip_ldap.hw_ldap).cn_ldap::
   "$(this.bundle) ldap nok: ip *$(ip_address_can)* mac *$(mac_address_can)* ldapmodify!";
-
-}
-
-bundle agent  ldap_command(ddns_name) {
-
-commands:
-
-  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
-
-#!(ip_ldap.hw_ldap).cn_ldap::
-
-# "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
-
-reports:
-
-  "$(this.bundle) ldap update  : $(ddns_name)";
 
 }
