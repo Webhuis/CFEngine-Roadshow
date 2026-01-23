@@ -57,24 +57,23 @@ commands:
 
 reports:
 
- #"$(this.bundle) dev   : $(dev_$(nic))";
   "$(this.bundle) ldap  : $(ddns_name)";
   "$(this.bundle) vlan  : $(vlan_number)";
   "$(this.bundle) subnet: $(subnet)";
   "$(this.bundle) ip_address : $(ip_address)";
-  "$(this.bundle) result : $(result)";
+  "$(this.bundle) mac   : $(mac_address)";
+
+  "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
-  "$(this.bundle) ldap_cn: $(ldap_cn)";
-  "$(this.bundle) ldap_ip: $(ldap_ip)";
-  "$(this.bundle) ldap_hw: $(ldap_hw)";
 
-  "$(this.bundle): $(ddns_name) not in ldap: $(ldap_cn), ip $(ip_addres), ldap_ip $(ldap_ip) mac $(mac_address) ldap_hw $(ldap_hw)";
+ "cn_ldap":: 
+  "$(this.bundle) ddns_name and cn exist : $(ddns_name) $(ldap_cn)";
 
- "ip_ldap"::
-  "$(this.bundle): $(ip_address) in ldap";
- "mac_ldap"::
-  "$(this.bundle): $(mac_address) in ldap";
- "!ip_ldap.!hw_ldap"::
-  "$(this.bundle): $(ddns_name) not in ldap: $(ldap_cn), ip $(ip_addres), ldap_ip $(ldap_ip) mac $(mac_address) ldap_hw $(ldap_hw)";
+ "!ip_ldapr|!hw_ldap"::
+  "/usr/bin/echo ldap: ldapmodify need to change hw or ip address!";
+  "/usr/bin/echo ldap: $(mac_address) $(ldap_hw) $(ip_address) $(ldap_ip)!";
+
+ "!cn_ldap":: 
+  "$(this.bundle) ddns_name aavailable but cn dows not exist : $(ddns_name), ldapadd";
 
 }
