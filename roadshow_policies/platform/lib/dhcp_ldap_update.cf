@@ -4,8 +4,8 @@ classes:
 
   "parsed_ip"                      expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", "$(ip_address)", "part");
   "cn_ldap"                        expression => regcmp("$(ddns_name)", "$(ldap_cn)");
-  "ip_ldap"                        expression => regcmp("$(ip_address)", "$(ldap_ip).");
-  "hw_ldap"                        expression => regcmp("$(mac_address)", "$(ldap_hw).");
+  "ip_ldap"                        expression => strcmp("$(ip_address_can)", "$(ldap_ip_can)");
+  "hw_ldap"                        expression => strcmp("$(mac_address_can)", "$(ldap_hw_can)");
 
 vars:
 
@@ -27,8 +27,12 @@ vars:
   "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
   "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
   "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
+  "ldap_ip_can"                        string => canonify("$(ldap_ip)");
+  "ip_address_can"                     string => canonify("$(ip_address)");
   "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
   "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
+  "ldap_hw_can"                        string => canonify("$(ldap_hw)");
+  "mac_address_can"                    string => canonify("$(mac_address)");
 
 
  #"dev_$(nic)"                         string => execresult("$($(sys.flavor).ip_cmd) link show dev $(nic)","noshell");
@@ -49,11 +53,8 @@ commands:
  "!cn_ldap":: 
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
- "ip_ldap.!hw_ldap"::
-  "/usr/bin/echo ldap: ldapmodify needed!";   
-
- "!ip_ldap.hw_ldap"::
-  "/usr/bin/echo ldap: ldapmodify needed!";   
+ !(ip_ldap.hw_ldap)::
+  "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
 reports:
 
@@ -69,11 +70,13 @@ reports:
  "cn_ldap":: 
   "$(this.bundle) ddns_name and cn exist : $(ddns_name) $(ldap_cn)";
 
- "!ip_ldapr|!hw_ldap"::
-  "/usr/bin/echo ldap: ldapmodify need to change hw or ip address!";
-  "/usr/bin/echo ldap: $(mac_address) $(ldap_hw) $(ip_address) $(ldap_ip)!";
-
  "!cn_ldap":: 
-  "$(this.bundle) ddns_name aavailable but cn dows not exist : $(ddns_name), ldapadd";
+  "$(this.bundle) ddns_name available but cn dows not exist : $(ddns_name), ldapadd";
+
+ ip_ldap.hw_ldap::
+  "$(this.bundle) ldap ok: ip *$(ip_address_can_)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
+
+ !(ip_ldap.hw_ldap)::
+  "$(this.bundle) ldap nok: ip *$(ip_address_can)* mac *$(mac_address_can)* ldapmodify!";
 
 }
