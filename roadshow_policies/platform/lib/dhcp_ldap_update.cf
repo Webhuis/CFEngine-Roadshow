@@ -44,17 +44,10 @@ files:
     perms          => mog("644","root","root"),
     edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
 
-#methods:
-
-#  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)", "$(subnet)", "$(vlan)", "$(ip_address)", "$(mac_address)");
-
-commands:
+methods:
 
  !cn_ldap:: 
-  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
-
- !(ip_ldap.hw_ldap).cn_ldap::
-  "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)");
 
 reports:
 
@@ -79,7 +72,7 @@ reports:
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
  cn_ldap:: 
-  "$(this.bundle) ddns_name and cn exist : $(ddns_name) $(ldap_cn)";
+  "$(this.bundle) ddns_name and cn exist : *$(ddns_name)* *$(ldap_cn)*";
 
  !cn_ldap:: 
   "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd";
@@ -89,5 +82,21 @@ reports:
 
  !(ip_ldap.hw_ldap).cn_ldap::
   "$(this.bundle) ldap nok: ip *$(ip_address_can)* mac *$(mac_address_can)* ldapmodify!";
+
+}
+
+bundle agent  ldap_command(ddns_name) {
+
+commands:
+
+  "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+
+#!(ip_ldap.hw_ldap).cn_ldap::
+
+# "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
+
+reports:
+
+  "$(this.bundle) ldap update  : $(ddns_name)";
 
 }
