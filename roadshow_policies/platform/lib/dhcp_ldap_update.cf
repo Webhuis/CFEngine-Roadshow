@@ -64,19 +64,30 @@ reports:
   "$(this.bundle) ip_address : $(ip_address)";
   "$(this.bundle) mac   : $(mac_address)";
 
+  "$(this.bundle) ldap_cn_l : $(ldap_cn_l)";
+  "$(this.bundle) ldap_ip_l : $(ldap_ip_l)";
+  "$(this.bundle) ldap_hw_l : $(ldap_hw_l)";
+  "$(this.bundle) ldap_cn : $(ldap_cn)";
+  "$(this.bundle) ldap_ip : $(ldap_ip)";
+  "$(this.bundle) ldap_ip_can : $(ldap_ip_can)";
+  "$(this.bundle) ip_address_can : $(ip_address_can)";
+  "$(this.bundle) ldap_hw : $(ldap_hw)";
+  "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
+  "$(this.bundle) mac_address_can : $(mac_address_can)";
+
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
- "cn_ldap":: 
+ cn_ldap:: 
   "$(this.bundle) ddns_name and cn exist : $(ddns_name) $(ldap_cn)";
 
- "!cn_ldap":: 
+ !cn_ldap:: 
   "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd";
 
  ip_ldap.hw_ldap::
   "$(this.bundle) ldap ok: ip *$(ip_address_can_)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
 
- !(ip_ldap.hw_ldap)::
+ !(ip_ldap.hw_ldap).cn_ldap::
   "$(this.bundle) ldap nok: ip *$(ip_address_can)* mac *$(mac_address_can)* ldapmodify!";
 
 }
