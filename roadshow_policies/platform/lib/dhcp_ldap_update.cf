@@ -19,12 +19,9 @@ vars:
 
   "result"                             string => execresult("$(ldap_search) -w $(ldap_passwd) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
   "ldap_result_lines"                   slist => string_split("$(result)", "\n", 99);
-  "cn_line"                             slist => sublist("ldap_result_lines", "head", 1);
-  "hw_2"                                slist => sublist("ldap_result_lines", "tail", 2);
-  "hw_line"                             slist => sublist("hw_2", "head", 1);
-  "ip_line"                             slist => sublist("ldap_result_lines", "tail", 1);
-  "result_index"                        slist => getindices("ldap_result_lines");
-  "result_values"                       slist => getvalues("ldap_result_lines");
+  "cn_line"                             slist => filter("cn: ", "ldap_result_lines", "true", "true", 1);
+  "hw_line"                             slist => filter("dhcpHWAddress: ethernet ", "ldap_result_lines", "true", "true", 1);
+  "ip_line"                             slist => filter("dhcpStatements: fixed-address ", "ldap_result_lines", "true", "true", 1);
   "ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
   "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
   "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
