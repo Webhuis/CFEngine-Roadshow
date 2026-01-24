@@ -3,9 +3,9 @@ bundle agent dhcp_ldap_update (suffix, nic, ip_address, mac, vlan_number) {
 classes:
 
   "parsed_ip"                      expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", "$(ip_address)", "part");
-  "cn_ldap"                        expression => strcmp("$(ddns_name_can)", "$(ldap_cn_can)");
-  "ip_ldap"                        expression => strcmp("$(ip_address_can)", "$(ldap_ip_can)");
-  "hw_ldap"                        expression => strcmp("$(mac_address_can)", "$(ldap_hw_can)");
+  "cn_ldap$(suffix)"               expression => strcmp("$(ddns_name_can)", "$(ldap_cn_can)");
+  "ip_ldap$(suffix)"               expression => strcmp("$(ip_address_can)", "$(ldap_ip_can)");
+  "hw_ldap$(suffix)"               expression => strcmp("$(mac_address_can)", "$(ldap_hw_can)");
 
 vars:
 
@@ -51,15 +51,15 @@ commands:
 
   "/usr/bin/echo ldap commands section";
 
- cn_ldap::
+ cn_ldap$(suffix)::
   "/usr/bin/echo ldap ddns_name exists: check ldapmodify!";
 
- !cn_ldap::
+ !cn_ldap$(suffix)::
 
   "/usr/bin/echo ldap ddns_name does exist:  $(ddns_name) $(ldap_ip)!";
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
- !(ip_ldap.hw_ldap).cn_ldap::
+ !(ip_ldap$(suffix).hw_ldap$(suffix)).cn_ldap$(suffix)::
 
   "/usr/bin/echo ldap ip or mac changed ldapmodify!";
   "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
@@ -87,16 +87,16 @@ reports:
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
- cn_ldap:: 
+ cn_ldap$(suffix):: 
   "$(this.bundle) ddns_name and cn exist : *$(ddns_name)* *$(ldap_cn)*";
 
- !cn_ldap:: 
+ !cn_ldap$(suffix):: 
   "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd";
 
- ip_ldap.hw_ldap::
+ ip_ldap$(suffix).hw_ldap$(suffix)::
   "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
 
- !(ip_ldap.hw_ldap).cn_ldap::
+ !(ip_ldap$(suffix).hw_ldap$(suffix)).cn_ldap$(suffix)::
   "$(this.bundle) ldap nok: ip *$(ip_address_can)* mac *$(mac_address_can)* ldapmodify!";
 
 }
