@@ -1,0 +1,21 @@
+bundle agent test {
+
+vars:
+
+  "role_name"                                  string => "Test VM for policy testing";
+
+  "bundles[cfe_hub]"                           string => "test_set.cf";
+
+  "inputs"                                      slist => getvalues("bundles");
+
+methods:
+
+  "We are the policy test node"             usebundle => "test_set";
+
+reports:
+
+  "$(this.bundle) role name: $(role_name)";
+  "$(this.bundle) role data: $(role_profile)";
+  "$(this.bundle) role inputs: $($(classify.role).inputs)";
+
+}

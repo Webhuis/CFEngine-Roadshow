@@ -1,0 +1,11 @@
+bundle agent test_set {
+
+vars:
+
+  "test_set"                    string => "I am the policy test node"; 
+
+reports:
+
+  "${this.bundle}: $(test_set)";
+
+}
