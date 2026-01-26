@@ -17,7 +17,7 @@ vars:
   "ttl"                                string => "300";
   "ntp_server"                         string => "ntp.time.nl";
 
-  "zone[1001]"                         string => { "eth0", "-int" };
+  "zone[1001]"                          slist => { "eth0", "-int" };
   "zone[123]"                          string => { "eth1", "" };
   "zone[22]"                           string => { "eth2", "-ssh" };
   "zone[213]"                          string => { "eth3", "-wan" };
