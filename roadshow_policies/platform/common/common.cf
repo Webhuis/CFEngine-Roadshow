@@ -40,17 +40,17 @@ methods:
  has_ddns_index::
   "Check the soft IP Addresses given"       usebundle => check_ip("$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 
- !bad_ip.mac_ok::
-  "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",
-                                                                          "$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
-                                                                          "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
-                                                                          "$(role_profile.ddns[$(role_profile.ddns_index)][mac])",
-                                                                          "$(role_profile.ddns[$(role_profile.ddns_index)][vlan])");
+#!bad_ip.mac_ok::
+# "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",
+#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
+#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
+#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][mac])",
+#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][vlan])");
 
- !bad_ip::
-  "We update ddns"                          usebundle => ddns_update("$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
-                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
-                                                                     "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])");
+#!bad_ip::
+# "We update ddns"                          usebundle => ddns_update("$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
+#                                                                    "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
+#                                                                    "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])");
 commands:
 
   "/usr/bin/wget -O /root/.ldap http://mirror.webhuis.nl/ldap/.ldap";
