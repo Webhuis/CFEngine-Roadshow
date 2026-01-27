@@ -26,7 +26,7 @@ vars:
   "zone[80]"                            slist => { "eth6", "-app" };
   "zone[111]"                           slist => { "eth7", "-srv" };
   "zone[1111]"                          slist => { "eth8", "-rs" };
-`
+
   "vlan[home]"                         string => "1001";
   "vlan[support]"                      string => "123";
   "vlan[admin]"                        string => "22";
