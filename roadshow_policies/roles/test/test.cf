@@ -4,7 +4,7 @@ vars:
 
   "role_name"                                  string => "Test VM for policy testing";
 
-  "bundles[cfe_hub]"                           string => "test_set.cf";
+  "bundles[test_set]"                          string => "test_set.cf";
 
   "inputs"                                      slist => getvalues("bundles");
 
