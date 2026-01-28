@@ -18,14 +18,14 @@ vars:
   "ntp_server"                         string => "ntp.time.nl";
 
   "zone[1001][nic]"                    string => "eth0";
-  "zone[1001][suffix]"                 string => "-int" ;
+  "zone[1001][suffix]"                 string => "-int";
   "zone[123][nic]"                     string => "eth1";
   "zone[123][suffix]"                  string => "" ;
   "zone[22][nic]"                      string => "eth2";
-  "zone[22][suffix]"                   string => "-ssh" ;
+  "zone[22][suffix]"                   string => "-ssh";
   "zone[213]"                          string => "eth3";
   "zone[213]"                          string => "-wan";
-  "zone[254]"                          string => "eth4"
+  "zone[254]"                          string => "eth4";
   "zone[254]"                          string => "-gw";
   "zone[42]"                           string => "eth5";
   "zone[42]"                           string => "-life";
