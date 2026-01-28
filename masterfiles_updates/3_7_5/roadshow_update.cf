@@ -113,6 +113,7 @@ files:
      create       => "true",
      classes      => r_if_repaired("update_report");
 
+ any::
   "/root/.ldap"
      handle       => "update_ldap",
      copy_from    => r_rcp("$(master_data)/organisations/$(organisation)/.ldap", $(sys.policy_hub)),
