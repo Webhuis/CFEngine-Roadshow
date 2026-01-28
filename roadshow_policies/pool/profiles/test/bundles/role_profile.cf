@@ -51,7 +51,7 @@ classes:
 
 vars:
 
-  "22_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[22][nic]))","noshell");
+  "22_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[22][nic])","noshell");
   "22_list"                                slist => string_split("$(22_raw)", "src ", 9);
   "22_ip"                                 string => lastnode("$(22_list)", " " );
 
@@ -74,7 +74,7 @@ classes:
 
 vars:
 
-  "123_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[123][nic]))","noshell");
+  "123_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[123][nic])","noshell");
   "123_list"                               slist => string_split("$(123_raw)", "src ", 9);
   "123_ip"                                string => lastnode("$(123_list)", " " );
 
