@@ -28,7 +28,7 @@ vars:
 
 methods:
 
-  "We need well cnfigured zones"   usebundle => zone_status("$(zones)");
+  "We need well cnfigured zones"   usebundle => status_$(zones);
 
 reports:
 
@@ -41,25 +41,46 @@ reports:
 
 }
 
-bundle common zone_status ( zone ) {
+bundle common zone_status_22 {
 
 classes:
 
-  "$(zone)_var"                       expression => isvariable("$(zone)_ip");
-  "$(zone)_ip"                        expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(zone)_ip)"),
+  "22_var"                            expression => isvariable("22_ip");
+  "22_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "22_ip)"),
                                       comment    => "Process the IP Addresses.";
-
 
 vars:
 
-  "$(zone)_raw"                           string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[$(zone)][nic]))","noshell");
-  "$(zone)_list"                           slist => string_split("$($(zone)_raw)", "src ", 9);
-  "$(zone)_ip"                            string => lastnode("$($(zone)_list)", " " );
+  "22_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[22][nic]))","noshell");
+  "22_list"                                slist => string_split("$(22_raw)", "src ", 9);
+  "22_ip"                                 string => lastnode("$(22_list)", " " );
 
 reports:
 
-  "$(this.bundle) nic: $($(classify.organisation).zone[$(zone)][nic])";
-  "$(this.bundle) nic: $(zone)][nic]";
+  "$(this.bundle) nic: $($(classify.organisation).zone[22][nic])";
+  "$(this.bundle) ip: $(22_ip]";
+
+}
+
+
+bundle common zone_status_123 {
+
+classes:
+
+  "123_var"                           expression => isvariable("123_ip");
+  "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "123_ip)"),
+                                      comment    => "Process the IP Addresses.";
+
+vars:
+
+  "123_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[123][nic]))","noshell");
+  "123_list"                               slist => string_split("$(123_raw)", "src ", 9);
+  "123_ip"                                string => lastnode("$(123_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[123][nic])";
+  "$(this.bundle) nic: $(123_ip)";
 
 }
 
