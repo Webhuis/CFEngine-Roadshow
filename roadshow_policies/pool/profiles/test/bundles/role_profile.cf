@@ -58,7 +58,7 @@ vars:
 reports:
 
   "$(this.bundle) nic: $($(classify.organisation).zone[22][nic])";
-  "$(this.bundle) ip: $(22_ip]";
+  "$(this.bundle) ip: $(22_ip)";
 
 }
 
