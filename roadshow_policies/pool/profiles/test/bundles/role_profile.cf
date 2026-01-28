@@ -28,7 +28,7 @@ vars:
 
 methods:
 
-  "We need well cnfigured zones"   usebundle => status_$(zones);
+  "We need well configured zones"  usebundle => zone_status_"$(zones)";
 
 reports:
 
