@@ -17,15 +17,24 @@ vars:
   "ttl"                                string => "300";
   "ntp_server"                         string => "ntp.time.nl";
 
-  "zone[1001]"                          slist => { "eth0", "-int" };
-  "zone[123]"                           slist => { "eth1", "" };
-  "zone[22]"                            slist => { "eth2", "-ssh" };
-  "zone[213]"                           slist => { "eth3", "-wan" };
-  "zone[254]"                           slist => { "eth4", "-gw" };
-  "zone[42]"                            slist => { "eth5", "-life" };
-  "zone[80]"                            slist => { "eth6", "-app" };
-  "zone[111]"                           slist => { "eth7", "-srv" };
-  "zone[1111]"                          slist => { "eth8", "-rs" };
+  "zone[1001][nic]"                    string => "eth0";
+  "zone[1001][suffix]"                 string => "-int" ;
+  "zone[123][nic]"                     string => "eth1";
+  "zone[123][suffix]"                  string => "" ;
+  "zone[22][nic]"                      string => "eth2";
+  "zone[22][suffix]"                   string => "-ssh" ;
+  "zone[213]"                          string => "eth3";
+  "zone[213]"                          string => "-wan";
+  "zone[254]"                          string => "eth4"
+  "zone[254]"                          string => "-gw";
+  "zone[42]"                           string => "eth5";
+  "zone[42]"                           string => "-life";
+  "zone[80]"                           string => "eth6";
+  "zone[80]"                           string => "-app";
+  "zone[111]"                          string => "eth7";
+  "zone[111]"                          string => "-srv";
+  "zone[1111]"                         string => "eth8";
+  "zone[1111]"                         string => "-rs";
 
   "vlan[home]"                         string => "1001";
   "vlan[support]"                      string => "123";

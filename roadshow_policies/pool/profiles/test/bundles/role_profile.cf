@@ -1,27 +1,8 @@
 bundle agent role_profile {
 
-classes:
-
-  "has_ddns_index"                 expression => isvariable("ddns_index");
-  "has_hosts_var"                  expression => isvariable("ip[support]");
-  "has_admin_var"                  expression => isvariable("ip[admin]");
-  "available_vlan_$(vlan)"         expression => execresult("$($(sys.flavor).ip_cmd) link show dev $(var_vlan_$(vlan))","noshell");
-
- has_hosts_var::
-  "valid_hosts_ip"                 comment    => "Process the IP Addresses.",
-                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
-                                                 "$(ip[support])");
-
- has_admin_var::
-  "valid_admin_ip"                 comment    => "Process the IP Addresses.",
-                                   expression => regcmp("(1[0-9]{0,2}|[3-9][0-9]{0,1}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[\.]([0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])",
-                                                 "$(ip[admin])");
-
 vars:
 
   "zones"                              slist => { "123", "22" };
-  "nic[support]"                      string => "$($(classify.organisation).nic[support])";
-  "nic[admin]"                        string => "$($(classify.organisation).nic[admin])";
 
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
@@ -45,6 +26,10 @@ vars:
   "hosts_ip"                          string => "$(ip[support])";
   "admin_ip"                          string => "$(ip[admin])";
 
+methods:
+
+  "We need well cnfigured zones"   usebundle => zone_status("$(zones)");
+
 reports:
 
   "$(this.bundle) nic: $(nic[$(nic_index)])";
@@ -53,6 +38,28 @@ reports:
   "$(this.bundle) hosts_ip: $(hosts_ip)";
   "$(this.bundle) admin_ip: $(admin_ip)";
   "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
+
+}
+
+bundle common zone_status ( zone ) {
+
+classes:
+
+  "$(zone)_var"                       expression => isvariable("$(zone)_ip");
+  "$(zone)_ip"                        expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(zone)_ip)"),
+                                      comment    => "Process the IP Addresses.";
+
+
+vars:
+
+  "$(zone)_raw"                           string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[$(zone)][nic]))","noshell");
+  "$(zone)_list"                           slist => string_split("$($(zone)_raw)", "src ", 9);
+  "$(zone)_ip"                            string => lastnode("$($(zone)_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[$(zone)][nic])";
+  "$(this.bundle) nic: $(zone)][nic]";
 
 }
 
