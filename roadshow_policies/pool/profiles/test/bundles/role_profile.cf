@@ -58,6 +58,7 @@ vars:
 reports:
 
   "$(this.bundle) nic: $($(classify.organisation).zone[22][nic])";
+  "$(this.bundle) show dev: $(22_ip)";
   "$(this.bundle) ip: $(22_ip)";
 
 }
@@ -80,6 +81,7 @@ vars:
 reports:
 
   "$(this.bundle) nic: $($(classify.organisation).zone[123][nic])";
+  "$(this.bundle) show dev: $(123_ip)";
   "$(this.bundle) ip: $(123_ip)";
 
 }
