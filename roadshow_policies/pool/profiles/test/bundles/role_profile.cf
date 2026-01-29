@@ -3,7 +3,7 @@ bundle agent role_profile {
 vars:
 
   "zones"                              slist => { "123", "22" };
-  "nic"                                slist => "$($(classify.organisation).zone[$(zones)][nic])";
+  "nic"                                slist => { "$($(classify.organisation).zone[$(zones)][nic])" };
 
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
