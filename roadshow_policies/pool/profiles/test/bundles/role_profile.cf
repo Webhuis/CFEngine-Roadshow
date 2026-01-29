@@ -85,7 +85,7 @@ classes:
 
   "22_nic"                            expression => regcmp(".*eth.*", "22_raw");
   "22_var"                            expression => isvariable("22_ip");
-  "22_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "22_ip)"),
+  "22_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "22_ip)");
 
 vars:
 
@@ -107,7 +107,7 @@ classes:
 
   "42_nic"                            expression => regcmp(".*eth.*", "42_raw");
   "42_var"                            expression => isvariable("42_ip");
-  "42_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "42_ip)"),
+  "42_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "42_ip)");
                                       comment    => "Process the IP Addresses.";
 vars:
 
@@ -129,7 +129,7 @@ classes:
 
   "123_nic"                           expression => regcmp(".*eth.*", "123_raw");
   "123_var"                           expression => isvariable("123_ip");
-  "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "123_ip)"),
+  "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "123_ip)");
 
 vars:
 
@@ -151,7 +151,7 @@ classes:
 
   "254_nic"                           expression => regcmp(".*eth.*", "254_raw");
   "254_var"                           expression => isvariable("254_ip");
-  "254_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "254_ip)"),
+  "254_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "254_ip)");
 
 vars:
 
