@@ -2,7 +2,7 @@ bundle agent role_profile {
 
 vars:
 
-  "zones"                              slist => { "123", "22" };
+  "zones"                              slist => { "123", "22", "42", "254" };
 
   "nic_index"                          slist => getindices("nic");
   "nic_values_unsorted"                slist => getvalues("nic");
@@ -32,12 +32,50 @@ methods:
 
 reports:
 
-  "$(this.bundle) nic: $(nic[$(nic_index)])";
-  "$(this.bundle) nic_index: $(nic_index)";
-  "$(this.bundle) nic_values: $(nic_values)";
-  "$(this.bundle) hosts_ip: $(hosts_ip)";
-  "$(this.bundle) admin_ip: $(admin_ip)";
-  "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
+ 22_nic::
+  "$(this.bundle) nic 22 available";
+ !22_nic::
+  "$(this.bundle) nic 22 not available";
+
+ 22_ip::
+  "$(this.bundle) ip 22 available";
+ !22_ip::
+  "$(this.bundle) ip 22 not available";
+
+ 42_nic::
+  "$(this.bundle) nic 42 available";
+ !42_nic::
+  "$(this.bundle) nic 42 not available";
+
+ 42_ip::
+  "$(this.bundle) ip 42 available";
+ !42_ip::
+  "$(this.bundle) ip 42 not available";
+
+ 123_nic::
+  "$(this.bundle) nic 123 available";
+ !123_nic::
+  "$(this.bundle) nic 123 not available";
+
+ 123_ip::
+  "$(this.bundle) ip 123 available";
+ !123_ip::
+  "$(this.bundle) ip 123 not available";
+
+ 254_nic::
+  "$(this.bundle) nic 254 available";
+ !254_nic::
+  "$(this.bundle) nic 254 not available";
+
+ 254_ip::
+  "$(this.bundle) ip 254 available";
+ !254_ip::
+  "$(this.bundle) ip 254 not available";
+ #"$(this.bundle) nic_index: $(nic_index)";
+ #"$(this.bundle) nic_values: $(nic_values)";
+ #"$(this.bundle) hosts_ip: $(hosts_ip)";
+ #"$(this.bundle) admin_ip: $(admin_ip)";
+ #"$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
 
 }
 
@@ -45,9 +83,9 @@ bundle common zone_status_22 {
 
 classes:
 
+  "22_nic"                            expression => regcmp(".*eth.*", "22_raw");
   "22_var"                            expression => isvariable("22_ip");
   "22_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "22_ip)"),
-                                      comment    => "Process the IP Addresses.";
 
 vars:
 
@@ -63,14 +101,35 @@ reports:
 
 }
 
+bundle common zone_status_42 {
+
+classes:
+
+  "42_nic"                            expression => regcmp(".*eth.*", "42_raw");
+  "42_var"                            expression => isvariable("42_ip");
+  "42_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "42_ip)"),
+                                      comment    => "Process the IP Addresses.";
+vars:
+
+  "42_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[42][nic])","noshell");
+  "42_list"                                slist => string_split("$(42_raw)", "src ", 9);
+  "42_ip"                                 string => lastnode("$(42_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[42][nic])";
+  "$(this.bundle) show dev: $(42_raw)";
+  "$(this.bundle) ip: $(42_ip)";
+
+}
 
 bundle common zone_status_123 {
 
 classes:
 
+  "123_nic"                           expression => regcmp(".*eth.*", "123_raw");
   "123_var"                           expression => isvariable("123_ip");
   "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "123_ip)"),
-                                      comment    => "Process the IP Addresses.";
 
 vars:
 
@@ -83,6 +142,28 @@ reports:
   "$(this.bundle) nic: $($(classify.organisation).zone[123][nic])";
   "$(this.bundle) show dev: $(123_raw)";
   "$(this.bundle) ip: $(123_ip)";
+
+}
+
+bundle common zone_status_254 {
+
+classes:
+
+  "254_nic"                           expression => regcmp(".*eth.*", "254_raw");
+  "254_var"                           expression => isvariable("254_ip");
+  "254_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "254_ip)"),
+
+vars:
+
+  "254_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[254][nic])","noshell");
+  "254_list"                               slist => string_split("$(254_raw)", "src ", 9);
+  "254_ip"                                string => lastnode("$(254_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[254][nic])";
+  "$(this.bundle) show dev: $(254_raw)";
+  "$(this.bundle) ip: $(254_ip)";
 
 }
 
