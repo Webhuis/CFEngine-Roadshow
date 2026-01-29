@@ -39,6 +39,7 @@ reports:
 
  22_ip::
   "$(this.bundle) ip 22 available";
+  "$(this.bundle) ip 22: $(22_ip)";
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
