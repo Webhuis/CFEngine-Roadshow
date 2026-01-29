@@ -1,0 +1,35 @@
+bundle common zone_22 {
+
+classes:
+
+  "22_nic"                            expression => regcmp(".*eth.*", "$(22_link)");
+  "22_var"                            expression => isvariable("22_ip");
+  "22_ip"                             expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(22_ip)");
+
+vars:
+
+  "22_nic"                                string => "$($(classify.organisation).zone[22][nic])";
+  "22_link"                               string => execresult("$($(sys.flavor).ip_cmd) a show dev $(22_nic)","noshell");
+  "22_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $(22_nic)","noshell");
+  "22_list"                                slist => string_split("$(22_raw)", "src ", 9);
+  "22_ip"                                 string => lastnode("$(22_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[22][nic])";
+  "$(this.bundle) show dev: $(22_raw)";
+  "$(this.bundle) ip: $(22_ip)";
+
+ 22_nic::
+  "$(this.bundle) nic 22 available";
+  "$(this.bundle) nic 22: $(22_nic)";
+ !22_nic::
+  "$(this.bundle) nic 22 is not available";
+
+ 22_ip::
+  "$(this.bundle) ip 22 available";
+  "$(this.bundle) ip 22: $(22_ip)";
+ !22_ip::
+  "$(this.bundle) ip 22 not available";
+
+}

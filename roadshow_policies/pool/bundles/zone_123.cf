@@ -1,0 +1,35 @@
+bundle common zone_123 {
+
+classes:
+
+  "123_nic"                           expression => regcmp(".*eth.*", "$(123_link)");
+  "123_var"                           expression => isvariable("$(123_ip)");
+  "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(123_ip)");
+
+vars:
+
+  "123_nic"                               string => "$($(classify.organisation).zone[123][nic])";
+  "123_link"                              string => execresult("$($(sys.flavor).ip_cmd) a show dev $(123_nic)","noshell");
+  "123_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $(123_nic)","noshell");
+  "123_list"                               slist => string_split("$(123_raw)", "src ", 9);
+  "123_ip"                                string => lastnode("$(123_list)", " " );
+
+reports:
+
+  "$(this.bundle) nic: $($(classify.organisation).zone[123][nic])";
+  "$(this.bundle) show dev: $(123_raw)";
+  "$(this.bundle) ip: $(123_ip)";
+
+ 123_nic::
+  "$(this.bundle) nic 123 available";
+  "$(this.bundle) nic 123: $(123_nic)";
+ !123_nic::
+  "$(this.bundle) nic 123 is not available";
+
+ 123_ip::
+  "$(this.bundle) ip 123 available";
+  "$(this.bundle) ip 123: $(123_ip)";
+ !123_ip::
+  "$(this.bundle) ip 123 not available";
+
+}

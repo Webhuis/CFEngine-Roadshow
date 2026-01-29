@@ -1,0 +1,36 @@
+bundle agent osi_123 {
+
+methods:
+
+  "We need predictable names"               usebundle => persistent_link($(role_profile.nic_trick));
+
+  "We require the loopback interface"       usebundle => l0_interface;
+  "Interfaces predictable names"            usebundle => configure_interfaces($(classify.ips));
+
+  "Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
+                                              comment => "OSI Layers one and two";
+
+#any::
+
+ #"Host data driven policies go here"       usebundle => host_data_driven_policies;
+
+ #"Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+
+
+reports:
+
+  "$(this.bundle) nic index: $(role_profile.nic_index)";
+  "$(this.bundle) nic values: $(role_profile.nic_values)";
+  "$(this.bundle) ip list: $(role_profile.ip_list)";
+  "$(this.bundle) ips: $(classify.ips)";
+
+  "$(this.bundle): I am checking basic interface stuff first, $(role_profile.nic[$(role_profile.nic_index)]).";
+  "$(this.bundle): I am doing common and data driven policies.";
+
+ !bad_ip::
+  "$(this.bundle) The soft ip addresses supplied are Ok.";
+
+ bad_ip::
+  "$(this.bundle) Invalid soft ip addresses are being supplied, no processing of soft ip address policies is going to take place.";
+
+}
