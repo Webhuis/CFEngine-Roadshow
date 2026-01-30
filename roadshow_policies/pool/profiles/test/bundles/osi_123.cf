@@ -7,7 +7,7 @@ vars:
 
 methods:
 
-  "We need predictable names"               usebundle => persistent_link($(role_profile.nic_trick));
+  "We need predictable names"               usebundle => persistent_link($(role_profile.zone));
 
   "We require the loopback interface"       usebundle => l0_interface;
   "Interfaces predictable names"            usebundle => configure_interfaces($(classify.ips));
