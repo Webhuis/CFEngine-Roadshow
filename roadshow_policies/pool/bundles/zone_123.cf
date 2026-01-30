@@ -10,6 +10,7 @@ vars:
 
   "123_nic"                               string => "$($(classify.organisation).zone[123][nic])";
   "123_link"                              string => execresult("$($(sys.flavor).ip_cmd) a show dev $(123_nic)","noshell");
+  "123_mac"                               string => "$(sys.hardware_mac[$(123_nic)])";
   "123_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $(123_nic)","noshell");
   "123_list"                               slist => string_split("$(123_raw)", "src ", 9);
   "123_ip"                                string => lastnode("$(123_list)", " " );
@@ -19,6 +20,7 @@ reports:
   "$(this.bundle) nic: $($(classify.organisation).zone[123][nic])";
   "$(this.bundle) show dev: $(123_raw)";
   "$(this.bundle) ip: $(123_ip)";
+  "$(this.bundle) mac: $(123_mac)";
 
  123_nic::
   "$(this.bundle) nic 123 available";

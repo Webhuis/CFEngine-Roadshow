@@ -9,6 +9,7 @@ vars:
 
   "42_nic"                                string => "$($(classify.organisation).zone[42][nic])";
   "42_link"                               string => execresult("$($(sys.flavor).ip_cmd) a show dev $(42_nic)","noshell");
+  "42_mac"                                string => "$(sys.hardware_mac[$(42_nic)])";
   "42_raw"                                string => execresult("$($(sys.flavor).ip_cmd) r show dev $($(classify.organisation).zone[42][nic])","noshell");
   "42_list"                                slist => string_split("$(42_raw)", "src ", 9);
   "42_ip"                                 string => lastnode("$(42_list)", " " );
@@ -18,6 +19,7 @@ reports:
   "$(this.bundle) nic: $($(classify.organisation).zone[42][nic])";
   "$(this.bundle) show dev: $(42_raw)";
   "$(this.bundle) ip: $(42_ip)";
+  "$(this.bundle) mac: $(42_mac)";
 
  42_nic::
   "$(this.bundle) nic 42 available";

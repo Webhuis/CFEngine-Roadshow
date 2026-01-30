@@ -24,9 +24,12 @@ methods:
   "We need well configured zones"           usebundle => "zone_status_$(zones)";
 
  22_ip.123_ip::
-  "We require configured osi layers 1-2-3"  usebundle => osi_123;
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(zones)");
 
 reports:
+
+  "$(this.bundle) ddns ";
+  "$(this.bundle) ddns ";
 
  22_nic::
   "$(this.bundle) nic 22 available";

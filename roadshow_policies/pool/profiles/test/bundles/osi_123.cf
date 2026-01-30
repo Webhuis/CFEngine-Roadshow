@@ -1,4 +1,9 @@
-bundle agent osi_123 {
+bundle agent osi_123 (zone) {
+
+vars:
+
+  "any"                                        string => "any";
+
 
 methods:
 

@@ -1,32 +1,24 @@
-bundle agent persistent_link (pos) {
- 
-classes:
-
-  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("classify.macs", "$(pos)"), "part"); 
+bundle agent persistent_link (zone) {
 
 vars:
 
-  "nic"                             string => nth("role_profile.nic_values", "$(pos)");
-
- mac_ok::
-  "mac_address"                     string => "$(part[1])";
+  "nic"                             string => "zone_$(zone).$(zone)_nic";
+  "mac"                             string => "zone_$(zone).$(zone)_mac";
 
 files:
 
- mac_ok::
+# "/etc/systemd/network/*"
+#   file_select    => all,
+#   delete         => tidy;
 
-  "/etc/systemd/network/*"
-    file_select    => all,
-    delete         => tidy;
-
-  "/etc/systemd/network/$(nic)_persistent.link"
-    comment                                => "one file per nic",
-    create                                 => "true",
-    perms                                  => mo("644", "root"),
-    action                                 => immediate,
-    edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
-    classes                                => if_repaired("reboot");
+# "/etc/systemd/network/$(nic)_persistent.link"
+#   comment                                => "one file per nic",
+#   create                                 => "true",
+#   perms                                  => mo("644", "root"),
+#   action                                 => immediate,
+#   edit_defaults                          => no_backup,
+#   edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
+#   classes                                => if_repaired("reboot");
 
 commands:
 
@@ -35,7 +27,6 @@ commands:
 
 reports:
 
-  "$(this.bundle) nic en mac: $(nic), $(mac_address)";
-  "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
+  "$(this.bundle) nic en mac: $(nic), $(mac)";
  
 }

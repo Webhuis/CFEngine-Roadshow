@@ -10,6 +10,7 @@ vars:
 
   "254_nic"                               string => "$($(classify.organisation).zone[254][nic])";
   "254_link"                              string => execresult("$($(sys.flavor).ip_cmd) a show dev $(254_nic)","noshell");
+  "254_mac"                               string => "$(sys.hardware_mac[$(254_nic)])";
   "254_raw"                               string => execresult("$($(sys.flavor).ip_cmd) r show dev $(254_nic)","noshell");
   "254_list"                               slist => string_split("$(254_raw)", "src ", 9);
   "254_ip"                                string => lastnode("$(254_list)", " " );
@@ -19,6 +20,7 @@ reports:
   "$(this.bundle) nic: $($(classify.organisation).zone[254][nic])";
   "$(this.bundle) show dev: $(254_raw)";
   "$(this.bundle) ip: $(254_ip)";
+  "$(this.bundle) mac: $(254_mac)";
 
  254_nic::
   "$(this.bundle) nic 254 available";
