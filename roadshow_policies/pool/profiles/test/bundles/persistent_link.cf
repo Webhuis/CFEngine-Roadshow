@@ -27,6 +27,7 @@ commands:
 
 reports:
 
+  "$(this.bundle) nic en mac: $(zone)";
   "$(this.bundle) nic en mac: $(nic), $(mac)";
  
 }
