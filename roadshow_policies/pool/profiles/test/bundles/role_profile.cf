@@ -26,7 +26,7 @@ vars:
 
 methods:
 
-  "We need predictable names"               usebundle => persistent($(zones));
+  "We need predictable names"               usebundle => persistent;
   "We need well configured zones"           usebundle => "zone_$(zones)";
 
  22_ip.123_ip::
