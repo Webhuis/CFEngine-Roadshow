@@ -1,7 +1,8 @@
-bundle agent persistent {
+bundle agent persistent (zones) {
 
 vars:
 
+  "zones_index"                      slist => getindices($(zones));
  #"zone"                            string => "$(zone_num)";
  #"nic"                             string => "$(zone_$(zone_num).$(zone_num)_nic)";
  #"mac"                             string => "$(zone_$(zone_num).$(zone_num)_mac)";
@@ -11,6 +12,20 @@ files:
   "/etc/systemd/network/*"
     file_select    => all,
     delete         => tidy;
+
+methods:
+
+  "The persistent pre-up script" usebundle => persistent_script("$(zones_index)", "$(zones[$(zones_index)])");
+
+reports:
+
+  "$(this.bundle) persistent";
+ 
+}
+
+bundle agent persistent_script (zones_index, zones) {
+
+files:
 
   "/etc/network/if-pre-up.d/persistent.sh"
     comment                                => "one line per nic",
