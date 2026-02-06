@@ -1,10 +1,10 @@
-bundle agent persistent_link (zones) {
+bundle agent persistent_link (zone_num) {
 
 vars:
 
- #"zone"                            string => "$(zones)";
-  "nic"                             string => "$(zone_$(zones).$(zones)_nic)";
-  "mac"                             string => "$(zone_$(zones).$(zones)_mac)";
+ #"zone"                            string => "$(zone_num)";
+  "nic"                             string => "$(zone_$(zone_num).$(zone_num)_nic)";
+  "mac"                             string => "$(zone_$(zone_num).$(zone_num)_mac)";
 
 files:
 
@@ -28,7 +28,7 @@ commands:
 
 reports:
 
-  "$(this.bundle) zone: $(zone)";
+  "$(this.bundle) zone: $(zone_num)";
   "$(this.bundle) nic en mac: $(nic), $(mac)";
  
 }
