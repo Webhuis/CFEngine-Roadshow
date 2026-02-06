@@ -2,7 +2,10 @@ bundle agent role_profile {
 
 vars:
 
-  "zones"                              slist => { "123", "22" };
+  "zones[ens18]"                      string => "123";
+  "zones[ens19]"                      string => "22";
+  "zones_index"                        slist => getindices("zones");
+  "zones_values"                       slist => getvalues("zones");
   "nic"                                slist => { "$($(classify.organisation).zone[$(zones)][nic])" };
 
   "nic_index"                          slist => getindices("nic");
@@ -23,6 +26,7 @@ vars:
 
 methods:
 
+  "We need predictable names"               usebundle => persistent($(zones));
   "We need well configured zones"           usebundle => "zone_$(zones)";
 
  22_ip.123_ip::
@@ -30,8 +34,10 @@ methods:
 
 reports:
 
-  "$(this.bundle) ddns ";
-  "$(this.bundle) ddns ";
+  "$(this.bundle) ddns $(ddns)";
+  "$(this.bundle) zone index $(zone_index)";
+  "$(this.bundle) zones index $(zones_index)";
+  "$(this.bundle) zones values $(zones_values)";
 
  22_nic::
   "$(this.bundle) nic 22 available";

@@ -1,0 +1,33 @@
+bundle agent persistent_link {
+
+vars:
+
+ #"zone"                            string => "$(zone_num)";
+ #"nic"                             string => "$(zone_$(zone_num).$(zone_num)_nic)";
+ #"mac"                             string => "$(zone_$(zone_num).$(zone_num)_mac)";
+
+files:
+
+  "/etc/systemd/network/*"
+    file_select    => all,
+    delete         => tidy;
+
+  "/etc/network/if-pre-up.d/persistent.sh"
+    comment                                => "one line per nic",
+    create                                 => "true",
+    perms                                  => mo("755", "root"),
+    action                                 => immediate,
+    edit_defaults                          => no_backup,
+    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.tmpl",
+    classes                                => if_repaired("reboot");
+
+commands:
+
+ reboot:: 
+  "/usr/sbin/shutdown -r 3";
+
+reports:
+
+  "$(this.bundle) persistent";
+ 
+}
