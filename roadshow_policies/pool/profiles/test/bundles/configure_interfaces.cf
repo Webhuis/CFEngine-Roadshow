@@ -1,0 +1,51 @@
+bundle agent configure_interfaces (ips) {
+
+classes:
+
+  "gateway"                     expression => strcmp($(default_device), $(current_device));
+ #"configure_interface"         expression => strcmp($(ips), $(current_device));
+
+vars:
+
+  "default_route"                   string => nth("classify.ipr", 0);
+  "default_device_list"              slist => splitstring( $(default_route), " ", "20"); 
+  "default_device"                  string => nth("default_device_list", "4");
+  "gateway_ip"                      string => nth("default_device_list", "2"); 
+
+  "current_device_list"              slist => splitstring( $(ips), " ", "20");
+  "current_interface"                slist => splitstring( $(ips), "global ", "20");
+  "current_ip"                      string => nth("current_device_list", "5");
+  "current_device"                  string => nth("current_interface", "1");
+
+files:
+
+ #configure_interface::
+# "/etc/network/interfaces.d/$(current_device)"
+#   comment                                => "one file per nic",
+#   create                                 => "true",
+#   perms                                  => mo("644", "root"),
+#   action                                 => immediate,
+#   edit_defaults                          => no_backup,
+#   edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/interfaces_eth.tmpl",
+#   classes                                => if_repaired("restart_network");
+
+commands:
+
+ restart_network::
+
+  "/usr/bin/systemctl restart networking";
+
+reports:
+
+  "$(this.bundle) current_device_list: $(current_device_list)";
+  "$(this.bundle) current_device: $(current_device)";
+ #"$(this.bundle) current_ip: $(current_ip)";
+  "$(this.bundle) ips $(ips)";
+
+#configure_interface::
+  "$(this.bundle) current_ip : $(current_ip)";
+
+ gateway::
+  "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
+ 
+}

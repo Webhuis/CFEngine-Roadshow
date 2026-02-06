@@ -10,21 +10,23 @@ vars:
   "nic_values"                         slist => sort("nic_values_unsorted", "lex");
   "nic_trick"                          slist => { "0", "1" };
 
+ 22_ip::
   "ddns[22][ip]"                      string => "$(zone_22.22_ip)";
   "ddns[22][nic]"                     string => "$(zone_22.22_nic)";
-  "ddns[22][suffix]"                  string => "-ssh";
+
+ 123_ip::
   "ddns[123][ip]"                     string => "$(zone_123.123_ip)";
   "ddns[123][nic]"                    string => "$(zone_123.123_nic)";
-  "ddns[123][suffix]"                  string => "";
 
-  "ddns_index"                         slist => getindices("ddns");
+ any::
+  "zone_index"                         slist => getindices("ddns");
 
 methods:
 
   "We need well configured zones"           usebundle => "zone_$(zones)";
 
  22_ip.123_ip::
-  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(zones)");
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(zone_index)");
 
 reports:
 
@@ -42,16 +44,6 @@ reports:
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
- 42_nic::
-  "$(this.bundle) nic 42 available";
- !42_nic::
-  "$(this.bundle) nic 42 not available";
-
- 42_ip::
-  "$(this.bundle) ip 42 available";
- !42_ip::
-  "$(this.bundle) ip 42 not available";
-
  123_nic::
   "$(this.bundle) nic 123 available";
  !123_nic::
@@ -62,15 +54,6 @@ reports:
  !123_ip::
   "$(this.bundle) ip 123 not available";
 
- 254_nic::
-  "$(this.bundle) nic 254 available";
- !254_nic::
-  "$(this.bundle) nic 254 not available";
-
- 254_ip::
-  "$(this.bundle) ip 254 available";
- !254_ip::
-  "$(this.bundle) ip 254 not available";
  #"$(this.bundle) nic_index: $(nic_index)";
  #"$(this.bundle) nic_values: $(nic_values)";
  #"$(this.bundle) hosts_ip: $(hosts_ip)";
