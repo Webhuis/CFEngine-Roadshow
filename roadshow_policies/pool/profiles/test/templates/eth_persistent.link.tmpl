@@ -6,9 +6,9 @@
 #
 [%CFEngine any:: %]
 [Match]
-MACAddress=$(zone_$(zone).$(zone)_mac)
+MACAddress=$(persistent_link.mac)
 Type=ether
 
 [Link]
-Name=$(zone_$(zone).$(zone)_nic)
+Name=$(persistent_link.nic)
 
