@@ -23,7 +23,7 @@ reports:
  
 }
 
-bundle agent persistent_script (zones_index, zones) {
+bundle agent persistent_script (unpredictable, predictable) {
 
 files:
 
