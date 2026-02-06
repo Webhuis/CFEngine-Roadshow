@@ -2,6 +2,7 @@ bundle agent persistent_link (zones) {
 
 vars:
 
+  "zone"                            string => "$(zones)";
   "nic"                             string => "$(zone_$(zone).$(zone)_nic)";
   "mac"                             string => "$(zone_$(zone).$(zone)_mac)";
 
