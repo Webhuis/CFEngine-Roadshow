@@ -1,4 +1,4 @@
-bundle agent persistent_link {
+bundle agent persistent {
 
 vars:
 
