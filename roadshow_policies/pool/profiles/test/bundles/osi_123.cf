@@ -3,7 +3,7 @@ bundle agent osi_123 (ddns) {
 vars:
 
   "zone_index"                                  slist => getindices("ddns");
-  "zone"                                        slist => "$($(ddns)[$(zone_index)])";
+ #"zone"                                        slist => "$(ddns)[$(zone_index)]";
  #"$($(array_mounts)[$(mounts_index)][nfs_host])",
   "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
