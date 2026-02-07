@@ -35,7 +35,7 @@ methods:
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
 
  22_ip.123_ip::
-  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(ddns[$(zone_index]))");
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$($(ddns)[$(zone_index]))");
 
 reports:
 
