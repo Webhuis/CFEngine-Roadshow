@@ -2,7 +2,7 @@ bundle agent osi_123(zone) {
 
 vars:
 
-  "zone_index"                                  slist => getindices($(zones));
+ #"zone_index"                                  slist => getindices($(zones));
 #bundle agent mount_nfs_array(array_mounts) {
 # "mounts_index"                         slist => getindices(${array_mounts});
 
@@ -17,7 +17,8 @@ methods:
 
   "We require the loopback interface"       usebundle => l0_interface;
 
- #"Interfaces predictable names"            usebundle => configure_interfaces($(ddns[$(zone_index)][nic]), $(ddns[$(zone_index)][ip]));
+  "Interfaces predictable names"            usebundle => configure_interfaces("$(role_profile.ddns[$(role_profile.zone_index)][nic])"
+                                                                             ,"$(role_profile.ddns[$(role_profile.zone_index)][ip])");
 
  #"Host data driven policies go here"       usebundle => host_data_driven_policies;
 

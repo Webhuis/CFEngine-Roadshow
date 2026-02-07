@@ -32,6 +32,6 @@ reports:
   "$(this.bundle) current_ip: $(current_ip)";
 
  gateway::
-  "$(this.bundle) gateway: $(nic) $(gateway_ip)"; 
+  "$(this.bundle) gateway: $(nic) $(osi_123.gateway_ip)"; 
  
 }

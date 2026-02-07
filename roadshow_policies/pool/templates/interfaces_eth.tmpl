@@ -11,4 +11,4 @@ auto $(configure_interfaces.current_device)
 iface $(configure_interfaces.current_device) inet static
   address $(configure_interfaces.current_ip)
 [%CFEngine gateway:: %]
-  gateway $(configure_interfaces.gateway_ip)
+  gateway $(osi_123.gateway_ip)
