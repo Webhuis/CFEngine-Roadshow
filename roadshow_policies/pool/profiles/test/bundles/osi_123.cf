@@ -23,7 +23,7 @@ reports:
 
   "$(this.bundle) zone: $(osi_123.zone)";
   "$(this.bundle) ddns_index: $(zone_index)";
-  "$(this.bundle) ddns content: $(osi_123.ddns[$(zone_index)][nic])";
+  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][nic])";
   "$(this.bundle) ddns content: $(ddns[$(zone_index)][mac])";
   "$(this.bundle) ddns content: $(ddns[$(zone_index)][ip])";
   "$(this.bundle) ddns content: $(ddns[$(zone_index)][suffix])";
