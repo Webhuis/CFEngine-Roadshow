@@ -2,7 +2,7 @@ bundle agent check_interfaces(zone) {
 
 vars:
 
-  "nic"                               string => "zone_$(zone).nic"
+  "nic"                               string => "zone_$(zone).$(zone)_nic";
 
 #methods:
 
