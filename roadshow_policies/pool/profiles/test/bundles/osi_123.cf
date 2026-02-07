@@ -3,11 +3,8 @@ bundle agent osi_123(ddns) {
 vars:
 
   "zone_index"                                  slist => getindices($(ddns));
-#bundle agent mount_nfs_array(array_mounts) {
-# "mounts_index"                         slist => getindices(${array_mounts});
+  "zone"                                        slist => "$(ddns[$(zone_index)])";
 
- #"zone"                                        slist => "$(ddns)[$(zone_index)]";
- #"$($(array_mounts)[$(mounts_index)][nfs_host])",
   "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
   "gateway_device"                             string => nth("gateway_line_list", "4");
@@ -26,6 +23,6 @@ reports:
 
   "$(this.bundle) zone: $(ddns)";
   "$(this.bundle) ddns_index: $(zone_index)";
-  "$(this.bundle) ddns content: $(ddns[$(zone_index)]";
+  "$(this.bundle) ddns content: $(ddns[$(zone_index)])";
 
 }
