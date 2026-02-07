@@ -1,8 +1,8 @@
-bundle agent osi_123(ddns) {
+bundle agent osi_123(zone) {
 
 vars:
 
-  "zone_index"                                  slist => getindices(${ddns});
+  "zone_index"                                  slist => getindices($(zones));
 #bundle agent mount_nfs_array(array_mounts) {
 # "mounts_index"                         slist => getindices(${array_mounts});
 
