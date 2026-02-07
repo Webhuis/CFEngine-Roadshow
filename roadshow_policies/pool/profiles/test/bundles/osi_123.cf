@@ -23,10 +23,10 @@ reports:
 
   "$(this.bundle) zone: $(osi_123.zone)";
   "$(this.bundle) ddns_index: $(zone_index)";
-  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][nic])";
-  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][mac])";
-  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][ip])";
-  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][suffix])";
-  "$(this.bundle) ddns content: $($(ddns)[$(zone_index)][vlan])";
+  "$(this.bundle) ddns nic: $($(ddns)[$(zone_index)][nic])";
+  "$(this.bundle) ddns mac: $($(ddns)[$(zone_index)][mac])";
+  "$(this.bundle) ddns ip: $($(ddns)[$(zone_index)][ip])";
+  "$(this.bundle) ddns suffix: $($(ddns)[$(zone_index)][suffix])";
+  "$(this.bundle) ddns vlan: $($(ddns)[$(zone_index)][vlan])";
 
 }
