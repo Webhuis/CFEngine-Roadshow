@@ -11,13 +11,19 @@ vars:
  #"nic_values"                         slist => sort("nic_values_unsorted", "lex");
  #"nic_trick"                          slist => { "0", "1" };
 
- 22_ip::
-  "ddns[22][ip]"                      string => "$(zone_22.22_ip)";
+ 22_ip::  #snimv
+  "ddns[22][suffix]"                  string => "$(organisation.zone[22][suffix])";
   "ddns[22][nic]"                     string => "$(zone_22.22_nic)";
+  "ddns[22][ip]"                      string => "$(zone_22.22_ip)";
+  "ddns[22][mac]"                     string => "$(zone_22.22_mac)";
+  "ddns[22][vlan]"                    string => "$(organisation.zone[22][vlan])";
 
  123_ip::
-  "ddns[123][ip]"                     string => "$(zone_123.123_ip)";
+  "ddns[123][suffix]"                 string => "$(organisation.zone[123][suffix])";
   "ddns[123][nic]"                    string => "$(zone_123.123_nic)";
+  "ddns[123][ip]"                     string => "$(zone_123.123_ip)";
+  "ddns[123][mac]"                    string => "$(zone_123.123_vlan)";
+  "ddns[123][vlan]"                   string => "$(organisation.zone[123][vlan])";
 
  any::
   "zone_index"                         slist => getindices("ddns");
@@ -29,7 +35,7 @@ methods:
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
 
  22_ip.123_ip::
-  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(zone_index)");
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("$(ddns)");
 
 reports:
 

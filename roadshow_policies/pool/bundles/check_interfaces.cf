@@ -4,8 +4,6 @@ vars:
 
   "nic"                               string => "zone_$(zone).$(zone)_nic";
 
-#methods:
-
 commands:
 
  "!($zone)_nic":: 

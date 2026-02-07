@@ -29,16 +29,16 @@ methods:
 
   "We require configured osi layers 1-2-3"  usebundle => osi_123;
 
-  "The ssh client config is common to us"   usebundle => ssh_config;
-  "Host data driven policies go here"       usebundle => host_data_driven_policies;
+ #"The ssh client config is common to us"   usebundle => ssh_config; moved to host_data
+ #"Host data driven policies go here"       usebundle => host_data_driven_policies; moved to osi
 
   "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
 
   "Basic environment stuff"                 usebundle => basic_environment;
-  "We use LDAP Authentication"              usebundle => authentication;
+  "We use LDAP Authentication"              usebundle => authentication;  # move to....?
 
- has_ddns_index::
-  "Check the soft IP Addresses given"       usebundle => check_ip("$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
+#has_ddns_index::
+# "Check the soft IP Addresses given"       usebundle => check_ip("$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 
 #!bad_ip.mac_ok::
 # "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",

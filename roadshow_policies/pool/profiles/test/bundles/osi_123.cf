@@ -1,27 +1,29 @@
-bundle agent osi_123 (zone) {
+bundle agent osi_123 (ddns) {
+
+classes:
+
+  "gateway"                                expression => strcmp($(gateway_device), $(current_device));
 
 vars:
 
-  "nic"                                        string => "zone_$(zone).$(zone)_nic";
+  "zone_index"                                  slist => getindices("ddns");
+  "nics"                                        slist => "$(ddns[$(zone_index)][nic])";
+  "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
+  "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
+  "gateway_device"                             string => nth("gateway_line_list", "4");
+  "gateway_ip"                                 string => nth("gateway_line_list", "2");
 
 methods:
 
   "We require the loopback interface"       usebundle => l0_interface;
 
-  "Interfaces predictable names"            usebundle => configure_interfaces($(nic));
+  "Interfaces predictable names"            usebundle => configure_interfaces($(ddns[$(zone_index)][nic]), $(ddns[$(zone_index)][ip]));
 
- #"Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
- #                                            comment => "OSI Layers one and two";
-
-#any::
-
-  "Host data driven policies go here"       usebundle => host_data_driven_policies;
-
-  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
-
+ #"Host data driven policies go here"       usebundle => host_data_driven_policies;
 
 reports:
 
   "$(this.bundle) zone: $(zone)";
+  "$(this.bundle) nic: $(nics)";
 
 }
