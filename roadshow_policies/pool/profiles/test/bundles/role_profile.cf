@@ -25,7 +25,7 @@ vars:
 methods:
 
  #"We need predictable names"               usebundle => persistent;
-  "We need zones classes"                   usebundle => zone_$(zones_index);
+  "We need zones classes"                   usebundle => "zone_$(zones_index)";
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
 
  22_ip.123_ip::
