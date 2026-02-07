@@ -2,7 +2,7 @@ bundle common zone_123 {
 
 classes:
 
-  "123_nic"                           expression => regcmp(".*eth.*", "$(123_link)");
+  "123_nic"                           expression => regcmp(".*eth.*UP.*", "$(123_link)");
   "123_var"                           expression => isvariable("$(123_ip)");
   "123_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(123_ip)");
 
@@ -23,10 +23,10 @@ reports:
   "$(this.bundle) mac: $(123_mac)";
 
  123_nic::
-  "$(this.bundle) nic 123 available";
+  "$(this.bundle) nic 123 is up";
   "$(this.bundle) nic 123: $(123_nic)";
  !123_nic::
-  "$(this.bundle) nic 123 is not available";
+  "$(this.bundle) nic 123 is down";
 
  123_ip::
   "$(this.bundle) ip 123 available";

@@ -8,17 +8,16 @@ methods:
 
   "We require the loopback interface"       usebundle => l0_interface;
 
- #"We need predictable names"               usebundle => persistent_link($(zone));
-  "Interfaces predictable names"            usebundle => configure_interfaces($(zone));
+  "Interfaces predictable names"            usebundle => configure_interfaces($(nic));
 
-  "Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
-                                              comment => "OSI Layers one and two";
+ #"Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
+ #                                            comment => "OSI Layers one and two";
 
 #any::
 
- #"Host data driven policies go here"       usebundle => host_data_driven_policies;
+  "Host data driven policies go here"       usebundle => host_data_driven_policies;
 
- #"Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
 
 
 reports:
