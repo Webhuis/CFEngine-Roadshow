@@ -9,6 +9,6 @@
 allow-hotplug $(configure_interfaces.current_device)
 auto $(configure_interfaces.current_device)
 iface $(configure_interfaces.current_device) inet static
-  address $(configure_interfaces.current_ip)
+  address $(configure_interfaces.current_ip)/24
 [%CFEngine gateway:: %]
   gateway $(osi_123.gateway_ip)
