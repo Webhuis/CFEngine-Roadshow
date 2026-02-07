@@ -24,7 +24,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) zone: $(zone)";
+  "$(this.bundle) zone: $(ddns)";
   "$(this.bundle) ddns_index: $(zone_index)";
+  "$(this.bundle) ddns content: $(ddns[$(zone_index)]";
 
 }
