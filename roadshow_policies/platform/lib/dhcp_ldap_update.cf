@@ -83,6 +83,10 @@ reports:
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
+ ip_ldap:: 
+  "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)*";
+ !ip_ldap:: 
+  "$(this.bundle) ip's do not match : *$(ip_can)* *$(ldap_ip_can)*";
  cn_ldap:: 
   "$(this.bundle) ddns_name and cn exist : *$(ddns_name_can)* *$(ldap_cn_can)*";
 
