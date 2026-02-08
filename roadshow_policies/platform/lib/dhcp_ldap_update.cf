@@ -87,7 +87,7 @@ reports:
   "$(this.bundle) ddns_name and cn exist : *$(ddns_name)* *$(ldap_cn)*";
 
  "!cn_ldap$(vlan)":: 
-  "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd";
+  "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd!";
 
  "cn_ldap$(vlan).!((ip_ldap$(vlan).hw_ldap$(vlan))"::
   "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
