@@ -1,1 +1,7 @@
-../../../templates/etc_hosts.tmpl
+# Webhuis template voor /etc/hosts
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+127.0.0.1       localhost
+$(osi_123.hosts_ip)    $(sys.fqhost)      $(sys.uqhost)

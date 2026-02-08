@@ -9,6 +9,8 @@ vars:
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
   "gateway_device"                             string => nth("gateway_line_list", "4");
   "gateway_ip"                                 string => nth("gateway_line_list", "2");
+  "hosts_ip"                                   string => "$($(zone)[123][ip])";
+  "admin_ip"                                   string => "$($(zone)[22][ip])";
 
 methods:
 
@@ -17,6 +19,8 @@ methods:
   "Interfaces predictable names"            usebundle => configure_interfaces("$($(zone)[$(zone_index)][nic])"
                                                                              ,"$($(zone)[$(zone_index)][ip])");
 
+  "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
+  "openssh server and client"               usebundle => sshd_config;
  #"Host data driven policies go here"       usebundle => host_data_driven_policies;
  #"Domain data driven policies go here"     usebundle => domain_data_driven_policies; # one bundle for all?
 

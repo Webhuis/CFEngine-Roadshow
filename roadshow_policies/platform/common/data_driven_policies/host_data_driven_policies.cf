@@ -2,11 +2,11 @@ bundle agent host_data_driven_policies {
 
 methods:
 
- 123_ip::
-  "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
+ #123_ip::
+ #"supply etc_hosts with a valid IP"        usebundle => etc_hosts;
 
- 22_ip::
-  "openssh server and client"               usebundle => sshd_config;
+ #22_ip::
+ #"openssh server and client"               usebundle => sshd_config;
 
 #has_ddns_index::
 # "Check the soft IP Addresses given"       usebundle => check_ip("$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
