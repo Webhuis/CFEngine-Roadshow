@@ -21,8 +21,14 @@ methods:
 
   "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
   "openssh server and client"               usebundle => sshd_config;
- #"Host data driven policies go here"       usebundle => host_data_driven_policies;
+ #"Host data driven policies go here"       usebundle => host_data_driven_policies;     obsolete
  #"Domain data driven policies go here"     usebundle => domain_data_driven_policies; # one bundle for all?
+
+  "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$($(zone)[$(zone_index)][suffix])",
+                                                                          "$($(zone)[$(zone_index)][nic])",
+                                                                          "$($(zone)[$(zone_index)][ip])",
+                                                                          "$($(zone)[$(zone_index)][mac])",
+                                                                          "$($(zone)[$(zone_index)][vlan])");
 
 reports:
 
