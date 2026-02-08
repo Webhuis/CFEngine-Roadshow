@@ -1,9 +1,9 @@
-bundle agent osi_123(ddns) {
+bundle agent osi_123(zone) {
 
 vars:
 
-  "zone_index"                                  slist => getindices($(ddns));
-  "zone"                                        slist => { "$(ddns[$(zone_index)])" };
+  "zone_index"                                  slist => getindices($(zone));
+  "zone"                                        slist => { "$(zone[$(zone_index)])" };
 
   "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
@@ -14,19 +14,20 @@ methods:
 
   "We require the loopback interface"       usebundle => l0_interface;
 
-  "Interfaces predictable names"            usebundle => configure_interfaces("$(role_profile.ddns[$(role_profile.zone_index)][nic])"
-                                                                             ,"$(role_profile.ddns[$(role_profile.zone_index)][ip])");
+  "Interfaces predictable names"            usebundle => configure_interfaces("$(zone[$(zone_index)][nic])"
+                                                                             ,"$(zone[$(zone_index)][ip])");
 
  #"Host data driven policies go here"       usebundle => host_data_driven_policies;
+ #"Domain data driven policies go here"     usebundle => domain_data_driven_policies; # one bundle for all?
 
 reports:
 
   "$(this.bundle) zone: $(osi_123.zone)";
-  "$(this.bundle) ddns_index: $(zone_index)";
-  "$(this.bundle) ddns nic: $($(ddns)[$(zone_index)][nic])";
-  "$(this.bundle) ddns mac: $($(ddns)[$(zone_index)][mac])";
-  "$(this.bundle) ddns ip: $($(ddns)[$(zone_index)][ip])";
-  "$(this.bundle) ddns suffix: $($(ddns)[$(zone_index)][suffix])";
-  "$(this.bundle) ddns vlan: $($(ddns)[$(zone_index)][vlan])";
+  "$(this.bundle) zone_index: $(zone_index)";
+  "$(this.bundle) zone nic: $(zone[$(zone_index)][nic])";
+  "$(this.bundle) zone mac: $(zone[$(zone_index)][mac])";
+  "$(this.bundle) zone ip: $(zone[$(zone_index)][ip])";
+  "$(this.bundle) zone suffix: $(zone[$(zone_index)][suffix])";
+  "$(this.bundle) zone vlan: $(zone[$(zone_index)][vlan])";
 
 }

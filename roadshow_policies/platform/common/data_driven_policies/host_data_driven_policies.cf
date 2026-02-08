@@ -12,16 +12,16 @@ methods:
 # "Check the soft IP Addresses given"       usebundle => check_ip("$(role_profile.ddns[$(role_profile.ddns_index)][ip])");
 
 #!bad_ip.mac_ok::
-# "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.ddns_index)][suffix])",
-#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
-#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
-#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][mac])",
-#                                                                         "$(role_profile.ddns[$(role_profile.ddns_index)][vlan])");
+# "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$(role_profile.ddns[$(role_profile.zone_index)][suffix])",
+#                                                                         "$(role_profile.ddns[$(role_profile.zone_index)][nic])",
+#                                                                         "$(role_profile.ddns[$(role_profile.zone_index)][ip])",
+#                                                                         "$(role_profile.ddns[$(role_profile.zone_index)][mac])",
+#                                                                         "$(role_profile.ddns[$(role_profile.zone_index)][vlan])");
 
 #!bad_ip::
-# "We update ddns"                          usebundle => ddns_update("$(role_profile.ddns[$(role_profile.ddns_index)][nic])",
-#                                                                    "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
-#                                                                    "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])");
+# "We update ddns"                          usebundle => zone_update("$(role_profile.ddns[$(role_profile.zone_index)][nic])",
+#                                                                    "$(role_profile.ddns[$(role_profile.zone_index)][ip])",
+#                                                                    "$(role_profile.ddns[$(role_profile.zone_index)][suffix])");
 
 reports:
 

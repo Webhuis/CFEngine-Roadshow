@@ -27,12 +27,12 @@ methods:
 
  any::
 
-  "We require configured osi layers 1-2-3"  usebundle => osi_123;
+ #"We require configured osi layers 1-2-3"  usebundle => osi_123;
 
  #"The ssh client config is common to us"   usebundle => ssh_config; moved to host_data
  #"Host data driven policies go here"       usebundle => host_data_driven_policies; moved to osi
 
-  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+ #"Domain data driven policies go here"     usebundle => domain_data_driven_policies;
 
   "Basic environment stuff"                 usebundle => basic_environment;
   "We use LDAP Authentication"              usebundle => authentication;  # move to....?
