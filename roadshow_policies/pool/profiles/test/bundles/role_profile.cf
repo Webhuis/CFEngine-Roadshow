@@ -12,21 +12,21 @@ vars:
  #"nic_trick"                          slist => { "0", "1" };
 
  22_ip::  #snimv
-  "ddns[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
-  "ddns[22][nic]"                     string => "$(zone_22.22_nic)";
-  "ddns[22][ip]"                      string => "$(zone_22.22_ip)";
-  "ddns[22][mac]"                     string => "$(zone_22.22_mac)";
-  "ddns[22][vlan]"                    string => "$($(classify.organisation).zone[22][vlan])";
+  "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
+  "zone[22][nic]"                     string => "$(zone_22.22_nic)";
+  "zone[22][ip]"                      string => "$(zone_22.22_ip)";
+  "zone[22][mac]"                     string => "$(zone_22.22_mac)";
+  "zone[22][vlan]"                    string => "$($(classify.organisation).zone[22][vlan])";
 
  123_ip::
-  "ddns[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
-  "ddns[123][nic]"                    string => "$(zone_123.123_nic)";
-  "ddns[123][ip]"                     string => "$(zone_123.123_ip)";
-  "ddns[123][mac]"                    string => "$(zone_123.123_mac)";
-  "ddns[123][vlan]"                   string => "$($(classify.organisation).zone[123][vlan])";
+  "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
+  "zone[123][nic]"                    string => "$(zone_123.123_nic)";
+  "zone[123][ip]"                     string => "$(zone_123.123_ip)";
+  "zone[123][mac]"                    string => "$(zone_123.123_mac)";
+  "zone[123][vlan]"                   string => "$($(classify.organisation).zone[123][vlan])";
 
  any::
-  "zone_index"                         slist => getindices("ddns");
+  "zone_index"                         slist => getindices("zone");
 
 methods:
 
@@ -35,11 +35,11 @@ methods:
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
 
  22_ip.123_ip::
-  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.ddns");
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.zone");
 
 reports:
 
-  "$(this.bundle) ddns $(ddns)";
+  "$(this.bundle) zone $(zone)";
   "$(this.bundle) zones index $(zones_index)";
   "$(this.bundle) zone index $(zone_index)";
 

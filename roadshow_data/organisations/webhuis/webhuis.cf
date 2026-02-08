@@ -22,7 +22,7 @@ vars:
   "zone[123][vlan]"                    string => "support";
   "zone[22][nic]"                      string => "eth1";
   "zone[22][suffix]"                   string => "-ssh";
-  "zone[22][suffix]"                   string => "admin";
+  "zone[22][vlan]"                     string => "admin";
   "zone[1001][nic]"                    string => "eth2";
   "zone[1001][suffix]"                 string => "-int";
   "zone[213]"                          string => "eth3";
