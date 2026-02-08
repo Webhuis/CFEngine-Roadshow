@@ -22,9 +22,9 @@ methods:
 
 reports:
 
-  "$(this.bundle) zone: $(osi_123.zone)";
+  "$(this.bundle) zone: $($(osi_123.zone))";
   "$(this.bundle) zone_index: $(zone_index)";
-  "$(this.bundle) zone nic: $(zone[$(zone_index)][nic])";
+  "$(this.bundle) zone nic: $($(zone)[$(zone_index)][nic])";
   "$(this.bundle) zone mac: $(zone[$(zone_index)][mac])";
   "$(this.bundle) zone ip: $(zone[$(zone_index)][ip])";
   "$(this.bundle) zone suffix: $(zone[$(zone_index)][suffix])";
