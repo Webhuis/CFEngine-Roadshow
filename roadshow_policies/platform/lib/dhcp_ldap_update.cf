@@ -43,7 +43,9 @@ files:
     perms          => mog("644","root","root"),
     edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
 
-#methods:
+methods:
+
+  "Determine ldap action"           usebundle => ldap_action( "$(ddns_name_can)", "$(ldap_cn_can)" );
 
 commands:
 
@@ -97,3 +99,20 @@ reports:
   "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
 
 }
+
+bundle agent ldap_action ( sysname, ldapname ) {
+
+classes:
+
+ "name_match"                         expression => strcmp($(sysname), $(ldapname));
+
+reports:
+
+ name_match::
+  "$(this.bundle) names match : *$(sysname)* *$(ldapname)*";
+
+ !name_match::
+  "$(this.bundle) names match : *$(sysname)* *$(ldapname)*";
+
+}
+
