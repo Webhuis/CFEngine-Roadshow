@@ -14,7 +14,7 @@ vars:
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "vlan"                               string => "Vlan-$(vlan_number)";
   "ip"                                 string => "$(ip_address)";
-  "ip_can"                             string => cononify("$(ip)");
+  "ip_can"                             string => canonify("$(ip)");
   "mac_address"                        string => "$(mac)";
   "mac_address_can"                    string => canonify("$(mac)");
   "ldap_passwd"                        string => "M@rkBurge55";
