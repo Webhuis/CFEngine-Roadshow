@@ -16,14 +16,14 @@ vars:
   "zone[22][nic]"                     string => "$(zone_22.22_nic)";
   "zone[22][ip]"                      string => "$(zone_22.22_ip)";
   "zone[22][mac]"                     string => "$(zone_22.22_mac)";
-  "zone[22][vlan]"                    string => "$($(classify.organisation).zone[22][vlan])";
+  "zone[22][vlan]"                    string => "22";
 
  123_ip::
   "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
   "zone[123][nic]"                    string => "$(zone_123.123_nic)";
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
   "zone[123][mac]"                    string => "$(zone_123.123_mac)";
-  "zone[123][vlan]"                   string => "$($(classify.organisation).zone[123][vlan])";
+  "zone[123][vlan]"                   string => "123";
 
  any::
   "zone_index"                         slist => getindices("zone");
