@@ -51,7 +51,7 @@ commands:
 
   "/usr/bin/echo ldap commands section";
  "!cn_ldap$(vlan)":: 
-  "/usr/bin/echo We need to add the ldap object $(ddns_name)";
+  "/usr/bin/echo We need to add the ldap object $(ddns_name), $(ddns_name_can), $(ldap_cn_can)";
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
  "cn_ldap$(vlan)"::
