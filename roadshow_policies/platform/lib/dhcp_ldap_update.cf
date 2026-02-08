@@ -32,11 +32,9 @@ vars:
   "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
   "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
   "ldap_ip_can"                        string => canonify("$(ldap_ip)");
-  "ip_address_can"                     string => canonify("$(ip_address)");
   "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
   "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
   "ldap_hw_can"                        string => canonify("$(ldap_hw)");
-  "mac_address_can"                    string => canonify("$(mac_address)");
 
 files:
 
@@ -73,21 +71,23 @@ reports:
   "$(this.bundle) ldap_ip_l : $(ldap_ip_l)";
   "$(this.bundle) ldap_hw_l : $(ldap_hw_l)";
   "$(this.bundle) ldap_cn : $(ldap_cn)";
+  "$(this.bundle) ddns_name_can : *$(ddns_name_can)*";
+  "$(this.bundle) ldap_cn_can : *$(ldap_cn_can)*";
   "$(this.bundle) ldap_ip : $(ldap_ip)";
-  "$(this.bundle) ldap_ip_can : $(ldap_ip_can)";
-  "$(this.bundle) ip_can : $(ip_can)";
+  "$(this.bundle) ldap_ip_can : *$(ldap_ip_can)*";
+  "$(this.bundle) ip_can : *$(ip_can)*";
   "$(this.bundle) ldap_hw : $(ldap_hw)";
-  "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
-  "$(this.bundle) mac_address_can : $(mac_address_can)";
+  "$(this.bundle) ldap_hw_can : *$(ldap_hw_can)*";
+  "$(this.bundle) mac_address_can : *$(mac_address_can)*";
 
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
  cn_ldap:: 
-  "$(this.bundle) ddns_name and cn exist : *$(ddns_name)* *$(ldap_cn)*";
+  "$(this.bundle) ddns_name and cn exist : *$(ddns_name_can)* *$(ldap_cn_can)*";
 
  !cn_ldap:: 
-  "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd!";
+  "$(this.bundle) ddns_name available but cn does not exist : i*$(ddns_name_can)*, ldapadd!";
 
  "cn_ldap.!(ip_ldap.hw_ldap)"::
   "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
