@@ -14,7 +14,7 @@ vars:
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "vlan"                               string => "Vlan-$(vlan_number)";
   "ip"                                 string => "$(ip_address)";
-  "ip_can"                             string => cononify("$(ip_address)");
+  "ip_can"                             string => cononify("$(ip)");
   "mac_address"                        string => "$(mac)";
   "mac_address_can"                    string => canonify("$(mac)");
   "ldap_passwd"                        string => "M@rkBurge55";
@@ -51,7 +51,7 @@ commands:
 
   "/usr/bin/echo ldap commands section";
  "!cn_ldap$(vlan)":: 
-  "We need to add the ldap object"  usebundle => ldap_command("$(ddns_name)");
+  "/usr/bin/echo We need to add the ldap object $(ddns_name)";
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
  "cn_ldap$(vlan)"::
