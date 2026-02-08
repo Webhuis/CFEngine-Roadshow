@@ -50,14 +50,14 @@ files:
 commands:
 
   "/usr/bin/echo ldap commands section";
- "!cn_ldap":: 
+ !cn_ldap:: 
   "/usr/bin/echo We need to add the ldap object $(ddns_name), $(ddns_name_can), $(ldap_cn_can)";
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
- "cn_ldap$"::
+ cn_ldap::
   "/usr/bin/echo ldap ddns_name exists $(ddns_name) $(ldap_ip): check ldapmodify!";
 
- "cn_ldap.!((ip_ldap.hw_ldap)"::
+ "cn_ldap.!(ip_ldap.hw_ldap)"::
   "/usr/bin/echo ldap ip or mac changed ldapmodify!";
   "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
@@ -83,13 +83,13 @@ reports:
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
- "cn_ldap":: 
+ cn_ldap:: 
   "$(this.bundle) ddns_name and cn exist : *$(ddns_name)* *$(ldap_cn)*";
 
- "!cn_ldap":: 
+ !cn_ldap:: 
   "$(this.bundle) ddns_name available but cn does not exist : $(ddns_name), ldapadd!";
 
- "cn_ldap.!((ip_ldap.hw_ldap)"::
+ "cn_ldap.!(ip_ldap.hw_ldap)"::
   "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
 
 }
