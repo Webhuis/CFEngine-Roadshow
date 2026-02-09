@@ -20,27 +20,22 @@ vars:
 
   "ldap_search"                 string => "/usr/bin/ldapsearch -x -w M@rkBurge55 -H ldap://mihrwhpdcsw1.sw.webhuis.nl/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
 
-  "result"                             string => execresult("$(ldap_search) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
+  "result"                             string => execresult("$(ldap_search) | grep -e 'result: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
   "ldap_result_lines"                   slist => string_split("$(result)", "\n", 99);
-  "cn_line"                             slist => filter("cn: ", "ldap_result_lines", "true", "true", 1); 
+ #"cn_line"                             slist => grep("cn: ", "ldap_result_lines");
   "hw_line"                             slist => grep("dhcpHWAddress.*", "ldap_result_lines");
   "ip_line"                             slist => grep("dhcpStatements.*", "ldap_result_lines");
   "status_list"                         slist => grep("result.*", "ldap_result_lines"); 
   "status_str"                         string => nth("status_list", 0); 
   "status_split"                        slist => string_split("$(status_str)", " ", "3" ); 
   "status"                             string => nth("status_split", "1" );
-  "ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
-  "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
-  "ldap_cn_can"                        string => canonify("$(ldap_cn)");
-  "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
-  "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
-  "ldap_ip_can"                        string => canonify("$(ldap_ip)");
-  "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
-  "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
-  "ldap_hw_can"                        string => canonify("$(ldap_hw)");
+ #"ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
+ #"ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
+ #"ldap_cn_can"                        string => canonify("$(ldap_cn)");
 
 files:
 
+ ldap_no_such_object::
   "/etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command"
     create         => "true",
     perms          => mog("644","root","root"),
@@ -70,12 +65,28 @@ reports:
 
 }
 
-bundle agent ldap_action ( ip, mac, ldap_ip, ldap_mac ) {
+bundle agent ldap_action ( ip, mac, ldap_ip_line, ldap_mac_line ) {
 
 classes:
 
   "ip_match"                          expression => strcmp($(ip), $(ldap_ip));
   "mac_match"                         expression => strcmp($(mac), $(ldap_mac));
+
+files:
+
+  "/etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command"
+    create         => "true",
+    perms          => mog("644","root","root"),
+    edit_template  => "$(sys.workdir)/roadshow_inputs/role/templates/ldap_host.tmpl";
+
+vars:
+
+  "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
+  "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
+  "ldap_ip_can"                        string => canonify("$(ldap_ip)");
+  "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
+  "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
+  "ldap_hw_can"                        string => canonify("$(ldap_hw)");
 
 commands:
 
@@ -89,24 +100,11 @@ commands:
 
 reports:
 
- name_match::
-  "$(this.bundle) names match : *$(sysname)* *$(ldapname)*";
-
- !name_match::
-  "$(this.bundle) names match : *$(sysname)* *$(ldapname)*";
-
- ip_ldap:: 
-  "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)*";
- !ip_ldap:: 
+ ip_ldap.mac_match:: 
+  "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)* *$(ip_can)* *$(ldap_ip_can)*";
+ !(ip_ldap.mac_match:: 
   "$(this.bundle) ip's do not match : *$(ip_can)* *$(ldap_ip_can)*";
- cn_ldap:: 
-  "$(this.bundle) ddns_name and cn exist : *$(ddns_name_can)* *$(ldap_cn_can)*";
 
- !cn_ldap:: 
-  "$(this.bundle) ddns_name available but cn does not exist : i*$(ddns_name_can)*, ldapadd!";
-
- "cn_ldap.!(ip_ldap.hw_ldap)"::
-  "$(this.bundle) ldap ok: ip *$(ip_address_can)* ldap-ip *$(ldap_ip_can)*! mac *$(mac_address_can)* ldap-hw *$(ldap_hw_can)*!";
 
 }
 
