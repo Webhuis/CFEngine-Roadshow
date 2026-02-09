@@ -102,7 +102,7 @@ reports:
 
  ip_ldap.mac_match:: 
   "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)* *$(ip_can)* *$(ldap_ip_can)*";
- !(ip_ldap.mac_match:: 
+ !(ip_ldap.mac_match):: 
   "$(this.bundle) ip's do not match : *$(ip_can)* *$(ldap_ip_can)*";
 
 
