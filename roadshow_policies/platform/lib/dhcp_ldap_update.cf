@@ -85,11 +85,11 @@ vars:
 
   "ip_can"                             string => canonify("$(ip_address)");
   "mac_can"                            string => canonify("$(mac)");
-  "ldap_ip_l"                           slist => string_split("$(ip_line)", " ", 9);
-  "ldap_ip"                            string => lastnode("$(ldap_ip_l)", " ");
+  "ldap_ip_list"                        slist => string_split("$(ip_line)", " ", "9");
+  "ldap_ip"                            string => nth("ldap_ip_list", 2);
   "ldap_ip_can"                        string => canonify("$(ldap_ip)");
-  "ldap_hw_l"                           slist => string_split("$(hw_line)", " ", 9);
-  "ldap_hw"                            string => lastnode("$(ldap_hw_l)", " ");
+  "ldap_hw_list"                        slist => string_split("$(hw_line)", " ", "9");
+  "ldap_hw"                            string => nth("ldap_hw_list", 2);
   "ldap_hw_can"                        string => canonify("$(ldap_hw)");
 
 commands:
@@ -105,10 +105,9 @@ commands:
 reports:
 
  ip_ldap.mac_match:: 
-  "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)* *$(ip_can)* *$(ldap_ip_can)*";
+  "$(this.bundle) ip's match : *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
  !(ip_ldap.mac_match):: 
-  "$(this.bundle) ip's do not match : *$(ip_can)* *$(ldap_ip_can)*";
-
+  "$(this.bundle) ip's do not match : *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
 
 }
 
