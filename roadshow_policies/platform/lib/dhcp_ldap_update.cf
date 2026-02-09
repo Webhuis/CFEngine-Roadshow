@@ -3,7 +3,8 @@ bundle agent dhcp_ldap_update (suffix, nic, ip_address, mac, vlan_number) {
 classes:
 
   "parsed_ip"                      expression => regextract("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})", "$(ip_address)", "part");
-  "ldap_exists"                    expression => isvariable("cn_line");
+  "ldap_success"                   expression => strcmp("$(status)", "0");
+  "ldap_no_such_object"            expression => strcmp("$(status)", "32");
 
 vars:
 
@@ -22,8 +23,12 @@ vars:
   "result"                             string => execresult("$(ldap_search) | grep -e 'cn: ' -e 'dhcpHWAddress: ethernet ' -e 'dhcpStatements: fixed-address '", useshell);
   "ldap_result_lines"                   slist => string_split("$(result)", "\n", 99);
   "cn_line"                             slist => filter("cn: ", "ldap_result_lines", "true", "true", 1); 
-  "hw_line"                             slist => filter("dhcpHWAddress: ethernet ", "ldap_result_lines", "true", "true", 2); 
-  "ip_line"                             slist => filter("dhcpStatements: fixed-address ", "ldap_result_lines", "true", "true", 3); 
+  "hw_line"                             slist => grep("dhcpHWAddress.*", "ldap_result_lines");
+  "ip_line"                             slist => grep("dhcpStatements.*", "ldap_result_lines");
+  "status_list"                         slist => grep("result.*", "ldap_result_lines"); 
+  "status_str"                         string => nth("status_list", 0); 
+  "status_split"                        slist => string_split("$(status_str)", " ", "3" ); 
+  "status"                             string => nth("status_split", "1" );
   "ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
   "ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
   "ldap_cn_can"                        string => canonify("$(ldap_cn)");
@@ -43,15 +48,15 @@ files:
 
 methods:
 
- ldap_exists::
+ ldap_success::
   "Determine ldap action"           usebundle => ldap_action( "$(ip_can)", "$(mac_address_can)", "$(ldap_ip_can)", "$(ldap_hw_can)" );
 
 commands:
 
   "/usr/bin/echo dhcp ldap commands section";
- ldap_exists:: 
-  "/usr/bin/echo ldap action commands section";
- !ldap_exists:: 
+ ldap_success:: 
+  "/usr/bin/echo dhcp ldap check_modify!";
+ ldap_no_such_object:: 
   "/usr/bin/echo We need to add the ldap object $(ddns_name) ";
   "/usr/bin/ldapadd -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapadd.command";
 
@@ -59,6 +64,7 @@ reports:
 
   "$(this.bundle) host: $(ddns_name) $(vlan) $(subnet) $(ip) $(mac_address)";
   "$(this.bundle) ldap: $(ldap_cn) $(ldap_ip) $(ldap_hw)";
+  "$(this.bundle) ldap status: $(status)";
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
 
