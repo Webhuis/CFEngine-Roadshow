@@ -75,7 +75,7 @@ classes:
 
 files:
 
- !(ip_match.mac_match)::
+ !ip_match|!mac_match::
   "/etc/ldap/$(ddns_name).$(sys.domain).ldapmodify.command"
     create         => "true",
     perms          => mog("644","root","root"),
@@ -98,7 +98,7 @@ commands:
 
  ip_match.mac_match::
   "/usr/bin/echo ldap_action ip and mac match!";
- !(ip_match.mac_match)::
+ !ip_match|!mac_match::
   "/usr/bin/echo ldap_action ip or mac changed ldapmodify!";
   "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapmodify.command";
 
@@ -115,7 +115,7 @@ reports:
 
  ip_ldap.mac_match:: 
   "$(this.bundle) ip's match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
- !(ip_ldap.mac_match):: 
+ !ip_ldap|!mac_match:: 
   "$(this.bundle) ip's do not match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
 
 }
