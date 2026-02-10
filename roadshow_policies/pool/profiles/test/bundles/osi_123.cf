@@ -30,8 +30,8 @@ methods:
                                                                           "$($(zone)[$(zone_index)][mac])",
                                                                           "$($(zone)[$(zone_index)][vlan])");
 
-  "We update ddns"                          usebundle => ddns_update( "$(role_profile.ddns[$(role_profile.ddns_index)][ip])",
-                                                                      "$(role_profile.ddns[$(role_profile.ddns_index)][suffix])");
+  "We update ddns"                          usebundle => ddns_update( "$($(zone)[$(zone_index)][ip])",
+                                                                      "$($(zone)[$(zone_index)][suffix])");
 
 reports:
 
