@@ -13,9 +13,7 @@ vars:
   "subnet"                             string => "$(part[1]).$(part[2]).$(part[3]).0";
   "vlan"                               string => "Vlan-$(vlan_number)";
   "ip"                                 string => "$(ip_address)";
-  "ip_can"                             string => canonify("$(ip)");
   "mac_address"                        string => "$(mac)";
-  "mac_address_can"                    string => canonify("$(mac)");
   "ldap_passwd"                        string => "M@rkBurge55";
 
   "ldap_search"                 string => "/usr/bin/ldapsearch -x -w M@rkBurge55 -H ldap://mihrwhpdcsw1.sw.webhuis.nl/ -b cn=$(ddns_name),cn=fixed,cn=$(subnet),cn=$(vlan),cn=dhcp,dc=sw,dc=webhuis,dc=nl -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl";
@@ -29,6 +27,10 @@ vars:
   "status_str"                         string => nth("status_list", 0); 
   "status_split"                        slist => string_split("$(status_str)", " ", "3" ); 
   "status"                             string => nth("status_split", "1" );
+  "ldap_ip_list"                        slist => string_split("$(ip_line)", " ", "9");
+  "ldap_ip"                            string => nth("ldap_ip_list", 2);
+  "ldap_hw_list"                        slist => string_split("$(hw_line)", " ", "9");
+  "ldap_hw"                            string => nth("ldap_hw_list", 2);
  #"ldap_cn_l"                           slist => string_split("$(cn_line)", " ", 9);
  #"ldap_cn"                            string => lastnode("$(ldap_cn_l)", " ");
  #"ldap_cn_can"                        string => canonify("$(ldap_cn)");
@@ -45,7 +47,7 @@ methods:
 
  ldap_success::
   "Determine ldap action"           usebundle => ldap_action(  "$(ddns_name)", "$(subnet)", "$(vlan)", "$(ip_address)", "$(mac_address)" 
-                                                            , "$(ip_line)", "$(hw_line)");
+                                                            , "$(ldap_ip)", "$(ldap_hw)");
 
 commands:
 
@@ -63,10 +65,12 @@ reports:
   "$(this.bundle) ldap status: $(status)";
   "$(this.bundle) ldapsearch result: $(result)";
   "$(this.bundle) ldap_result_lines : $(ldap_result_lines)";
+  "$(this.bundle) ip_line: $(ip_line)";
+  "$(this.bundle) hw_line: $(hw_line)";
 
 }
 
-bundle agent ldap_action ( ddns_name, subnet, vlan, ip_address, mac, ip_line, hw_line) {
+bundle agent ldap_action ( ddns_name, subnet, vlan, ip_address, mac, ldap_ip, ldap_hw ) {
 
 classes:
 
@@ -85,11 +89,7 @@ vars:
 
   "ip_can"                             string => canonify("$(ip_address)");
   "mac_can"                            string => canonify("$(mac)");
-  "ldap_ip_list"                        slist => string_split("$(ip_line)", " ", "9");
-  "ldap_ip"                            string => nth("ldap_ip_list", 2);
   "ldap_ip_can"                        string => canonify("$(ldap_ip)");
-  "ldap_hw_list"                        slist => string_split("$(hw_line)", " ", "9");
-  "ldap_hw"                            string => nth("ldap_hw_list", 2);
   "ldap_hw_can"                        string => canonify("$(ldap_hw)");
 
 commands:
@@ -106,11 +106,9 @@ reports:
 
   "$(this.bundle) ip_can : $(ip_can)";
   "$(this.bundle) mac_can : $(mac_can)";
-  "$(this.bundle) ip_line: $(ip_line)";
-  "$(this.bundle) ldap_ip_list : $(ldap_ip_list)";
   "$(this.bundle) ldap_ip : $(ldap_ip)";
-  "$(this.bundle) hw_line: $(hw_line)";
-  "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
+  "$(this.bundle) ldap_ip_can : $(ldap_ip_can)";
+  "$(this.bundle) ldap_hw : $(ldap_hw)";
   "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
 
  ip_ldap.mac_match:: 
