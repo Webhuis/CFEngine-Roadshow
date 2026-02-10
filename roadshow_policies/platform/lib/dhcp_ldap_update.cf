@@ -74,8 +74,8 @@ bundle agent ldap_action ( ddns_name, subnet, vlan, ip_address, mac, ldap_ip, ld
 
 classes:
 
-  "ip_match"                          expression => strcmp($(ip_can), $(ldap_ip_can));
-  "mac_match"                         expression => strcmp($(mac_can), $(ldap_hw_can));
+  "ip_match"                          expression => strcmp("$(ip_can)", "$(ldap_ip_can)");
+  "mac_match"                         expression => strcmp("$(mac_can)", "$(ldap_hw_can)");
 
 files:
 
