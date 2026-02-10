@@ -97,9 +97,9 @@ commands:
   "/usr/bin/echo ldap_action ddns_name exists: check ldapmodify!";
 
  ip_match.mac_match::
-  "/usr/bin/echo ldap_action ip and mac match!";
+  "/usr/bin/echo ldap_action ip and mac match! vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
  !ip_match|!mac_match::
-  "/usr/bin/echo ldap_action ip or mac changed ldapmodify!";
+  "/usr/bin/echo ldap_action ip or mac changed ldapmodify! vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
   "/usr/bin/ldapmodify -v -x -H ldap://$($(classify.organisation).dhcp_ldap)/ -D cn=CFEngine,ou=users,dc=sw,dc=webhuis,dc=nl -w M@rkBurge55 -f /etc/ldap/$(ddns_name).$(sys.domain).ldapmodify.command";
 
 reports:
@@ -111,10 +111,10 @@ reports:
   "$(this.bundle) ldap_hw : $(ldap_hw)";
   "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
 
- ip_ldap.mac_match:: 
-  "$(this.bundle) ip's match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
- !ip_ldap|!mac_match:: 
-  "$(this.bundle) ip's do not match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
+#ip_ldap.mac_match:: 
+# "$(this.bundle) ip's match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
+#!ip_ldap|!mac_match:: 
+# "$(this.bundle) ip's do not match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
 
 }
 
