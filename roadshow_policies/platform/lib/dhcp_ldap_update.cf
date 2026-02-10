@@ -110,7 +110,7 @@ reports:
   "$(this.bundle) ldap_ip_list : $(ldap_ip_list)";
   "$(this.bundle) ldap_ip : $(ldap_ip)";
   "$(this.bundle) hw_line: $(hw_line)";
-  "$(this.bundle) ldap_ip_can : $(ldap_ip_can)";
+  "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
   "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
 
  ip_ldap.mac_match:: 
