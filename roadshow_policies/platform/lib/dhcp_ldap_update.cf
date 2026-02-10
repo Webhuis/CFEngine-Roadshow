@@ -104,6 +104,15 @@ commands:
 
 reports:
 
+  "$(this.bundle) ip_can : $(ip_can)";
+  "$(this.bundle) mac_can : $(mac_can)";
+  "$(this.bundle) ip_line: $(ip_line)";
+  "$(this.bundle) ldap_ip_list : $(ldap_ip_list)";
+  "$(this.bundle) ldap_ip : $(ldap_ip)";
+  "$(this.bundle) hw_line: $(hw_line)";
+  "$(this.bundle) ldap_ip_can : $(ldap_ip_can)";
+  "$(this.bundle) ldap_hw_can : $(ldap_hw_can)";
+
  ip_ldap.mac_match:: 
   "$(this.bundle) ip's match : vlan $(vlan) *$(ip_can)* *$(ldap_ip_can)* *$(mac_can)* *$(ldap_hw_can)*";
  !(ip_ldap.mac_match):: 
