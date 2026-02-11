@@ -29,7 +29,7 @@ vars:
 
 files:
 
- !a_record|!ptr_record::
+ !a_record_dns|!ptr_record_dns::
   "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
     create         => "true",
     perms          => mog("644","root","root"),
@@ -50,7 +50,7 @@ reports:
 #a_record::
 # "$(this.bundle): $(ddns_name).$(sys.domain), $(ip_address)";
  a_record_dns.ptr_record_dns::
-  "$(this.bundle) DNS is Ok!";
+  "$(this.bundle) DNS $(ddns_name).$(sys.domain), $(ip_address) is Ok!";
  !a_record_dns|!ptr_record_dns::
   "$(this.bundle) update DNS!";
 
