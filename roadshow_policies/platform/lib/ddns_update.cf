@@ -37,7 +37,7 @@ files:
 
 commands:
 
- !a_record|!ptr_record::
+ !a_record_dns|!ptr_record_dns::
   "/usr/bin/nsupdate -d -v -k $(mdns_key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
