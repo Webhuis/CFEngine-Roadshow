@@ -6,7 +6,6 @@ vars:
 
 files:
 
- valid_admin_ip::
   "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
@@ -30,10 +29,6 @@ reports:
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
- valid_admin_ip::
-  "$(this.bundle) etc_hosts_nic: $(admin_ip)";
-
- !valid_admin_ip::
-   "$(this.bundle): bad admin_ip! $(admin_ip)";
+  "$(this.bundle) osi_123.admin_ip: $(osi_123.admin_ip)";
 
 }

@@ -2,7 +2,6 @@ bundle agent etc_hosts {
 
 files:
 
- valid_hosts_ip::
   "/etc/hosts"
   comment                   => "/etc/hosts for main stream hosts",
   create                    => "true",
@@ -12,10 +11,6 @@ files:
 
 reports:
 
- valid_hosts_ip::
-  "$(this.bundle) etc_hosts_ip: $(role_profile.hosts_ip)";
-
- !valid_hosts_ip::
-   "$(this.bundle): etc_hosts_ip bad hosts_ip! $(role_profile.hosts_ip)";
+  "$(this.bundle) osi_123.etc_hosts_ip: $(osi_123.hosts_ip)";
 
 }

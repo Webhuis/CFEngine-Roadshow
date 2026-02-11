@@ -1,39 +1,46 @@
-bundle agent osi_123 {
+bundle agent osi_123(zone) {
+
+vars:
+
+  "zone_index"                                  slist => getindices($(zone));
+ #"zone"                                        slist => { "$(zone[$(zone_index)])" };
+
+  "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
+  "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
+  "gateway_device"                             string => nth("gateway_line_list", "4");
+  "gateway_ip"                                 string => nth("gateway_line_list", "2");
+  "hosts_ip"                                   string => "$($(zone)[123][ip])";
+  "admin_ip"                                   string => "$($(zone)[22][ip])";
 
 methods:
 
- has_nic_sequence::
-  "We need predictable names"               usebundle => persistent_link($(role_profile.nic_trick));
-
- has_nic_values::
   "We require the loopback interface"       usebundle => l0_interface;
-  "Interfaces predictable names"            usebundle => configure_interfaces($(classify.ips));
 
- has_nic_index::
-  "Check the interfaces"                    usebundle => check_interfaces("$(role_profile.nic[$(role_profile.nic_index)])"),
-                                              comment => "OSI Layers one and two";
+  "Interfaces predictable names"            usebundle => configure_interfaces("$($(zone)[$(zone_index)][nic])"
+                                                                             ,"$($(zone)[$(zone_index)][ip])");
 
- any::
+  "supply etc_hosts with a valid IP"        usebundle => etc_hosts;
+  "openssh server and client"               usebundle => sshd_config;
+ #"Host data driven policies go here"       usebundle => host_data_driven_policies;     obsolete
+ #"Domain data driven policies go here"     usebundle => domain_data_driven_policies; moved to role_profile
 
-  "Host data driven policies go here"       usebundle => host_data_driven_policies;
+  "We update dhcp_ldap"                     usebundle => dhcp_ldap_update("$($(zone)[$(zone_index)][suffix])",
+                                                                          "$($(zone)[$(zone_index)][nic])",
+                                                                          "$($(zone)[$(zone_index)][ip])",
+                                                                          "$($(zone)[$(zone_index)][mac])",
+                                                                          "$($(zone)[$(zone_index)][vlan])");
 
-  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
-
+  "We update ddns"                          usebundle => ddns_update( "$($(zone)[$(zone_index)][ip])",
+                                                                      "$($(zone)[$(zone_index)][suffix])");
 
 reports:
 
-  "$(this.bundle) nic index: $(role_profile.nic_index)";
-  "$(this.bundle) nic values: $(role_profile.nic_values)";
-  "$(this.bundle) ip list: $(role_profile.ip_list)";
-  "$(this.bundle) ips: $(classify.ips)";
-
-  "$(this.bundle): I am checking basic interface stuff first, $(role_profile.nic[$(role_profile.nic_index)]).";
-  "$(this.bundle): I am doing common and data driven policies.";
-
- !bad_ip::
-  "$(this.bundle) The soft ip addresses supplied are Ok.";
-
- bad_ip::
-  "$(this.bundle) Invalid soft ip addresses are being supplied, no processing of soft ip address policies is going to take place.";
+  "$(this.bundle) zone: $($(osi_123.zone))";
+  "$(this.bundle) zone_index: $(zone_index)";
+  "$(this.bundle) zone nic: $($(zone)[$(zone_index)][nic])";
+  "$(this.bundle) zone mac: $($(zone)[$(zone_index)][mac])";
+  "$(this.bundle) zone ip: $($(zone)[$(zone_index)][ip])";
+  "$(this.bundle) zone suffix: $($(zone)[$(zone_index)][suffix])";
+  "$(this.bundle) zone vlan: $($(zone)[$(zone_index)][vlan])";
 
 }
