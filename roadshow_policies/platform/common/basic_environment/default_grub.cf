@@ -1,0 +1,23 @@
+bundle agent default_grub {
+
+files:
+
+  "/etc/default/grub"
+  comment                   => "Classical interface names",
+  create                    => "true",
+  perms                     => mo("644","root"),
+  edit_template             => "$(sys.workdir)/roadshow_inputs/role/templates/default_grub.tmpl",
+  action                    => r_immediate,
+  classes                   => if_repaired("update_grub");
+
+commands:
+
+ update_grub::
+  "/usr/sbin/update-grub";
+  "/usr/sbin/shutdown -r";
+
+reports:
+
+  "$(this.bundle) Classical interface names!";
+
+}

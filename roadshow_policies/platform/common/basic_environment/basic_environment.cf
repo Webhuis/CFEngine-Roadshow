@@ -2,6 +2,7 @@ bundle agent basic_environment {
 
 methods:
 
+  "We desire classic interface names"    usebundle => default_grub;
   "Install common packages"              usebundle => pkg_base_common;
   "Set locales to UTF 8"                 usebundle => locales;
   "Standardise issue setup"              usebundle => login_messages;
