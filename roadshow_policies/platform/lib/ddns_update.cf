@@ -44,12 +44,14 @@ reports:
 
   "$(this.bundle): $(ddns_name).$(sys.domain), $(ip_address)";
   "$(this.bundle): dig_host2ip $(dig_host2ip) $(host2ip_can)";
-  "$(this.bundle): dig_ip2host $(dig_ip2_host) $(ip2host_can)";
+  "$(this.bundle): dig_ip2host $(dig_ip2host) $(ip2host_can)";
   "$(this.bundle): mdns, $(mdns)";
   "$(this.bundle): mdns_key, $(mdns_key)";
- a_record.ptr_record::
+#a_record::
+# "$(this.bundle): $(ddns_name).$(sys.domain), $(ip_address)";
+ a_record_dns.ptr_record_dns::
   "$(this.bundle) DNS is Ok!";
- !a_record|!ptr_record)::
+ !a_record_dns|!ptr_record_dns::
   "$(this.bundle) update DNS!";
 
 }
