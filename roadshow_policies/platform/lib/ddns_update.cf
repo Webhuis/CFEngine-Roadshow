@@ -23,9 +23,9 @@ vars:
   "arpa_address"                                 string => "$(part[4]).$(part[3]).$(part[2]).$(part[1]).in-addr.arpa.";
 
   "dig_host2ip"                                  string => execresult("/usr/bin/dig +short $(ddns_name).$(sys.domain)", "noshell");
-  "host2ip_can"                                  string => canonify("$(host2ip)");
+  "host2ip_can"                                  string => canonify("$(dig_host2ip)");
   "dig_ip2host"                                  string => execresult("/usr/bin/dig +short -x $(ip_address)", "noshell");
-  "ip2host_can"                                  string => canonify("$(ip2host)");
+  "ip2host_can"                                  string => canonify("$(dig_ip2host)");
 
 files:
 
@@ -38,7 +38,7 @@ files:
 commands:
 
  !a_record|!ptr_record::
-  "/usr/bin/nsupdate -v -k $(mdns_key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
+  "/usr/bin/nsupdate -d -v -k $(mdns_key) /etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command";
 
 reports:
 
