@@ -6,7 +6,7 @@ vars:
 # "ipv4_index"             slist => sort(getindices("sys.ipv4"), int);
   "ipv4_values"            slist => getvalues("sys.ipv4");
   "interface"              slist => "sys.interfaces";
-  "mac_address"            slist => "sys.hardware_mac[$(sys.interfaces)])";
+  "mac_address"            slist => "sys.hardware_mac[$(sys.interfaces)]";
   "hw_index"               slist => getindices("sys.hardware_addresses");
   "hw_values"              slist => getvalues("sys.hardware_addresses");
 
