@@ -1,8 +1,0 @@
-# Webhuis template for persistent links in /etc/systemd/network
-# Overcomes the issues with the very unpredictable predictable interface names.
-# Interface names are hard linked to mac addresses on vlans
-#
-# Do not edit
-#
-[%CFEngine any:: %]
-/usr/sbin/ip link set $(persistent_script.unpredictable) name $(persistent_script.predictable)
