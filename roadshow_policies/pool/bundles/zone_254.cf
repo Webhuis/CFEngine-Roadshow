@@ -23,10 +23,10 @@ reports:
   "$(this.bundle) mac: $(254_mac)";
 
  254_nic::
-  "$(this.bundle) nic 254 available";
+  "$(this.bundle) nic 254 is up";
   "$(this.bundle) nic 254: $(254_nic)";
  !254_nic::
-  "$(this.bundle) nic 254 is not available";
+  "$(this.bundle) nic 254 is down";
 
  254_ip::
   "$(this.bundle) ip 254 available";
