@@ -1,1 +1,102 @@
-../../../bundles/role_profile.cf
+bundle agent role_profile {
+
+vars:
+
+  "zones"                              slist => { "123", "22", "254" };
+  "zones_index"                        slist => getindices("zones");
+
+ 22_ip::
+  "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
+  "zone[22][nic]"                     string => "$(zone_22.22_nic)";
+  "zone[22][ip]"                      string => "$(zone_22.22_ip)";
+  "zone[22][mac]"                     string => "$(zone_22.22_mac)";
+  "zone[22][vlan]"                    string => "22";
+
+ 123_ip::
+  "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
+  "zone[123][nic]"                    string => "$(zone_123.123_nic)";
+  "zone[123][ip]"                     string => "$(zone_123.123_ip)";
+  "zone[123][mac]"                    string => "$(zone_123.123_mac)";
+  "zone[123][vlan]"                   string => "123";
+
+ 254_ip::
+  "zone[254][suffix]"                 string => "$($(classify.organisation).zone[254][suffix])";
+  "zone[254][nic]"                    string => "$(zone_254.254_nic)";
+  "zone[254][ip]"                     string => "$(zone_254.254_ip)";
+  "zone[254][mac]"                    string => "$(zone_254.254_mac)";
+  "zone[254][vlan]"                   string => "254";
+
+ any::
+  "zone_index"                         slist => getindices("zone");
+
+  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip)";
+  "vip_index"                          slist => getindices(keepalive_vip);
+
+  "keepalive_nic"                     string => "$(nic[gw])";
+  "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip)");
+  "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
+  "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
+  "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
+
+  "hosts_ip"                          string => "$(ip[support])";
+  "admin_ip"                          string => "$(ip[admin])";
+  "gw_ip"                             string => "$(ip[gw])";
+
+methods:
+
+  "We need zones classes"                   usebundle => "zone_$(zones)";
+ #"We need predictable names"               usebundle => persistent;
+  "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
+
+ 22_ip.123_ip.245_ip::
+  "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.zone");
+
+ any::
+  "Domain data driven policies go here"     usebundle => domain_data_driven_policies;
+
+reports:
+
+  "$(this.bundle) zone $(zone)";
+  "$(this.bundle) zones index $(zones_index)";
+  "$(this.bundle) zone index $(zone_index)";
+
+ 22_nic::
+  "$(this.bundle) nic 22 available";
+ !22_nic::
+  "$(this.bundle) nic 22 not available";
+
+ 22_ip::
+  "$(this.bundle) ip 22 available";
+  "$(this.bundle) ip 22: $(22_ip)";
+ !22_ip::
+  "$(this.bundle) ip 22 not available";
+
+ 123_nic::
+  "$(this.bundle) nic 123 available";
+ !123_nic::
+  "$(this.bundle) nic 123 not available";
+
+ 123_ip::
+  "$(this.bundle) ip 123 available";
+ !123_ip::
+  "$(this.bundle) ip 123 not available";
+
+ 254_nic::
+  "$(this.bundle) nic 254 available";
+ !254_nic::
+  "$(this.bundle) nic 254 not available";
+
+ 254_ip::
+  "$(this.bundle) ip 254 available";
+ !254_ip::
+  "$(this.bundle) ip 254 not available";
+
+ any::
+  "$(this.bundle) keepalive_vlan: $(keepalive_vlan)";
+  "$(this.bundle) keepalive_vip: $(keepalive_vip)";
+  "$(this.bundle) keepalive_nic: $(keepalive_nic)";
+  "$(this.bundle) keepalive_ipv4_4: $(keepalive_ipv4_4)";
+  "$(this.bundle) keepalive_routes: $(keepalive_routes)";
+  "$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
+
+}

@@ -5,6 +5,8 @@ vars:
   "ipv4_index"             slist => getindices("sys.ipv4");
 # "ipv4_index"             slist => sort(getindices("sys.ipv4"), int);
   "ipv4_values"            slist => getvalues("sys.ipv4");
+  "hw_index"               slist => getindices("sys.hwaddress");
+  "hw_values"              slist => getvalues("sys.hwaddress");
 
 reports:
 
@@ -24,5 +26,7 @@ reports:
   "nics                    $(ipv4_index), $(sys.ipv4[$(ipv4_index)])";
   "ipv4_index              $(ipv4_index)";
   "ipv4_values             $(ipv4_values)";
+  "hw_index                $(hw_index)";
+  "hw_values               $(hw_values)";
 
 }
