@@ -2,7 +2,7 @@ bundle common zone_254 {
 
 classes:
 
-  "254_nic"                           expression => regcmp(".*eth.*", "$(254_link)");
+  "254_nic"                           expression => regcmp(".*eth.*UP.*", "$(254_link)");
   "254_var"                           expression => isvariable("254_ip");
   "254_ip"                            expression => regcmp("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", "$(254_ip)");
 
