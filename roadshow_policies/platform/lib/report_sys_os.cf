@@ -5,8 +5,8 @@ vars:
   "ipv4_index"             slist => getindices("sys.ipv4");
 # "ipv4_index"             slist => sort(getindices("sys.ipv4"), int);
   "ipv4_values"            slist => getvalues("sys.ipv4");
-  "hw_index"               slist => getindices("sys.hwaddress");
-  "hw_values"              slist => getvalues("sys.hwaddress");
+  "hw_index"               slist => getindices("sys.hardware_addresses");
+  "hw_values"              slist => getvalues("sys.hardware_addresses");
 
 reports:
 
