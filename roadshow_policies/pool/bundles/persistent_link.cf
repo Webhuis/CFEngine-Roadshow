@@ -1,4 +1,4 @@
-bundle agent persistent_link (pos) {
+bundle agent persistent_link (nic) {
  
 classes:
 
