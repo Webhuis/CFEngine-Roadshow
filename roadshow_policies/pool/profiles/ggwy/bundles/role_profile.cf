@@ -4,7 +4,7 @@ vars:
 
   "zones"                              slist => { "123", "22", "254" };
   "zones_index"                        slist => getindices("zones");
-
+  "num_interfaces"                     slist => { "0", "1", "2" };
  22_ip::
   "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
   "zone[22][nic]"                     string => "$(zone_22.22_nic)";
@@ -44,9 +44,12 @@ vars:
 
 methods:
 
- #"We need predictable names"               usebundle => persistent;
   "We need zones classes"                   usebundle => "zone_$(zones)";
+
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
+
+ !22_nic|!123_nic|!245_nic::
+  "We require the specified nics"           usebundle => interface_nic ("$(zone[$(zones_index)][nic])");
 
  22_ip.123_ip.245_ip::
   "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.zone");
@@ -56,7 +59,7 @@ methods:
 
 reports:
 
-  "$(this.bundle) zone $(zone)";
+  "$(this.bundle) zones $(zone[$(zones_index)][nic])";
   "$(this.bundle) zones index $(zones_index)";
   "$(this.bundle) zone index $(zone_index)";
 
