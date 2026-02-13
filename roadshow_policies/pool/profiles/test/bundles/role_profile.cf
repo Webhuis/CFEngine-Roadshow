@@ -48,7 +48,7 @@ methods:
  #"We need predictable names"               usebundle => persistent;
   "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
 
- !22_ip|!123_ip|!245_ip::
+ !22_nic|!123_nic|!245_nic::
   "We requirei the specified nics"          usebundle => interface_nic ("$(zone{$(zones_index)][nic])");
 
  22_ip.123_ip.245_ip::
