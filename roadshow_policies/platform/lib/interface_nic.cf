@@ -1,0 +1,16 @@
+bundle agent interface_nic (nic) {
+
+classes:
+
+  "interface_down"     expression => regcmp( "interface_down", $(interface_down) );
+
+vars:
+
+  "interface_down"         string => "interface_down";
+
+reports:
+
+  "$(this.bundle) nic en mac: $(nic), $(mac_address)";
+  "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
+
+}
