@@ -1,37 +1,35 @@
-bundle agent persistent_link (nic) {
+bundle agent persistent_link (pos) {
  
 classes:
 
-  "mac_ok"                      expression => regextract( ".*ether ([^\s]+).*(' '.*)*", nth("classify.macs", "$(pos)"), "part"); 
+  "if_nic"                      expression => strcmp( "$(interface)", "$(nic)" ); 
 
 vars:
 
-  "nic"                             string => nth("role_profile.nic_values", "$(pos)");
-
- mac_ok::
-  "mac_address"                     string => "$(part[1])";
+  "interface"                                string => nth("interface_nic.interfaces_available", "$(pos)");
+  "mac"                                      string => "$(sys.hardware_mac[$(interface)])";
+  "zones"                                    string => nth("interface_pairing.zones", "$(pos)");
+  "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
 
 files:
 
- mac_ok::
+ !if_nic::
 
-  "/etc/systemd/network/*"
-    file_select    => all,
-    delete         => tidy;
+  "/etc/systemd/network/$(nic)_persistent.link"
+    comment                                         => "one file per nic",
+    create                                          => "true",
+    perms                                           => mo("644", "root"),
+    action                                          => immediate,
+    edit_defaults                                   => no_backup,
+    edit_template                                   => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
+    classes                                         => if_repaired("update_grub");
 
-  "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
-    comment                                => "one file per nic",
-    create                                 => "true",
-    perms                                  => mo("644", "root"),
-    action                                 => immediate,
-    edit_defaults                          => no_backup,
-    edit_template                          => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
-    classes                                => if_repaired("reboot");
+methods:
 
-commands:
+ update_grub::
 
- reboot:: 
-  "/usr/sbin/shutdown -r 3";
+  "Grub needs to be updated"              usebundle => update_grub,
+                                            classes => if_repaired("reboot");
 
 reports:
 
