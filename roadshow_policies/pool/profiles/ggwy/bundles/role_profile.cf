@@ -46,7 +46,7 @@ methods:
 
   "We need zones classes"                   usebundle => "zone_$(zones)";
 
-  "The interfaces have to be up"            usebundle => check_interface("$(zones_index)");
+  "The interfaces have to be up"            usebundle => check_interfaces("$(zones_index)");
 
  !22_nic|!123_nic|!245_nic::
   "We require the specified nics"           usebundle => interface_nic;
