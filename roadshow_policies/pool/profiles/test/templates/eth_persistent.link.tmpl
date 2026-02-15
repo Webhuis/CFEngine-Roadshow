@@ -1,0 +1,14 @@
+# Webhuis template for persistent links in /etc/systemd/network
+# Overcomes the issues with the very unpredictable predictable interface names.
+# Interface names are hard linked to mac addresses on vlans
+#
+# Do not edit
+#
+[%CFEngine any:: %]
+[Match]
+MACAddress=$(persistent_link.mac_address)
+Type=ether
+
+[Link]
+Name=$(persistent_link.nic)
+

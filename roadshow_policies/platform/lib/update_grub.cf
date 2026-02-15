@@ -1,0 +1,11 @@
+bundle agent update_grub {
+
+commands:
+
+  "/usr/sbin/update-grub2";
+
+reports:
+
+  "$(this.bundle) reboot needed";
+
+}

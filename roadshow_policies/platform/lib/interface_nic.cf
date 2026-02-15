@@ -1,16 +1,18 @@
 bundle agent interface_nic (nic) {
 
-classes:
-
-  "interface_down"     expression => regcmp( "interface_down", $(interface_down) );
-
 vars:
 
-  "interface_down"         string => "interface_down";
+  "zones"                                   slist => { "$(role_profile.zones)" };
+  "interfaces_available"                    slist => {@(sys.interfaces)};
+
+methods:
+
+  "persistent nic"                      usebundle => persistent_link("$(role_profiel.num_interfaces)");
+ 
 
 reports:
 
-  "$(this.bundle) nic en mac: $(nic), $(mac_address)";
-  "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
+  "$(this.bundle) role zones: $(role_profile.zones)";
+  "$(this.bundle) available: $(interfaces_available)";
 
 }
