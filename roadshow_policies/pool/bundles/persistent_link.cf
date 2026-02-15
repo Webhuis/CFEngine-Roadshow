@@ -33,7 +33,6 @@ methods:
 
 reports:
 
-  "$(this.bundle) nic en mac: $(nic), $(mac_address)";
-  "$(this.bundle) paired: $(nic), $(pos), $(mac_address)";
+  "$(this.bundle) if and nic: $(interface), $(mac), $(nic), $(zones)";
  
 }
