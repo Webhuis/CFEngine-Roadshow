@@ -26,6 +26,8 @@ reports:
   "nics                    $(ipv4_index), $(sys.ipv4[$(ipv4_index)])";
   "ipv4_index              $(ipv4_index)";
   "ipv4_values             $(ipv4_values)";
+  "hardware_addresses      $(sys.hardware_addresses)";
+  "interface_flags         $(sys.interface_flags)";
   "interface               $(sys.interfaces)";
   "Interface mac_address   $(sys.interfaces) $(sys.hardware_mac[$(sys.interfaces)])";
   "hw_index                $(hw_index)";
