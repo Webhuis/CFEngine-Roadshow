@@ -17,16 +17,16 @@ vars:
 
 files:
 
-#!if_nic::
+ !if_nic::
 
-# "/etc/systemd/network/$(nic)_persistent.link"
-#   comment                                         => "one file per nic",
-#   create                                          => "true",
-#   perms                                           => mo("644", "root"),
-#   action                                          => immediate,
-#   edit_defaults                                   => no_backup,
-#   edit_template                                   => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
-#   classes                                         => if_repaired("update_grub");
+  "/etc/systemd/network/$(nic)_persistent.link"
+    comment                                         => "one file per nic",
+    create                                          => "true",
+    perms                                           => mo("644", "root"),
+    action                                          => immediate,
+    edit_defaults                                   => no_backup,
+    edit_template                                   => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
+    classes                                         => if_repaired("update_grub");
 
 methods:
 
