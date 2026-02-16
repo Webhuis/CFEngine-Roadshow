@@ -11,7 +11,7 @@ vars:
   "interface"                                string => nth("interface_list", "1");
   "mac_address"                              string => execresult("/usr/bin/cat /sys/class/net/$(interface)/address", noshell);
 
- #"zones_list"                                slist => { @(role_profile.zones) };
+  "zones_list"                                slist => { @(role_profile.zones) };
   "zones"                                    string => nth("role_profile.zones", "$(pos)");
   "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
 
