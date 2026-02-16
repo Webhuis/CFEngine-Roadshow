@@ -8,7 +8,7 @@ vars:
 
 methods:
 
-  "persistent nic"                      usebundle => persistent_link("$(role_profiel.num_interfaces)");
+  "persistent nic"                      usebundle => persistent_link("$(role_profile.num_interfaces)");
 
 reports:
 
