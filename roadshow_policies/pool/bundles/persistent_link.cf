@@ -19,7 +19,7 @@ files:
 
  !if_nic::
 
-  "/etc/systemd/network/$(nic)_persistent.link"
+  "/etc/systemd/network/1$(pos)_$(nic)_persistent.link"
     comment                                         => "one file per nic",
     create                                          => "true",
     perms                                           => mo("644", "root"),
