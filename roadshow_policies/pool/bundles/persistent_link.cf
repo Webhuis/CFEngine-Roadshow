@@ -11,8 +11,9 @@ vars:
   "interface"                                string => nth("interface_list", "1");
   "mac_address"                              string => execresult("/usr/bin/cat /sys/class/net/$(interface)/address", noshell);
 
-  "zones"                                    string => nth("role_profile.zones", "$(pos)");
-  "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
+  "zones"                                     slist => "$(role_profile.zones)";
+  "zone"                                     string => nth("zones", "$(pos)");
+  "nic"                                      string => "$(zone_$(zone).$(zone)_nic)";
 
 files:
 
@@ -36,6 +37,8 @@ methods:
 
 reports:
 
-  "$(this.bundle) if and nic: $(interface), $(mac_address), $(nic), $(zones)";
+  "$(this.bundle) zones: $(zones)";
+  "$(this.bundle) zone: $(zone)";
+  "$(this.bundle) if and nic: $(interface), $(mac_address), $(nic), $(zone)";
  
 }
