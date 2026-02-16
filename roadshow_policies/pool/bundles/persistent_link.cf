@@ -12,7 +12,7 @@ vars:
   "mac_address"                              string => execresult("/usr/bin/cat /sys/class/net/$(interface)/address", noshell);
 
  #"zones"                                     slist => { "$(role_profile.zones)" };
-  "zones"                                    string => nth("role_profile.zones", "$(pos)");
+  "zones"                                    string => nth("$(role_profile.zones)", "$(pos)");
   "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
 
 files:
