@@ -6,8 +6,11 @@ classes:
 
 vars:
 
-  "interface"                                string => nth("interface_nic.interfaces_available", "$(pos)");
-  "mac"                                      string => "$(sys.hardware_mac[$(interface)])";
+  "interface_line"                           string => nth("interface_nic.nic_lines", "$(pos)");
+  "interface_list"                            slist => string_split($(interface_line), ": ", 9);
+  "interface"                                string => nth("interface_list", "1");
+  "mac_address"                              string => execresult("/usr/bin/cat /sys/class/net/$(interface)/address", noshell);
+
   "zones"                                    string => nth("role_profile.zones", "$(pos)");
   "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
 
@@ -33,6 +36,6 @@ methods:
 
 reports:
 
-  "$(this.bundle) if and nic: $(interface), $(mac), $(nic), $(zones)";
+  "$(this.bundle) if and nic: $(interface), $(mac_address), $(nic), $(zones)";
  
 }

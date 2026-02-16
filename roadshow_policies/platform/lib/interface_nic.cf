@@ -1,18 +1,19 @@
-bundle agent interface_nic (nic) {
+bundle agent interface_nic {
 
 vars:
 
   "zones"                                   slist => { "$(role_profile.zones)" };
-  "interfaces_available"                    slist => {@(sys.interfaces)};
+  "ip_nic_line"                            string => execresult("$($(sys.flavor).ip_cmd) link | grep 'eth[0-9].*:' ", useshell);
+  "nic_lines"                               slist => string_split($(ip_nic_line), "\n", 99);
 
 methods:
 
   "persistent nic"                      usebundle => persistent_link("$(role_profiel.num_interfaces)");
- 
 
 reports:
 
   "$(this.bundle) role zones: $(role_profile.zones)";
-  "$(this.bundle) available: $(interfaces_available)";
+  "$(this.bundle) nic lines $(nic_lines)";
+
 
 }
