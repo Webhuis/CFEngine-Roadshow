@@ -11,22 +11,22 @@ vars:
   "interface"                                string => nth("interface_list", "1");
   "mac_address"                              string => execresult("/usr/bin/cat /sys/class/net/$(interface)/address", noshell);
 
-  "zones"                                     slist => { "$(role_profile.zones)" };
-  "zone"                                     string => nth("zones", "$(pos)");
-  "nic"                                      string => "$(zone_$(zone).$(zone)_nic)";
+ #"zones"                                     slist => { "$(role_profile.zones)" };
+  "zones"                                    string => nth("role_profile.zones", "$(pos)");
+  "nic"                                      string => "$(zone_$(zones).$(zones)_nic)";
 
 files:
 
- !if_nic::
+#!if_nic::
 
-  "/etc/systemd/network/$(nic)_persistent.link"
-    comment                                         => "one file per nic",
-    create                                          => "true",
-    perms                                           => mo("644", "root"),
-    action                                          => immediate,
-    edit_defaults                                   => no_backup,
-    edit_template                                   => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
-    classes                                         => if_repaired("update_grub");
+# "/etc/systemd/network/$(nic)_persistent.link"
+#   comment                                         => "one file per nic",
+#   create                                          => "true",
+#   perms                                           => mo("644", "root"),
+#   action                                          => immediate,
+#   edit_defaults                                   => no_backup,
+#   edit_template                                   => "$(sys.workdir)/roadshow_inputs/role/templates/eth_persistent.link.tmpl",
+#   classes                                         => if_repaired("update_grub");
 
 methods:
 
@@ -38,7 +38,7 @@ methods:
 reports:
 
   "$(this.bundle) zones: $(zones)";
-  "$(this.bundle) zone: $(zone)";
-  "$(this.bundle) if and nic: $(interface), $(mac_address), $(nic), $(zone)";
+  "$(this.bundle) zone: $(role_profile.zones)";
+  "$(this.bundle) if and nic: $(interface), $(mac_address), $(nic), $(zones)";
  
 }
