@@ -3,7 +3,7 @@ bundle agent osi_123(zone) {
 vars:
 
   "zone_index"                                  slist => getindices($(zone));
-  "zone"                                        slist => { "$(zone[$(zone_index)])" };
+ #"zone"                                        slist => { "$(zone[$(zone_index)])" };
 
   "gateway_line"                               string => execresult("/usr/sbin/ip route list match 0", noshell);
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
@@ -35,6 +35,7 @@ reports:
 
   "$(this.bundle) zone: $($(osi_123.zone))";
   "$(this.bundle) zone_index: $(zone_index)";
+  "$(this.bundle) zone zone_index : $($(zone)[$(zone_index)])";
   "$(this.bundle) zone nic: $($(zone)[$(zone_index)][nic])";
   "$(this.bundle) zone mac: $($(zone)[$(zone_index)][mac])";
   "$(this.bundle) zone ip: $($(zone)[$(zone_index)][ip])";

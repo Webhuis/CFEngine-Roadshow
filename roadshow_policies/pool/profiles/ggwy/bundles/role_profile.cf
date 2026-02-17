@@ -47,10 +47,10 @@ methods:
 
   "The interfaces have to be up"            usebundle => check_interfaces("$(zones_index)");
 
- !22_nic|!123_nic|!245_nic::
+ !22_nic|!123_nic|!254_nic::
   "We require the specified nics"           usebundle => interface_nic;
 
- 22_ip.123_ip.245_ip::
+ 22_ip.123_ip.254_ip::
   "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.zone");
 
  any::
