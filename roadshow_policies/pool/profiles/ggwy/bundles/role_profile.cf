@@ -5,19 +5,21 @@ vars:
   "zones"                              slist => { "123", "22", "254" };
   "num_interfaces"                     slist => { "0", "1", "2" };
 
- 22_ip::
-  "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
-  "zone[22][nic]"                     string => "$(zone_22.22_nic)";
-  "zone[22][ip]"                      string => "$(zone_22.22_ip)";
-  "zone[22][mac]"                     string => "$(zone_22.22_mac)";
-  "zone[22][vlan]"                    string => "22";
-
  123_ip::
   "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
   "zone[123][nic]"                    string => "$(zone_123.123_nic)";
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
   "zone[123][mac]"                    string => "$(zone_123.123_mac)";
   "zone[123][vlan]"                   string => "123";
+  "hosts_ip"                          string => "$(zone[123][ip])";
+
+ 22_ip::
+  "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
+  "zone[22][nic]"                     string => "$(zone_22.22_nic)";
+  "zone[22][ip]"                      string => "$(zone_22.22_ip)";
+  "zone[22][mac]"                     string => "$(zone_22.22_mac)";
+  "zone[22][vlan]"                    string => "22";
+  "admin_ip"                          string => "$(zone[22][ip])";
 
  254_ip::
   "zone[254][suffix]"                 string => "$($(classify.organisation).zone[254][suffix])";
@@ -25,22 +27,19 @@ vars:
   "zone[254][ip]"                     string => "$(zone_254.254_ip)";
   "zone[254][mac]"                    string => "$(zone_254.254_mac)";
   "zone[254][vlan]"                   string => "254";
+  "gw_ip"                             string => "$(zone[254][ip])";
+
+  "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
+  "keepalive_nic"                     string => "$(zone[254][nic])";
 
  any::
+
   "zone_index"                         slist => getindices("zone");
-
-  "keepalive_vip[$(nic[gw])]"         string => "$($(classify.domain).ggwy_vip)";
-  "vip_index"                          slist => getindices(keepalive_vip);
-
-  "keepalive_nic"                     string => "$(nic[gw])";
   "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip)");
   "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
   "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
   "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
 
-  "hosts_ip"                          string => "$(ip[support])";
-  "admin_ip"                          string => "$(ip[admin])";
-  "gw_ip"                             string => "$(ip[gw])";
 
 methods:
 
