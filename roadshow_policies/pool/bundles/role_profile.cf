@@ -47,7 +47,7 @@ reports:
 
  22_ip::
   "$(this.bundle) ip 22 available";
-  "$(this.bundle) ip 22: $(role_profile.admin_ip) $(role_profile.zone[22][ip])";
+  "$(this.bundle) ip 22: $(role_profile.admin_ip) $(role_profile.zone[22][ip]) - $(zone_22.22_ip)";
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
@@ -58,7 +58,7 @@ reports:
 
  123_ip::
   "$(this.bundle) ip 123 available";
-  "$(this.bundle) ip 123: $(role_profile.hosts_ip) $(role_profile.zone[123][ip])";
+  "$(this.bundle) ip 123: $(role_profile.hosts_ip) $(role_profile.zone[123][ip]) - $(zone_123.123_ip)";
  !123_ip::
   "$(this.bundle) ip 123 not available";
 
