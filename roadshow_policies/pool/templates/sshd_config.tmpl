@@ -4,7 +4,7 @@
 #
 [%CFEngine any:: %]
 Port 22
-ListenAddress $(role_profile.admin_ip)
+ListenAddress $(zone_$(role_profile.admin_zone).$(role_profile.admin_zone)_ip)
 Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
 SyslogFacility AUTH

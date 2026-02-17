@@ -6,6 +6,7 @@ vars:
 
 files:
 
+ "$(role_profile.admin_zone)_ip::
   "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
@@ -29,6 +30,6 @@ reports:
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
-  "$(this.bundle) role_profile.admin_ip: $(role_profile.admin_ip)";
+  "$(this.bundle) role_profile.admin_zone: $(role_profile.admin_zone)";
 
 }

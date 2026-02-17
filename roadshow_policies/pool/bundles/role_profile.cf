@@ -10,7 +10,6 @@ vars:
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
   "zone[123][mac]"                    string => "$(zone_123.123_mac)";
   "zone[123][vlan]"                   string => "123";
-  "hosts_ip"                          string => "$(zone_123.123_ip)";
 
  22_ip::
   "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
@@ -18,10 +17,11 @@ vars:
   "zone[22][ip]"                      string => "$(zone_22.22_ip)";
   "zone[22][mac]"                     string => "$(zone_22.22_mac)";
   "zone[22][vlan]"                    string => "22";
-  "admin_ip"                          string => "$(zone_22.22_ip)";
 
  any::
   "zone_index"                         slist => getindices("zone");
+  "hosts_zone"                        string => "123";
+  "admin_zone"                        string => "22";
 
 methods:
 
@@ -47,7 +47,7 @@ reports:
 
  22_ip::
   "$(this.bundle) ip 22 available";
-  "$(this.bundle) ip 22: $(role_profile.admin_ip) $(role_profile.zone[22][ip]) - $(zone_22.22_ip)";
+  "$(this.bundle) ip 22: $(zone_$(admin_zone).zone[$(admin_zone)][ip])";
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
@@ -58,7 +58,7 @@ reports:
 
  123_ip::
   "$(this.bundle) ip 123 available";
-  "$(this.bundle) ip 123: $(role_profile.hosts_ip) $(role_profile.zone[123][ip]) - $(zone_123.123_ip)";
+  "$(this.bundle) ip 123: $(zone_$(hosts_zone).zone[$(hosts_zone)][ip])";
  !123_ip::
   "$(this.bundle) ip 123 not available";
 
