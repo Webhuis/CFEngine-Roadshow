@@ -11,7 +11,7 @@ vars:
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
   "zone[123][mac]"                    string => "$(zone_123.123_mac)";
   "zone[123][vlan]"                   string => "123";
-  "hosts_ip"                          string => "$(zone[123][ip])";
+  "hosts_ip"                          string => "$(zone_123.123_ip)";
 
  22_ip::
   "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
@@ -19,7 +19,7 @@ vars:
   "zone[22][ip]"                      string => "$(zone_22.22_ip)";
   "zone[22][mac]"                     string => "$(zone_22.22_mac)";
   "zone[22][vlan]"                    string => "22";
-  "admin_ip"                          string => "$(zone[22][ip])";
+  "admin_ip"                          string => "$(zone_22.22_ip)";
 
  any::
   "zone_index"                         slist => getindices("zone");
@@ -38,8 +38,7 @@ methods:
 
 reports:
 
-  "$(this.bundle) zone $(zone)";
-  "$(this.bundle) zones index $(zones_index)";
+  "$(this.bundle) zones $(zones)";
   "$(this.bundle) zone index $(zone_index)";
 
  22_nic::
