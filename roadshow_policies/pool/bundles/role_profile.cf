@@ -49,7 +49,7 @@ reports:
 
  22_ip::
   "$(this.bundle) ip 22 available";
-  "$(this.bundle) ip 22: $(22_ip)";
+  "$(this.bundle) ip 22: $(admin_ip)";
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
@@ -60,13 +60,8 @@ reports:
 
  123_ip::
   "$(this.bundle) ip 123 available";
+  "$(this.bundle) ip 123: $(hosts_ip)";
  !123_ip::
   "$(this.bundle) ip 123 not available";
-
- #"$(this.bundle) nic_index: $(nic_index)";
- #"$(this.bundle) nic_values: $(nic_values)";
- #"$(this.bundle) hosts_ip: $(hosts_ip)";
- #"$(this.bundle) admin_ip: $(admin_ip)";
- #"$(this.bundle) ddns: $(ddns[$(ddns_index)][ip])";
 
 }
