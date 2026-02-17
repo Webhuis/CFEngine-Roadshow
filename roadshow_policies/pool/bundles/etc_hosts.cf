@@ -2,6 +2,7 @@ bundle agent etc_hosts {
 
 files:
 
+ "$(role_profile.hosts_zone)_ip"::
   "/etc/hosts"
   comment                   => "/etc/hosts for main stream hosts",
   create                    => "true",
@@ -11,6 +12,7 @@ files:
 
 reports:
 
-  "$(this.bundle) osi_123.etc_hosts_ip: $(osi_123.hosts_ip)";
+ "$(role_profile.hosts_zone)_ip"::
+  "$(this.bundle) hosts_ip $(zone_$(hosts_zone).$(hosts_zone)_ip)";
 
 }

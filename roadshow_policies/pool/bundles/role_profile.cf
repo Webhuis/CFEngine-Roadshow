@@ -47,7 +47,7 @@ reports:
 
  22_ip::
   "$(this.bundle) ip 22 available";
-  "$(this.bundle) ip 22: $(zone_$(admin_zone).zone[$(admin_zone)][ip])";
+  "$(this.bundle) ip 22: $(zone_$(admin_zone).$(admin_zone)_ip)";
  !22_ip::
   "$(this.bundle) ip 22 not available";
 
@@ -58,7 +58,7 @@ reports:
 
  123_ip::
   "$(this.bundle) ip 123 available";
-  "$(this.bundle) ip 123: $(zone_$(hosts_zone).zone[$(hosts_zone)][ip])";
+  "$(this.bundle) ip 123: $(zone_$(hosts_zone).$(hosts_zone)_ip)";
  !123_ip::
   "$(this.bundle) ip 123 not available";
 

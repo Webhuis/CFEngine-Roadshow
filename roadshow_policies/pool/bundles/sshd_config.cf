@@ -30,6 +30,6 @@ reports:
  "$(this.bundle): template $(sshd_config_template)";
  "$(this.bundle): I am implementing sshd role based configuration";
 
-  "$(this.bundle) role_profile.admin_zone: $(role_profile.admin_zone)";
+  "$(this.bundle) hosts zone hosts ip: $(hosts_zone) $(zone_$(hosts_zone).$(hosts_zone)_ip)
 
 }

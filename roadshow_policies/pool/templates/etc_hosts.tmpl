@@ -4,4 +4,4 @@
 #
 [%CFEngine any:: %]
 127.0.0.1       localhost
-$(role_profile.hosts_ip)    $(sys.fqhost)      $(sys.uqhost)
+$(zone_$(role_profile.hosts_zone).$(role_profile.hosts_zone)_ip)    $(sys.fqhost)      $(sys.uqhost)
