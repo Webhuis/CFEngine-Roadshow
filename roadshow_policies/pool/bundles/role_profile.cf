@@ -27,7 +27,7 @@ methods:
 
  #"We need predictable names"               usebundle => persistent;
   "We need zones classes"                   usebundle => "zone_$(zones)";
-  "The interfaces have to be up"            usebundle => check_interface("$(zones");
+  "The interfaces have to be up"            usebundle => check_interface("$(zones)");
 
  22_ip.123_ip::
   "We require configured osi layers 1-2-3"  usebundle => osi_123 ("role_profile.zone");
