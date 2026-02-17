@@ -6,7 +6,7 @@ vars:
 
 files:
 
- "$(role_profile.admin_zone)_ip::
+ "$(role_profile.admin_zone)_ip"::
   "$(sshd_config)"
    comment                   => "sshd config",
    perms                     => mo("644","root"),
