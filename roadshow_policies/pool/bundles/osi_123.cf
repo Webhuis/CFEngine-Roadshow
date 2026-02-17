@@ -9,8 +9,6 @@ vars:
   "gateway_line_list"                           slist => splitstring( $(gateway_line), " ", "20");
   "gateway_device"                             string => nth("gateway_line_list", "4");
   "gateway_ip"                                 string => nth("gateway_line_list", "2");
-  "hosts_ip"                                   string => "$($(zone)[123][ip])";
-  "admin_ip"                                   string => "$($(zone)[22][ip])";
 
 methods:
 
