@@ -8,7 +8,7 @@ vars:
 
 methods:
 
-    "PHP5 for Apache2"                 usebundle => packages("apache_php.pkg");
+    "PHP7 for Apache2"                 usebundle => packages("apache_php.pkg");
 
 reports:
 

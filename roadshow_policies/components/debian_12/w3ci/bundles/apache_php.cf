@@ -1,0 +1,23 @@
+bundle agent apache_php {
+
+vars:
+
+    "pkg[libapache2-mod-php7.3]"          string => "*";
+    "pkg[php-fpm]"                        string => "*";
+    "pkg[php-gd]"                         string => "*";
+    "pkg[php-mbstring]"                   string => "*";
+    "pkg[php-pear]"                       string => "*";
+    "pkg[php-pgsql]"                      string => "*";
+    "pkg[php-sqlite3]"                    string => "*";
+
+
+methods:
+
+    "PHP5 for Apache2"                 usebundle => packages("apache_php.pkg");
+
+reports:
+
+  "${this.bundle}: apache_php";
+
+}
+
