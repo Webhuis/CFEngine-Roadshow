@@ -4,10 +4,17 @@ vars:
 
   "role_name"                                  string => "HTTP HTTPS w3c compliant internal apache2 http nginx https Webserver";
 
+  "bundles[local_gateway]"            string => "${sys.flavor}/apache2.cf";
+  "bundles[local_gateway]"            string => "${sys.flavor}/apache_php.cf";
+  "bundles[gateway_tools]"            string => "${sys.flavor}/nginx.cf";
+
+  "sequence"                           slist => getindices("bundles");
+  "inputs"                             slist => getvalues("bundles");
+
 methods:
 
   "We need the Apache Webserver"            usebundle => "apache2";
-  "We need the Apache Webserver"            usebundle => "$(sys.flavor)/apache_php";
+  "We need the Apache Webserver"            usebundle => "apache_php";
   "We need nginx serving https"             usebundle => "nginx";
 
 reports:
