@@ -5,7 +5,7 @@ vars:
   "zones"                              slist => { "123", "22", "254" };
   "num_interfaces"                     slist => { "0", "1", "2" };
 
- 123_ip::
+#123_ip::
   "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
   "zone[123][nic]"                    string => "$(zone_123.123_nic)";
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
@@ -13,7 +13,7 @@ vars:
   "zone[123][vlan]"                   string => "123";
   "hosts_ip"                          string => "$(zone[123][ip])";
 
- 22_ip::
+#22_ip::
   "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
   "zone[22][nic]"                     string => "$(zone_22.22_nic)";
   "zone[22][ip]"                      string => "$(zone_22.22_ip)";
@@ -21,7 +21,7 @@ vars:
   "zone[22][vlan]"                    string => "22";
   "admin_ip"                          string => "$(zone[22][ip])";
 
- 254_ip::
+#254_ip::
   "zone[254][suffix]"                 string => "$($(classify.organisation).zone[254][suffix])";
   "zone[254][nic]"                    string => "$(zone_254.254_nic)";
   "zone[254][ip]"                     string => "$(zone_254.254_ip)";
