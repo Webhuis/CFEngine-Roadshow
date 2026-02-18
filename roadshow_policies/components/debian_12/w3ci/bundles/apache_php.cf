@@ -9,6 +9,7 @@ vars:
     "pkg[php-pear]"                       string => "*";
     "pkg[php-pgsql]"                      string => "*";
     "pkg[php-sqlite3]"                    string => "*";
+    "pkg[php-zend-eventmanager]"          string => "*";
 
 
 methods:
