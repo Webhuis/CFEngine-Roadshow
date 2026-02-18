@@ -4,14 +4,14 @@ vars:
 
   "zones"                              slist => { "123", "22" };
 
- 123_ip::
+#123_ip::
   "zone[123][suffix]"                 string => "$($(classify.organisation).zone[123][suffix])";
   "zone[123][nic]"                    string => "$(zone_123.123_nic)";
   "zone[123][ip]"                     string => "$(zone_123.123_ip)";
   "zone[123][mac]"                    string => "$(zone_123.123_mac)";
   "zone[123][vlan]"                   string => "123";
 
- 22_ip::
+#22_ip::
   "zone[22][suffix]"                  string => "$($(classify.organisation).zone[22][suffix])";
   "zone[22][nic]"                     string => "$(zone_22.22_nic)";
   "zone[22][ip]"                      string => "$(zone_22.22_ip)";
