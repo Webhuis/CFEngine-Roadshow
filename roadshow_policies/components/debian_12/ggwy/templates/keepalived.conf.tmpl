@@ -24,7 +24,7 @@ vrrp_instance $(keepalive.keepalive_nic) {
       auth_pass 1111
   }
   virtual_ipaddress {
-    $(keepalive.keepalive_vip) dev $(keepalive.keepalive.nic)
+    $(keepalive.keepalive_vip) dev $(keepalive.keepalive_nic)
   }
   virtual_routes {
     $($(classify.domain).ggwy_routes[$($(classify.domain).ggwy_routes_index)]) via $($(classify.domain).ggwy_routes_index) dev $(keepalive.keepalive_nic)
