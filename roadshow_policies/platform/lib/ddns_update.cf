@@ -8,10 +8,10 @@ classes:
   "ptr_record_dns"                           expression => isvariable("dig_ip2host");
 
  a_record_dns::
-  "a_record"                                 expression => strcmp("$(host2ip_can)", "..*");
+  "a_record"                                 expression => strcmp("$(host2ip_can)", ".*..*");
 
  ptr_record_dns::
-  "ptr_record"                               expression => strcmp("$(ip2host_can)", "..*");
+  "ptr_record"                               expression => strcmp("$(ip2host_can)", ".*..*");
 
 vars:
 
@@ -29,7 +29,7 @@ vars:
 
 files:
 
- !a_record_dns|!ptr_record_dns::
+ !a_record|!ptr_record::
   "/etc/dhcp/$(ddns_name).$(sys.domain).nsupdate.command"
     create         => "true",
     perms          => mog("644","root","root"),
