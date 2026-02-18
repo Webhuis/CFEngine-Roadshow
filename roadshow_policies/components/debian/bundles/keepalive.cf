@@ -5,7 +5,7 @@ vars:
   "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
   "keepalive_nic"                     string => "$(zone_$(role_profile.gw_zone).$(role_profile.gw_zone)_zone[nic])";
 
-  "ip_can_prio"                       string => canonify("$(zone_$(role_profile.gw_zone).$(role_profile.gw_zone)_zone[ip])"; 
+  "ip_can_prio"                       string => canonify("$(zone_$(role_profile.gw_zone).$(role_profile.gw_zone)_zone[ip])"); 
   "ip_list_prio"                       slist => string_split("$(ip_can_prio)", "src ", 99); 
   "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
 
