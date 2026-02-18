@@ -2,7 +2,7 @@ bundle agent apache_php {
 
 vars:
 
-    "pkg[libapache2-mod-php7.3]"          string => "*";
+    "pkg[libapache2-mod-php]"             string => "*";
     "pkg[php-fpm]"                        string => "*";
     "pkg[php-gd]"                         string => "*";
     "pkg[php-mbstring]"                   string => "*";
