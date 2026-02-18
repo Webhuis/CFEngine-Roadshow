@@ -27,7 +27,7 @@ methods:
 
  #"We need predictable names"               usebundle => persistent;
   "We need zones classes"                   usebundle => "zone_$(zones)";
-  "The interfaces have to be up"            usebundle => check_interface("$(zones)");
+  "The interfaces have to be up"            usebundle => check_interfaces("$(zones)");
 
  !22_nic|!123_nic::
   "We require the specified nics"           usebundle => interface_nic;
