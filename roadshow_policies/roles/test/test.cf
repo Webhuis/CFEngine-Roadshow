@@ -4,8 +4,8 @@ vars:
 
   "role_name"                                  string => "Test VM for policy testing";
 
-  "bundles[local_gateway]"                     string => "${sys.flavor}/local_gateway.cf";
-  "bundles[gateway_tools]"                     string => "${sys.flavor}/gateway_tools.cf";
+ #"bundles[local_gateway]"                     string => "${sys.flavor}/local_gateway.cf";
+ #"bundles[gateway_tools]"                     string => "${sys.flavor}/gateway_tools.cf";
   "bundles[test_set]"                          string => "test_set.cf";
 
   "inputs"                                      slist => getvalues("bundles");
@@ -14,8 +14,8 @@ methods:
 
   "We are the policy test node"             usebundle => "test_set";
 
-  "We are the gateway of all"      usebundle => "local_gateway";
-  "We desire gateway tooling"      usebundle => "gateway_tools";
+ #"We are the gateway of all"      usebundle => "local_gateway";
+ #"We desire gateway tooling"      usebundle => "gateway_tools";
 
 reports:
 
