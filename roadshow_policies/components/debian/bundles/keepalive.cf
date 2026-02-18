@@ -2,6 +2,19 @@ bundle agent keepalive {
 
 vars:
 
+  "keepalive_vip"                     string => "$($(classify.domain).ggwy_vip)";
+  "keepalive_nic"                     string => "$(zone_$(role_profile.gw_zone).$(role_profile.gw_zone)_zone[nic])";
+
+  "ip_can_prio"                       string => canonify("$(zone_$(role_profile.gw_zone).$(role_profile.gw_zone)_zone[ip])"; 
+  "ip_list_prio"                       slist => string_split("$(ip_can_prio)", "src ", 99); 
+  "keepalive_prio"                    string => lastnode("$(ip_list_prio)", "_" );
+
+  "ip_can_vrid"                       string => canonify("$($(classify.domain).ggwy_vip)");
+  "ip_list_vrid"                       slist => string_split("$(ip_can_vrid)", "src ", 99);
+  "keepalive_vrid"                    string => lastnode("$(ip_list_vrid)", "_" );
+
+  "keepalive_routes"                  string => "$($(classify.domain).ggwy_routes)";
+
   "pkg[keepalived]"	   	   	string => "*";
 
 files:

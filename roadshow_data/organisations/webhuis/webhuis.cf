@@ -28,10 +28,10 @@ vars:
   "zone[1001][vlan]"                   string => "home";
   "zone[213][nic]"                     string => "eth3";
   "zone[213][suffix]"                  string => "-wan";
-  "zone[213][vlan]"                     string => "wan";
+  "zone[213][vlan]"                    string => "wan";
   "zone[254][nic]"                     string => "eth4";
   "zone[254][suffix]"                  string => "-gw";
-  "zone[254][vlan]"                     string => "gw";
+  "zone[254][vlan]"                    string => "gw";
   "zone[42][nic]"                      string => "eth5";
   "zone[42][suffix]"                   string => "-life";
   "zone[42][vlan]"                     string => "life";

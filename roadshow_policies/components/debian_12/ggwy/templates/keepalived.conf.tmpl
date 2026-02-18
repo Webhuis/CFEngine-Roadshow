@@ -14,19 +14,19 @@ global_defs {
   smtp_connect_timeout 30
 }
 
-vrrp_instance $(role_profile.keepalive_nic) {
-  interface $(role_profile.keepalive_nic)
-  virtual_router_id $(role_profile.keepalive_vrid)
-  priority $(role_profile.keepalive_prio)
+vrrp_instance $(keepalive.keepalive_nic) {
+  interface $(keepalive.keepalive_nic)
+  virtual_router_id $(keepalive.keepalive_vrid)
+  priority $(keepalive.keepalive_prio)
   advert_int 1
   authentication {
     auth_type PASS
       auth_pass 1111
   }
   virtual_ipaddress {
-    $(role_profile.keepalive_vip[$(role_profile.vip_index)]) dev $(role_profile.vip_index)
+    $(keepalive.keepalive_vip) dev $(keepalive.nic)
   }
   virtual_routes {
-    $($(classify.domain).ggwy_routes[$($(classify.domain).ggwy_routes_index)]) via $($(classify.domain).ggwy_routes_index) dev $(role_profile.keepalive_nic)
+    $($(classify.domain).ggwy_routes[$($(classify.domain).ggwy_routes_index)]) via $($(classify.domain).ggwy_routes_index) dev $(keepalive.keepalive_nic)
   }
 }
